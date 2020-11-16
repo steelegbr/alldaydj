@@ -12,7 +12,7 @@ SECRET_KEY = environ.get("ADDJ_SECRET_KEY")
 
 # Debug more
 
-DEBUG = strtobool(environ.get("ADDJ_DEBUG", False))
+DEBUG = strtobool(environ.get("ADDJ_DEBUG", "False"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

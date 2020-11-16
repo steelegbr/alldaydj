@@ -42,3 +42,25 @@ need the following variables.
  - ADDJ_ALLOWED_HOSTS - The hosts we are permitted to make requests from. Default to an empty list.
  - ADDJ_LANG_CODE - The language code we're installed with. Defaults to en-gb.
  - ADDJ_TIMEZONE - The server timezone. Defaults to UTC.
+
+A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
+
+    . set_params_dev.sh
+
+Note the lack of forward slash!
+
+## PostgreSQL on macOS
+
+You'll need to install through homebrew:
+
+    brew install postgresql
+
+Same as for installing modern Python versions:
+
+    brew install python@3.9
+
+To start the database engine:
+
+    brew services start postgresql
+
+This creates a user with your username but no password.

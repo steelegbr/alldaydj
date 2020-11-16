@@ -1,3 +1,4 @@
 *.pyc
 addjvenv/
 .vscode/
+set_params_dev.sh

@@ -2,12 +2,17 @@
 Django Settings for AllDay DJ.
 """
 
+from distutils.util import strtobool
 from os import environ
 from pathlib import Path
 
 # Unique secret key per instalation
 
 SECRET_KEY = environ.get("ADDJ_SECRET_KEY")
+
+# Debug more
+
+DEBUG = strtobool(environ.get("ADDJ_DEBUG", False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,8 +65,12 @@ WSGI_APPLICATION = "alldaydj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": environ.get("ADDJ_DB_NAME"),
+        "USER": environ.get("ADDJ_DB_USER"),
+        "PASSWORD": environ.get("ADDJ_DB_PASS"),
+        "HOST": environ.get("ADDJ_DB_HOST"),
+        "PORT": environ.get("ADDJ_DB_PORT", 5432)
     }
 }
 
@@ -88,3 +97,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+# The hosts we can connect to the application on.
+
+ALLOWED_HOSTS = environ.get("ADDJ_ALLOWED_HOSTS", [])
+
+# Localisation
+
+LANGUAGE_CODE = environ.get("ADDJ_LANG_CODE", "en-gb")
+TIME_ZONE = environ.get("ADDJ_TIMEZONE", "UTC")
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True

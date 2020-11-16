@@ -33,3 +33,12 @@ Environment variables are used to configure the application. For any deployment 
 need the following variables.
 
  - ADDJ_SECRET_KEY - The Django secret key.
+ - ADDJ_DEBUG - Indicates if debug mode should be enabled. Defaults to False.
+ - ADDJ_DB_NAME - Name of the database to connect to.
+ - ADDJ_DB_USER - Username to connect to the database as.
+ - ADDJ_DB_PASS - The password to connect to the database with.
+ - ADDJ_DB_HOST - The host to connect to the database on.
+ - ADDJ_DB_PORT - The port to connect to the database on. Defaults to 5432.
+ - ADDJ_ALLOWED_HOSTS - The hosts we are permitted to make requests from. Default to an empty list.
+ - ADDJ_LANG_CODE - The language code we're installed with. Defaults to en-gb.
+ - ADDJ_TIMEZONE - The server timezone. Defaults to UTC.

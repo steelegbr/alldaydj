@@ -1,2 +1,4 @@
-alldaydj/settings_local.py
 *.pyc
+addjvenv/
+.vscode/
+set_params_dev.sh

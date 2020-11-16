@@ -1,0 +1,6 @@
+name: alldaydj-actions
+on: [push]
+jobs:
+  black-linter:
+    runs-on: ubuntu-latest
+    uses: lgeiger/black-action@master

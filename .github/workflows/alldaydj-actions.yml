@@ -34,10 +34,10 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
-      - name: Install Python $PYTHON_VER
+      - name: Install Python ${{ env.PYTHON_VER }}
         uses: actions/setup-python@v1
         with:
-          python-version: $PYTHON_VER
+          python-version: ${{ env.PYTHON_VER }}
       - name: Install psycopg2 dependancies
         run: sudo apt-get install python-dev libpq-dev
       - name: Install dependancies

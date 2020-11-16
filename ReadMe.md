@@ -2,8 +2,6 @@
 
 Radio playout for the modern, cloud-driven world. This is the API for AllDay DJ, handing media storage, logs, VT, etc.
 
-## Pipeline status
-
 ![Test and Build](https://github.com/steelegbr/alldaydj/workflows/alldaydj-actions/badge.svg)
 
 ## Project Plan

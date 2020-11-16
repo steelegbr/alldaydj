@@ -3,4 +3,9 @@ on: [push]
 jobs:
   black-linter:
     runs-on: ubuntu-latest
-    uses: lgeiger/black-action@master
+    steps:
+      - uses: actions/checkout@v1
+      - name: Black Code Formatter
+        uses: lgeiger/black-action@master
+        with:
+          args: ". --check"

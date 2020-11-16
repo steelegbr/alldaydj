@@ -24,13 +24,14 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: $ADDJ_DB_NAME
-          POSTGRES_PASSWORD: $ADDJ_DB_PASS
-          POSTGRES_USER: $ADDJ_DB_USER
+          POSTGRES_DB: ${{ env.ADDJ_DB_NAME }}
+          POSTGRES_PASSWORD: ${{ env.ADDJ_DB_PASS }}
+          POSTGRES_USER: ${{ env.ADDJ_DB_USER }}
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     runs-on: ubuntu-latest
+    needs: black-linter
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1

@@ -50,13 +50,9 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ env.PYTHON_VER }}
-      - name: Install psycopg2 dependancies
-        run: sudo apt-get install python-dev libpq-dev
       - name: Install dependancies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run migrations
-        run: python manage.py migrate_schemas --shared
       - name: Test with django
         run: python manage.py test

@@ -8,7 +8,7 @@ Radio playout for the modern, cloud-driven world. This is the API for AllDay DJ,
 
 The plan for delivering AllDay DJ in stages:
 
- - [ ] JWT auth integration.
+ - [X] JWT auth integration.
  - [ ] Audio library (can store and edit carts).
  - [ ] Search
  - [ ] Log editing.

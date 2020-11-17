@@ -41,9 +41,13 @@ need the following variables.
  - ADDJ_DB_PASS - The password to connect to the database with.
  - ADDJ_DB_HOST - The host to connect to the database on.
  - ADDJ_DB_PORT - The port to connect to the database on. Defaults to 5432.
- - ADDJ_ALLOWED_HOSTS - The hosts we are permitted to make requests from. Default to an empty list.
  - ADDJ_LANG_CODE - The language code we're installed with. Defaults to en-gb.
  - ADDJ_TIMEZONE - The server timezone. Defaults to UTC.
+ - ADDJ_USERS_DOMAIN - Base URL to match tenants on.
+ - ADDJ_RABBIT_HOST - The host RabbitMQ is running on. Defaults to localhost.
+ - ADDJ_RABBIT_PORT - The port RabbitMQ is running on. Defaults to 5672.
+ - ADDJ_RABBIT_USER - The username to log into RabbitMQ with. Defaults to "guest".
+ - ADDJ_RABBIT_PASS - The password to log into RabbitMQ with. Defaults to "".
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
@@ -66,3 +70,23 @@ To start the database engine:
     brew services start postgresql
 
 This creates a user with your username but no password.
+
+## Migrations
+
+Due to the use of django-tenants for schema level segregation, we need to handle migrations with the following command:
+
+    python manage.py makemigrations
+    python manage.py migrate_schemas --shared
+
+## Rabbit... Rabbit, Rabbit, Rabbit!
+
+RabbitMQ is required to make the Celery magic work. On macOS you can use homebrew:
+
+    brew install rabbitmq
+    brew services start rabbitmq
+
+## Celery
+
+Celery is used for async tasks. You need to have the running going for it to do anything. ;)
+
+    celery -A proj alldaydj worker -l INFO

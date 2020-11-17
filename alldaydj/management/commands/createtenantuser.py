@@ -28,9 +28,7 @@ class Command(BaseCommand):
         # Sanity checks
 
         if not username or not password:
-            raise CommandError(
-                "You must supply a username and password for the user."
-            )
+            raise CommandError("You must supply a username and password for the user.")
 
         (_, email) = parseaddr(username)
         if not email:

@@ -8,9 +8,10 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+
 class TenantViewSet(generics.ListAPIView):
     """
-        Read-only view into tenants.
+    Read-only view into tenants.
     """
 
     serializer_class = TenantSerializer

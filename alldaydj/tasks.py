@@ -12,6 +12,7 @@ from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.models import UserTenantPermissions
 from typing import Any
 
+
 @shared_task
 def bootstrap(
     public_tenancy_name: str, admin_username: str, admin_password: str
@@ -35,6 +36,7 @@ def bootstrap(
 
     return f"Successfully bootstrapped the {public_tenancy_name} public tenancy with {admin_username}."
 
+
 @shared_task
 def create_tenant(tenant_name: str, username: str) -> str:
     """
@@ -48,6 +50,7 @@ def create_tenant(tenant_name: str, username: str) -> str:
     provision_tenant(tenant_name, tenant_name, username)
     return f"Successfully created the {tenant_name} tenancy."
 
+
 @shared_task
 def create_user(email: str, password: str) -> str:
     """Create a user.
@@ -57,14 +60,14 @@ def create_user(email: str, password: str) -> str:
         password (str): The password.
     """
 
-    user = TenantUser.objects.create_user(
-        email = email,
-        password = password
-    )
+    user = TenantUser.objects.create_user(email=email, password=password)
 
     return f"Successfully created the {email} user."
 
-def __set_tenant_permissions(user: Any, tenant: Any, superuser: bool, staff: bool) -> None:
+
+def __set_tenant_permissions(
+    user: Any, tenant: Any, superuser: bool, staff: bool
+) -> None:
     """Sets the specified user permissions on a tenant.
 
     Args:
@@ -74,7 +77,10 @@ def __set_tenant_permissions(user: Any, tenant: Any, superuser: bool, staff: boo
         staff (bool): Indicates if the user should be staff.
     """
     with tenant_context(tenant):
-            UserTenantPermissions.objects.get_or_create(profile=user, is_staff=staff, is_superuser=superuser)
+        UserTenantPermissions.objects.get_or_create(
+            profile=user, is_staff=staff, is_superuser=superuser
+        )
+
 
 @shared_task
 def make_superuser(email: str, tenant_name: str, staff: bool, superuser: bool) -> str:
@@ -94,7 +100,7 @@ def make_superuser(email: str, tenant_name: str, staff: bool, superuser: bool) -
         raise ValueError(f"Could not find user {email}.")
 
     if tenant_name:
-        
+
         # Specific tenancy
 
         tenant = Tenant.objects.filter(name=tenant_name).first()
@@ -106,9 +112,9 @@ def make_superuser(email: str, tenant_name: str, staff: bool, superuser: bool) -
         __set_tenant_permissions(user, tenant, staff, superuser)
 
         return f"Successfully applied permissions for {user} on the {tenant} tenancy."
-    
+
     else:
-        
+
         # Every tenancy
 
         tenants = Tenant.objects.all()

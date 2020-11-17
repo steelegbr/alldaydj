@@ -34,16 +34,16 @@ class Command(BaseCommand):
         # Sanity checks
 
         if not username:
-            raise CommandError(
-                "You must supply a username."
-            )
+            raise CommandError("You must supply a username.")
 
         (_, email) = parseaddr(username)
         if not email:
             raise CommandError(f"{email} is not a valid e-mail address.")
 
         if not all_tenants and not tenancy:
-            raise CommandError("You must specify all tenancies (--all) or give a specific tenant to assign permissions to.")
+            raise CommandError(
+                "You must specify all tenancies (--all) or give a specific tenant to assign permissions to."
+            )
 
         #  Perform the bootstrap
 

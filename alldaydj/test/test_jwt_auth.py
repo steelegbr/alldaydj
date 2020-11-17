@@ -170,7 +170,7 @@ class JwtAuthTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         json_response = json.loads(response.content)
-        tenancies = [tenancy["slug"] for tenancy in json_response ]
+        tenancies = [tenancy["slug"] for tenancy in json_response]
 
         self.assertEqual(tenancies, expected_tenancies)
 

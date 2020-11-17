@@ -24,29 +24,34 @@ class JwtAuthTests(APITestCase):
     PUBLIC_FQDN = environ.get("ADDJ_USERS_DOMAIN")
     TENANT_FQDN = f"{TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
+
+        super(JwtAuthTests, cls).setUpClass()
 
         # Order is important here
-        # We can create the tenancies
+        # First create the tenancies
 
-        create_public_tenant(self.PUBLIC_FQDN, self.ADMIN_USERNAME)
-        self.standard_fqdn = provision_tenant(
-            self.TENANT_NAME, self.TENANT_NAME, self.ADMIN_USERNAME
+        create_public_tenant(cls.PUBLIC_FQDN, cls.ADMIN_USERNAME)
+        cls.standard_fqdn = provision_tenant(
+            cls.TENANT_NAME, cls.TENANT_NAME, cls.ADMIN_USERNAME
         )
 
         # We update the dyanmically create admin user
 
-        self.admin_user = TenantUser.objects.filter(email=self.ADMIN_USERNAME)[0]
+        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME)[0]
+        cls.admin_user.set_password(cls.ADMIN_PASSWORD)
+        cls.admin_user.save()
 
         # And finally a standard user
 
-        self.standard_user = TenantUser.objects.create_user(
-            email=self.STANDARD_USERNAME,
-            password=self.STANDARD_PASSWORD,
+        cls.standard_user = TenantUser.objects.create_user(
+            email=cls.STANDARD_USERNAME,
+            password=cls.STANDARD_PASSWORD,
             is_active=True,
         )
 
-        Tenant.objects.filter(name=self.TENANT_NAME)[0].add_user(self.standard_user)
+        Tenant.objects.filter(name=cls.TENANT_NAME)[0].add_user(cls.standard_user)
 
     @parameterized.expand(
         [
@@ -67,14 +72,14 @@ class JwtAuthTests(APITestCase):
         # Arrange
 
         url = reverse("token_obtain_pair")
-        auth_request = {username: username, password: password}
+        auth_request = {"email": username, "password": password}
+        host = f"{tenant_name}.{environ.get('ADDJ_USERS_DOMAIN')}"
 
         # Act
 
         response = self.client.post(
-            url, auth_request, format="json", **{"HTTP_HOST": self.TENANT_FQDN}
+            url, auth_request, format="json", **{"HTTP_HOST": host}
         )
-        print(response.content)
 
         # Assert
 
@@ -86,5 +91,5 @@ class JwtAuthTests(APITestCase):
         self.assertIsNotNone(response_json)
         self.assertIn("access", response_json)
         self.assertIn("refresh", response_json)
-        self.assertIsNotNone(response_json.access)
-        self.assertIsNotNone(response_json.refresh)
+        self.assertIsNotNone(response_json["access"])
+        self.assertIsNotNone(response_json["refresh"])

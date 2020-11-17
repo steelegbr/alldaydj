@@ -33,6 +33,7 @@ SHARED_APPS = [
     "tenant_users.permissions",
     "tenant_users.tenants",
     "rest_framework",
+    "django_celery_results",
 ]
 
 TENANT_APPS = [
@@ -40,6 +41,7 @@ TENANT_APPS = [
     "tenant_users.permissions",
     "alldaydj",
     "rest_framework",
+    "django_celery_results",
 ]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
@@ -126,7 +128,7 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-ALLOWED_HOSTS = environ.get("ADDJ_ALLOWED_HOSTS", [])
+ALLOWED_HOSTS = [f".{environ.get('ADDJ_USERS_DOMAIN')}"]
 
 # Localisation
 
@@ -146,3 +148,10 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
 }
+
+# Celery
+
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_TIMEZONE = environ.get("ADDJ_TIMEZONE", "UTC")
+CELERY_TASK_TRACK_STARTED = True
+CELERY_BROKER = f"pyamqp://{environ.get('ADDJ_RABBIT_USER', 'guest')}:{environ.get('ADDJ_RABBIT_PASS', '')}@{environ.get('ADDJ_RABBIT_HOST', 'localhost')}:{environ.get('ADDJ_RABBIT_PORT', 5672)}/"

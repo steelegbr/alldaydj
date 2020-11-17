@@ -7,6 +7,9 @@ env:
   ADDJ_DB_USER: alldaydj
   ADDJ_DB_PASS: ${{ secrets.ADDJ_DB_PASS }}
   ADDJ_DB_HOST: localhost
+  ADDJ_RABIT_HOST: localhost
+  ADDJ_RABBIT_USER: alldaydj
+  ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
   PYTHON_VER: 3.9
   ADDJ_USERS_DOMAIN: test.alldaydj.net
 
@@ -31,6 +34,13 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      rabbitmq:
+        image: rabbitmq
+        env:
+          RABBITMQ_DEFAULT_USER: ${{ env.ADDJ_RABBIT_USER }}
+          RABBITMQ_DEFAULT_PASS: ${{ env.ADDJ_RABBIT_PASS }}
+        ports:
+          - 5672:5672
     runs-on: ubuntu-latest
     needs: black-linter
     steps:
@@ -47,6 +57,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run migrations
-        run: python manage.py migrate
+        run: python manage.py migrate_schemas --shared
       - name: Test with django
         run: python manage.py test

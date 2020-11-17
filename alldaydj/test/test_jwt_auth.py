@@ -39,7 +39,7 @@ class JwtAuthTests(APITestCase):
 
         # We update the dyanmically create admin user
 
-        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME)[0]
+        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME).first()
         cls.admin_user.set_password(cls.ADMIN_PASSWORD)
         cls.admin_user.save()
 
@@ -51,7 +51,7 @@ class JwtAuthTests(APITestCase):
             is_active=True,
         )
 
-        Tenant.objects.filter(name=cls.TENANT_NAME)[0].add_user(cls.standard_user)
+        Tenant.objects.filter(name=cls.TENANT_NAME).first().add_user(cls.standard_user)
 
     @parameterized.expand(
         [
@@ -93,3 +93,32 @@ class JwtAuthTests(APITestCase):
         self.assertIn("refresh", response_json)
         self.assertIsNotNone(response_json["access"])
         self.assertIsNotNone(response_json["refresh"])
+
+    @parameterized.expand([
+        ("bad@example.com", "credsgohere", TENANT_NAME),
+        (STANDARD_USERNAME, ADMIN_PASSWORD, TENANT_NAME),
+        (ADMIN_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
+    ])
+    def test_bad_creds(self, username: str, password: str, tenant_name: str):
+        """
+        Tests users cannot login with bad credentials.
+        """
+
+        # Arrange
+
+        url = reverse("token_obtain_pair")
+        auth_request = {
+            "email": username,
+            "password": password,
+        }
+        host = f"{tenant_name}.{environ.get('ADDJ_USERS_DOMAIN')}"
+
+        # Act
+
+        response = self.client.post(
+            url, auth_request, format="json", **{"HTTP_HOST": host}
+        )
+
+        #  Assert
+
+        self.assertEqual(response.status_code, 401)

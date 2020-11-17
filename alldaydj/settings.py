@@ -20,16 +20,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
+SHARED_APPS = [
+    "django_tenants",
+    "alldaydj",
     "django.contrib.contenttypes",
+    "django.contrib.auth",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.admin",
     "django.contrib.staticfiles",
 ]
 
+TENANT_APPS = ["django.contrib.contenttypes"]
+
+INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+TENANT_MODEL = "alldaydj.Tenant"
+TENANT_DOMAIN_MODEL = "alldaydj.Domain"
+
 MIDDLEWARE = [
+    "django_tenants.middleware.main.TenantMainMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -65,7 +75,7 @@ WSGI_APPLICATION = "alldaydj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_tenants.postgresql_backend",
         "NAME": environ.get("ADDJ_DB_NAME"),
         "USER": environ.get("ADDJ_DB_USER"),
         "PASSWORD": environ.get("ADDJ_DB_PASS"),
@@ -73,6 +83,8 @@ DATABASES = {
         "PORT": environ.get("ADDJ_DB_PORT", 5432),
     }
 }
+
+DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 
 # Password validation

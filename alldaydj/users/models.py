@@ -4,7 +4,7 @@
 
 from django.db import models
 from django.utils.translation import gettext as _
-from tenant_users import UserProfile
+from tenant_users.tenants.models import UserProfile
 
 
 class TenantUser(UserProfile):

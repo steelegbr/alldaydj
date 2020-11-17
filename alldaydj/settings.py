@@ -31,17 +31,23 @@ SHARED_APPS = [
     "django.contrib.admin",
     "django.contrib.staticfiles",
     "tenant_users.permissions",
-    "tenant_users.permissions",
+    "tenant_users.tenants",
+    "rest_framework",
 ]
 
-TENANT_APPS = ["django.contrib.contenttypes", "tenant_users.permissions", "alldaydj"]
+TENANT_APPS = [
+    "django.contrib.contenttypes",
+    "tenant_users.permissions",
+    "alldaydj",
+    "rest_framework",
+]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = "alldaydj.tenants.Tenant"
-TENANT_DOMAIN_MODEL = "alldaydj.tenants.Domain"
+TENANT_MODEL = "tenants.Tenant"
+TENANT_DOMAIN_MODEL = "tenants.Domain"
 TENANT_USERS_DOMAIN = environ.get("ADDJ_USERS_DOMAIN")
-AUTH_USER_MODEL = "alldaydj.users.TenantUser"
+AUTH_USER_MODEL = "users.TenantUser"
 SESSION_COOKIE_DOMAIN = f".{environ.get('ADDJ_USERS_DOMAIN')}"
 
 MIDDLEWARE = [
@@ -129,3 +135,14 @@ TIME_ZONE = environ.get("ADDJ_TIMEZONE", "UTC")
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# REST Framework
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissions",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
+}

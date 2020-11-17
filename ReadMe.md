@@ -67,3 +67,10 @@ To start the database engine:
     brew services start postgresql
 
 This creates a user with your username but no password.
+
+## Migrations
+
+Due to the use of django-tenants for schema level segregation, we need to handle migrations with the following command:
+
+    python manage.py makemigrations
+    python manage.py migrate_schemas --shared

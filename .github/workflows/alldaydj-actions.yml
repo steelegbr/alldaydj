@@ -8,6 +8,7 @@ env:
   ADDJ_DB_PASS: ${{ secrets.ADDJ_DB_PASS }}
   ADDJ_DB_HOST: localhost
   PYTHON_VER: 3.9
+  ADDJ_USERS_DOMAIN: test.alldaydj.net
 
 jobs:
   black-linter:

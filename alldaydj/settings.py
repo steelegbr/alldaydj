@@ -22,21 +22,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SHARED_APPS = [
     "django_tenants",
-    "alldaydj",
+    "alldaydj.tenants",
+    "alldaydj.users",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.admin",
     "django.contrib.staticfiles",
+    "tenant_users.permissions",
+    "tenant_users.permissions",
 ]
 
-TENANT_APPS = ["django.contrib.contenttypes"]
+TENANT_APPS = ["django.contrib.contenttypes", "tenant_users.permissions", "alldaydj"]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = "alldaydj.Tenant"
-TENANT_DOMAIN_MODEL = "alldaydj.Domain"
+TENANT_MODEL = "alldaydj.tenants.Tenant"
+TENANT_DOMAIN_MODEL = "alldaydj.tenants.Domain"
+TENANT_USERS_DOMAIN = environ.get("ADDJ_USERS_DOMAIN")
+AUTH_USER_MODEL = "alldaydj.users.TenantUser"
+SESSION_COOKIE_DOMAIN = f".{environ.get('ADDJ_USERS_DOMAIN')}"
 
 MIDDLEWARE = [
     "django_tenants.middleware.main.TenantMainMiddleware",
@@ -104,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTHENTICATION_BACKENDS = ["tenant_users.permissions.backend.UserBackend"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

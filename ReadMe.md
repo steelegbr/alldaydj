@@ -44,6 +44,7 @@ need the following variables.
  - ADDJ_ALLOWED_HOSTS - The hosts we are permitted to make requests from. Default to an empty list.
  - ADDJ_LANG_CODE - The language code we're installed with. Defaults to en-gb.
  - ADDJ_TIMEZONE - The server timezone. Defaults to UTC.
+ - ADDJ_USERS_DOMAIN - Base URL to match tenants on.
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 

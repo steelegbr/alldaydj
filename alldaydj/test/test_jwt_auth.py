@@ -1,3 +1,6 @@
+from alldaydj.users.models import TenantUser
+from alldaydj.tenants.models import Tenant
+from alldaydj.test.utils import get_bearer_token
 from django.urls import reverse
 import json
 from os import environ
@@ -6,8 +9,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.tasks import provision_tenant
-from alldaydj.users.models import TenantUser
-from alldaydj.tenants.models import Tenant
+from typing import List
 
 
 class JwtAuthTests(APITestCase):
@@ -20,6 +22,7 @@ class JwtAuthTests(APITestCase):
     ADMIN_USERNAME = "admin@example.com"
     ADMIN_PASSWORD = "1337h@x0r"
     TENANT_NAME = "test"
+    OTHER_TENANT_NAME = "other"
     PUBLIC_TENANT_NAME = "public"
     PUBLIC_FQDN = environ.get("ADDJ_USERS_DOMAIN")
     TENANT_FQDN = f"{TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
@@ -33,8 +36,13 @@ class JwtAuthTests(APITestCase):
         # First create the tenancies
 
         create_public_tenant(cls.PUBLIC_FQDN, cls.ADMIN_USERNAME)
+
         cls.standard_fqdn = provision_tenant(
             cls.TENANT_NAME, cls.TENANT_NAME, cls.ADMIN_USERNAME
+        )
+
+        cls.other_fqdn = provision_tenant(
+            cls.OTHER_TENANT_NAME, cls.OTHER_TENANT_NAME, cls.ADMIN_USERNAME
         )
 
         # We update the dyanmically create admin user
@@ -94,14 +102,20 @@ class JwtAuthTests(APITestCase):
         self.assertIsNotNone(response_json["access"])
         self.assertIsNotNone(response_json["refresh"])
 
-    @parameterized.expand([
-        ("bad@example.com", "credsgohere", TENANT_NAME),
-        (STANDARD_USERNAME, ADMIN_PASSWORD, TENANT_NAME),
-        (ADMIN_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
-    ])
+    @parameterized.expand(
+        [
+            ("bad@example.com", "credsgohere", TENANT_NAME),
+            (STANDARD_USERNAME, ADMIN_PASSWORD, TENANT_NAME),
+            (ADMIN_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
+        ]
+    )
     def test_bad_creds(self, username: str, password: str, tenant_name: str):
-        """
-        Tests users cannot login with bad credentials.
+        """Tests users cannot login with bad credentials.
+
+        Args:
+            username (str): The username to try.
+            password (str): The password to try.
+            tenant_name (str): The tenancy to try logging in on.
         """
 
         # Arrange
@@ -118,6 +132,61 @@ class JwtAuthTests(APITestCase):
         response = self.client.post(
             url, auth_request, format="json", **{"HTTP_HOST": host}
         )
+
+        #  Assert
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    @parameterized.expand(
+        [
+            (STANDARD_USERNAME, STANDARD_PASSWORD, ["test"]),
+            (ADMIN_USERNAME, ADMIN_PASSWORD, ["test", "other"]),
+        ]
+    )
+    def test_get_tenancy_list(
+        self, username: str, password: str, expected_tenancies: List[str]
+    ):
+        """
+        Checks we get the correct tenancy back for a user.
+
+        Args:
+            username (str): The username to test with.
+            password (str): The password to test with.
+            expected_tenancies (List[str]): The expected list of tenancies.
+        """
+
+        # Arrange
+
+        token = get_bearer_token(username, password, self.PUBLIC_FQDN, self.client)
+        url = reverse("tenancies")
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        # Act
+
+        response = self.client.get(url, **{"HTTP_HOST": self.PUBLIC_FQDN})
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        json_response = json.loads(response.content)
+        tenancies = [tenancy["slug"] for tenancy in json_response ]
+
+        self.assertEqual(tenancies, expected_tenancies)
+
+    def test_cannot_cross_tenancy(self):
+        """
+        Tests we can't cross users between tenancies.
+        """
+
+        #  Arrange
+
+        url = reverse("tenancies")
+        host = f"{self.OTHER_TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
+
+        # Act
+
+        response = self.client.get(url, format="json", **{"HTTP_HOST": host})
 
         #  Assert
 

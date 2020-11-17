@@ -6,6 +6,7 @@ from django.db import models
 from django_tenants.models import DomainMixin
 from tenant_users.tenants.models import TenantBase
 
+
 class Tenant(TenantBase):
     """
     Tenant of the AllDay DJ web app.

@@ -7,6 +7,7 @@ from rest_framework.test import APITestCase
 from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.tasks import provision_tenant
 from alldaydj.users.models import TenantUser
+from alldaydj.tenants.models import Tenant
 
 
 class JwtAuthTests(APITestCase):
@@ -24,21 +25,28 @@ class JwtAuthTests(APITestCase):
     TENANT_FQDN = f"{TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
 
     def setUp(self):
+
+        # Order is important here
+        # We can create the tenancies
+
+        create_public_tenant(self.PUBLIC_FQDN, self.ADMIN_USERNAME)
+        self.standard_fqdn = provision_tenant(
+            self.TENANT_NAME, self.TENANT_NAME, self.ADMIN_USERNAME
+        )
+
+        # We update the dyanmically create admin user
+
+        self.admin_user = TenantUser.objects.filter(email=self.ADMIN_USERNAME)[0]
+
+        # And finally a standard user
+
         self.standard_user = TenantUser.objects.create_user(
             email=self.STANDARD_USERNAME,
             password=self.STANDARD_PASSWORD,
             is_active=True,
         )
-        self.admin_user = TenantUser.objects.create_superuser(
-            email=self.ADMIN_USERNAME,
-            password=self.ADMIN_PASSWORD,
-            is_active=True,
-        )
 
-        create_public_tenant(self.PUBLIC_FQDN, self.ADMIN_USERNAME)
-        self.standard_fqdn = provision_tenant(self.TENANT_NAME, self.ADMIN_USERNAME)
-
-        
+        Tenant.objects.filter(name=self.TENANT_NAME)[0].add_user(self.standard_user)
 
     @parameterized.expand(
         [
@@ -64,13 +72,17 @@ class JwtAuthTests(APITestCase):
         # Act
 
         response = self.client.post(
-            url, auth_request, format="json", **{"HTTP_HOST", self.TENANT_FQDN}
+            url, auth_request, format="json", **{"HTTP_HOST": self.TENANT_FQDN}
         )
-        response_json = json.loads(response.content)
+        print(response.content)
 
         # Assert
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(response.content)
+
+        response_json = json.loads(response.content)
+
         self.assertIsNotNone(response_json)
         self.assertIn("access", response_json)
         self.assertIn("refresh", response_json)

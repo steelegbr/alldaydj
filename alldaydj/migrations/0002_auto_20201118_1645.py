@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alldaydj', '0001_initial'),
+        ("alldaydj", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='cart',
-            name='composer',
+            model_name="cart",
+            name="composer",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='cart',
-            name='isrc',
+            model_name="cart",
+            name="isrc",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='cart',
-            name='publisher',
+            model_name="cart",
+            name="publisher",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='cart',
-            name='record_label',
+            model_name="cart",
+            name="record_label",
             field=models.TextField(null=True),
         ),
     ]

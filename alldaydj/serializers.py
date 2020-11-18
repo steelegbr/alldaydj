@@ -25,6 +25,7 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = (
             "label",
+            "id",
             "title",
             "display_artist",
             "artists",

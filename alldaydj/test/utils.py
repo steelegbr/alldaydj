@@ -7,15 +7,12 @@ from alldaydj.tasks import (
     bootstrap,
     create_tenant,
     create_user,
-    make_superuser,
     join_user_tenancy,
     set_tenant_user_permissions,
 )
 from alldaydj.tenants.models import Tenant
-from alldaydj.users.models import TenantUser
-from django.contrib.auth.models import Permission
+from django.conf import settings
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 import json
 from os import environ
 from rest_framework import status
@@ -91,6 +88,9 @@ def create_tenant_user(
         tenancy (str): The tenancy to connect them to.
         permissions (List[str]): The permissions to give the user.
     """
+
+    if not permissions:
+        permissions = settings.ADDJ_DEFAULT_PERMISSIONS
 
     create_user.apply(args=(username, password))
     join_user_tenancy.apply(args=(username, tenancy))

@@ -90,4 +90,4 @@ RabbitMQ is required to make the Celery magic work. On macOS you can use homebre
 
 Celery is used for async tasks. You need to have the running going for it to do anything. ;)
 
-    celery -A proj alldaydj worker -l INFO
+    celery -A alldaydj worker -l INFO

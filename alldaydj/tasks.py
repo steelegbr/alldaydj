@@ -167,7 +167,9 @@ def set_tenant_user_permissions(
     # Apply the permissions
 
     with tenant_context(tenant):
-        (user_permissions, _) = UserTenantPermissions.objects.get_or_create(profile=user)
+        (user_permissions, _) = UserTenantPermissions.objects.get_or_create(
+            profile=user
+        )
 
         for permission in permissions:
             current_permission = Permission.objects.get(codename=permission)

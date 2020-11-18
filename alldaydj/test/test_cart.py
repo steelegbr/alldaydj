@@ -1,9 +1,15 @@
 from alldaydj.models import Artist, Cart, Tag, Type
 from alldaydj.tenants.models import Tenant
-from alldaydj.test.utils import set_bearer_token, create_tenancy
+from alldaydj.test.utils import (
+    set_bearer_token,
+    create_tenancy,
+    create_public_tenant,
+    create_tenant_user,
+)
 from django.urls import reverse
 from django.conf import settings
 from django_tenants.utils import tenant_context
+import json
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -15,6 +21,8 @@ class CartTests(APITestCase):
     Test cases for the cart management API.
     """
 
+    ADMIN_USERNAME = "admin@example.com"
+    ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "cart@example.com"
     PASSWORD = "$up3rS3cur3"
     TENANCY_NAME = "test"
@@ -30,19 +38,19 @@ class CartTests(APITestCase):
 
         # Create the tenancy
 
-        (fqdn, tenancy) = create_tenancy(
-            cls.TENANCY_NAME,
-            cls.USERNAME,
-            cls.PASSWORD,
-            settings.ADDJ_DEFAULT_PERMISSIONS,
-        )
+        create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
+        (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
         cls.fqdn = fqdn
         cls.tenancy = tenancy
+
+        # Create our test user
+
+        create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
 
         # Create some test data
 
         with tenant_context(cls.tenancy):
-            for i in range(3):
+            for i in range(4):
                 artist = Artist(name=f"Artist {i}")
                 tag = Tag(tag=f"Tag {i}")
                 type = Type(name=f"Type {i}")
@@ -58,7 +66,7 @@ class CartTests(APITestCase):
     @parameterized.expand(
         [
             (
-                "CART123",
+                "CART1",
                 "Test Title",
                 "Artist 1 & Artist 2",
                 ["Artist 1", "Artist 2"],
@@ -70,7 +78,21 @@ class CartTests(APITestCase):
                 "Label 1 Ltd",
                 ["Tag 1", "Tag 2"],
                 "Type 1",
-            )
+            ),
+            (
+                "CART2",
+                "Test Title",
+                "Artist 3",
+                ["Artist 3"],
+                True,
+                1880,
+                None,
+                None,
+                None,
+                None,
+                [],
+                "Type 2",
+            ),
         ]
     )
     def test_retrieve_song(
@@ -126,3 +148,22 @@ class CartTests(APITestCase):
         # Assert
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        json_response = json.loads(response.content)
+
+        self.assertEqual(json_response["label"], label)
+        self.assertEqual(json_response["title"], title)
+        self.assertEqual(json_response["display_artist"], display_artist)
+        self.assertEqual(json_response["artists"], artists)
+        self.assertEqual(json_response["cue_audio_start"], 0)
+        self.assertEqual(json_response["cue_audio_end"], 233040)
+        self.assertEqual(json_response["cue_intro_start"], 0)
+        self.assertEqual(json_response["cue_intro_end"], 29350)
+        self.assertEqual(json_response["cue_segue"], 22606)
+        self.assertEqual(json_response["sweeper"], sweeper)
+        self.assertEqual(json_response["year"], year)
+        self.assertEqual(json_response["isrc"], isrc)
+        self.assertEqual(json_response["composer"], composer)
+        self.assertEqual(json_response["publisher"], publisher)
+        self.assertEqual(json_response["record_label"], record_label)
+        self.assertEqual(json_response["tags"], tags)
+        self.assertEqual(json_response["type"], type)

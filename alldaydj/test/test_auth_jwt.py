@@ -1,13 +1,18 @@
+from django.conf import settings
 from alldaydj.users.models import TenantUser
 from alldaydj.tenants.models import Tenant
-from alldaydj.test.utils import set_bearer_token
+from alldaydj.test.utils import (
+    create_tenancy,
+    create_tenant_user,
+    set_bearer_token,
+    create_public_tenant,
+)
 from django.urls import reverse
 import json
 from os import environ
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.tasks import provision_tenant
 from typing import List
 
@@ -24,7 +29,7 @@ class JwtAuthTests(APITestCase):
     TENANT_NAME = "test"
     OTHER_TENANT_NAME = "other"
     PUBLIC_TENANT_NAME = "public"
-    PUBLIC_FQDN = environ.get("ADDJ_USERS_DOMAIN")
+    PUBLIC_FQDN = f"public.{environ.get('ADDJ_USERS_DOMAIN')}"
     TENANT_FQDN = f"{TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
 
     @classmethod
@@ -35,31 +40,22 @@ class JwtAuthTests(APITestCase):
         # Order is important here
         # First create the tenancies
 
-        create_public_tenant(cls.PUBLIC_FQDN, cls.ADMIN_USERNAME)
+        create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
+        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME).first()
 
-        cls.standard_fqdn = provision_tenant(
-            cls.TENANT_NAME, cls.TENANT_NAME, cls.ADMIN_USERNAME
-        )
-
-        cls.other_fqdn = provision_tenant(
-            cls.OTHER_TENANT_NAME, cls.OTHER_TENANT_NAME, cls.ADMIN_USERNAME
-        )
+        (cls.standard_fqdn, _) = create_tenancy(cls.TENANT_NAME, cls.ADMIN_USERNAME)
+        (cls.other_fqdn, _) = create_tenancy(cls.OTHER_TENANT_NAME, cls.ADMIN_USERNAME)
 
         # We update the dyanmically create admin user
 
-        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME).first()
         cls.admin_user.set_password(cls.ADMIN_PASSWORD)
         cls.admin_user.save()
 
         # And finally a standard user
 
-        cls.standard_user = TenantUser.objects.create_user(
-            email=cls.STANDARD_USERNAME,
-            password=cls.STANDARD_PASSWORD,
-            is_active=True,
+        create_tenant_user(
+            cls.STANDARD_USERNAME, cls.STANDARD_PASSWORD, cls.TENANT_NAME
         )
-
-        Tenant.objects.filter(name=cls.TENANT_NAME).first().add_user(cls.standard_user)
 
     @parameterized.expand(
         [

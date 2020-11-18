@@ -3,6 +3,14 @@
 """
 
 from tenant_users.permissions.models import UserTenantPermissions
+from alldaydj.tasks import (
+    bootstrap,
+    create_tenant,
+    create_user,
+    make_superuser,
+    join_user_tenancy,
+    set_tenant_user_permissions,
+)
 from alldaydj.tenants.models import Tenant
 from alldaydj.users.models import TenantUser
 from django.contrib.auth.models import Permission
@@ -14,11 +22,12 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from tenant_users.tenants.tasks import provision_tenant
 from tenant_users.tenants.utils import create_public_tenant
-from django_tenants.utils import get_public_schema_name
 from typing import List, Tuple
 
 
-def set_bearer_token(username: str, password: str, host: str, client: APIClient) -> None:
+def set_bearer_token(
+    username: str, password: str, host: str, client: APIClient
+) -> None:
     """Attempts to set the current bearer token for a given user.
 
     Args:
@@ -37,8 +46,20 @@ def set_bearer_token(username: str, password: str, host: str, client: APIClient)
         client.credentials(HTTP_AUTHORIZATION=f"Bearer {json_response['access']}")
 
 
+def create_public_tenant(username: str, password: str) -> None:
+    """
+    Creates the public tenancy.
+
+    Args:
+        username (str): The username to create it with.
+        password (str): The password to create it with.
+    """
+    bootstrap.apply(args=("public", username, password))
+
+
 def create_tenancy(
-    name: str, username: str, password: str, permissions: List[str]
+    name: str,
+    username: str,
 ) -> Tuple[str, Tenant]:
     """
     Creates a new tenancy for testing.
@@ -47,34 +68,30 @@ def create_tenancy(
         name (str): The name of the tenancy.
         username (str): The username (email) to user for the owner.
         password (str): The password to use for the owner.
-        permissions (List[str]): The list of permissions to give the user.
 
     Returns:
         str: The FQDN of the tenancy.
         Tenant: The tenancy we created.
     """
 
-    # We need a public tenant to start with
+    create_tenant.apply(args=(name, username))
 
-    public_fqdn = f"public.{environ.get('ADDJ_USERS_DOMAIN')}"
-    create_public_tenant(public_fqdn, username)
+    tenant = Tenant.objects.filter(name=name).first()
+    return (f"{name}.{environ.get('ADDJ_USERS_DOMAIN')}", tenant)
 
-    # Now create the specific tenant
 
-    tenant_fqdn = provision_tenant(name, name, username)
+def create_tenant_user(
+    username: str, password: str, tenancy: str, permissions: List[str] = []
+) -> None:
+    """Creates a user and assigns them to a tenancy.
 
-    # Assign permissions
+    Args:
+        username (str): The username for the new user.
+        password (str): The password for the new user.
+        tenancy (str): The tenancy to connect them to.
+        permissions (List[str]): The permissions to give the user.
+    """
 
-    tenancy = Tenant.objects.filter(name=name).first()
-    user = TenantUser.objects.filter(email=username).first()
-
-    with tenant_context(tenancy):
-        (user_permissions, _) = UserTenantPermissions.objects.get_or_create(profile=user)
-
-        for permission in permissions:
-            current_permission = Permission.objects.get(codename=permission)
-            user_permissions.user_permissions.add(current_permission)
-
-        user_permissions.save()
-
-    return tenant_fqdn, tenancy
+    create_user.apply(args=(username, password))
+    join_user_tenancy.apply(args=(username, tenancy))
+    set_tenant_user_permissions.apply(args=(username, tenancy, permissions))

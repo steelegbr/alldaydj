@@ -12,6 +12,7 @@ env:
   ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
   PYTHON_VER: 3.9
   ADDJ_USERS_DOMAIN: test.alldaydj.net
+  ADDJ_CELERY_ALWAYS_EAGER: "True"
 
 jobs:
   black-linter:

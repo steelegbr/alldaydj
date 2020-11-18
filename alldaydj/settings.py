@@ -34,6 +34,7 @@ SHARED_APPS = [
     "tenant_users.tenants",
     "rest_framework",
     "django_celery_results",
+    "colorfield",
 ]
 
 TENANT_APPS = [
@@ -42,6 +43,7 @@ TENANT_APPS = [
     "alldaydj",
     "rest_framework",
     "django_celery_results",
+    "colorfield",
 ]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]

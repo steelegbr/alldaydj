@@ -14,9 +14,11 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     artists = serializers.SlugRelatedField(
-        slug_field="name", queryset=Artist.objects.all()
+        slug_field="name", queryset=Artist.objects.all(), many=True
     )
-    tags = serializers.ListField()
+    tags = serializers.SlugRelatedField(
+        slug_field="tag", queryset=Tag.objects.all(), many=True
+    )
     type = serializers.SlugRelatedField(slug_field="name", queryset=Type.objects.all())
 
     class Meta:

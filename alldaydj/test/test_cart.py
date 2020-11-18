@@ -1,6 +1,6 @@
 from alldaydj.models import Artist, Cart, Tag, Type
 from alldaydj.tenants.models import Tenant
-from alldaydj.test.utils import get_bearer_token, create_tenancy
+from alldaydj.test.utils import set_bearer_token, create_tenancy
 from django.urls import reverse
 from django.conf import settings
 from django_tenants.utils import tenant_context
@@ -37,10 +37,11 @@ class CartTests(APITestCase):
             settings.ADDJ_DEFAULT_PERMISSIONS,
         )
         cls.fqdn = fqdn
+        cls.tenancy = tenancy
 
         # Create some test data
 
-        with tenant_context(tenancy):
+        with tenant_context(cls.tenancy):
             for i in range(3):
                 artist = Artist(name=f"Artist {i}")
                 tag = Tag(tag=f"Tag {i}")
@@ -54,9 +55,74 @@ class CartTests(APITestCase):
                 cls.tags.append(tag)
                 cls.types.append(type)
 
-    def test_retrieve_song(self):
+    @parameterized.expand(
+        [
+            (
+                "CART123",
+                "Test Title",
+                "Artist 1 & Artist 2",
+                ["Artist 1", "Artist 2"],
+                False,
+                1980,
+                "ISRC123",
+                "Composer 1",
+                "Publisher 1",
+                "Label 1 Ltd",
+                ["Tag 1", "Tag 2"],
+                "Type 1",
+            )
+        ]
+    )
+    def test_retrieve_song(
+        self,
+        label: str,
+        title: str,
+        display_artist: str,
+        artists: List[Artist],
+        sweeper: bool,
+        year: int,
+        isrc: str,
+        composer: str,
+        publisher: str,
+        record_label: str,
+        tags: List[Tag],
+        type: Type,
+    ):
         """
         Tere's we can successfully retrieve a song from the API.
         """
 
-        pass
+        # Arrange
+
+        with tenant_context(self.tenancy):
+            cart = Cart(
+                label=label,
+                title=title,
+                display_artist=display_artist,
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=sweeper,
+                year=year,
+                isrc=isrc,
+                composer=composer,
+                publisher=publisher,
+                record_label=record_label,
+                type=Type.objects.get(name=type),
+            )
+            cart.artists.set([Artist.objects.get(name=artist) for artist in artists])
+            cart.tags.set([Tag.objects.get(tag=tag) for tag in tags])
+            cart.save()
+
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        url = reverse("cart-detail", kwargs={"pk": cart.id})
+
+        # Act
+
+        response = self.client.get(url, **{"HTTP_HOST": self.fqdn})
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

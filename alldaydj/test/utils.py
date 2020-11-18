@@ -18,17 +18,14 @@ from django_tenants.utils import get_public_schema_name
 from typing import List, Tuple
 
 
-def get_bearer_token(username: str, password: str, host: str, client: APIClient) -> str:
-    """Obtains a current bearer token for a given user.
+def set_bearer_token(username: str, password: str, host: str, client: APIClient) -> None:
+    """Attempts to set the current bearer token for a given user.
 
     Args:
         username (str): The user to log in as.
         password (str): Their password.
         host (str): The hostname to make the request for.
         client (APIClient): The test client to use for login.
-
-    Returns:
-        str: The bearer token (if we can get it).
     """
 
     url = reverse("token_obtain_pair")
@@ -37,9 +34,7 @@ def get_bearer_token(username: str, password: str, host: str, client: APIClient)
 
     if response.status_code == status.HTTP_200_OK:
         json_response = json.loads(response.content)
-        return json_response["access"]
-    else:
-        pass
+        client.credentials(HTTP_AUTHORIZATION=f"Bearer {json_response['access']}")
 
 
 def create_tenancy(

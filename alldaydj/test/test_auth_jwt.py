@@ -1,6 +1,6 @@
 from alldaydj.users.models import TenantUser
 from alldaydj.tenants.models import Tenant
-from alldaydj.test.utils import get_bearer_token
+from alldaydj.test.utils import set_bearer_token
 from django.urls import reverse
 import json
 from os import environ
@@ -157,9 +157,8 @@ class JwtAuthTests(APITestCase):
 
         # Arrange
 
-        token = get_bearer_token(username, password, self.PUBLIC_FQDN, self.client)
+        set_bearer_token(username, password, self.PUBLIC_FQDN, self.client)
         url = reverse("tenancies")
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
         # Act
 

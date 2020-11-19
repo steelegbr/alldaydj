@@ -67,8 +67,7 @@ def create_user(email: str, password: str) -> str:
         password (str): The password.
     """
 
-    user = TenantUser.objects.create_user(email=email, password=password)
-
+    TenantUser.objects.create_user(email=email, password=password)
     return f"Successfully created the {email} user."
 
 

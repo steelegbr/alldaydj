@@ -5,7 +5,6 @@
 from alldaydj.tasks import create_user
 from django.core.management.base import BaseCommand, CommandError, CommandParser
 from email.utils import parseaddr
-import re
 from typing import Any, Optional
 
 

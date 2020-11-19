@@ -5,7 +5,6 @@
 from alldaydj.tenants.serializers import TenantSerializer
 from alldaydj.tenants.models import Tenant
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 

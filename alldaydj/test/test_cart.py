@@ -3,11 +3,9 @@ from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
     create_tenancy,
-    create_public_tenant,
     create_tenant_user,
 )
 from django.urls import reverse
-from django.conf import settings
 from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized

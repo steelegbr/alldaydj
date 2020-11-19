@@ -2,7 +2,6 @@
     Test utility functions.
 """
 
-from tenant_users.permissions.models import UserTenantPermissions
 from alldaydj.tasks import (
     bootstrap,
     create_tenant,

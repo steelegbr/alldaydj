@@ -5,8 +5,6 @@
 from alldaydj.tenants.models import Tenant
 from alldaydj.users.models import TenantUser
 from alldaydj.test.utils import create_public_tenant
-from django.urls import reverse
-from django.conf import settings
 from rest_framework.test import APITestCase
 from typing import List
 

@@ -7,7 +7,6 @@ from alldaydj.test.utils import (
     create_tenant_user,
 )
 from django.urls import reverse
-from django.conf import settings
 from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized

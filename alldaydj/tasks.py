@@ -67,8 +67,7 @@ def create_user(email: str, password: str) -> str:
         password (str): The password.
     """
 
-    user = TenantUser.objects.create_user(email=email, password=password)
-
+    TenantUser.objects.create_user(email=email, password=password)
     return f"Successfully created the {email} user."
 
 
@@ -128,15 +127,13 @@ def make_superuser(email: str, tenant_name: str, staff: bool, superuser: bool) -
 
         return f"Successfully applied permissions for {user} on the {tenant} tenancy."
 
-    else:
+    # Every tenancy
 
-        # Every tenancy
+    tenants = Tenant.objects.all()
+    for tenant in tenants:
+        __set_tenant_permissions(user, tenant, staff, superuser)
 
-        tenants = Tenant.objects.all()
-        for tenant in tenants:
-            __set_tenant_permissions(user, tenant, staff, superuser)
-
-        return f"Successfully applied permissions for {user} on all tenancies."
+    return f"Successfully applied permissions for {user} on all tenancies."
 
 
 @shared_task

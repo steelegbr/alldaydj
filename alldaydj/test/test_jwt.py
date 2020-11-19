@@ -11,7 +11,6 @@ from os import environ
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-from tenant_users.tenants.tasks import provision_tenant
 from typing import List
 
 

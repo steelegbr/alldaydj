@@ -4,3 +4,4 @@ addjvenv/
 set_params_dev.sh
 .DS_Store
 .coverage
+coverage.xml

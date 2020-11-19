@@ -166,6 +166,7 @@ TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 NOSE_ARGS = [
     "--with-coverage",
     "--cover-package=alldaydj",
+    "--cover-xml",
 ]
 
 # AllDay DJ

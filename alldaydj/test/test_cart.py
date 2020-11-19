@@ -1,5 +1,5 @@
 from alldaydj.models import Artist, Cart, Tag, Type
-from alldaydj.tenants.models import Tenant
+from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
     create_tenancy,
@@ -25,7 +25,7 @@ class CartTests(APITestCase):
     ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "cart@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "test"
+    TENANCY_NAME = "cart"
 
     artists: List[Artist] = []
     tags: List[Tag] = []
@@ -38,14 +38,14 @@ class CartTests(APITestCase):
 
         # Create the tenancy
 
-        create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
-        (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
-        cls.fqdn = fqdn
-        cls.tenancy = tenancy
+        with tenant_context(SetupTests.PUBLIC_TENANT):
+            (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
+            cls.fqdn = fqdn
+            cls.tenancy = tenancy
 
-        # Create our test user
+            # Create our test user
 
-        create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
 
         # Create some test data
 
@@ -276,3 +276,268 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["record_label"], record_label)
         self.assertEqual(json_response["tags"], tags)
         self.assertEqual(json_response["type"], type)
+
+    def test_update_cart(self):
+        """
+        Tests we can update a cart through a PUT command.
+        """
+
+        # Arrange
+
+        with tenant_context(self.tenancy):
+            cart = Cart(
+                label="CART5",
+                title="More Audio Variety",
+                display_artist="Artist 1",
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=False,
+                year=800,
+                isrc="ABC123",
+                composer="Some Person",
+                publisher="Evil Bandits",
+                record_label="Money Makers",
+                type=Type.objects.get(name="Type 1"),
+            )
+            cart.artists.set([Artist.objects.get(name="Artist 1")])
+            cart.tags.set([Tag.objects.get(tag="Tag 1")])
+            cart.save()
+
+        cart_request = {
+            "label": "CART6",
+            "title": "Updated Audio",
+            "display_artist": "Artist 1 & Friends",
+            "artists": ["Artist 1"],
+            "cue_audio_start": 0,
+            "cue_audio_end": 233040,
+            "cue_intro_start": 0,
+            "cue_intro_end": 29350,
+            "cue_segue": 22606,
+            "sweeper": True,
+            "year": 1999,
+            "tags": ["Tag 2"],
+            "type": ["Type 2"],
+            "isrc": "DEF456",
+            "composer": "Tone Deaf",
+            "publisher": "Pontificating Publishers",
+            "record_label": "Dolla Dolla Bill Y'all",
+        }
+
+        url = reverse("cart-detail", kwargs={"pk": cart.id})
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+
+        # Act
+
+        response = self.client.put(url, cart_request, **{"HTTP_HOST": self.fqdn})
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        json_response = json.loads(response.content)
+
+        self.assertIsNotNone(json_response["id"])
+        self.assertEqual(json_response["label"], "CART6")
+        self.assertEqual(json_response["title"], "Updated Audio")
+        self.assertEqual(json_response["display_artist"], "Artist 1 & Friends")
+        self.assertEqual(json_response["artists"], ["Artist 1"])
+        self.assertEqual(json_response["cue_audio_start"], 0)
+        self.assertEqual(json_response["cue_audio_end"], 233040)
+        self.assertEqual(json_response["cue_intro_start"], 0)
+        self.assertEqual(json_response["cue_intro_end"], 29350)
+        self.assertEqual(json_response["cue_segue"], 22606)
+        self.assertEqual(json_response["sweeper"], True)
+        self.assertEqual(json_response["year"], 1999)
+        self.assertEqual(json_response["isrc"], "DEF456")
+        self.assertEqual(json_response["composer"], "Tone Deaf")
+        self.assertEqual(json_response["publisher"], "Pontificating Publishers")
+        self.assertEqual(json_response["record_label"], "Dolla Dolla Bill Y'all")
+        self.assertEqual(json_response["tags"], ["Tag 2"])
+        self.assertEqual(json_response["type"], "Type 2")
+
+    def test_delete_cart(self):
+        """
+        Tests we can delete a cart.
+        """
+
+        # Arrange
+
+        with tenant_context(self.tenancy):
+            cart = Cart(
+                label="CART7",
+                title="More Audio Variety",
+                display_artist="Artist 1",
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=False,
+                year=800,
+                isrc="ABC123",
+                composer="Some Person",
+                publisher="Evil Bandits",
+                record_label="Money Makers",
+                type=Type.objects.get(name="Type 1"),
+            )
+            cart.artists.set([Artist.objects.get(name="Artist 1")])
+            cart.tags.set([Tag.objects.get(tag="Tag 1")])
+            cart.save()
+
+        url = reverse("cart-detail", kwargs={"pk": cart.id})
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+
+        # Act
+
+        response = self.client.delete(url, **{"HTTP_HOST": self.fqdn})
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_fail_rename_collision(self):
+        """
+        Tests we can't re-name a cart to collide.
+        """
+
+        with tenant_context(self.tenancy):
+            existing_cart = Cart(
+                label="CART8",
+                title="Cart 8 for Collision",
+                display_artist="Artist 1",
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=False,
+                year=800,
+                isrc="ABC123",
+                composer="Some Person",
+                publisher="Evil Bandits",
+                record_label="Money Makers",
+                type=Type.objects.get(name="Type 1"),
+            )
+            existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
+            existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
+            existing_cart.save()
+
+            cart = Cart(
+                label="CART9",
+                title="Cart 9 for Collision",
+                display_artist="Artist 1",
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=False,
+                year=800,
+                isrc="ABC123",
+                composer="Some Person",
+                publisher="Evil Bandits",
+                record_label="Money Makers",
+                type=Type.objects.get(name="Type 1"),
+            )
+            cart.artists.set([Artist.objects.get(name="Artist 1")])
+            cart.tags.set([Tag.objects.get(tag="Tag 1")])
+            cart.save()
+
+        cart_request = {
+            "label": "cart8",
+            "title": "Attempt to overwrite!",
+            "display_artist": "Artist 1 & Friends",
+            "artists": ["Artist 1"],
+            "cue_audio_start": 0,
+            "cue_audio_end": 233040,
+            "cue_intro_start": 0,
+            "cue_intro_end": 29350,
+            "cue_segue": 22606,
+            "sweeper": True,
+            "year": 1999,
+            "tags": ["Tag 2"],
+            "type": ["Type 2"],
+            "isrc": "DEF456",
+            "composer": "Tone Deaf",
+            "publisher": "Pontificating Publishers",
+            "record_label": "Dolla Dolla Bill Y'all",
+        }
+
+        url = reverse("cart-detail", kwargs={"pk": cart.id})
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+
+        # Act
+
+        response = self.client.put(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response_json = json.loads(response.content)
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response_json["label"], ["cart with this label already exists."]
+        )
+
+    def test_fail_name_collision(self):
+        """
+        Tests we can't create a new cart to collide.
+        """
+
+        with tenant_context(self.tenancy):
+            existing_cart = Cart(
+                label="CART10",
+                title="Cart 8 for Collision",
+                display_artist="Artist 1",
+                cue_audio_start=0,
+                cue_audio_end=233040,
+                cue_intro_start=0,
+                cue_intro_end=29350,
+                cue_segue=22606,
+                sweeper=False,
+                year=800,
+                isrc="ABC123",
+                composer="Some Person",
+                publisher="Evil Bandits",
+                record_label="Money Makers",
+                type=Type.objects.get(name="Type 1"),
+            )
+            existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
+            existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
+            existing_cart.save()
+
+        cart_request = {
+            "label": "cart10",
+            "title": "Attempt to overwrite!",
+            "display_artist": "Artist 1 & Friends",
+            "artists": ["Artist 1"],
+            "cue_audio_start": 0,
+            "cue_audio_end": 233040,
+            "cue_intro_start": 0,
+            "cue_intro_end": 29350,
+            "cue_segue": 22606,
+            "sweeper": True,
+            "year": 1999,
+            "tags": ["Tag 2"],
+            "type": ["Type 2"],
+            "isrc": "DEF456",
+            "composer": "Tone Deaf",
+            "publisher": "Pontificating Publishers",
+            "record_label": "Dolla Dolla Bill Y'all",
+        }
+
+        url = reverse("cart-list")
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+
+        # Act
+
+        response = self.client.post(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response_json = json.loads(response.content)
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response_json["label"], ["cart with this label already exists."]
+        )

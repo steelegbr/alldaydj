@@ -9,7 +9,10 @@ from alldaydj.models import Artist, Cart, Tag, Type
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        fields = ("name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -48,10 +51,13 @@ class CartSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ("tag",)
+        fields = (
+            "id",
+            "tag",
+        )
 
 
 class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
-        fields = ("name", "colour", "now_playing")
+        fields = ("id", "name", "colour", "now_playing")

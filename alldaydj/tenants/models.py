@@ -15,6 +15,9 @@ class Tenant(TenantBase):
     name = models.TextField()
     auto_create_schema = True
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Domain(DomainMixin):
     """

@@ -5,12 +5,14 @@
 from alldaydj.users.models import TenantUser
 from alldaydj.tenants.models import Tenant
 from celery import shared_task
+from django.conf import settings
+from django.contrib.auth.models import Permission
 from django_tenants.utils import tenant_context
 from os import environ
 from tenant_users.tenants.tasks import provision_tenant
 from tenant_users.tenants.utils import create_public_tenant
-from tenant_users.tenants.models import UserTenantPermissions
-from typing import Any
+from tenant_users.tenants.models import ExistsError, UserTenantPermissions
+from typing import Any, List
 
 
 @shared_task
@@ -30,9 +32,13 @@ def bootstrap(
         f"{public_tenancy_name}.{environ.get('ADDJ_USERS_DOMAIN')}", admin_username
     )
 
-    admin_user = TenantUser.objects.filter(email=admin_username)[0]
+    admin_user = TenantUser.objects.filter(email=admin_username).first()
     admin_user.set_password(admin_password)
     admin_user.save()
+
+    # Continue into making the user a god
+
+    make_superuser.apply_async(args=(admin_username, "Public Tenant", True, True))
 
     return f"Successfully bootstrapped the {public_tenancy_name} public tenancy with {admin_username}."
 
@@ -48,6 +54,7 @@ def create_tenant(tenant_name: str, username: str) -> str:
     """
 
     provision_tenant(tenant_name, tenant_name, username)
+    make_superuser.apply_async(args=(username, tenant_name, True, True))
     return f"Successfully created the {tenant_name} tenancy."
 
 
@@ -77,9 +84,17 @@ def __set_tenant_permissions(
         staff (bool): Indicates if the user should be staff.
     """
     with tenant_context(tenant):
-        UserTenantPermissions.objects.get_or_create(
-            profile=user, is_staff=staff, is_superuser=superuser
-        )
+
+        permission = UserTenantPermissions.objects.get(profile=user)
+
+        if permission:
+            permission.is_staff = staff
+            permission.is_superuser = superuser
+            permission.save()
+        else:
+            UserTenantPermissions.objects.get_or_create(
+                profile=user, is_staff=staff, is_superuser=superuser
+            )
 
 
 @shared_task
@@ -122,3 +137,83 @@ def make_superuser(email: str, tenant_name: str, staff: bool, superuser: bool) -
             __set_tenant_permissions(user, tenant, staff, superuser)
 
         return f"Successfully applied permissions for {user} on all tenancies."
+
+
+@shared_task
+def set_tenant_user_permissions(
+    username: str, tenancy: str, permissions: List[str]
+) -> str:
+    """
+    Sets the permissions for a given user in a specified tenancy.
+
+    Args:
+        username (str): The username to set the permissions for.
+        tenancy (str): The tenancy to set the permissions on.
+        permissions (List[str]): The permissions to set.
+    """
+
+    # Find the user
+
+    user = TenantUser.objects.filter(email=username).first()
+    if not user:
+        raise ValueError(f"Failed to find user {username}.")
+
+    # Find the tenancy
+
+    tenant = Tenant.objects.filter(name=tenancy).first()
+    if not tenant:
+        raise ValueError(f"Failed to find the {tenancy} tenancy.")
+
+    # Apply the permissions
+
+    with tenant_context(tenant):
+        (user_permissions, _) = UserTenantPermissions.objects.get_or_create(
+            profile=user
+        )
+
+        for permission in permissions:
+            current_permission = Permission.objects.get(codename=permission)
+            user_permissions.user_permissions.add(current_permission)
+
+        user_permissions.save()
+
+    return f"Successfully updated permissions for {username} in {tenancy}."
+
+
+@shared_task
+def join_user_tenancy(username: str, tenancy: str) -> str:
+    """
+    Joins a specific user to a tenancy with default permissions.
+
+    Args:
+        username (str): The user to join.
+        tenancy (str): The name of the tenancy.
+    """
+
+    # Find the user
+
+    user = TenantUser.objects.filter(email=username).first()
+    if not user:
+        raise ValueError(f"Failed to find user {username}.")
+
+    # Find the tenancy
+
+    tenant = Tenant.objects.filter(name=tenancy).first()
+    if not tenant:
+        raise ValueError(f"Failed to find the {tenancy} tenancy.")
+
+    # Make the magic happen
+
+    try:
+        tenant.add_user(user)
+    except ExistsError:
+        # Silently ignore if it's already done
+        pass
+
+    # Set the default permissions
+
+    set_tenant_user_permissions.apply_async(
+        args=(username, tenancy, settings.ADDJ_DEFAULT_PERMISSIONS)
+    )
+
+    return f"Successfully added {username} to the {tenancy} tenancy."

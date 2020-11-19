@@ -34,6 +34,8 @@ SHARED_APPS = [
     "tenant_users.tenants",
     "rest_framework",
     "django_celery_results",
+    "colorfield",
+    "django_nose",
 ]
 
 TENANT_APPS = [
@@ -42,6 +44,7 @@ TENANT_APPS = [
     "alldaydj",
     "rest_framework",
     "django_celery_results",
+    "colorfield",
 ]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
@@ -155,3 +158,33 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_TIMEZONE = environ.get("ADDJ_TIMEZONE", "UTC")
 CELERY_TASK_TRACK_STARTED = True
 CELERY_BROKER = f"pyamqp://{environ.get('ADDJ_RABBIT_USER', 'guest')}:{environ.get('ADDJ_RABBIT_PASS', '')}@{environ.get('ADDJ_RABBIT_HOST', 'localhost')}:{environ.get('ADDJ_RABBIT_PORT', 5672)}/"
+CELERY_ALWAYS_EAGER = strtobool(environ.get("ADDJ_CELERY_ALWAYS_EAGER", "False"))
+
+# Nose
+
+TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
+NOSE_ARGS = [
+    "--with-coverage",
+    "--cover-package=alldaydj",
+]
+
+# AllDay DJ
+
+ADDJ_DEFAULT_PERMISSIONS = [
+    "add_artist",
+    "change_artist",
+    "delete_artist",
+    "view_artist",
+    "add_cart",
+    "change_cart",
+    "delete_cart",
+    "view_cart",
+    "add_tag",
+    "change_tag",
+    "delete_tag",
+    "view_tag",
+    "add_type",
+    "change_type",
+    "delete_type",
+    "view_type",
+]

@@ -1,5 +1,5 @@
 """
-    Serializers for AllDay DJ.
+    Serializers for AllDay DJ Tenants.
 """
 
 from rest_framework import serializers

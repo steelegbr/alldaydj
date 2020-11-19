@@ -2,3 +2,5 @@
 addjvenv/
 .vscode/
 set_params_dev.sh
+.DS_Store
+.coverage

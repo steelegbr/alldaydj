@@ -1,13 +1,16 @@
-from alldaydj.users.models import TenantUser
-from alldaydj.tenants.models import Tenant
-from alldaydj.test.utils import get_bearer_token
+from alldaydj.test.test_0000_init_tenancies import SetupTests
+from alldaydj.test.utils import (
+    create_tenancy,
+    create_tenant_user,
+    set_bearer_token,
+)
 from django.urls import reverse
+from django_tenants.utils import tenant_context
 import json
 from os import environ
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.tasks import provision_tenant
 from typing import List
 
@@ -19,12 +22,10 @@ class JwtAuthTests(APITestCase):
 
     STANDARD_USERNAME = "standard@example.com"
     STANDARD_PASSWORD = "$up3rS3cur3"
-    ADMIN_USERNAME = "admin@example.com"
-    ADMIN_PASSWORD = "1337h@x0r"
     TENANT_NAME = "test"
     OTHER_TENANT_NAME = "other"
     PUBLIC_TENANT_NAME = "public"
-    PUBLIC_FQDN = environ.get("ADDJ_USERS_DOMAIN")
+    PUBLIC_FQDN = f"public.{environ.get('ADDJ_USERS_DOMAIN')}"
     TENANT_FQDN = f"{TENANT_NAME}.{environ.get('ADDJ_USERS_DOMAIN')}"
 
     @classmethod
@@ -32,39 +33,26 @@ class JwtAuthTests(APITestCase):
 
         super(JwtAuthTests, cls).setUpClass()
 
-        # Order is important here
-        # First create the tenancies
+        # Create the tenancies we need
 
-        create_public_tenant(cls.PUBLIC_FQDN, cls.ADMIN_USERNAME)
+        with tenant_context(SetupTests.PUBLIC_TENANT):
+            (cls.standard_fqdn, _) = create_tenancy(
+                cls.TENANT_NAME, SetupTests.ADMIN_USERNAME
+            )
+            (cls.other_fqdn, _) = create_tenancy(
+                cls.OTHER_TENANT_NAME, SetupTests.ADMIN_USERNAME
+            )
 
-        cls.standard_fqdn = provision_tenant(
-            cls.TENANT_NAME, cls.TENANT_NAME, cls.ADMIN_USERNAME
-        )
+            # And also a standard user
 
-        cls.other_fqdn = provision_tenant(
-            cls.OTHER_TENANT_NAME, cls.OTHER_TENANT_NAME, cls.ADMIN_USERNAME
-        )
-
-        # We update the dyanmically create admin user
-
-        cls.admin_user = TenantUser.objects.filter(email=cls.ADMIN_USERNAME).first()
-        cls.admin_user.set_password(cls.ADMIN_PASSWORD)
-        cls.admin_user.save()
-
-        # And finally a standard user
-
-        cls.standard_user = TenantUser.objects.create_user(
-            email=cls.STANDARD_USERNAME,
-            password=cls.STANDARD_PASSWORD,
-            is_active=True,
-        )
-
-        Tenant.objects.filter(name=cls.TENANT_NAME).first().add_user(cls.standard_user)
+            create_tenant_user(
+                cls.STANDARD_USERNAME, cls.STANDARD_PASSWORD, cls.TENANT_NAME
+            )
 
     @parameterized.expand(
         [
             (STANDARD_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
-            (ADMIN_USERNAME, ADMIN_PASSWORD, TENANT_NAME),
+            (SetupTests.ADMIN_USERNAME, SetupTests.ADMIN_PASSWORD, TENANT_NAME),
         ]
     )
     def test_can_authenticate(self, username: str, password: str, tenant_name: str):
@@ -105,8 +93,8 @@ class JwtAuthTests(APITestCase):
     @parameterized.expand(
         [
             ("bad@example.com", "credsgohere", TENANT_NAME),
-            (STANDARD_USERNAME, ADMIN_PASSWORD, TENANT_NAME),
-            (ADMIN_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
+            (STANDARD_USERNAME, SetupTests.ADMIN_PASSWORD, TENANT_NAME),
+            (SetupTests.ADMIN_USERNAME, STANDARD_PASSWORD, TENANT_NAME),
         ]
     )
     def test_bad_creds(self, username: str, password: str, tenant_name: str):
@@ -140,7 +128,7 @@ class JwtAuthTests(APITestCase):
     @parameterized.expand(
         [
             (STANDARD_USERNAME, STANDARD_PASSWORD, ["test"]),
-            (ADMIN_USERNAME, ADMIN_PASSWORD, ["test", "other"]),
+            (SetupTests.ADMIN_USERNAME, SetupTests.ADMIN_PASSWORD, ["test", "other"]),
         ]
     )
     def test_get_tenancy_list(
@@ -157,9 +145,8 @@ class JwtAuthTests(APITestCase):
 
         # Arrange
 
-        token = get_bearer_token(username, password, self.PUBLIC_FQDN, self.client)
+        set_bearer_token(username, password, self.PUBLIC_FQDN, self.client)
         url = reverse("tenancies")
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
         # Act
 

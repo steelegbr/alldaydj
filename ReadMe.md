@@ -48,6 +48,7 @@ need the following variables.
  - ADDJ_RABBIT_PORT - The port RabbitMQ is running on. Defaults to 5672.
  - ADDJ_RABBIT_USER - The username to log into RabbitMQ with. Defaults to "guest".
  - ADDJ_RABBIT_PASS - The password to log into RabbitMQ with. Defaults to "".
+ - ADDJ_CELERY_ALWAYS_EAGER - Indicates if Celery should run immediately (test environment).
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
@@ -76,7 +77,8 @@ This creates a user with your username but no password.
 Due to the use of django-tenants for schema level segregation, we need to handle migrations with the following command:
 
     python manage.py makemigrations
-    python manage.py migrate_schemas --shared
+    python manage.py makemigrations alldaydj
+    python manage.py migrate_schemas
 
 ## Rabbit... Rabbit, Rabbit, Rabbit!
 
@@ -89,4 +91,4 @@ RabbitMQ is required to make the Celery magic work. On macOS you can use homebre
 
 Celery is used for async tasks. You need to have the running going for it to do anything. ;)
 
-    celery -A proj alldaydj worker -l INFO
+    celery -A alldaydj worker -l INFO

@@ -17,8 +17,6 @@ import json
 from os import environ
 from rest_framework import status
 from rest_framework.test import APIClient
-from tenant_users.tenants.tasks import provision_tenant
-from tenant_users.tenants.utils import create_public_tenant
 from typing import List, Tuple
 
 
@@ -78,7 +76,7 @@ def create_tenancy(
 
 
 def create_tenant_user(
-    username: str, password: str, tenancy: str, permissions: List[str] = []
+    username: str, password: str, tenancy: str, permissions: List[str] = None
 ) -> None:
     """Creates a user and assigns them to a tenancy.
 

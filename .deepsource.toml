@@ -1,7 +1,5 @@
 version = 1
 
-test_patterns = ["*/test/**"]
-
 [[analyzers]]
 name = "python"
 enabled = true
@@ -10,5 +8,5 @@ enabled = true
   runtime_version = "3.x.x"
 
 [[analyzers]]
-name = "python"
+name = "test-coverage"
 enabled = true

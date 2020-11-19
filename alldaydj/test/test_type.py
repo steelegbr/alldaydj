@@ -58,11 +58,11 @@ class TypeTests(APITestCase):
         # Arrange
 
         with tenant_context(self.tenancy):
-            type = Type(name=name, colour=colour, now_playing=now_playing)
-            type.save()
+            cart_type = Type(name=name, colour=colour, now_playing=now_playing)
+            cart_type.save()
 
         set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
-        url = reverse("type-detail", kwargs={"pk": type.id})
+        url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
@@ -127,13 +127,13 @@ class TypeTests(APITestCase):
         # Arrange
 
         with tenant_context(self.tenancy):
-            type = Type(name=original_name, colour=colour, now_playing=now_playing)
-            type.save()
+            cart_type = Type(name=original_name, colour=colour, now_playing=now_playing)
+            cart_type.save()
 
         type_request = {"name": new_name, "colour": colour, "now_playing": now_playing}
 
         set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
-        url = reverse("type-detail", kwargs={"pk": type.id})
+        url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
@@ -144,7 +144,7 @@ class TypeTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json_response = json.loads(response.content)
 
-        self.assertEqual(json_response["id"], str(type.id))
+        self.assertEqual(json_response["id"], str(cart_type.id))
         self.assertEqual(json_response["name"], new_name)
         self.assertEqual(json_response["colour"], colour)
         self.assertEqual(json_response["now_playing"], now_playing)
@@ -157,11 +157,11 @@ class TypeTests(APITestCase):
         # Arrange
 
         with tenant_context(self.tenancy):
-            type = Type(name="Type to Delete", colour="#C0C0C0", now_playing=False)
-            type.save()
+            cart_type = Type(name="Type to Delete", colour="#C0C0C0", now_playing=False)
+            cart_type.save()
 
         set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
-        url = reverse("type-detail", kwargs={"pk": type.id})
+        url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
@@ -179,8 +179,10 @@ class TypeTests(APITestCase):
         # Arrange
 
         with tenant_context(self.tenancy):
-            type = Type(name="Colliding Type 1", colour="#C0C0C0", now_playing=False)
-            type.save()
+            cart_type = Type(
+                name="Colliding Type 1", colour="#C0C0C0", now_playing=False
+            )
+            cart_type.save()
             colliding_type = Type(
                 name="Colliding Type 2", colour="#C0C0C0", now_playing=False
             )
@@ -212,8 +214,10 @@ class TypeTests(APITestCase):
         # Arrange
 
         with tenant_context(self.tenancy):
-            type = Type(name="Colliding Type 1", colour="#C0C0C0", now_playing=False)
-            type.save()
+            cart_type = Type(
+                name="Colliding Type 1", colour="#C0C0C0", now_playing=False
+            )
+            cart_type.save()
 
         type_request = {
             "name": "Colliding Type 1",

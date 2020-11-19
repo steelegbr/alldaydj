@@ -51,15 +51,15 @@ class CartTests(APITestCase):
             for i in range(4):
                 artist = Artist(name=f"Artist {i}")
                 tag = Tag(tag=f"Tag {i}")
-                type = Type(name=f"Type {i}")
+                cart_type = Type(name=f"Type {i}")
 
                 artist.save()
                 tag.save()
-                type.save()
+                cart_type.save()
 
                 cls.artists.append(artist)
                 cls.tags.append(tag)
-                cls.types.append(type)
+                cls.types.append(cart_type)
 
     @parameterized.expand(
         [
@@ -106,7 +106,7 @@ class CartTests(APITestCase):
         publisher: str,
         record_label: str,
         tags: List[Tag],
-        type: Type,
+        cart_type: Type,
     ):
         """
         Tere's we can successfully retrieve a song from the API.
@@ -130,7 +130,7 @@ class CartTests(APITestCase):
                 composer=composer,
                 publisher=publisher,
                 record_label=record_label,
-                type=Type.objects.get(name=type),
+                type=Type.objects.get(name=cart_type),
             )
             cart.artists.set([Artist.objects.get(name=artist) for artist in artists])
             cart.tags.set([Tag.objects.get(tag=tag) for tag in tags])
@@ -164,7 +164,7 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["publisher"], publisher)
         self.assertEqual(json_response["record_label"], record_label)
         self.assertEqual(json_response["tags"], tags)
-        self.assertEqual(json_response["type"], type)
+        self.assertEqual(json_response["type"], cart_type)
 
     @parameterized.expand(
         [
@@ -211,7 +211,7 @@ class CartTests(APITestCase):
         publisher: str,
         record_label: str,
         tags: List[Tag],
-        type: Type,
+        cart_type: Type,
     ):
         """
         Tests we can successfully post a new cart to the API.
@@ -232,7 +232,7 @@ class CartTests(APITestCase):
             "sweeper": sweeper,
             "year": year,
             "tags": tags,
-            "type": type,
+            "type": cart_type,
         }
 
         if isrc:
@@ -273,7 +273,7 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["publisher"], publisher)
         self.assertEqual(json_response["record_label"], record_label)
         self.assertEqual(json_response["tags"], tags)
-        self.assertEqual(json_response["type"], type)
+        self.assertEqual(json_response["type"], cart_type)
 
     def test_update_cart(self):
         """

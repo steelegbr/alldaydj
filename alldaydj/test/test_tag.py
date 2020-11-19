@@ -144,7 +144,7 @@ class TagTests(APITestCase):
 
     def test_delete_tag(self):
         """
-        Tests we can delete an tag.
+        Tests we can delete a tag.
         """
 
         # Arrange

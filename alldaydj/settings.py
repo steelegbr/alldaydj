@@ -167,7 +167,7 @@ NOSE_ARGS = [
     "--with-coverage",
     "--cover-package=alldaydj",
     "--cover-xml",
-    "--verbosity=2"
+    "--verbosity=2",
 ]
 
 # File Storage

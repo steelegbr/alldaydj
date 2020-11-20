@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('alldaydj', '0003_audiouploadjob'),
+        ("alldaydj", "0003_audiouploadjob"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='audiouploadjob',
-            name='error',
+            model_name="audiouploadjob",
+            name="error",
             field=models.TextField(null=True),
         ),
     ]

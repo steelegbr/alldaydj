@@ -5,7 +5,14 @@
 from alldaydj.models import AudioUploadJob
 from alldaydj.users.models import TenantUser
 from alldaydj.tenants.models import Tenant
+from alldaydj.audio import (
+    FileStage,
+    WaveCompression,
+    get_wave_compression,
+    generate_file_name,
+)
 from celery import shared_task
+from chunk import Chunk
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.storage import default_storage
@@ -251,6 +258,47 @@ def _get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJ
     return (tenant, job)
 
 
+def _set_job_error(job: AudioUploadJob, error: str) -> str:
+    """
+    Sets the error on the audio upload job.
+
+    Args:
+        job (AudioUploadJob): The job to set the error on.
+        error (str): The error message.
+    """
+
+    job.status = AudioUploadJob.AudioUploadStatus.ERROR
+    job.error = error
+    job.save()
+    return error
+
+
+def _move_audio_file(src: str, dst: str):
+    """
+    Moves an audio file in the django file store.
+
+    Args:
+        src (str): The source file name.
+        dst (str): The destination file name.
+    """
+
+    # Check the source exists
+
+    if not default_storage.exists(src):
+        raise ValueError(f"{src} is not a valid source file name.")
+
+    # Copy the contents
+
+    with default_storage.open(src, "rb") as src_file:
+        contents = src_file.read()
+
+    default_storage.save(dst, contents)
+
+    # Delete the source file
+
+    default_storage.delete(src)
+
+
 @shared_task
 def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     """
@@ -265,18 +313,31 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     """
 
     (tenant, job) = _get_upload_job(job_id, tenant_name)
+    job.status = AudioUploadJob.AudioUploadStatus.VALIDATING
+    job.save()
 
     # Open the file and check the type
 
-    inbound_file_name = f"queued/{tenant.name}_{job.id}_{job.cart.id}"
-    inbound_file = default_storage.open(inbound_file_name, "rb")
-    mime = magic.from_buffer(inbound_file.read(1024), mime=True)
+    inbound_file_name = generate_file_name(job, tenant, FileStage.QUEUED)
+    uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+
+    with default_storage.open(inbound_file_name, "rb") as inbound_file:
+        mime = magic.from_buffer(inbound_file.read(1024), mime=True)
+        inbound_file.seek(0)
 
     if mime == "audio/wav":
 
         # WAVE files - need to check if it's compressed
 
-        pass
+        with default_storage.open(inbound_file_name, "rb") as inbound_file:
+            compression = get_wave_compression(inbound_file)
+
+        if compression == WaveCompression.COMPRESSED:
+            pass
+        elif compression == WaveCompression.UNCOMPRESSED:
+            _move_audio_file(inbound_file_name, uncompressed_file_name)
+        elif compression == WaveCompression.INVALID:
+            return _set_job_error(job, "Failed to find the format chunk.")
 
     elif mime in settings.ADDJ_COMPRESSED_MIME_TYPES:
 
@@ -287,15 +348,18 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     else:
 
         # Invalid format
-        # Note the error in the job
-
-        error = f"{mime} is not a valid audio file MIME type."
-        job.status = AudioUploadJob.AudioUploadStatus.ERROR
-        job.error = error
-        job.save()
-
-        # Delete the audio file
+        # Delete the file and note the error in the job
 
         default_storage.delete(inbound_file_name)
+        return _set_job_error(job, f"{mime} is not a valid audio file MIME type.")
 
-        return error
+
+@shared_task
+def extract_audio_metadata(job_id: str, tenant: str):
+    """
+    Attempts to extract metadata from an uncompressed audio file.
+
+    Args:
+        job_id (str): The job to perform this task for.
+        tenant (str): The tenant to perform this task for.
+    """

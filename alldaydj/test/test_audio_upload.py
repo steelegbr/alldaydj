@@ -1,4 +1,4 @@
-from parameterized.parameterized import parameterized_class
+from alldaydj.audio import FileStage, generate_file_name
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 from alldaydj.tasks import validate_audio_upload
 from alldaydj.test.test_0000_init_tenancies import SetupTests
@@ -7,6 +7,7 @@ from alldaydj.test.utils import (
     create_tenancy,
     create_tenant_user,
 )
+from celery.result import EagerResult
 from django.urls import reverse
 from django_tenants.utils import tenant_context
 import json
@@ -152,12 +153,14 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json_response = json.loads(response.content)
         job_id = json_response["id"]
+        job = AudioUploadJob.objects.get(id=job_id)
 
         self.assertEqual(json_response["cart"], str(self.cart.id))
         self.assertEqual(json_response["status"], "QUEUED")
 
         storage_mock.assert_called_with(
-            f"queued/{self.TENANCY_NAME}_{job_id}_{self.cart.id}", ANY
+            generate_file_name(job, self.tenancy, FileStage.QUEUED),
+            ANY,
         )
 
         validate_mock.assert_called_with(args=(UUID(job_id), self.TENANCY_NAME))
@@ -179,7 +182,9 @@ class AudioUploadTests(APITestCase):
     @parameterized.expand([("./alldaydj/test/files/invalid_type.txt", "text/plain")])
     @patch("django.core.files.storage.default_storage.delete")
     @patch("django.core.files.storage.default_storage.open")
-    def test_validate_invalid_file(self, file_name: str, mime: str, open_mock, delete_mock):
+    def test_validate_invalid_file(
+        self, file_name: str, mime: str, open_mock, delete_mock
+    ):
         """
         Tests invalid files don't make it past validation.
         """
@@ -188,7 +193,8 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.return_value = open(file_name, "rb")
-        storage_file_name = f"queued/{self.TENANCY_NAME}_{job.id}_{job.cart.id}"
+        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+        expected_mime_error = f"{mime} is not a valid audio file MIME type."
 
         # Act
 
@@ -197,6 +203,8 @@ class AudioUploadTests(APITestCase):
 
         # Assert
 
-        self.assertEqual(updated_job.error, f"{mime} is not a valid audio file MIME type.")
+        self.assertEqual(result.result, expected_mime_error)
+        self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.ERROR)
+        self.assertEqual(updated_job.error, expected_mime_error)
         open_mock.assert_called_with(storage_file_name, "rb")
         delete_mock.assert_called_with(storage_file_name)

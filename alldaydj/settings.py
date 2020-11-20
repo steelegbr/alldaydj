@@ -162,13 +162,13 @@ CELERY_ALWAYS_EAGER = strtobool(environ.get("ADDJ_CELERY_ALWAYS_EAGER", "False")
 
 # Nose
 
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
-NOSE_ARGS = [
-    "--with-coverage",
-    "--cover-package=alldaydj",
-    "--cover-xml",
-    "--verbosity=2",
-]
+# TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
+# NOSE_ARGS = [
+#     "--with-coverage",
+#     "--cover-package=alldaydj",
+#     "--cover-xml",
+#     "--verbosity=2",
+# ]
 
 # File Storage
 

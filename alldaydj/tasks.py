@@ -8,12 +8,14 @@ from alldaydj.tenants.models import Tenant
 from celery import shared_task
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.core.files.storage import default_storage
 from django_tenants.utils import tenant_context
+import magic
 from os import environ
 from tenant_users.tenants.tasks import provision_tenant
 from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.models import ExistsError, UserTenantPermissions
-from typing import Any, List
+from typing import Any, List, Tuple
 
 
 @shared_task
@@ -217,6 +219,38 @@ def join_user_tenancy(username: str, tenancy: str) -> str:
     return f"Successfully added {username} to the {tenancy} tenancy."
 
 
+def _get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJob]:
+    """
+    Obtains the upload job and associated tenancy.
+
+    Args:
+        job_id (str): The job ID to search for.
+        tenant_name (str): The tenant this should be attached to.
+
+    Raises:
+        ValueError: Failed to get the tenant or job.
+
+    Returns:
+        Tuple[Tenant, AudioUploadJob]: The tenant and the job.
+    """
+
+    # Switch into the correct tenancy
+
+    tenant = Tenant.objects.filter(name=tenant_name).first()
+    if not tenant:
+        raise ValueError(f"{tenant_name} is not a valid tenancy.")
+
+    # Find the upload job
+
+    with tenant_context(tenant):
+        job = AudioUploadJob.objects.filter(id=job_id).first()
+
+    if not job:
+        raise ValueError(f"Upload job {job_id} on tenant {tenant} is not valid.")
+
+    return (tenant, job)
+
+
 @shared_task
 def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     """
@@ -230,4 +264,38 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
         str: The success / failure message.
     """
 
-    pass
+    (tenant, job) = _get_upload_job(job_id, tenant_name)
+
+    # Open the file and check the type
+
+    inbound_file_name = f"queued/{tenant.name}_{job.id}_{job.cart.id}"
+    inbound_file = default_storage.open(inbound_file_name, "rb")
+    mime = magic.from_buffer(inbound_file.read(1024), mime=True)
+
+    if mime == "audio/wav":
+
+        # WAVE files - need to check if it's compressed
+
+        pass
+
+    elif mime in settings.ADDJ_COMPRESSED_MIME_TYPES:
+
+        # Compressed files - re-encode
+
+        pass
+
+    else:
+
+        # Invalid format
+        # Note the error in the job
+
+        error = f"{mime} is not a valid audio file MIME type."
+        job.status = AudioUploadJob.AudioUploadStatus.ERROR
+        job.error = error
+        job.save()
+
+        # Delete the audio file
+
+        default_storage.delete(inbound_file_name)
+
+        return error

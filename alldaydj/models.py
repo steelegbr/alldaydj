@@ -102,3 +102,4 @@ class AudioUploadJob(models.Model):
         default=AudioUploadStatus.QUEUED,
     )
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    error = models.TextField(null=True)

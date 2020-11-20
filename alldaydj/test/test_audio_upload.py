@@ -1,4 +1,6 @@
+from parameterized.parameterized import parameterized_class
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
+from alldaydj.tasks import validate_audio_upload
 from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
@@ -8,9 +10,10 @@ from alldaydj.test.utils import (
 from django.urls import reverse
 from django_tenants.utils import tenant_context
 import json
+from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-from unittest.mock import patch
+from unittest.mock import ANY, Mock, patch
 from uuid import UUID
 
 
@@ -78,7 +81,7 @@ class AudioUploadTests(APITestCase):
 
     def test_bad_cart(self):
         """
-        Tests we can't upload to a bad (non-existant) cart
+        Tests we can't upload to a bad (non-existant) cart.
         """
 
         # Arrange
@@ -100,7 +103,7 @@ class AudioUploadTests(APITestCase):
 
     def test_no_file(self):
         """
-        Tests that uploading with no file errors
+        Tests that uploading with no file errors.
         """
 
         # Arrange
@@ -123,16 +126,17 @@ class AudioUploadTests(APITestCase):
             response.content.decode(), "You must upload an audio file to process."
         )
 
+    @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
     @patch("alldaydj.tasks.validate_audio_upload.apply_async")
     @patch("django.core.files.storage.default_storage.save")
-    def test_trigger_upload(self, storage_mock, validate_mock):
+    def test_trigger_upload(self, file_name: str, storage_mock, validate_mock):
         """
-        Tests a file upload trigger the process
+        Tests a file upload trigger the process.
         """
 
         # Arrange
 
-        audio_request = {"file": "RIFFTESTFILE"}
+        audio_request = {"file": open(file_name, "rb")}
 
         set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
         url = reverse("audio", kwargs={"pk": self.cart.id})
@@ -153,7 +157,46 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(json_response["status"], "QUEUED")
 
         storage_mock.assert_called_with(
-            f"queued/{self.TENANCY_NAME}_{job_id}_{self.cart.id}", "RIFFTESTFILE"
+            f"queued/{self.TENANCY_NAME}_{job_id}_{self.cart.id}", ANY
         )
 
         validate_mock.assert_called_with(args=(UUID(job_id), self.TENANCY_NAME))
+
+    def _create_job(self) -> AudioUploadJob:
+        """
+        Creates a new audio upload job.
+
+        Returns:
+            AudioUploadJob: The job we created.
+        """
+
+        with tenant_context(self.tenancy):
+            job = AudioUploadJob(cart=self.cart)
+            job.save()
+
+        return job
+
+    @parameterized.expand([("./alldaydj/test/files/invalid_type.txt", "text/plain")])
+    @patch("django.core.files.storage.default_storage.delete")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_validate_invalid_file(self, file_name: str, mime: str, open_mock, delete_mock):
+        """
+        Tests invalid files don't make it past validation.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.return_value = open(file_name, "rb")
+        storage_file_name = f"queued/{self.TENANCY_NAME}_{job.id}_{job.cart.id}"
+
+        # Act
+
+        result = validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(updated_job.error, f"{mime} is not a valid audio file MIME type.")
+        open_mock.assert_called_with(storage_file_name, "rb")
+        delete_mock.assert_called_with(storage_file_name)

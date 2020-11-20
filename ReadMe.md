@@ -97,3 +97,9 @@ RabbitMQ is required to make the Celery magic work. On macOS you can use homebre
 Celery is used for async tasks. You need to have the running going for it to do anything. ;)
 
     celery -A alldaydj worker -l INFO
+
+## Magic
+
+On macOS, libmagic needs to be manually installed:
+
+    brew install libmagic

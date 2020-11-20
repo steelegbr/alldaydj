@@ -167,7 +167,16 @@ NOSE_ARGS = [
     "--with-coverage",
     "--cover-package=alldaydj",
     "--cover-xml",
+    "--verbosity=2"
 ]
+
+# File Storage
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_REGION_NAME = environ.get("ADDJ_S3_REGION")
+AWS_S3_ENDPOINT_URL = environ.get("ADDJ_S3_ENDPOINT")
+AWS_ACCESS_KEY_ID = environ.get("ADDJ_S3_KEY_ID")
+AWS_SECRET_ACCESS_KEY = environ.get("ADDJ_S3_KEY_SECRET")
 
 # AllDay DJ
 

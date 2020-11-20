@@ -14,6 +14,10 @@ env:
   ADDJ_USERS_DOMAIN: test.alldaydj.net
   ADDJ_CELERY_ALWAYS_EAGER: "True"
   DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+  ADDJ_S3_REGION: dummy-region
+  ADDJ_S3_ENDPOINT: https://localhost/
+  ADDJ_S3_KEY_ID: key123
+  ADDJ_S3_KEY_SECRET: secret123
 
 jobs:
   django-tests:

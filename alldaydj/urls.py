@@ -2,7 +2,14 @@
     AllDay DJ URL Routing
 """
 
-from alldaydj.views import ArtistViewSet, CartViewSet, TagViewSet, TypeViewSet
+from alldaydj.views import (
+    ArtistViewSet,
+    AudioUploadJobViewSet,
+    AudioView,
+    CartViewSet,
+    TagViewSet,
+    TypeViewSet,
+)
 from alldaydj.tenants.views import TenantViewSet
 from django.contrib import admin
 from django.urls import path, include
@@ -16,6 +23,7 @@ from rest_framework_simplejwt.views import (
 router = DefaultRouter()
 router.register("artist", ArtistViewSet)
 router.register("cart", CartViewSet)
+router.register("job", AudioUploadJobViewSet)
 router.register("tag", TagViewSet)
 router.register("type", TypeViewSet)
 
@@ -29,5 +37,6 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("api/token/tenancies/", TenantViewSet.as_view(), name="tenancies"),
+    path("api/audio/<uuid:pk>/", AudioView.as_view(), name="audio"),
     path("api/", include(router.urls)),
 ]

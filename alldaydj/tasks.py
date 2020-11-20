@@ -2,6 +2,7 @@
     Async tasks for AllDay DJ.
 """
 
+from alldaydj.models import AudioUploadJob
 from alldaydj.users.models import TenantUser
 from alldaydj.tenants.models import Tenant
 from celery import shared_task
@@ -214,3 +215,19 @@ def join_user_tenancy(username: str, tenancy: str) -> str:
     )
 
     return f"Successfully added {username} to the {tenancy} tenancy."
+
+
+@shared_task
+def validate_audio_upload(job_id: str, tenant_name: str) -> str:
+    """
+    Validates an uploaded audio file.
+
+    Args:
+        job_id (str): The UUID of the job we're working on.
+        tenant_name (str): The name of the tenant this task it running under.
+
+    Returns:
+        str: The success / failure message.
+    """
+
+    pass

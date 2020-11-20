@@ -3,7 +3,7 @@
 """
 
 from rest_framework import serializers
-from alldaydj.models import Artist, Cart, Tag, Type
+from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -13,6 +13,14 @@ class ArtistSerializer(serializers.ModelSerializer):
             "id",
             "name",
         )
+
+
+class AudioUploadJobSerializer(serializers.ModelSerializer):
+    cart = serializers.SlugRelatedField(slug_field="id", read_only=True)
+
+    class Meta:
+        model = AudioUploadJob
+        fields = ("id", "status", "cart")
 
 
 class CartSerializer(serializers.ModelSerializer):

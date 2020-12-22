@@ -12,7 +12,7 @@ click-repl==0.1.6
 coverage==5.3
 cryptography==3.3.1
 Django==3.1.4
-django-celery-results==1.2.1
+django-celery-results==2.0.0
 django-colorfield==0.3.2
 django-nose==1.4.7
 django-tenant-users==0.3.12

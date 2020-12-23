@@ -28,7 +28,7 @@ pathspec==0.8.1
 prompt-toolkit==3.0.8
 psycopg2==2.8.6
 pycparser==2.20
-PyJWT==1.7.1
+PyJWT==2.0.0
 pytz==2020.4
 regex==2020.11.13
 six==1.15.0

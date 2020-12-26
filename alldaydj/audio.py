@@ -4,9 +4,9 @@
 
 from alldaydj.tenants.models import Tenant
 from alldaydj.models import AudioUploadJob
-from chunk import Chunk
 from enum import Enum
 from typing import BinaryIO
+from wave_chunk_parser.chunks import RiffChunk, FormatChunk, WaveFormat
 
 
 class WaveCompression(Enum):
@@ -26,20 +26,19 @@ def get_wave_compression(file: BinaryIO) -> WaveCompression:
         WaveCompression: The level of compression detected.
     """
 
-    while True:
-        try:
-            chunk = Chunk(file)
-            if chunk.getname() == "fmt ":
-                data = chunk.read()
-                if data[8:9] == 1:
-                    return WaveCompression.UNCOMPRESSED
-                return WaveCompression.COMPRESSED
+    try:
 
-        except EOFError:
+        riff_chunk = RiffChunk.from_file(file)
+        format_chunk: FormatChunk = riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT)
+        if format_chunk and format_chunk.format == WaveFormat.PCM:
+            return WaveCompression.UNCOMPRESSED
+        return WaveCompression.COMPRESSED
 
-            # If we get here we didn't see a format chunk
+    except Exception:
 
-            return WaveCompression.INVALID
+        # If we get here we didn't see a format chunk
+
+        return WaveCompression.INVALID
 
 
 class FileStage(Enum):

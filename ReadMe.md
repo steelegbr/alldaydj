@@ -103,3 +103,13 @@ Celery is used for async tasks. You need to have the running going for it to do 
 On macOS, libmagic needs to be manually installed:
 
     brew install libmagic
+
+## LAME
+
+On macOS
+
+    brew install lame
+
+On Ubuntu
+
+    apt install libmp3lame-dev

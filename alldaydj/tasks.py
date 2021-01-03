@@ -322,7 +322,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
 
     with default_storage.open(inbound_file_name, "rb") as inbound_file:
-        mime = magic.from_buffer(inbound_file.read(1024), mime=True)
+        mime = magic.from_buffer(inbound_file.read(1024))
         inbound_file.seek(0)
 
     if mime == "audio/wav":
@@ -333,7 +333,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
             compression = get_wave_compression(inbound_file)
 
         if compression == WaveCompression.COMPRESSED:
-            pass
+            return _set_job_error(job, "Compressed WAVE files are not supported.")
         elif compression == WaveCompression.UNCOMPRESSED:
             _move_audio_file(inbound_file_name, uncompressed_file_name)
         elif compression == WaveCompression.INVALID:

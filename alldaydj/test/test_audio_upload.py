@@ -179,7 +179,7 @@ class AudioUploadTests(APITestCase):
 
         return job
 
-    @parameterized.expand([("./alldaydj/test/files/invalid_type.txt", "text/plain")])
+    @parameterized.expand([("./alldaydj/test/files/invalid_type.txt", "ASCII text, with no line terminators")])
     @patch("django.core.files.storage.default_storage.delete")
     @patch("django.core.files.storage.default_storage.open")
     def test_validate_invalid_file(

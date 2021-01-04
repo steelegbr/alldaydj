@@ -24,6 +24,10 @@ class TestDecoder(TestCase):
                 "./alldaydj/test/files/valid.flac",
                 "./alldaydj/test/files/valid_flac_decoded.wav",
             ),
+            (
+                "./alldaydj/test/files/valid.m4a",
+                "./alldaydj/test/files/valid_m4a_decoded.wav",
+            ),
         ]
     )
     def test_codec_valid(self, source_file: str, expected_file: str):

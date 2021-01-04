@@ -128,5 +128,7 @@ def get_decoder(mime: str) -> AudioDecoder:
         return MpegCodec("ogg")
     if "FLAC" in mime:
         return MpegCodec("flac")
+    if "AAC" in mime:
+        return MpegCodec("m4a")
 
     raise ValueError(f"{mime} is not a supported compressed audio format.")

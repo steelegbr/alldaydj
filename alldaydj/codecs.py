@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import ffmpeg
+from logging import getLogger, Logger
 import numpy as np
+import os
 from streamp3 import MP3Decoder
 from tempfile import NamedTemporaryFile
 from typing import BinaryIO, Dict, Literal
@@ -56,29 +58,57 @@ class MpegCodec(AudioDecoder):
     Uses the FFMPEG library to encode and decode.
     """
 
-    __file_format : Literal["ogg", "flac"]
+    __file_format: Literal["ogg", "flac"]
+    __logger: Logger
 
     def __init__(self, file_format: Literal["ogg", "flac"]):
         self.__file_format = file_format
+        self.__logger = getLogger(__name__)
 
     def decode(self, input_stream: BinaryIO, output_stream: BinaryIO) -> None:
 
-        # Write our inbound (compressed) file to a temporary destination
+        with NamedTemporaryFile(
+            suffix=f".{self.__file_format}"
+        ) as temp_in_file, NamedTemporaryFile() as temp_out_file:
 
-        with NamedTemporaryFile(suffix=f".{self.__file_format}", delete=False) as temp_file:
+            # Write our inbound (compressed) file to a temporary destination
+
             input_stream.seek(0)
-            temp_file.write(input_stream.read())
-            temp_file.flush()
+            temp_in_file.write(input_stream.read())
+            temp_in_file.flush()
 
             # Convert
 
-            processor, _ = (
-                ffmpeg.input(temp_file.name)
-                .output("pipe:", format="s16le", acodec="pcm_s16le", ar="44100")
-                .run(capture_stdout=True)
+            out_wave_filename = f"{temp_out_file.name}.wav"
+
+            ffmpeg_stderr, ffmpeg_stdout = (
+                ffmpeg.input(temp_in_file.name)
+                .output(out_wave_filename)
+                .overwrite_output()
+                .run(capture_stdout=True, capture_stderr=True)
             )
 
-            output_stream.write(processor.stdout.read())
+            # Log the result
+
+            self.__logger.info(
+                "FFMPEG conversion of %s STDOUT: %s",
+                self.__file_format,
+                ffmpeg_stdout,
+            )
+            self.__logger.info(
+                "FFMPEG conversion of %s STDERR: %s",
+                self.__file_format,
+                ffmpeg_stderr,
+            )
+
+            # Write to our buffer
+
+            with open(out_wave_filename, "rb") as converted_wav:
+                output_stream.write(converted_wav.read())
+
+            # Delete our WAV file
+
+            os.remove(out_wave_filename)
 
 
 def get_decoder(mime: str) -> AudioDecoder:

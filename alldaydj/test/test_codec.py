@@ -43,5 +43,5 @@ class TestDecoder(TestCase):
                 get_decoder(mime).decode(source, in_memory)
 
                 # Assert
-                
+
                 self.assertEqual(in_memory.read(), expected.read())

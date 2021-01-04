@@ -26,7 +26,9 @@ django-tenants==3.2.1
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.6.0
 drf-jwt==1.17.3
+ffmpeg-python==0.2.0
 filelock==3.0.12
+future==0.18.2
 isort==5.6.4
 jmespath==0.10.0
 kombu==4.6.11

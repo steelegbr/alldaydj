@@ -15,7 +15,11 @@ class TestDecoder(TestCase):
             (
                 "./alldaydj/test/files/valid.mp3",
                 "./alldaydj/test/files/valid_mp3_decoded.wav",
-            )
+            ),
+            (
+                "./alldaydj/test/files/valid.ogg",
+                "./alldaydj/test/files/valid_ogg_decoded.wav",
+            ),
         ]
     )
     def test_codec_valid(self, source_file: str, expected_file: str):
@@ -36,9 +40,8 @@ class TestDecoder(TestCase):
 
                 # Act
 
-                result = get_decoder(mime).decode(source, in_memory)
+                get_decoder(mime).decode(source, in_memory)
 
                 # Assert
-
-                self.assertTrue(result)
+                
                 self.assertEqual(in_memory.read(), expected.read())

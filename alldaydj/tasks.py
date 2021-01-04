@@ -363,7 +363,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
         elif compression == WaveCompression.INVALID:
             return _set_job_error(job, "Failed to find the format chunk.")
 
-    elif mime in settings.ADDJ_COMPRESSED_MIME_TYPES:
+    elif any(mime_type in mime for mime_type in settings.ADDJ_COMPRESSED_MIME_TYPES):
 
         # Compressed files - re-encode
 

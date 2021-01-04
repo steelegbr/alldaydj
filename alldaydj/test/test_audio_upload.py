@@ -220,3 +220,39 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(updated_job.error, expected_mime_error)
         open_mock.assert_called_with(storage_file_name, "rb")
         delete_mock.assert_called_with(storage_file_name)
+
+    @parameterized.expand(
+        [
+            ("./alldaydj/test/files/valid.mp3"),
+            ("./alldaydj/test/files/valid.ogg"),
+            ("./alldaydj/test/files/valid.flac"),
+            ("./alldaydj/test/files/valid.m4a"),
+        ]
+    )
+    @patch("alldaydj.tasks.decompress_audio.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_validate_compressed_file(
+        self, file_name: str, open_mock, compression_mock
+    ):
+        """
+        Compressed files pass validation and gets assigned for decompression.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.return_value = open(file_name, "rb")
+        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+
+        # Act
+
+        validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        compression_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        self.assertEqual(
+            updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
+        )
+        open_mock.assert_called_with(storage_file_name, "rb")

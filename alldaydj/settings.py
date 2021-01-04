@@ -199,4 +199,4 @@ ADDJ_DEFAULT_PERMISSIONS = [
     "view_type",
 ]
 
-ADDJ_COMPRESSED_MIME_TYPES = ["audio/mp3", "audio/ogg", "audio/x-flac"]
+ADDJ_COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg"]

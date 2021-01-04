@@ -11,12 +11,14 @@ from alldaydj.audio import (
     get_wave_compression,
     generate_file_name,
 )
+from alldaydj.codecs import get_decoder
 from celery import shared_task
 from chunk import Chunk
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.storage import default_storage
 from django_tenants.utils import tenant_context
+from logging import getLogger
 import magic
 from os import environ
 from tenant_users.tenants.tasks import provision_tenant
@@ -226,7 +228,7 @@ def join_user_tenancy(username: str, tenancy: str) -> str:
     return f"Successfully added {username} to the {tenancy} tenancy."
 
 
-def _get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJob]:
+def __get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJob]:
     """
     Obtains the upload job and associated tenancy.
 
@@ -254,6 +256,28 @@ def _get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJ
 
     if not job:
         raise ValueError(f"Upload job {job_id} on tenant {tenant} is not valid.")
+
+    return (tenant, job)
+
+
+def __set_job_status(
+    job_id: str, tenant_name: str, status: AudioUploadJob.AudioUploadStatus
+) -> Tuple[Tenant, AudioUploadJob]:
+    """
+    Sets the audio upload job status.
+
+    Args:
+        job_id (str): The UUID of the job.
+        tenant_name (str): The tenant the job is for.
+        status (AudioUploadJob.AudioUploadStatus): The status to set.
+
+    Returns:
+        Tuple[Tenant, AudioUploadJob]: The tenant and the job.
+    """
+
+    (tenant, job) = __get_upload_job(job_id, tenant_name)
+    job.status = status
+    job.save()
 
     return (tenant, job)
 
@@ -312,9 +336,9 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
         str: The success / failure message.
     """
 
-    (tenant, job) = _get_upload_job(job_id, tenant_name)
-    job.status = AudioUploadJob.AudioUploadStatus.VALIDATING
-    job.save()
+    (tenant, job) = __set_job_status(
+        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.VALIDATING
+    )
 
     # Open the file and check the type
 
@@ -343,7 +367,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
 
         # Compressed files - re-encode
 
-        pass
+        decompress_audio.apply_async(args=(job_id, tenant_name))
 
     else:
 
@@ -355,6 +379,41 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
 
 
 @shared_task
+def decompress_audio(job_id: str, tenant_name: str, mime: str):
+    """
+    Decompresses audio to WAVE format.
+
+    Args:
+        job_id (str): The job to perform this task for.
+        tenant (str): The tenant to perform this task for.
+        mime (str): The mime type of the file.
+    """
+
+    (tenant, job) = __set_job_status(
+        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DECOMPRESSING
+    )
+    logger = getLogger(__name__)
+
+    # Open the files and attempt to convert
+
+    inbound_file_name = generate_file_name(job, tenant, FileStage.QUEUED)
+    uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+
+    with default_storage.open(inbound_file_name) as inbound_file, default_storage.open(
+        uncompressed_file_name
+    ) as uncompressed_file:
+
+        try:
+            get_decoder(mime).decode(inbound_file, uncompressed_file)
+        except Exception as ex:
+            logger.error(
+                f"Failed to decompress the audio for upload job {job_id} on tenant {tenant_name}.",
+                ex,
+            )
+            return _set_job_error(job, "Failed to decompress the audio.")
+
+
+@shared_task
 def extract_audio_metadata(job_id: str, tenant: str):
     """
     Attempts to extract metadata from an uncompressed audio file.
@@ -363,3 +422,5 @@ def extract_audio_metadata(job_id: str, tenant: str):
         job_id (str): The job to perform this task for.
         tenant (str): The tenant to perform this task for.
     """
+
+    pass

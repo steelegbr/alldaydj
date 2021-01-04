@@ -127,7 +127,12 @@ class AudioUploadTests(APITestCase):
             response.content.decode(), "You must upload an audio file to process."
         )
 
-    @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
+    @parameterized.expand(
+        [
+            ("./alldaydj/test/files/valid_no_markers.wav"),
+            ("./alldaydj/test/files/valid.mp3"),
+        ]
+    )
     @patch("alldaydj.tasks.validate_audio_upload.apply_async")
     @patch("django.core.files.storage.default_storage.save")
     def test_trigger_upload(self, file_name: str, storage_mock, validate_mock):

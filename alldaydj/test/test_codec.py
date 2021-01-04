@@ -20,6 +20,10 @@ class TestDecoder(TestCase):
                 "./alldaydj/test/files/valid.ogg",
                 "./alldaydj/test/files/valid_ogg_decoded.wav",
             ),
+            (
+                "./alldaydj/test/files/valid.flac",
+                "./alldaydj/test/files/valid_flac_decoded.wav",
+            ),
         ]
     )
     def test_codec_valid(self, source_file: str, expected_file: str):

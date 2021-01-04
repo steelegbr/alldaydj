@@ -349,33 +349,35 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
         mime = magic.from_buffer(inbound_file.read(1024))
         inbound_file.seek(0)
 
-    if mime == "audio/wav":
+        if "WAVE audio" in mime:
 
-        # WAVE files - need to check if it's compressed
+            # WAVE files - need to check if it's compressed
 
-        with default_storage.open(inbound_file_name, "rb") as inbound_file:
             compression = get_wave_compression(inbound_file)
 
-        if compression == WaveCompression.COMPRESSED:
-            return _set_job_error(job, "Compressed WAVE files are not supported.")
-        elif compression == WaveCompression.UNCOMPRESSED:
-            _move_audio_file(inbound_file_name, uncompressed_file_name)
-        elif compression == WaveCompression.INVALID:
-            return _set_job_error(job, "Failed to find the format chunk.")
+            if compression == WaveCompression.COMPRESSED:
+                return _set_job_error(job, "Compressed WAVE files are not supported.")
+            elif compression == WaveCompression.UNCOMPRESSED:
+                _move_audio_file(inbound_file_name, uncompressed_file_name)
+                extract_audio_metadata.apply_async(args=(job_id, tenant_name))
+            elif compression == WaveCompression.INVALID:
+                return _set_job_error(job, "Failed to find the format chunk.")
 
-    elif any(mime_type in mime for mime_type in settings.ADDJ_COMPRESSED_MIME_TYPES):
+        elif any(
+            mime_type in mime for mime_type in settings.ADDJ_COMPRESSED_MIME_TYPES
+        ):
 
-        # Compressed files - re-encode
+            # Compressed files - re-encode
 
-        decompress_audio.apply_async(args=(job_id, tenant_name))
+            decompress_audio.apply_async(args=(job_id, tenant_name))
 
-    else:
+        else:
 
-        # Invalid format
-        # Delete the file and note the error in the job
+            # Invalid format
+            # Delete the file and note the error in the job
 
-        default_storage.delete(inbound_file_name)
-        return _set_job_error(job, f"{mime} is not a valid audio file MIME type.")
+            default_storage.delete(inbound_file_name)
+            return _set_job_error(job, f"{mime} is not a valid audio file MIME type.")
 
 
 @shared_task
@@ -407,10 +409,13 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
             get_decoder(mime).decode(inbound_file, uncompressed_file)
         except Exception as ex:
             logger.error(
-                f"Failed to decompress the audio for upload job {job_id} on tenant {tenant_name}.",
-                ex,
+                f"Failed to decompress the audio for upload job {job_id} on tenant {tenant_name}. Details: {ex}",
             )
             return _set_job_error(job, "Failed to decompress the audio.")
+
+    # Move onto metadata extraction
+
+    extract_audio_metadata.apply_async(args=(job_id, tenant_name))
 
 
 @shared_task

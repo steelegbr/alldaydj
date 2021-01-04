@@ -1,6 +1,6 @@
 from alldaydj.audio import FileStage, generate_file_name
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
-from alldaydj.tasks import validate_audio_upload
+from alldaydj.tasks import validate_audio_upload, decompress_audio
 from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
@@ -10,6 +10,7 @@ from alldaydj.test.utils import (
 from celery.result import EagerResult
 from django.urls import reverse
 from django_tenants.utils import tenant_context
+from io import BytesIO
 import json
 from parameterized import parameterized
 from rest_framework import status
@@ -256,3 +257,97 @@ class AudioUploadTests(APITestCase):
             updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
         )
         open_mock.assert_called_with(storage_file_name, "rb")
+
+    @parameterized.expand(
+        [
+            ("./alldaydj/test/files/valid_no_markers.wav"),
+        ]
+    )
+    @patch("alldaydj.tasks._move_audio_file")
+    @patch("alldaydj.tasks.extract_audio_metadata.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_validate_uncompressed_file(
+        self, file_name: str, open_mock, extract_metadata_mock, move_audio_mock
+    ):
+        """
+        Uncompressed audio files pass validation.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.return_value = open(file_name, "rb")
+        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+
+        # Act
+
+        validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        extract_metadata_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        self.assertEqual(
+            updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
+        )
+        open_mock.assert_called_with(storage_file_name, "rb")
+
+    @parameterized.expand(
+        [
+            ("./alldaydj/test/files/valid.mp3", "ID3"),
+            ("./alldaydj/test/files/valid.ogg", "Ogg data, Vorbis audio"),
+            ("./alldaydj/test/files/valid.flac", "FLAC"),
+            ("./alldaydj/test/files/valid.m4a", "AAC"),
+        ]
+    )
+    @patch("alldaydj.tasks.extract_audio_metadata.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_decompress_audio_valid(
+        self, file_name: str, mime: str, open_mock, extract_metadata_mock
+    ):
+        """
+        Audio decompression task.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+
+        # Act
+
+        decompress_audio.apply(args=(job.id, self.TENANCY_NAME, mime))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(
+            updated_job.status, AudioUploadJob.AudioUploadStatus.DECOMPRESSING
+        )
+        extract_metadata_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+
+    @parameterized.expand(
+        [
+            ("./alldaydj/test/files/invalid_type.txt", "AAC"),
+        ]
+    )
+    @patch("django.core.files.storage.default_storage.open")
+    def test_decompress_audio_invalid(self, file_name: str, mime: str, open_mock):
+        """
+        Audio decompression failure.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+
+        # Act
+
+        result = decompress_audio.apply(args=(job.id, self.TENANCY_NAME, mime))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.ERROR)
+        self.assertEqual(result.result, "Failed to decompress the audio.")

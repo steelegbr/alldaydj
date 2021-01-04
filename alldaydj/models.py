@@ -76,6 +76,8 @@ class Cart(models.Model):
     record_label = models.TextField(null=True)
     tags = models.ManyToManyField(Tag)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    hash_audio = models.TextField(null=True)
+    hash_compressed = models.TextField(null=True)
 
     def __str__(self) -> str:
         return f"[{self.label}] {self.display_artist} - {self.title}"

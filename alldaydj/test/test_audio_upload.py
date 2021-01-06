@@ -4,6 +4,8 @@ from alldaydj.tasks import (
     validate_audio_upload,
     decompress_audio,
     extract_audio_metadata,
+    generate_compressed_audio,
+    generate_hashes,
 )
 from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
@@ -430,3 +432,28 @@ class AudioUploadTests(APITestCase):
         generate_compressed_audio_mock.assert_called_with(
             args=(job.id, self.TENANCY_NAME)
         )
+
+    @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
+    @patch("alldaydj.tasks.generate_hashes.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_compress_audio(self, file_name: str, open_mock, generate_hashes_mock):
+        """
+        Audio compression task.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+
+        # Act
+
+        generate_compressed_audio.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(
+            updated_job.status, AudioUploadJob.AudioUploadStatus.COMPRESSING
+        )
+        generate_hashes_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))

@@ -12,7 +12,7 @@ from alldaydj.audio import (
     generate_file_name,
     get_cart_chunk,
 )
-from alldaydj.codecs import get_decoder
+from alldaydj.codecs import get_decoder, OggEncoder
 from celery import shared_task
 from chunk import Chunk
 from django.conf import settings
@@ -423,8 +423,10 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
     inbound_file_name = generate_file_name(job, tenant, FileStage.QUEUED)
     uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
 
-    with default_storage.open(inbound_file_name) as inbound_file, default_storage.open(
-        uncompressed_file_name
+    with default_storage.open(
+        inbound_file_name, "rb"
+    ) as inbound_file, default_storage.open(
+        uncompressed_file_name, "wb"
     ) as uncompressed_file:
 
         try:
@@ -477,7 +479,7 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
 
     audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
 
-    with default_storage.open(audio_file_name) as audio_file:
+    with default_storage.open(audio_file_name, "rb") as audio_file:
         (cart_chunk, format_chunk) = get_cart_chunk(audio_file)
         if cart_chunk:
 
@@ -512,7 +514,31 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
 
 @shared_task
 def generate_compressed_audio(job_id: str, tenant_name: str):
-    pass
+    """
+    Generates the compressed (OGG) audio file.
+
+    Args:
+        job_id (str): The job to perform this task for.
+        tenant_name (str): The tenant to perform this task for.
+    """
+
+    (tenant, job) = __set_job_status(
+        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.COMPRESSING
+    )
+    logger = getLogger(__name__)
+
+    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, tenant, FileStage.COMPRESSED)
+
+    with default_storage.open(
+        audio_file_name, "rb"
+    ) as audio_file, default_storage.open(
+        compressed_file_name, "wb"
+    ) as compressed_file:
+        logger.info(f"Compressing WAV to OGG for job {job_id} on tenant {tenant_name}.")
+        OggEncoder().encode(audio_file, compressed_file, settings.ADDJ_OGG_QUALITY)
+
+    generate_hashes.apply_async(args=(job_id, tenant_name))
 
 
 @shared_task

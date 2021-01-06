@@ -13,6 +13,7 @@ from alldaydj.audio import (
     get_cart_chunk,
 )
 from alldaydj.codecs import get_decoder, OggEncoder
+from alldaydj.hash import generate_hash
 from celery import shared_task
 from chunk import Chunk
 from django.conf import settings
@@ -543,4 +544,29 @@ def generate_compressed_audio(job_id: str, tenant_name: str):
 
 @shared_task
 def generate_hashes(job_id: str, tenant_name: str):
-    pass
+    """
+    Generates the file hashes used by clients to manage their caches.
+
+    Args:
+        job_id (str): The job to perform this task for.
+        tenant_name (str): The tenant to perform this task for.
+    """
+
+    (tenant, job) = __set_job_status(
+        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.HASHING
+    )
+    logger = getLogger(__name__)
+
+    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, tenant, FileStage.COMPRESSED)
+
+    with default_storage.open(
+        audio_file_name, "rb"
+    ) as audio_file, default_storage.open(
+        compressed_file_name, "rb"
+    ) as compressed_file:
+        job.cart.hash_audio = generate_hash(audio_file)
+        job.cart.hash_compressed = generate_hash(compressed_file)
+
+    job.cart.save()
+    __set_job_status(job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DONE)

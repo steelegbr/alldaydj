@@ -53,6 +53,8 @@ class CartSerializer(serializers.ModelSerializer):
             "record_label",
             "tags",
             "type",
+            "hash_audio",
+            "hash_compressed",
         )
 
 

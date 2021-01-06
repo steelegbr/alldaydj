@@ -457,3 +457,45 @@ class AudioUploadTests(APITestCase):
             updated_job.status, AudioUploadJob.AudioUploadStatus.COMPRESSING
         )
         generate_hashes_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+
+    @parameterized.expand(
+        [
+            (
+                "./alldaydj/test/files/valid_with_markers.wav",
+                "./alldaydj/test/files/valid.ogg",
+                "d6e4085fffc29e8bcc526ae32446f779f05fa2ecaf17f3e8b4584bee02079f88",
+                "b9452aaeb14828fe7c9cae6749878220a26977963f91471a0193c75c59081e86",
+            ),
+        ]
+    )
+    @patch("django.core.files.storage.default_storage.open")
+    def test_generate_hashes(
+        self,
+        audio_file_name: str,
+        compressed_file_name: str,
+        expected_audio_hash: str,
+        expected_compressed_hash: str,
+        open_mock,
+    ):
+        """
+        Generate audio file hashes.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [
+            open(audio_file_name, "rb"),
+            open(compressed_file_name, "rb"),
+        ]
+
+        # Act
+
+        generate_hashes.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.DONE)
+        self.assertEqual(updated_job.cart.hash_audio, expected_audio_hash)
+        self.assertEqual(updated_job.cart.hash_compressed, expected_compressed_hash)

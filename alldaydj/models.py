@@ -95,6 +95,7 @@ class AudioUploadJob(models.Model):
         DECOMPRESSING = "DECOMPRESSING", _("Decompressing the audio")
         METADATA = "METADATA", _("Extracting metadata")
         COMPRESSING = "COMPRESSING", _("Generating compressed version")
+        HASHING = "HASHING", _("Generating hashes")
         DONE = "DONE", _("Successfully processed the audio")
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

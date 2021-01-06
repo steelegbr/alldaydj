@@ -400,3 +400,33 @@ class AudioUploadTests(APITestCase):
         generate_compressed_audio_mock.assert_called_with(
             args=(job.id, self.TENANCY_NAME)
         )
+
+    @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
+    @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_extract_metadata(
+        self,
+        file_name: str,
+        open_mock,
+        generate_compressed_audio_mock,
+    ):
+        """
+        Metadata not extracted from a file with no cart chunk.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+
+        # Act
+
+        extract_audio_metadata.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.METADATA)
+        generate_compressed_audio_mock.assert_called_with(
+            args=(job.id, self.TENANCY_NAME)
+        )

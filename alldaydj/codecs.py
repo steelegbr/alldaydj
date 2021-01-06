@@ -25,6 +25,70 @@ class AudioDecoder(ABC):
         pass
 
 
+class OggEncoder:
+    """
+    OGG Vorbis Encoder.
+    """
+
+    __logger: Logger
+
+    def __init__(self):
+        self.__logger = getLogger(__name__)
+
+    def encode(
+        self, input_stream: BinaryIO, output_stream: BinaryIO, quality: int
+    ) -> None:
+        """
+        Encodes wave audio to OGG vorbis.
+
+        Args:
+            input_stream (BinaryIO): The input file.
+            output_stream (BinaryIO): The output file.
+            quality (int): The quality to encode at.
+        """
+
+        with NamedTemporaryFile(
+            suffix=".wav"
+        ) as temp_in_file, NamedTemporaryFile() as temp_out_file:
+
+            # Write our inbound (compressed) file to a temporary destination
+
+            input_stream.seek(0)
+            temp_in_file.write(input_stream.read())
+            temp_in_file.flush()
+
+            # Convert
+
+            out_ogg_filename = f"{temp_out_file.name}.ogg"
+
+            ffmpeg_stderr, ffmpeg_stdout = (
+                ffmpeg.input(temp_in_file.name)
+                .output(out_ogg_filename, q=quality)
+                .overwrite_output()
+                .run(capture_stdout=True, capture_stderr=True)
+            )
+
+            # Log the result
+
+            self.__logger.info(
+                "FFMPEG compression to OGG STDOUT: %s",
+                ffmpeg_stdout,
+            )
+            self.__logger.info(
+                "FFMPEG compression to OGG STDERR: %s",
+                ffmpeg_stderr,
+            )
+
+            # Write to our buffer
+
+            with open(out_ogg_filename, "rb") as converted_ogg:
+                output_stream.write(converted_ogg.read())
+
+            # Delete our WAV file
+
+            os.remove(out_ogg_filename)
+
+
 class Mp3AudioDecoder(AudioDecoder):
     """
     LAME based MP3 audio decoder.

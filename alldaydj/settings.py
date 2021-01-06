@@ -200,3 +200,4 @@ ADDJ_DEFAULT_PERMISSIONS = [
 ]
 
 ADDJ_COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
+ADDJ_OGG_QUALITY = int(environ.get("ADDJ_OGG_QUALITY", "4"))

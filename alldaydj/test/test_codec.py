@@ -1,4 +1,4 @@
-from alldaydj.codecs import get_decoder
+from alldaydj.codecs import get_decoder, OggEncoder
 from io import BytesIO
 import magic
 from parameterized import parameterized
@@ -33,10 +33,6 @@ class TestDecoder(TestCase):
     def test_codec_valid(self, source_file: str, expected_file: str):
         """
         CODECs successfully decode.
-
-        Args:
-            source_file (str): The source file to decode.
-            expected_file (str): The expected output.
         """
 
         # Arrange
@@ -49,6 +45,33 @@ class TestDecoder(TestCase):
                 # Act
 
                 get_decoder(mime).decode(source, in_memory)
+
+                # Assert
+
+                self.assertEqual(in_memory.read(), expected.read())
+
+    @parameterized.expand(
+        [
+            (
+                "./alldaydj/test/files/valid_with_markers.wav",
+                "./alldaydj/test/files/compressed.ogg",
+            ),
+        ]
+    )
+    def test_ogg_encode(self, source_file: str, expected_file: str):
+        """
+        OGG encoding works.
+        """
+
+        # Arrange
+
+        with open(source_file, "rb") as source:
+            with open(expected_file, "rb") as expected:
+                in_memory = BytesIO(bytes([0] * len(expected.read())))
+
+                # Act
+
+                OggEncoder().encode(source, in_memory, 4)
 
                 # Assert
 

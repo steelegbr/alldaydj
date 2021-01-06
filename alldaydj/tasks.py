@@ -10,6 +10,7 @@ from alldaydj.audio import (
     WaveCompression,
     get_wave_compression,
     generate_file_name,
+    get_cart_chunk,
 )
 from alldaydj.codecs import get_decoder
 from celery import shared_task
@@ -25,6 +26,7 @@ from tenant_users.tenants.tasks import provision_tenant
 from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.models import ExistsError, UserTenantPermissions
 from typing import Any, List, Tuple
+from wave_chunk_parser.chunks import CartTimer
 
 
 @shared_task
@@ -306,9 +308,12 @@ def _move_audio_file(src: str, dst: str):
         dst (str): The destination file name.
     """
 
+    logger = getLogger(__name__)
+
     # Check the source exists
 
     if not default_storage.exists(src):
+        logger.error(f"Cannot move {src} to {dst} as the source file does not exist.")
         raise ValueError(f"{src} is not a valid source file name.")
 
     # Copy the contents
@@ -321,6 +326,7 @@ def _move_audio_file(src: str, dst: str):
     # Delete the source file
 
     default_storage.delete(src)
+    logger.info(f"Successfully moved {src} to {dst}.")
 
 
 @shared_task
@@ -339,6 +345,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     (tenant, job) = __set_job_status(
         job_id, tenant_name, AudioUploadJob.AudioUploadStatus.VALIDATING
     )
+    logger = getLogger(__name__)
 
     # Open the file and check the type
 
@@ -356,11 +363,20 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
             compression = get_wave_compression(inbound_file)
 
             if compression == WaveCompression.COMPRESSED:
+                logger.warning(
+                    f"Audio upload job {job_id} for tenant {tenant_name} encountered a compressed WAVE file."
+                )
                 return _set_job_error(job, "Compressed WAVE files are not supported.")
             elif compression == WaveCompression.UNCOMPRESSED:
+                logger.info(
+                    f"Audio upload job {job_id} for tenant {tenant_name} encountered a WAVE file."
+                )
                 _move_audio_file(inbound_file_name, uncompressed_file_name)
                 extract_audio_metadata.apply_async(args=(job_id, tenant_name))
             elif compression == WaveCompression.INVALID:
+                logger.warning(
+                    f"Audio upload job {job_id} for tenant {tenant_name} encountered a WAVE file with no format chunk."
+                )
                 return _set_job_error(job, "Failed to find the format chunk.")
 
         elif any(
@@ -369,6 +385,9 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
 
             # Compressed files - re-encode
 
+            logger.info(
+                f"Audio upload job {job_id} for tenant {tenant_name} encountered a {mime} file."
+            )
             decompress_audio.apply_async(args=(job_id, tenant_name))
 
         else:
@@ -377,6 +396,9 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
             # Delete the file and note the error in the job
 
             default_storage.delete(inbound_file_name)
+            logger.error(
+                f"Audio upload job {job_id} for tenant {tenant_name} encountered a {mime} file."
+            )
             return _set_job_error(job, f"{mime} is not a valid audio file MIME type.")
 
 
@@ -413,13 +435,30 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
             )
             return _set_job_error(job, "Failed to decompress the audio.")
 
-    # Move onto metadata extraction
+    # Delete the compressed file and move onto metadata extraction
 
+    default_storage.delete(inbound_file_name)
     extract_audio_metadata.apply_async(args=(job_id, tenant_name))
 
 
+def __get_timer(timers: List[CartTimer], possible_prefixes: List[str]):
+    """
+    Obtains the timer from a given list.
+
+    Args:
+        timers (List[CartTimer]): The list of timers.
+        possible_prefixes (List[str]): The prefixes we're working through.
+    """
+
+    for prefix in possible_prefixes:
+        if found_timers := [timer for timer in timers if timer.name == prefix]:
+            return found_timers[0].time
+
+    return 0
+
+
 @shared_task
-def extract_audio_metadata(job_id: str, tenant: str):
+def extract_audio_metadata(job_id: str, tenant_name: str):
     """
     Attempts to extract metadata from an uncompressed audio file.
 
@@ -428,4 +467,42 @@ def extract_audio_metadata(job_id: str, tenant: str):
         tenant (str): The tenant to perform this task for.
     """
 
+    (tenant, job) = __set_job_status(
+        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.METADATA
+    )
+    logger = getLogger(__name__)
+
+    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+
+    with default_storage.open(audio_file_name) as audio_file:
+        if cart_chunk := get_cart_chunk(audio_file):
+
+            logger.info(
+                f"Updating cart {job.cart.id} for tenant {tenant_name} with cart chunk data."
+            )
+
+            # Update the timers based on the cart chunk
+
+            job.cart.cue_audio_start = __get_timer(cart_chunk.timers, ["AUD1", "AUDs"])
+            job.cart.cue_intro_start = __get_timer(cart_chunk.timers, ["INT1", "INTs"])
+            job.cart.cue_intro_end = __get_timer(
+                cart_chunk.timers, ["INT", "INT2", "INTe"]
+            )
+            job.cart.cue_segue = __get_timer(cart_chunk.timers, ["SEG", "SEG1", "SEGs"])
+            job.cart.cue_audio_end = __get_timer(cart_chunk.timers, ["AUD2", "AUDe"])
+
+            job.cart.save()
+
+    # Move on to generating the compressed audio file
+
+    generate_compressed_audio.apply_async(args=(job_id, tenant_name))
+
+
+@shared_task
+def generate_compressed_audio(job_id: str, tenant_name: str):
+    pass
+
+
+@shared_task
+def generate_hashes(job_id: str, tenant_name: str):
     pass

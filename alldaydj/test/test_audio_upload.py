@@ -1,6 +1,10 @@
 from alldaydj.audio import FileStage, generate_file_name
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
-from alldaydj.tasks import validate_audio_upload, decompress_audio
+from alldaydj.tasks import (
+    validate_audio_upload,
+    decompress_audio,
+    extract_audio_metadata,
+)
 from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
@@ -301,9 +305,10 @@ class AudioUploadTests(APITestCase):
         ]
     )
     @patch("alldaydj.tasks.extract_audio_metadata.apply_async")
+    @patch("django.core.files.storage.default_storage.delete")
     @patch("django.core.files.storage.default_storage.open")
     def test_decompress_audio_valid(
-        self, file_name: str, mime: str, open_mock, extract_metadata_mock
+        self, file_name: str, mime: str, open_mock, delete_mock, extract_metadata_mock
     ):
         """
         Audio decompression task.
@@ -313,6 +318,7 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+        delete_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
 
         # Act
 
@@ -325,6 +331,7 @@ class AudioUploadTests(APITestCase):
             updated_job.status, AudioUploadJob.AudioUploadStatus.DECOMPRESSING
         )
         extract_metadata_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        delete_mock.assert_called_with(delete_file_name)
 
     @parameterized.expand(
         [
@@ -351,3 +358,45 @@ class AudioUploadTests(APITestCase):
 
         self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.ERROR)
         self.assertEqual(result.result, "Failed to decompress the audio.")
+
+    @parameterized.expand(
+        [("./alldaydj/test/files/valid_with_markers.wav", 0, 0, 41373, 0, 0)]
+    )
+    @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
+    @patch("django.core.files.storage.default_storage.open")
+    def test_extract_metadata(
+        self,
+        file_name: str,
+        expected_audio_start: int,
+        expected_intro_start: int,
+        expected_intro_end: int,
+        expected_segue: int,
+        expected_audio_end: int,
+        open_mock,
+        generate_compressed_audio_mock,
+    ):
+        """
+        Metadata successfully extracted from a file with cart chunk.
+        """
+
+        # Arrange
+
+        job = self._create_job()
+        open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
+
+        # Act
+
+        extract_audio_metadata.apply(args=(job.id, self.TENANCY_NAME))
+        updated_job = AudioUploadJob.objects.get(id=job.id)
+
+        # Assert
+
+        self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.METADATA)
+        self.assertEqual(updated_job.cart.cue_audio_start, expected_audio_start)
+        self.assertEqual(updated_job.cart.cue_intro_start, expected_intro_start)
+        self.assertEqual(updated_job.cart.cue_intro_end, expected_intro_end)
+        self.assertEqual(updated_job.cart.cue_segue, expected_segue)
+        self.assertEqual(updated_job.cart.cue_audio_end, expected_audio_end)
+        generate_compressed_audio_mock.assert_called_with(
+            args=(job.id, self.TENANCY_NAME)
+        )

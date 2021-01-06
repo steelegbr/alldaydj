@@ -5,7 +5,7 @@
 from alldaydj.tenants.models import Tenant
 from alldaydj.models import AudioUploadJob
 from enum import Enum
-from typing import BinaryIO
+from typing import BinaryIO, Tuple
 from wave_chunk_parser.chunks import RiffChunk, FormatChunk, CartChunk, WaveFormat
 
 
@@ -41,7 +41,7 @@ def get_wave_compression(file: BinaryIO) -> WaveCompression:
         return WaveCompression.INVALID
 
 
-def get_cart_chunk(file: BinaryIO) -> CartChunk:
+def get_cart_chunk(file: BinaryIO) -> Tuple[CartChunk, FormatChunk]:
     """
     Attempts to get a cart chunk from a WAVE file.
 
@@ -49,14 +49,17 @@ def get_cart_chunk(file: BinaryIO) -> CartChunk:
         file (BinaryIO): The file to find the chunk in.
 
     Returns:
-        CartChunk: The chunk if we can find it, otherwise None.
+        Tuple[CartChunk, FormatChunk]: The chunk if we can find it and an associated format chunk.
     """
 
     try:
-        riff_cunk = RiffChunk.from_file(file)
-        return riff_cunk.sub_chunks.get(CartChunk.HEADER_CART)
+        riff_chunk = RiffChunk.from_file(file)
+        return (
+            riff_chunk.sub_chunks.get(CartChunk.HEADER_CART),
+            riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT),
+        )
     except Exception:
-        pass
+        return (None, None)
 
 
 class FileStage(Enum):

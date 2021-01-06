@@ -441,18 +441,21 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
     extract_audio_metadata.apply_async(args=(job_id, tenant_name))
 
 
-def __get_timer(timers: List[CartTimer], possible_prefixes: List[str]):
+def __get_timer(
+    timers: List[CartTimer], possible_prefixes: List[str], sample_rate: int
+):
     """
     Obtains the timer from a given list.
 
     Args:
         timers (List[CartTimer]): The list of timers.
         possible_prefixes (List[str]): The prefixes we're working through.
+        sample_rate (int): The sample rate.
     """
 
     for prefix in possible_prefixes:
         if found_timers := [timer for timer in timers if timer.name == prefix]:
-            return found_timers[0].time
+            return (found_timers[0].time * 1000) // sample_rate
 
     return 0
 
@@ -475,7 +478,8 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
     audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
 
     with default_storage.open(audio_file_name) as audio_file:
-        if cart_chunk := get_cart_chunk(audio_file):
+        (cart_chunk, format_chunk) = get_cart_chunk(audio_file)
+        if cart_chunk:
 
             logger.info(
                 f"Updating cart {job.cart.id} for tenant {tenant_name} with cart chunk data."
@@ -483,15 +487,21 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
 
             # Update the timers based on the cart chunk
 
-            job.cart.cue_audio_start = __get_timer(cart_chunk.timers, ["AUD1", "AUDs"])
-            job.cart.cue_intro_start = __get_timer(cart_chunk.timers, ["INT1", "INTs"])
+            job.cart.cue_audio_start = __get_timer(
+                cart_chunk.timers, ["AUD1", "AUDs"], format_chunk.sample_rate
+            )
+            job.cart.cue_intro_start = __get_timer(
+                cart_chunk.timers, ["INT1", "INTs"], format_chunk.sample_rate
+            )
             job.cart.cue_intro_end = __get_timer(
-                cart_chunk.timers, ["INT ", "INT2", "INTe"]
+                cart_chunk.timers, ["INT ", "INT2", "INTe"], format_chunk.sample_rate
             )
             job.cart.cue_segue = __get_timer(
-                cart_chunk.timers, ["SEG ", "SEG1", "SEGs"]
+                cart_chunk.timers, ["SEG ", "SEG1", "SEGs"], format_chunk.sample_rate
             )
-            job.cart.cue_audio_end = __get_timer(cart_chunk.timers, ["AUD2", "AUDe"])
+            job.cart.cue_audio_end = __get_timer(
+                cart_chunk.timers, ["AUD2", "AUDe"], format_chunk.sample_rate
+            )
 
             job.cart.save()
 

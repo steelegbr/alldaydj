@@ -486,9 +486,11 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
             job.cart.cue_audio_start = __get_timer(cart_chunk.timers, ["AUD1", "AUDs"])
             job.cart.cue_intro_start = __get_timer(cart_chunk.timers, ["INT1", "INTs"])
             job.cart.cue_intro_end = __get_timer(
-                cart_chunk.timers, ["INT", "INT2", "INTe"]
+                cart_chunk.timers, ["INT ", "INT2", "INTe"]
             )
-            job.cart.cue_segue = __get_timer(cart_chunk.timers, ["SEG", "SEG1", "SEGs"])
+            job.cart.cue_segue = __get_timer(
+                cart_chunk.timers, ["SEG ", "SEG1", "SEGs"]
+            )
             job.cart.cue_audio_end = __get_timer(cart_chunk.timers, ["AUD2", "AUDe"])
 
             job.cart.save()

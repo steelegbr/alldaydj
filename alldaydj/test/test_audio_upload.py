@@ -360,7 +360,7 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(result.result, "Failed to decompress the audio.")
 
     @parameterized.expand(
-        [("./alldaydj/test/files/valid_with_markers.wav", 0, 0, 41373, 0, 0)]
+        [("./alldaydj/test/files/valid_with_markers.wav", 0, 0, 41373, 108118, 0)]
     )
     @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
     @patch("django.core.files.storage.default_storage.open")

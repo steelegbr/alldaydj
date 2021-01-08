@@ -6,6 +6,7 @@ from colorfield.fields import ColorField
 from django.contrib.postgres.fields import CITextField
 from django.core.validators import RegexValidator, MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 import uuid
 
 
@@ -75,6 +76,33 @@ class Cart(models.Model):
     record_label = models.TextField(null=True)
     tags = models.ManyToManyField(Tag)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    hash_audio = models.TextField(null=True)
+    hash_compressed = models.TextField(null=True)
 
     def __str__(self) -> str:
         return f"[{self.label}] {self.display_artist} - {self.title}"
+
+
+class AudioUploadJob(models.Model):
+    """
+    Job status tracker for audio uploads.
+    """
+
+    class AudioUploadStatus(models.TextChoices):
+        QUEUED = "QUEUED", _("Queued for upload")
+        ERROR = "ERROR", _("Error")
+        VALIDATING = "VALIDATING", _("Confirming the file is an audio file")
+        DECOMPRESSING = "DECOMPRESSING", _("Decompressing the audio")
+        METADATA = "METADATA", _("Extracting metadata")
+        COMPRESSING = "COMPRESSING", _("Generating compressed version")
+        HASHING = "HASHING", _("Generating hashes")
+        DONE = "DONE", _("Successfully processed the audio")
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    status = models.CharField(
+        max_length=13,
+        choices=AudioUploadStatus.choices,
+        default=AudioUploadStatus.QUEUED,
+    )
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    error = models.TextField(null=True)

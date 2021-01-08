@@ -3,7 +3,6 @@ from alldaydj.test.test_0000_init_tenancies import SetupTests
 from alldaydj.test.utils import (
     set_bearer_token,
     create_tenancy,
-    create_public_tenant,
     create_tenant_user,
 )
 from django.urls import reverse
@@ -20,8 +19,6 @@ class ArtistTests(APITestCase):
     Test cases for the artist management API.
     """
 
-    ADMIN_USERNAME = "admin@example.com"
-    ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "artist@example.com"
     PASSWORD = "$up3rS3cur3"
     TENANCY_NAME = "artist"
@@ -34,8 +31,9 @@ class ArtistTests(APITestCase):
         # Create the tenancy
 
         with tenant_context(SetupTests.PUBLIC_TENANT):
-            create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
-            (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
+            (fqdn, tenancy) = create_tenancy(
+                cls.TENANCY_NAME, SetupTests.ADMIN_USERNAME
+            )
             cls.fqdn = fqdn
             cls.tenancy = tenancy
 

@@ -50,6 +50,10 @@ need the following variables.
  - ADDJ_RABBIT_USER - The username to log into RabbitMQ with. Defaults to "guest".
  - ADDJ_RABBIT_PASS - The password to log into RabbitMQ with. Defaults to "".
  - ADDJ_CELERY_ALWAYS_EAGER - Indicates if Celery should run immediately (test environment).
+ - ADDJ_S3_REGION - The S3 bucket region.
+ - ADDJ_S3_ENDPOINT - The S3 endpoint to use.
+ - ADDJ_S3_KEY_ID - The S3 key.
+ - ADDJ_S3_KEY_SECRET - The S3 secret.
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
@@ -93,3 +97,23 @@ RabbitMQ is required to make the Celery magic work. On macOS you can use homebre
 Celery is used for async tasks. You need to have the running going for it to do anything. ;)
 
     celery -A alldaydj worker -l INFO
+
+## Magic
+
+On macOS, libmagic needs to be manually installed:
+
+    brew install libmagic
+
+## LAME
+
+On macOS
+
+    brew install lame
+
+On Ubuntu
+
+    apt install libmp3lame-dev
+
+## FFMPEG
+
+FFMPEG is used to handle the odd and wonderous array of codecs out there. It needs to be installed as a binary we can call.

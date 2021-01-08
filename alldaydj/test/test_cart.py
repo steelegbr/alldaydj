@@ -19,8 +19,6 @@ class CartTests(APITestCase):
     Test cases for the cart management API.
     """
 
-    ADMIN_USERNAME = "admin@example.com"
-    ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "cart@example.com"
     PASSWORD = "$up3rS3cur3"
     TENANCY_NAME = "cart"
@@ -37,7 +35,9 @@ class CartTests(APITestCase):
         # Create the tenancy
 
         with tenant_context(SetupTests.PUBLIC_TENANT):
-            (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
+            (fqdn, tenancy) = create_tenancy(
+                cls.TENANCY_NAME, SetupTests.ADMIN_USERNAME
+            )
             cls.fqdn = fqdn
             cls.tenancy = tenancy
 

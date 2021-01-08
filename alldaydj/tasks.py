@@ -569,7 +569,9 @@ def generate_hashes(job_id: str, tenant_name: str):
         job.cart.hash_audio = generate_hash(audio_file)
         job.cart.hash_compressed = generate_hash(compressed_file)
 
-    logger.info(f"Generated hashes for audio upload job {job_id} for tenant {tenant_name}.")
+    logger.info(
+        f"Generated hashes for audio upload job {job_id} for tenant {tenant_name}."
+    )
 
     job.cart.save()
     __set_job_status(job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DONE)

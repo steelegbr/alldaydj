@@ -50,7 +50,7 @@ class TestCodecs(TestCase):
 
                 # Assert
 
-                self.assertEqual(in_memory.read(), expected.read())
+                self.assertEqual(len(in_memory.read()), len(expected.read()))
 
     @parameterized.expand(
         [

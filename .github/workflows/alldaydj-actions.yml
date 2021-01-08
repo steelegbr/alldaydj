@@ -46,13 +46,11 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ env.PYTHON_VER }}
-      - name: Install LAME
+      - name: Install LAME and FFMPEG
         run: |
-          sudo apt install libmp3lame-dev
-      - name: Install FFMPEG
-        run: |
-          sudo apt install ffmpeg
-      - name: Install dependancies
+          sudo apt update
+          sudo apt install libmp3lame-dev ffmpeg
+      - name: Install Python dependancies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt

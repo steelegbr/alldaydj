@@ -13,7 +13,6 @@ from alldaydj.test.utils import (
     create_tenancy,
     create_tenant_user,
 )
-from celery.result import EagerResult
 from django.urls import reverse
 from django_tenants.utils import tenant_context
 from io import BytesIO
@@ -21,7 +20,7 @@ import json
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-from unittest.mock import ANY, Mock, patch
+from unittest.mock import patch, ANY
 from uuid import UUID
 
 
@@ -406,7 +405,7 @@ class AudioUploadTests(APITestCase):
     @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
     @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
     @patch("django.core.files.storage.default_storage.open")
-    def test_extract_metadata(
+    def test_extract_metadata_failure(
         self,
         file_name: str,
         open_mock,

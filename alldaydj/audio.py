@@ -34,6 +34,8 @@ def get_wave_compression(file: BinaryIO) -> WaveCompression:
             return WaveCompression.UNCOMPRESSED
         return WaveCompression.COMPRESSED
 
+    # skipcq: PYL-W0703
+    # Any issues reading the file means it's not valid.
     except Exception:
 
         # If we get here we didn't see a format chunk
@@ -58,6 +60,8 @@ def get_cart_chunk(file: BinaryIO) -> Tuple[CartChunk, FormatChunk]:
             riff_chunk.sub_chunks.get(CartChunk.HEADER_CART),
             riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT),
         )
+    # skipcq: PYL-W0703
+    # Fall back to assuming there's not metadata.
     except Exception:
         return (None, None)
 
@@ -87,7 +91,7 @@ def generate_file_name(job: AudioUploadJob, tenant: Tenant, stage: FileStage) ->
 
     if stage == FileStage.QUEUED:
         return f"queued/{tenant.name}_{job.id}_{job.cart.id}"
-    elif stage == FileStage.COMPRESSED:
+    if stage == FileStage.COMPRESSED:
         return f"compressed/{tenant.name}_{job.cart.id}"
 
     return f"audio/{tenant.name}_{job.cart.id}"

@@ -50,7 +50,8 @@ class AudioView(views.APIView):
     parser_classes = [MultiPartParser]
     queryset = Cart.objects.all()
 
-    def post(self, request, pk, format=None):
+    @staticmethod
+    def post(request, pk):
 
         # Check we have a cart to match on
 

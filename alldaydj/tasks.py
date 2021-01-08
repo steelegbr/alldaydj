@@ -15,7 +15,6 @@ from alldaydj.audio import (
 from alldaydj.codecs import get_decoder, OggEncoder
 from alldaydj.hash import generate_hash
 from celery import shared_task
-from chunk import Chunk
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.storage import default_storage
@@ -368,7 +367,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
                     f"Audio upload job {job_id} for tenant {tenant_name} encountered a compressed WAVE file."
                 )
                 return _set_job_error(job, "Compressed WAVE files are not supported.")
-            elif compression == WaveCompression.UNCOMPRESSED:
+            if compression == WaveCompression.UNCOMPRESSED:
                 logger.info(
                     f"Audio upload job {job_id} for tenant {tenant_name} encountered a WAVE file."
                 )
@@ -432,6 +431,8 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
 
         try:
             get_decoder(mime).decode(inbound_file, uncompressed_file)
+        # skipcq: PYL-W0703
+        # We just want to log something went wrong, not crash out
         except Exception as ex:
             logger.error(
                 f"Failed to decompress the audio for upload job {job_id} on tenant {tenant_name}. Details: {ex}",
@@ -567,6 +568,8 @@ def generate_hashes(job_id: str, tenant_name: str):
     ) as compressed_file:
         job.cart.hash_audio = generate_hash(audio_file)
         job.cart.hash_compressed = generate_hash(compressed_file)
+
+    logger.info(f"Generated hashes for audio upload job {job_id} for tenant {tenant_name}.")
 
     job.cart.save()
     __set_job_status(job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DONE)

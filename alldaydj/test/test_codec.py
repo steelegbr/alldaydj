@@ -5,9 +5,9 @@ from parameterized import parameterized
 from unittest import TestCase
 
 
-class TestDecoder(TestCase):
+class TestCodecs(TestCase):
     """
-    Tests audio decoders into WAVE.
+    Tests audio CODECs.
     """
 
     @parameterized.expand(
@@ -45,6 +45,8 @@ class TestDecoder(TestCase):
                 # Act
 
                 get_decoder(mime).decode(source, in_memory)
+                in_memory.seek(0)
+                expected.seek(0)
 
                 # Assert
 

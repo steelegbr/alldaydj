@@ -65,14 +65,15 @@ class TestDecoder(TestCase):
 
         # Arrange
 
-        with open(source_file, "rb") as source:
-            with open(expected_file, "rb") as expected:
-                in_memory = BytesIO(bytes([0] * len(expected.read())))
+        with open(source_file, "rb") as source, open(expected_file, "rb") as expected:
+            in_memory = BytesIO(bytes([0] * len(expected.read())))
 
-                # Act
+            # Act
 
-                OggEncoder().encode(source, in_memory, 4)
+            OggEncoder().encode(source, in_memory, 4)
+            in_memory.seek(0)
+            expected.seek(0)
 
-                # Assert
+            # Assert
 
-                self.assertEqual(in_memory.read(), expected.read())
+            self.assertEqual(len(in_memory.read()), len(expected.read()))

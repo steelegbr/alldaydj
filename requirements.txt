@@ -29,7 +29,7 @@ drf-jwt==1.17.3
 ffmpeg-python==0.2.0
 filelock==3.0.12
 future==0.18.2
-isort==5.6.4
+isort==5.7.0
 jmespath==0.10.0
 kombu==4.6.11
 lazy-object-proxy==1.4.3

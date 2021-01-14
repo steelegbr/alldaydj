@@ -97,4 +97,4 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: "True"
-          tags: steelegbr/alldaydj-web-backend:{{ github.ref }}
+          tags: steelegbr/alldaydj-web-backend:${{ github.ref }}

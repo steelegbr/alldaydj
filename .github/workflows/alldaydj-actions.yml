@@ -67,3 +67,11 @@ jobs:
         run: |
           curl https://deepsource.io/cli | sh
           ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml
+  web-backend-container:
+    needs: django-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build the web app backend container
+        uses: docker/build-push-action@v2
+        with:
+          file: ./backend/web.Dockerfile

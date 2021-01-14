@@ -50,19 +50,20 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libmp3lame-dev ffmpeg
-      - name: Move into backend directory
-        run: |
-          cd backend
       - name: Install Python dependancies
+        working-directory: ./backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run the black lint check
+        working-directory: ./backend
         run: |
           black . --check
       - name: Test with django
+        working-directory: ./backend
         run: python manage.py test
       - name: Test coverage to deepsource.io
+        working-directory: ./backend
         run: |
           curl https://deepsource.io/cli | sh
           ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml

@@ -50,6 +50,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libmp3lame-dev ffmpeg
+      - name: Move into backend directory
+        run: |
+          cd backend
       - name: Install Python dependancies
         run: |
           python -m pip install --upgrade pip

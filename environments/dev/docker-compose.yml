@@ -47,7 +47,7 @@ services:
       - ADDJ_S3_ENDPOINT
       - ADDJ_S3_KEY_ID
       - ADDJ_S3_KEY_SECRET
-      - ADDJ_S3_BUCKET=alldaydj
+      - ADDJ_S3_BUCKET
     links:
       - alldaydj-postgres:postgres
       - alldaydj-rabbit:rabbit
@@ -70,7 +70,8 @@ services:
       - ADDJ_S3_ENDPOINT
       - ADDJ_S3_KEY_ID
       - ADDJ_S3_KEY_SECRET
-      - ADDJ_S3_BUCKET=alldaydj
+      - ADDJ_S3_BUCKET
+      - CELERY_BROKER_URL=amqp://${ADDJ_RABBIT_USER}:${ADDJ_RABBIT_PASS}@rabbit:5672/
     links:
       - alldaydj-postgres:postgres
       - alldaydj-rabbit:rabbit

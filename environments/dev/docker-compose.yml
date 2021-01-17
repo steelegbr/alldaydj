@@ -17,14 +17,64 @@ services:
   alldaydj-postgres:
     image: postgres:latest
     environment:
-      - POSTGRES_USERNAME=${ADDJ_DB_USER}
+      - POSTGRES_USER=${ADDJ_DB_USER}
       - POSTGRES_PASSWORD=${ADDJ_DB_PASS}
       - POSTGRES_DB=${ADDJ_DB_NAME}
     volumes:
       - alldaydj-postgres:/var/lib/postgresql/data
-  alldaydj-rabbitmq:
-    image: bitnami/rabbitmq
-    
+  alldaydj-rabbit:
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=${ADDJ_RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${ADDJ_RABBIT_PASS}
+  alldaydj-web:
+    image: steelegbr/alldaydj-web-backend:${GIT_BRANCH}
+    ports:
+      - 8000:8000
+    environment:
+      - ADDJ_SECRET_KEY
+      - ADDJ_DEBUG
+      - ADDJ_DB_NAME
+      - ADDJ_DB_USER
+      - ADDJ_DB_PASS
+      - ADDJ_DB_HOST
+      - ADDJ_USERS_DOMAIN
+      - ADDJ_RABBIT_HOST
+      - ADDJ_RABBIT_USER
+      - ADDJ_RABBIT_PASS
+      - ADDJ_CELERY_ALWAYS_EAGER
+      - ADDJ_S3_REGION
+      - ADDJ_S3_ENDPOINT
+      - ADDJ_S3_KEY_ID
+      - ADDJ_S3_KEY_SECRET
+      - ADDJ_S3_BUCKET=alldaydj
+    links:
+      - alldaydj-postgres:postgres
+      - alldaydj-rabbit:rabbit
+      - alldaydj-localstack:localstack
+  alldaydj-job-runner:
+    image: steelegbr/alldaydj-job-runner:${GIT_BRANCH}
+    environment:
+      - ADDJ_SECRET_KEY
+      - ADDJ_DEBUG
+      - ADDJ_DB_NAME
+      - ADDJ_DB_USER
+      - ADDJ_DB_PASS
+      - ADDJ_DB_HOST
+      - ADDJ_USERS_DOMAIN
+      - ADDJ_RABBIT_HOST
+      - ADDJ_RABBIT_USER
+      - ADDJ_RABBIT_PASS
+      - ADDJ_CELERY_ALWAYS_EAGER
+      - ADDJ_S3_REGION
+      - ADDJ_S3_ENDPOINT
+      - ADDJ_S3_KEY_ID
+      - ADDJ_S3_KEY_SECRET
+      - ADDJ_S3_BUCKET=alldaydj
+    links:
+      - alldaydj-postgres:postgres
+      - alldaydj-rabbit:rabbit
+      - alldaydj-localstack:localstack
 volumes:
   alldaydj-localstack:
   alldaydj-postgres:

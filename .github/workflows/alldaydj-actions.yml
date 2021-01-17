@@ -18,6 +18,7 @@ env:
   ADDJ_S3_ENDPOINT: https://localhost/
   ADDJ_S3_KEY_ID: key123
   ADDJ_S3_KEY_SECRET: secret123
+  ADDJ_S3_BUCKET: alldaydj
 
 jobs:
   django-tests:

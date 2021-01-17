@@ -6,3 +6,4 @@ set_params_dev.ps1
 .DS_Store
 .coverage
 coverage.xml
+*.env

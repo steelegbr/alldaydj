@@ -7,4 +7,5 @@ RUN apt install -y libmp3lame-dev ffmpeg
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY  ./backend/ .
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN chmod +x launch.sh
+CMD ["./launch.sh"]

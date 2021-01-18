@@ -16,7 +16,8 @@ class TenantViewSet(generics.ListAPIView):
     serializer_class = TenantSerializer
     queryset = Tenant.objects.all()
 
-    def list(self, request, *args, **kwargs):
+    @staticmethod
+    def list(request, *args, **kwargs):
         user = request.user
         tenancies = user.tenants.exclude(name="Public Tenant")
         serializer = TenantSerializer(tenancies, many=True)

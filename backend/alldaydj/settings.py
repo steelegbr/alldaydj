@@ -159,6 +159,7 @@ CELERY_TIMEZONE = environ.get("ADDJ_TIMEZONE", "UTC")
 CELERY_TASK_TRACK_STARTED = True
 CELERY_BROKER = f"pyamqp://{environ.get('ADDJ_RABBIT_USER', 'guest')}:{environ.get('ADDJ_RABBIT_PASS', '')}@{environ.get('ADDJ_RABBIT_HOST', 'localhost')}:{environ.get('ADDJ_RABBIT_PORT', 5672)}/"
 CELERY_ALWAYS_EAGER = strtobool(environ.get("ADDJ_CELERY_ALWAYS_EAGER", "False"))
+CELERY_IMPORTS = ("alldaydj.tasks",)
 
 # Nose
 

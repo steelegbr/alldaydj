@@ -279,7 +279,9 @@ def __set_job_status(
 
     (tenant, job) = __get_upload_job(job_id, tenant_name)
     job.status = status
-    job.save()
+
+    with tenant_context(tenant):
+        job.save()
 
     return (tenant, job)
 

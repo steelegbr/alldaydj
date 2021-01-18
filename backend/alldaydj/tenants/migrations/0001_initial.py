@@ -52,6 +52,7 @@ class Migration(migrations.Migration):
                         max_length=63,
                         unique=True,
                         validators=[
+                            # skipcq: PYL-W0212
                             django_tenants.postgresql_backend.base._check_schema_name
                         ],
                     ),

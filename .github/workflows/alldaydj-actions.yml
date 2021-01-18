@@ -18,6 +18,7 @@ env:
   ADDJ_S3_ENDPOINT: https://localhost/
   ADDJ_S3_KEY_ID: key123
   ADDJ_S3_KEY_SECRET: secret123
+  ADDJ_S3_BUCKET: alldaydj
 
 jobs:
   django-tests:
@@ -51,15 +52,53 @@ jobs:
           sudo apt update
           sudo apt install libmp3lame-dev ffmpeg
       - name: Install Python dependancies
+        working-directory: ./backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run the black lint check
+        working-directory: ./backend
         run: |
           black . --check
       - name: Test with django
+        working-directory: ./backend
         run: python manage.py test
       - name: Test coverage to deepsource.io
+        working-directory: ./backend
         run: |
           curl https://deepsource.io/cli | sh
           ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml
+  web-backend-container:
+    needs: django-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the commit
+        uses: actions/checkout@v1
+      - name: Get branch name
+        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
+        id: branch_name
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Cache docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Build the web app backend container
+        uses: docker/build-push-action@v2
+        with:
+          file: ./backend/web.Dockerfile
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          push: "True"
+          tags: steelegbr/alldaydj-web-backend:${{ steps.branch_name.outputs.branch }}

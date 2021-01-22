@@ -19,6 +19,7 @@ from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.storage import default_storage
 from django_tenants.utils import tenant_context
+from functools import wraps
 from logging import getLogger
 import magic
 from os import environ
@@ -27,6 +28,34 @@ from tenant_users.tenants.utils import create_public_tenant
 from tenant_users.tenants.models import ExistsError, UserTenantPermissions
 from typing import Any, List, Tuple
 from wave_chunk_parser.chunks import CartTimer
+
+
+def set_tenant_context(function):
+    """
+    Decorator for setting the tenant context on the fly.
+    Any function using this must have at least two arguments - job ID and tenant name.
+    """
+
+    @wraps(function)
+    def decorator(*args, **kwargs):
+
+        # Sanity check
+
+        if not args or len(args) < 2:
+            raise Exception(
+                "To use this wrapper, you must have at least two arguments - job ID and tenant name."
+            )
+
+        tenant_name = args[1]
+        tenant = Tenant.objects.filter(name=tenant_name).first()
+
+        if not tenant:
+            raise ValueError(f"{tenant_name} is not a valid tenancy.")
+
+        with tenant_context(tenant):
+            return function(*args)
+
+    return decorator
 
 
 @shared_task
@@ -230,60 +259,49 @@ def join_user_tenancy(username: str, tenancy: str) -> str:
     return f"Successfully added {username} to the {tenancy} tenancy."
 
 
-def __get_upload_job(job_id: str, tenant_name: str) -> Tuple[Tenant, AudioUploadJob]:
+def __get_upload_job(job_id: str) -> AudioUploadJob:
     """
     Obtains the upload job and associated tenancy.
 
     Args:
         job_id (str): The job ID to search for.
-        tenant_name (str): The tenant this should be attached to.
 
     Raises:
         ValueError: Failed to get the tenant or job.
 
     Returns:
-        Tuple[Tenant, AudioUploadJob]: The tenant and the job.
+        AudioUploadJob: The tenant and the job.
     """
-
-    # Switch into the correct tenancy
-
-    tenant = Tenant.objects.filter(name=tenant_name).first()
-    if not tenant:
-        raise ValueError(f"{tenant_name} is not a valid tenancy.")
 
     # Find the upload job
 
-    with tenant_context(tenant):
-        job = AudioUploadJob.objects.filter(id=job_id).first()
+    job = AudioUploadJob.objects.filter(id=job_id).first()
 
     if not job:
-        raise ValueError(f"Upload job {job_id} on tenant {tenant} is not valid.")
+        raise ValueError(f"Upload job {job_id} is not valid.")
 
-    return (tenant, job)
+    return job
 
 
 def __set_job_status(
-    job_id: str, tenant_name: str, status: AudioUploadJob.AudioUploadStatus
-) -> Tuple[Tenant, AudioUploadJob]:
+    job_id: str, status: AudioUploadJob.AudioUploadStatus
+) -> AudioUploadJob:
     """
     Sets the audio upload job status.
 
     Args:
         job_id (str): The UUID of the job.
-        tenant_name (str): The tenant the job is for.
         status (AudioUploadJob.AudioUploadStatus): The status to set.
 
     Returns:
-        Tuple[Tenant, AudioUploadJob]: The tenant and the job.
+        AudioUploadJob: The job.
     """
 
-    (tenant, job) = __get_upload_job(job_id, tenant_name)
+    job = __get_upload_job(job_id)
     job.status = status
+    job.save()
 
-    with tenant_context(tenant):
-        job.save()
-
-    return (tenant, job)
+    return job
 
 
 def _set_job_error(job: AudioUploadJob, error: str) -> str:
@@ -332,6 +350,7 @@ def _move_audio_file(src: str, dst: str):
 
 
 @shared_task
+@set_tenant_context
 def validate_audio_upload(job_id: str, tenant_name: str) -> str:
     """
     Validates an uploaded audio file.
@@ -344,15 +363,13 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
         str: The success / failure message.
     """
 
-    (tenant, job) = __set_job_status(
-        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.VALIDATING
-    )
+    job = __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.VALIDATING)
     logger = getLogger(__name__)
 
     # Open the file and check the type
 
-    inbound_file_name = generate_file_name(job, tenant, FileStage.QUEUED)
-    uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+    inbound_file_name = generate_file_name(job, tenant_name, FileStage.QUEUED)
+    uncompressed_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
 
     with default_storage.open(inbound_file_name, "rb") as inbound_file:
         mime = magic.from_buffer(inbound_file.read(1024))
@@ -390,7 +407,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
             logger.info(
                 f"Audio upload job {job_id} for tenant {tenant_name} encountered a {mime} file."
             )
-            decompress_audio.apply_async(args=(job_id, tenant_name))
+            decompress_audio.apply_async(args=(job_id, tenant_name, mime))
 
         else:
 
@@ -405,6 +422,7 @@ def validate_audio_upload(job_id: str, tenant_name: str) -> str:
 
 
 @shared_task
+@set_tenant_context
 def decompress_audio(job_id: str, tenant_name: str, mime: str):
     """
     Decompresses audio to WAVE format.
@@ -415,15 +433,13 @@ def decompress_audio(job_id: str, tenant_name: str, mime: str):
         mime (str): The mime type of the file.
     """
 
-    (tenant, job) = __set_job_status(
-        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DECOMPRESSING
-    )
+    job = __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.DECOMPRESSING)
     logger = getLogger(__name__)
 
     # Open the files and attempt to convert
 
-    inbound_file_name = generate_file_name(job, tenant, FileStage.QUEUED)
-    uncompressed_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+    inbound_file_name = generate_file_name(job, tenant_name, FileStage.QUEUED)
+    uncompressed_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
 
     with default_storage.open(
         inbound_file_name, "rb"
@@ -467,6 +483,7 @@ def __get_timer(
 
 
 @shared_task
+@set_tenant_context
 def extract_audio_metadata(job_id: str, tenant_name: str):
     """
     Attempts to extract metadata from an uncompressed audio file.
@@ -476,12 +493,10 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
         tenant (str): The tenant to perform this task for.
     """
 
-    (tenant, job) = __set_job_status(
-        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.METADATA
-    )
+    job = __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.METADATA)
     logger = getLogger(__name__)
 
-    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
+    audio_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
 
     with default_storage.open(audio_file_name, "rb") as audio_file:
         (cart_chunk, format_chunk) = get_cart_chunk(audio_file)
@@ -517,6 +532,7 @@ def extract_audio_metadata(job_id: str, tenant_name: str):
 
 
 @shared_task
+@set_tenant_context
 def generate_compressed_audio(job_id: str, tenant_name: str):
     """
     Generates the compressed (OGG) audio file.
@@ -526,13 +542,11 @@ def generate_compressed_audio(job_id: str, tenant_name: str):
         tenant_name (str): The tenant to perform this task for.
     """
 
-    (tenant, job) = __set_job_status(
-        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.COMPRESSING
-    )
+    job = __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.COMPRESSING)
     logger = getLogger(__name__)
 
-    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
-    compressed_file_name = generate_file_name(job, tenant, FileStage.COMPRESSED)
+    audio_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, tenant_name, FileStage.COMPRESSED)
 
     with default_storage.open(
         audio_file_name, "rb"
@@ -546,6 +560,7 @@ def generate_compressed_audio(job_id: str, tenant_name: str):
 
 
 @shared_task
+@set_tenant_context
 def generate_hashes(job_id: str, tenant_name: str):
     """
     Generates the file hashes used by clients to manage their caches.
@@ -555,13 +570,14 @@ def generate_hashes(job_id: str, tenant_name: str):
         tenant_name (str): The tenant to perform this task for.
     """
 
-    (tenant, job) = __set_job_status(
-        job_id, tenant_name, AudioUploadJob.AudioUploadStatus.HASHING
-    )
+    job = __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.HASHING)
     logger = getLogger(__name__)
 
-    audio_file_name = generate_file_name(job, tenant, FileStage.AUDIO)
-    compressed_file_name = generate_file_name(job, tenant, FileStage.COMPRESSED)
+    audio_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, tenant_name, FileStage.COMPRESSED)
+
+    job.cart.audio = audio_file_name
+    job.cart.compressed = compressed_file_name
 
     with default_storage.open(
         audio_file_name, "rb"
@@ -576,4 +592,4 @@ def generate_hashes(job_id: str, tenant_name: str):
     )
 
     job.cart.save()
-    __set_job_status(job_id, tenant_name, AudioUploadJob.AudioUploadStatus.DONE)
+    __set_job_status(job_id, AudioUploadJob.AudioUploadStatus.DONE)

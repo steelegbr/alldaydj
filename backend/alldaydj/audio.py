@@ -2,7 +2,6 @@
     Audio Utility Methods
 """
 
-from alldaydj.tenants.models import Tenant
 from alldaydj.models import AudioUploadJob
 from enum import Enum
 from typing import BinaryIO, Tuple
@@ -76,13 +75,13 @@ class FileStage(Enum):
     AUDIO = 2
 
 
-def generate_file_name(job: AudioUploadJob, tenant: Tenant, stage: FileStage) -> str:
+def generate_file_name(job: AudioUploadJob, tenant_name: str, stage: FileStage) -> str:
     """
     Generates the name of an audio file based on the stage.
 
     Args:
         job_id (AudioUploadJob): The job we're doing this for.
-        tenant (Tenant): The tenant we're managing the file for.
+        tenant_name (Tenant): The tenant we're managing the file for.
         stage (FileStage): The stage the file is in.
 
     Returns:
@@ -90,8 +89,8 @@ def generate_file_name(job: AudioUploadJob, tenant: Tenant, stage: FileStage) ->
     """
 
     if stage == FileStage.QUEUED:
-        return f"queued/{tenant.name}_{job.id}_{job.cart.id}"
+        return f"queued/{tenant_name}_{job.id}_{job.cart.id}"
     if stage == FileStage.COMPRESSED:
-        return f"compressed/{tenant.name}_{job.cart.id}"
+        return f"compressed/{tenant_name}_{job.cart.id}"
 
-    return f"audio/{tenant.name}_{job.cart.id}"
+    return f"audio/{tenant_name}_{job.cart.id}"

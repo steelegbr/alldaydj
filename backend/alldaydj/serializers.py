@@ -2,6 +2,7 @@
     Serializers for AllDay DJ.
 """
 
+from django.core.files.storage import default_storage
 from rest_framework import serializers
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 
@@ -21,6 +22,23 @@ class AudioUploadJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = AudioUploadJob
         fields = ("id", "status", "cart")
+
+
+class AudioSerlializer(serializers.ModelSerializer):
+    audio = serializers.SerializerMethodField()
+    compressed = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_audio(cart):
+        return default_storage.url(cart.audio)
+
+    @staticmethod
+    def get_compressed(cart):
+        return default_storage.url(cart.compressed)
+
+    class Meta:
+        model = Cart
+        fields = ("audio", "compressed", "hash_audio", "hash_compressed")
 
 
 class CartSerializer(serializers.ModelSerializer):

@@ -229,10 +229,10 @@ class AudioUploadTests(APITestCase):
 
     @parameterized.expand(
         [
-            ("./alldaydj/test/files/valid.mp3"),
-            ("./alldaydj/test/files/valid.ogg"),
-            ("./alldaydj/test/files/valid.flac"),
-            ("./alldaydj/test/files/valid.m4a"),
+            ("./alldaydj/test/files/valid.mp3",),
+            ("./alldaydj/test/files/valid.ogg",),
+            ("./alldaydj/test/files/valid.flac",),
+            ("./alldaydj/test/files/valid.m4a",),
         ]
     )
     @patch("alldaydj.tasks.decompress_audio.apply_async")
@@ -257,7 +257,7 @@ class AudioUploadTests(APITestCase):
 
         # Assert
 
-        compression_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        compression_mock.assert_called()
         self.assertEqual(
             updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
         )

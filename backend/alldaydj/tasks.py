@@ -576,6 +576,9 @@ def generate_hashes(job_id: str, tenant_name: str):
     audio_file_name = generate_file_name(job, tenant_name, FileStage.AUDIO)
     compressed_file_name = generate_file_name(job, tenant_name, FileStage.COMPRESSED)
 
+    job.cart.audio = audio_file_name
+    job.cart.compressed = compressed_file_name
+
     with default_storage.open(
         audio_file_name, "rb"
     ) as audio_file, default_storage.open(

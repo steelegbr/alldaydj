@@ -278,7 +278,7 @@ def __get_upload_job(job_id: str) -> AudioUploadJob:
     job = AudioUploadJob.objects.filter(id=job_id).first()
 
     if not job:
-        raise ValueError(f"Upload job {job_id} on tenant {tenant} is not valid.")
+        raise ValueError(f"Upload job {job_id} is not valid.")
 
     return job
 

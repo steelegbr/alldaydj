@@ -2,7 +2,6 @@
     Views for AllDay DJ.
 """
 
-from alldaydj.audio import FileStage, generate_file_name
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 from alldaydj.serializers import (
     ArtistSerializer,
@@ -14,7 +13,7 @@ from alldaydj.serializers import (
 )
 from alldaydj.tasks import validate_audio_upload
 from django.core.files.storage import default_storage
-from django.http import HttpResponseBadRequest, Http404
+from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from rest_framework.parsers import MultiPartParser

@@ -2,7 +2,6 @@
     Audio Utility Methods
 """
 
-from alldaydj.tenants.models import Tenant
 from alldaydj.models import AudioUploadJob
 from enum import Enum
 from typing import BinaryIO, Tuple

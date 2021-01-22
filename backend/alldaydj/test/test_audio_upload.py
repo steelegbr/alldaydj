@@ -229,16 +229,25 @@ class AudioUploadTests(APITestCase):
 
     @parameterized.expand(
         [
-            ("./alldaydj/test/files/valid.mp3"),
-            ("./alldaydj/test/files/valid.ogg"),
-            ("./alldaydj/test/files/valid.flac"),
-            ("./alldaydj/test/files/valid.m4a"),
+            ("./alldaydj/test/files/valid.mp3", "Audio file with ID3 version 2.3.0"),
+            (
+                "./alldaydj/test/files/valid.ogg",
+                "Ogg data, Vorbis audio, stereo, 44100 Hz, ~499821 bps, created by: Xiph.Org libVorbis I (1.3.5)",
+            ),
+            (
+                "./alldaydj/test/files/valid.flac",
+                "FLAC audio bitstream data, 16 bit, stereo, 44.1 kHz, 111020 samples",
+            ),
+            (
+                "./alldaydj/test/files/valid.m4a",
+                "ISO Media, Apple iTunes ALAC/AAC-LC (.M4A) Audio",
+            ),
         ]
     )
     @patch("alldaydj.tasks.decompress_audio.apply_async")
     @patch("django.core.files.storage.default_storage.open")
     def test_validate_compressed_file(
-        self, file_name: str, open_mock, compression_mock
+        self, file_name: str, expected_mime: str, open_mock, compression_mock
     ):
         """
         Compressed files pass validation and gets assigned for decompression.
@@ -257,7 +266,9 @@ class AudioUploadTests(APITestCase):
 
         # Assert
 
-        compression_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        compression_mock.assert_called_with(
+            args=(job.id, self.TENANCY_NAME, expected_mime)
+        )
         self.assertEqual(
             updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
         )

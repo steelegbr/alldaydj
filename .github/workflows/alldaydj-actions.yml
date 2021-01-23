@@ -102,3 +102,10 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: "True"
           tags: steelegbr/alldaydj-web-backend:${{ steps.branch_name.outputs.branch }}
+  react-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the commit
+        uses: actions/checkout@v1
+      - name: Install NPM
+        uses: actions/setup-node@v2

@@ -1,12 +1,13 @@
-import { Menu } from './components/common/Menu';
+import { Layout } from './pages/Layout';
+import { AuthenticationProvider } from './components/context/AuthenticationContext';
 import { ThemeProvider } from './components/context/ThemeContext';
 
 function App() {
   return (
     <ThemeProvider>
-      <>
-        <Menu />
-      </>
+      <AuthenticationProvider>
+        <Layout />
+      </AuthenticationProvider>
     </ThemeProvider>
   );
 }

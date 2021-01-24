@@ -2,6 +2,8 @@ import { AppBar, Toolbar, IconButton, Typography, Hidden, Drawer, useTheme, Divi
 import { Brightness4, Brightness7, LibraryMusic } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
+import { isAuthenticated } from '../../services/AuthenticationService';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 import { ThemeContext } from '../context/ThemeContext';
 
 export const Menu = () => {
@@ -9,6 +11,9 @@ export const Menu = () => {
     const theme = useTheme();
     const [menuOpen, setMenuOpen] = React.useState(false);
     const themeContext = React.useContext(ThemeContext);
+    const authenticationContext = React.useContext(AuthenticationContext);
+    const authenticated = isAuthenticated(authenticationContext);
+
     const useStyles = makeStyles((theme: Theme) => createStyles({
         root: {
             display: 'flex',
@@ -80,15 +85,17 @@ export const Menu = () => {
                         container
                     >
                         <Grid item>
-                            <IconButton
-                                color="inherit"
-                                aria-label="open menu"
-                                edge="start"
-                                onClick={handleMenuToggle}
-                                className={classes.menuButton}
-                            >
-                                <MenuIcon />
-                            </IconButton>
+                            {authenticated && (
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="open menu"
+                                    edge="start"
+                                    onClick={handleMenuToggle}
+                                    className={classes.menuButton}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                            )}
                         </Grid>
                         <Grid item>
                             <Typography variant="h6" noWrap>
@@ -108,36 +115,38 @@ export const Menu = () => {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <nav aria-label="main menu" className={classes.drawer}>
-                <Hidden smUp implementation="css">
-                    <Drawer
-                        container={container}
-                        variant="persistent"
-                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={menuOpen}
-                        onClose={handleMenuToggle}
-                        ModalProps={{
-                            keepMounted: true
-                        }}
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}
-                    >
-                        <MenuContents />
-                    </Drawer>
-                </Hidden>
-                <Hidden xsDown implementation="css">
-                    <Drawer
-                        variant="permanent"
-                        open
-                        classes={{
-                            paper: classes.drawerPaper
-                        }}
-                    >
-                        <MenuContents />
-                    </Drawer>
-                </Hidden>
-            </nav>
+            {authenticated && (
+                <nav aria-label="main menu" className={classes.drawer}>
+                    <Hidden smUp implementation="css">
+                        <Drawer
+                            container={container}
+                            variant="persistent"
+                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                            open={menuOpen}
+                            onClose={handleMenuToggle}
+                            ModalProps={{
+                                keepMounted: true
+                            }}
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                        >
+                            <MenuContents />
+                        </Drawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Drawer
+                            variant="permanent"
+                            open
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                        >
+                            <MenuContents />
+                        </Drawer>
+                    </Hidden>
+                </nav>
+            )}
         </div>
     )
 }

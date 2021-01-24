@@ -1,5 +1,6 @@
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
+import { getLogger } from '../../services/LoggingService';
 
 export interface ThemeSettings {
     darkMode: boolean
@@ -17,8 +18,12 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider =  ({ children }: ThemeProviderProps) => {
+    const logger = getLogger();
+    const darkMode = localStorage.getItem("darkMode") === "true";
+    logger.info(`Dark mode setting from local storage: ${darkMode}.`)
+
     const [themeSettings, setThemeSettings] = React.useState<ThemeSettings>({
-        darkMode: false
+        darkMode: darkMode
     });
 
     const theme = createMuiTheme({
@@ -26,6 +31,9 @@ export const ThemeProvider =  ({ children }: ThemeProviderProps) => {
             type: themeSettings.darkMode ? "dark": "light"
        } 
     });
+
+    localStorage.setItem("darkMode", themeSettings.darkMode ? "true" : "false")
+    logger.info(`Set dark mode to ${themeSettings.darkMode} in local storage.`)
 
     return (
         <ThemeContext.Provider value={{ themeSettings, setThemeSettings }}>

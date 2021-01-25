@@ -7,3 +7,8 @@ export interface ApiLoginResponse {
     refresh: string,
     access: string
 }
+
+export interface ApiTenancy {
+    name: string,
+    slug: string
+}

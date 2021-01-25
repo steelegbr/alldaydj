@@ -13,12 +13,14 @@ const calculateExpiry = (token: JwtToken) => {
 export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus => {
     const refreshToken = localStorage.getItem('refreshToken');
     const accessToken = localStorage.getItem('accessToken');
+    const tenant = localStorage.getItem('tenant') || undefined;
     let log = getLogger();
 
     log.info("Attempting to get authentication status from local storage.")
 
     let authenticationStatus : AuthenticationStatus = {
-        stage: "Unauthenticated"
+        stage: "Unauthenticated",
+        tenant: tenant
     };
     
     if (refreshToken) {
@@ -49,13 +51,15 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
     return authenticationStatus;
 }
 
-export const isAuthenticated = (props: AuthenticationStatusProps | undefined) => {
+export const isAuthenticated = (props: AuthenticationStatusProps | undefined, requireTenant = false) => {
     const authenticationStage = props?.authenticationStatus.stage;
-    return (
+    const tenant = props?.authenticationStatus.tenant;
+    const authenticated = (
         authenticationStage === "Authenticated" || 
         authenticationStage === "RefreshingAccessToken" || 
         authenticationStage === "AccessTokenRefreshNeeded"
     );
+    return requireTenant ? authenticated && tenant : authenticated;
 }
 
 export const loginUser = (refreshToken: string, accessToken: string) => {
@@ -78,4 +82,24 @@ export const loginUser = (refreshToken: string, accessToken: string) => {
 
     return authenticationStatus;
     
+}
+
+export const logOut = () => {
+
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('tenant');
+
+    const status : AuthenticationStatus = {
+        stage: "Unauthenticated"
+    };
+    return status;
+}
+
+export const setTenant = (tenant: string, authenticationStatus: AuthenticationStatus) => {
+    localStorage.setItem('tenant', tenant);
+    return {
+        ...authenticationStatus,
+        tenant: tenant
+    };
 }

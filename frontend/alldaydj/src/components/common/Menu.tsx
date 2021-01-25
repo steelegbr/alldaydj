@@ -1,10 +1,12 @@
 import { AppBar, Toolbar, IconButton, Typography, Hidden, Drawer, useTheme, Divider, List, ListItemIcon, ListItemText, Grid, makeStyles, createStyles, Theme, ListItem } from '@material-ui/core';
-import { Brightness4, Brightness7, LibraryMusic } from '@material-ui/icons';
+import { Brightness4, Brightness7, Domain, ExitToApp, LibraryMusic } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
-import { isAuthenticated } from '../../services/AuthenticationService';
+import { Paths } from '../../routing/Paths';
+import { isAuthenticated, logOut } from '../../services/AuthenticationService';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import { ThemeContext } from '../context/ThemeContext';
+import { ListItemLink } from './ListItemLink';
 
 export const Menu = () => {
     const drawerWidth = 240;
@@ -12,7 +14,8 @@ export const Menu = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
     const themeContext = React.useContext(ThemeContext);
     const authenticationContext = React.useContext(AuthenticationContext);
-    const authenticated = isAuthenticated(authenticationContext);
+    const authenticated = isAuthenticated(authenticationContext, true);
+    const currentTenant = authenticationContext?.authenticationStatus.tenant;
 
     const useStyles = makeStyles((theme: Theme) => createStyles({
         root: {
@@ -58,6 +61,10 @@ export const Menu = () => {
         }
     }
 
+    const doLogOut = () => {
+        authenticationContext?.setAuthenticationStatus(logOut());
+    }
+
     const MenuContents = () => {
         return (
             <div>
@@ -71,12 +78,37 @@ export const Menu = () => {
                         <ListItemText primary="Music Library" />
                     </ListItem>
                 </List>
+                <Divider />
+                <List>
+                    <ListItemLink
+                        key="Change Tenant"
+                        href={Paths.auth.tenancy}
+                    >
+                        <ListItemIcon>
+                            <Domain />
+                        </ListItemIcon>
+                        <ListItemText 
+                            primary="Change Tenant" 
+                            secondary={`Current: ${currentTenant}`}
+                        />
+                    </ListItemLink>
+                    <ListItem 
+                        button 
+                        key="Log Out"
+                        onClick={doLogOut}
+                    >
+                        <ListItemIcon>
+                            <ExitToApp />
+                        </ListItemIcon>
+                        <ListItemText primary="Log Out" />
+                    </ListItem>
+                </List>
             </div>
         )
     }
 
     return (
-        <div className={classes.root}>
+        <div>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Grid

@@ -5,7 +5,7 @@ import { ApplicationRouter } from "../routing/ApplicationRouter";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        toolbar: theme.mixins.toolbar
+        toolbar: theme.mixins.toolbar,
     })
 );
 
@@ -13,10 +13,11 @@ export const Layout = () => {
     const classes = useStyles();
 
     return (
-        <CssBaseline>
+        <div>
+            <CssBaseline />
             <Menu />
             <div className={classes.toolbar} />
             <ApplicationRouter />
-        </CssBaseline>
+        </div>
     )
 }

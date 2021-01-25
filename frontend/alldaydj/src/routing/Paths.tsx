@@ -1,6 +1,7 @@
 export const Paths = {
     "auth": {
         "login": "/login/",
-        "logout": "/logout/"
+        "logout": "/logout/",
+        "tenancy": "/tenancy/"
     }
 }

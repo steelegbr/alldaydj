@@ -109,11 +109,11 @@ jobs:
       - name: Install NPM
         uses: actions/setup-node@v2
       - name: Install yarn
-        run: npm install yarn
+        run: npm install --global yarn
         working-directory: ./frontend/alldaydj
       - name: Install libraries with yarn
         run: yarn
         working-directory: ./frontend/alldaydj
       - name: ECMA Script Linting
-        run: eslint '*/**/*.{js,ts,tsx}' --quiet
+        run: yarn lint
         working-directory: ./frontend/alldaydj

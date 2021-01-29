@@ -3,10 +3,10 @@ import React from "react";
 import { Menu } from "../components/common/Menu";
 import { ApplicationRouter } from "../routing/ApplicationRouter";
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         toolbar: theme.mixins.toolbar,
-    })
+    }),
 );
 
 export const Layout = () => {
@@ -19,5 +19,5 @@ export const Layout = () => {
             <div className={classes.toolbar} />
             <ApplicationRouter />
         </div>
-    )
-}
+    );
+};

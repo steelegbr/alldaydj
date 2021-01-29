@@ -1,44 +1,44 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader, createStyles, makeStyles, MenuItem, Select, Theme } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ApiTenancy } from '../../api/models/Authentication';
-import { getTenancies } from '../../api/requests/Authentication';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import { setTenant } from '../../services/AuthenticationService';
-import { getLogger } from '../../services/LoggingService';
-import { AuthenticationWrapper } from './AuthenticationWrapper';
+import { Box, Button, Card, CardActions, CardContent, CardHeader, createStyles, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { ApiTenancy } from "../../api/models/Authentication";
+import { getTenancies } from "../../api/requests/Authentication";
+import { AuthenticationContext } from "../../components/context/AuthenticationContext";
+import { setTenant } from "../../services/AuthenticationService";
+import { getLogger } from "../../services/LoggingService";
+import { AuthenticationWrapper } from "./AuthenticationWrapper";
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         errorBox: {
             marginBottom: 10,
-            padding: 5
-        }
-    })
+            padding: 5,
+        },
+    }),
 );
 
 export const TenancyChooser = () => {
-    let log = getLogger();
+    const log = getLogger();
     const history = useHistory();
     const classes = useStyles();
     const authenticationContext = React.useContext(AuthenticationContext);
     const token = authenticationContext?.authenticationStatus.accessToken;
     const [tenancies, setTenancies] = React.useState<ApiTenancy[]>([]);
-    const [error, setError] = React.useState<string>('');
-    const [selectedTenant, setSelectedTenant] = React.useState<string>('');
+    const [error, setError] = React.useState<string>("");
+    const [selectedTenant, setSelectedTenant] = React.useState<string>("");
 
     useEffect(() => {
         if (token) {
             log.info("Updating list of tenancies.");
             getTenancies(token).then(
                 response => {
-                    setError('');
+                    setError("");
                     setTenancies(response.data);
                 },
                 error => {
                     log.error(error);
                     setError("Failed to load the list of tenancies for the current user.");
-                }
+                },
             );
         }
     }, [token, log]);
@@ -48,15 +48,15 @@ export const TenancyChooser = () => {
             const { authenticationStatus, setAuthenticationStatus } = authenticationContext;
             const newAuthenticationStatus = setTenant(tenant, authenticationStatus);
             setAuthenticationStatus(newAuthenticationStatus);
-            log.info(`Set tenant to ${tenant}.`)
+            log.info(`Set tenant to ${tenant}.`);
             history.push("/");
         }
-        log.error(`Cannot set tenant to ${tenant} as we don't have an authentication context.`)
-    }
+        log.error(`Cannot set tenant to ${tenant} as we don't have an authentication context.`);
+    };
 
     const changeSelectedTenant = (event: React.ChangeEvent<{ value: unknown }>) => {
         setSelectedTenant(event.target.value as string);
-    }
+    };
 
     //if (tenancies && tenancies.length === 1) {
     //    doSetTenant(tenancies[0].slug);
@@ -72,7 +72,7 @@ export const TenancyChooser = () => {
             event.preventDefault();
             doSetTenant(selectedTenant);
         }
-    }
+    };
 
     if (error) {
         return (
@@ -80,8 +80,8 @@ export const TenancyChooser = () => {
                 <Card>
                     <CardHeader title="Choose a Tenancy" />
                     <CardContent>
-                        <Box 
-                            bgcolor="error.main" 
+                        <Box
+                            bgcolor="error.main"
                             boxShadow={3}
                             className={classes.errorBox}
                         >
@@ -90,7 +90,7 @@ export const TenancyChooser = () => {
                     </CardContent>
                 </Card>
             </AuthenticationWrapper>
-        )
+        );
     }
 
     return (
@@ -108,8 +108,8 @@ export const TenancyChooser = () => {
                         </Select>
                     </CardContent>
                     <CardActions>
-                        <Button 
-                            color="primary" 
+                        <Button
+                            color="primary"
                             variant="contained"
                             type="submit"
                             disabled={buttonDisabled}
@@ -121,5 +121,4 @@ export const TenancyChooser = () => {
             </form>
         </AuthenticationWrapper>
     );
-
-}
+};

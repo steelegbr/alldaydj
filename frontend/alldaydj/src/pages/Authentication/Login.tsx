@@ -1,34 +1,34 @@
-import { Card, CardContent, FormControl, InputLabel, InputAdornment, Input, Button, CardHeader, CardActions, makeStyles, Theme, createStyles, Box, FormHelperText, CircularProgress } from '@material-ui/core';
-import { Email, Lock } from '@material-ui/icons';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { userLogin } from '../../api/requests/Authentication';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import { Paths } from '../../routing/Paths';
-import { loginUser } from '../../services/AuthenticationService';
-import { getLogger } from '../../services/LoggingService';
-import { AuthenticationWrapper } from './AuthenticationWrapper';
+import { Card, CardContent, FormControl, InputLabel, InputAdornment, Input, Button, CardHeader, CardActions, makeStyles, Theme, createStyles, Box, FormHelperText, CircularProgress } from "@material-ui/core";
+import { Email, Lock } from "@material-ui/icons";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { userLogin } from "../../api/requests/Authentication";
+import { AuthenticationContext } from "../../components/context/AuthenticationContext";
+import { Paths } from "../../routing/Paths";
+import { loginUser } from "../../services/AuthenticationService";
+import { getLogger } from "../../services/LoggingService";
+import { AuthenticationWrapper } from "./AuthenticationWrapper";
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         loginProgress: {
             position: "absolute",
             left: "50%",
             top: "50%",
             marginLeft: -12,
-            marginTop: -12
+            marginTop: -12,
         },
         wrapper: {
-            position: "relative"
+            position: "relative",
         },
         errorBox: {
             marginBottom: 10,
-            padding: 5
-        }
-    })
+            padding: 5,
+        },
+    }),
 );
 
-type LoginProgress = 
+type LoginProgress =
     | "Idle"
     | "Error"
     | "InProgress"
@@ -43,14 +43,14 @@ interface LoginStatus {
 }
 
 export const Login = () => {
-    let log = getLogger();
-    let history = useHistory();
+    const log = getLogger();
+    const history = useHistory();
     const classes = useStyles();
     const authenticationContext = React.useContext(AuthenticationContext);
-    const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({ 
+    const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
         progress: "Idle",
         email: "",
-        password: ""
+        password: "",
     });
     const disableButtons = loginStatus.progress === "InProgress";
 
@@ -58,7 +58,7 @@ export const Login = () => {
         setLoginStatus({
             ...loginStatus,
             errorEmail: undefined,
-            email: email
+            email: email,
         });
     };
 
@@ -66,42 +66,41 @@ export const Login = () => {
         setLoginStatus({
             ...loginStatus,
             errorPassword: undefined,
-            password: password
+            password: password,
         });
     };
 
     const clearForm = () => {
         setLoginStatus({
             progress: "Idle",
-            email: '',
-            password: '',
+            email: "",
+            password: "",
             errorEmail: undefined,
-            errorPassword: undefined
+            errorPassword: undefined,
         });
         log.info("Cleared the login form");
     };
 
     const attemptLogin = (event: React.SyntheticEvent) => {
-
         event.preventDefault();
 
-        let newLoginStatus : LoginStatus = {
+        const newLoginStatus : LoginStatus = {
             progress: "InProgress",
             email: loginStatus.email,
-            password: loginStatus.password
+            password: loginStatus.password,
         };
 
-        log.info("Starting login validation.")
+        log.info("Starting login validation.");
 
         let errors = false;
 
         if (!loginStatus.email) {
-            newLoginStatus.errorEmail = "You must supply a username"
+            newLoginStatus.errorEmail = "You must supply a username";
             errors = true;
         }
 
         if (!loginStatus.password) {
-            newLoginStatus.errorPassword = "You must supply a password"
+            newLoginStatus.errorPassword = "You must supply a password";
             errors = true;
         }
 
@@ -112,15 +111,15 @@ export const Login = () => {
             return;
         }
 
-        log.info("Login validation complete.")
+        log.info("Login validation complete.");
         setLoginStatus(newLoginStatus);
 
         userLogin({
             email: newLoginStatus.email,
-            password: newLoginStatus.password
+            password: newLoginStatus.password,
         }).then(
             result => {
-                log.info('User login success!');
+                log.info("User login success!");
                 const user = loginUser(result.data.refresh, result.data.access);
                 authenticationContext?.setAuthenticationStatus(user);
                 history.push(Paths.auth.tenancy);
@@ -129,12 +128,11 @@ export const Login = () => {
                 log.warn(`User login failed - ${error}`);
                 setLoginStatus({
                     ...newLoginStatus,
-                    progress: "Error"
+                    progress: "Error",
                 });
-            })
+            });
+    };
 
-    }
-    
     return (
         <AuthenticationWrapper>
             <form onSubmit={attemptLogin}>
@@ -142,8 +140,8 @@ export const Login = () => {
                     <CardHeader title="Login to AllDay DJ" />
                     <CardContent>
                         {loginStatus.progress === "Error" && (
-                            <Box 
-                                bgcolor="error.main" 
+                            <Box
+                                bgcolor="error.main"
                                 boxShadow={3}
                                 className={classes.errorBox}
                             >
@@ -163,7 +161,7 @@ export const Login = () => {
                                         </InputAdornment>
                                     }
                                     value={loginStatus.email}
-                                    onChange={(event) => { setEmail(event.target.value) }}
+                                    onChange={(event) => { setEmail(event.target.value); }}
                                 />
                                 {loginStatus.errorEmail && (
                                     <FormHelperText error>
@@ -183,7 +181,7 @@ export const Login = () => {
                                         </InputAdornment>
                                     }
                                     value={loginStatus.password}
-                                    onChange={(event) => { setPassword(event.target.value) }}
+                                    onChange={(event) => { setPassword(event.target.value); }}
                                 />
                                 {loginStatus.errorPassword && (
                                     <FormHelperText error>
@@ -194,8 +192,8 @@ export const Login = () => {
                     </CardContent>
                     <CardActions>
                         <Box className={classes.wrapper}>
-                            <Button 
-                                color="primary" 
+                            <Button
+                                color="primary"
                                 variant="contained"
                                 type="submit"
                                 disabled={disableButtons}
@@ -206,8 +204,8 @@ export const Login = () => {
                                 <CircularProgress size={24} className={classes.loginProgress} />
                             )}
                         </Box>
-                        <Button 
-                            color="secondary" 
+                        <Button
+                            color="secondary"
                             variant="outlined"
                             onClick={clearForm}
                             disabled={disableButtons}
@@ -218,5 +216,5 @@ export const Login = () => {
                 </Card>
             </form>
         </AuthenticationWrapper>
-    )
-}
+    );
+};

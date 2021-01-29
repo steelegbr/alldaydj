@@ -1,7 +1,7 @@
 export const Paths = {
-    "auth": {
-        "login": "/login/",
-        "logout": "/logout/",
-        "tenancy": "/tenancy/"
-    }
-}
+    auth: {
+        login: "/login/",
+        logout: "/logout/",
+        tenancy: "/tenancy/",
+    },
+};

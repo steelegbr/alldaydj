@@ -11,5 +11,5 @@ export const Dummy = () => {
                 This is a stand-in component to test routing, etc.
             </Typography>
         </>
-    )
-}
+    );
+};

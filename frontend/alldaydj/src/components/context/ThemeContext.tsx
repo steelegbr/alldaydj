@@ -1,46 +1,45 @@
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
-import { getLogger } from '../../services/LoggingService';
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import React from "react";
+import { getLogger } from "../../services/LoggingService";
 
 export interface ThemeSettings {
-    darkMode: boolean
-};
+  darkMode: boolean;
+}
 
 export interface ThemeContextProps {
-    themeSettings: ThemeSettings,
-    setThemeSettings: React.Dispatch<React.SetStateAction<ThemeSettings>>
+  themeSettings: ThemeSettings;
+  setThemeSettings: React.Dispatch<React.SetStateAction<ThemeSettings>>;
 }
 
-export const ThemeContext = React.createContext<undefined | ThemeContextProps>(undefined);
+export const ThemeContext = React.createContext<undefined | ThemeContextProps>(
+  undefined,
+);
 
 interface ThemeProviderProps {
-    children: JSX.Element
+  children: Element;
 }
 
-export const ThemeProvider =  ({ children }: ThemeProviderProps) => {
-    const logger = getLogger();
-    const darkMode = localStorage.getItem("darkMode") === "true";
-    logger.info(`Dark mode setting from local storage: ${darkMode}.`)
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const logger = getLogger();
+  const darkMode = localStorage.getItem("darkMode") === "true";
+  logger.info(`Dark mode setting from local storage: ${darkMode}.`);
 
-    const [themeSettings, setThemeSettings] = React.useState<ThemeSettings>({
-        darkMode: darkMode
-    });
+  const [themeSettings, setThemeSettings] = React.useState<ThemeSettings>({
+    darkMode: darkMode,
+  });
 
-    const theme = createMuiTheme({
-       palette: {
-            type: themeSettings.darkMode ? "dark": "light"
-       } 
-    });
+  const theme = createMuiTheme({
+    palette: {
+      type: themeSettings.darkMode ? "dark" : "light",
+    },
+  });
 
-    localStorage.setItem("darkMode", themeSettings.darkMode ? "true" : "false")
-    logger.info(`Set dark mode to ${themeSettings.darkMode} in local storage.`)
+  localStorage.setItem("darkMode", themeSettings.darkMode ? "true" : "false");
+  logger.info(`Set dark mode to ${themeSettings.darkMode} in local storage.`);
 
-    return (
-        <ThemeContext.Provider value={{ themeSettings, setThemeSettings }}>
-            <MuiThemeProvider theme={theme}>
-                {children}
-            </MuiThemeProvider>
-        </ThemeContext.Provider>
-    );
-
-}
+  return (
+    <ThemeContext.Provider value={{ themeSettings, setThemeSettings }}>
+      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+    </ThemeContext.Provider>
+  );
+};

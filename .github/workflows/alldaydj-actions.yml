@@ -111,6 +111,9 @@ jobs:
       - name: Install yarn
         run: npm install yarn
         working-directory: ./frontend/alldaydj
+      - name: Install libraries with yarn
+        run: yarn
+        working-directory: ./frontend/alldaydj
       - name: ECMA Script Linting
         run: eslint '*/**/*.{js,ts,tsx}' --quiet
         working-directory: ./frontend/alldaydj

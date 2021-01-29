@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
-import { getAuthenticationStatusFromLocalStorage } from "../../services/AuthenticationService";
-import { getLogger } from "../../services/LoggingService";
+import React, { useEffect } from 'react'
+import {
+  getAuthenticationStatusFromLocalStorage,
+  refreshAccessToken
+} from '../../services/AuthenticationService'
+import { getLogger } from '../../services/LoggingService'
 
 export type AuthenticationStage =
-  | "Unauthenticated"
-  | "AccessTokenRefreshNeeded"
-  | "RefreshingAccessToken"
-  | "Authenticated";
+  | 'Unauthenticated'
+  | 'AccessTokenRefreshNeeded'
+  | 'RefreshingAccessToken'
+  | 'Authenticated';
 
 export interface AuthenticationStatus {
   stage: AuthenticationStage;
@@ -19,54 +22,47 @@ export interface AuthenticationStatus {
 
 export interface AuthenticationStatusProps {
   authenticationStatus: AuthenticationStatus;
-  setAuthenticationStatus: React.Dispatch<
-    React.SetStateAction<AuthenticationStatus>
-  >;
+  setAuthenticationStatus: React.Dispatch<React.SetStateAction<AuthenticationStatus>>;
 }
 
-export const AuthenticationContext = React.createContext<
-  undefined | AuthenticationStatusProps
->(undefined);
+export const AuthenticationContext = React.createContext<undefined | AuthenticationStatusProps>(
+  undefined
+)
 
 interface AuthenticationProviderProps {
-  children: Element;
+  children: React.ReactElement;
 }
 
-export const AuthenticationProvider = ({
-  children,
-}: AuthenticationProviderProps) => {
-  const [
-    authenticationStatus,
-    setAuthenticationStatus,
-  ] = React.useState<AuthenticationStatus>(
-    getAuthenticationStatusFromLocalStorage(),
-  );
+export const AuthenticationProvider = ({ children }: AuthenticationProviderProps): React.ReactElement => {
+  const [authenticationStatus, setAuthenticationStatus] = React.useState<AuthenticationStatus>(
+    getAuthenticationStatusFromLocalStorage()
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const log = getLogger();
-      log.debug("Checking current authentication status.");
+      const log = getLogger()
+      log.debug('Checking current authentication status.')
 
-      const newAuthStatus = getAuthenticationStatusFromLocalStorage();
+      const newAuthStatus = getAuthenticationStatusFromLocalStorage()
       if (newAuthStatus.stage !== authenticationStatus.stage) {
-        log.info(`Change of authentication stage to ${newAuthStatus.stage}.`);
-        setAuthenticationStatus(newAuthStatus);
+        log.info(`Change of authentication stage to ${newAuthStatus.stage}.`)
+        setAuthenticationStatus(newAuthStatus)
       }
-    }, Number(process.env.REACT_APP_AUTH_INTERVAL));
+    }, Number(process.env.REACT_APP_AUTH_INTERVAL))
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
-    if (authenticationStatus.stage === "AccessTokenRefreshNeeded") {
+    const log = getLogger()
+    if (authenticationStatus.stage === 'AccessTokenRefreshNeeded') {
+      refreshAccessToken(authenticationStatus.refreshToken || '', log, setAuthenticationStatus)
     }
-  }, [authenticationStatus]);
+  }, [authenticationStatus])
 
   return (
-    <AuthenticationContext.Provider
-      value={{ authenticationStatus, setAuthenticationStatus }}
-    >
+    <AuthenticationContext.Provider value={{ authenticationStatus, setAuthenticationStatus }}>
       {children}
     </AuthenticationContext.Provider>
-  );
-};
+  )
+}

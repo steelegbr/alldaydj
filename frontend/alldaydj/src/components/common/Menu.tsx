@@ -14,87 +14,81 @@ import {
   makeStyles,
   createStyles,
   Theme,
-  ListItem,
-} from "@material-ui/core";
-import {
-  Brightness4,
-  Brightness7,
-  Domain,
-  ExitToApp,
-  LibraryMusic,
-} from "@material-ui/icons";
-import MenuIcon from "@material-ui/icons/Menu";
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Paths } from "../../routing/Paths";
-import { isAuthenticated, logOut } from "../../services/AuthenticationService";
-import { AuthenticationContext } from "../context/AuthenticationContext";
-import { ThemeContext } from "../context/ThemeContext";
+  ListItem
+} from '@material-ui/core'
+import { Brightness4, Brightness7, Domain, ExitToApp, LibraryMusic } from '@material-ui/icons'
+import MenuIcon from '@material-ui/icons/Menu'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { Paths } from '../../routing/Paths'
+import { isAuthenticated, logOut } from '../../services/AuthenticationService'
+import { AuthenticationContext } from '../context/AuthenticationContext'
+import { ThemeContext } from '../context/ThemeContext'
 
-export const Menu = () => {
-  const drawerWidth = 240;
-  const theme = useTheme();
-  const history = useHistory();
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const themeContext = React.useContext(ThemeContext);
-  const authenticationContext = React.useContext(AuthenticationContext);
-  const authenticated = isAuthenticated(authenticationContext, true);
-  const currentTenant = authenticationContext?.authenticationStatus.tenant;
+export const Menu = (): React.ReactElement => {
+  const drawerWidth = 240
+  const theme = useTheme()
+  const history = useHistory()
+  const [menuOpen, setMenuOpen] = React.useState(false)
+  const themeContext = React.useContext(ThemeContext)
+  const authenticationContext = React.useContext(AuthenticationContext)
+  const authenticated = isAuthenticated(authenticationContext, true)
+  const currentTenant = authenticationContext?.authenticationStatus.tenant
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        display: "flex",
+        display: 'flex'
       },
       drawer: {
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up('sm')]: {
           width: drawerWidth,
-          flexShrink: 0,
-        },
+          flexShrink: 0
+        }
       },
       appBar: {
         marginLeft: drawerWidth,
-        zIndex: theme.zIndex.drawer + 1,
+        zIndex: theme.zIndex.drawer + 1
       },
       menuButton: {
         marginRight: theme.spacing(2),
-        [theme.breakpoints.up("sm")]: {
-          display: "none",
-        },
+        [theme.breakpoints.up('sm')]: {
+          display: 'none'
+        }
       },
       toolbar: theme.mixins.toolbar,
       drawerPaper: {
-        width: drawerWidth,
-      },
-    }),
-  );
+        width: drawerWidth
+      }
+    })
+  )
 
-  const classes = useStyles();
-  const container = window.document.body;
-  const darkMode = themeContext?.themeSettings.darkMode;
+  const classes = useStyles()
+  const container = window.document.body
+  const darkMode = themeContext?.themeSettings.darkMode
 
   const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
+    setMenuOpen(!menuOpen)
+  }
 
   const handleDarkModeToggle = () => {
     if (themeContext) {
       const newThemeSettings = {
         ...themeContext.themeSettings,
-        darkMode: !darkMode,
-      };
-      themeContext.setThemeSettings(newThemeSettings);
+        darkMode: !darkMode
+      }
+      themeContext.setThemeSettings(newThemeSettings)
     }
-  };
+  }
 
   const doLogOut = () => {
-    authenticationContext?.setAuthenticationStatus(logOut());
-  };
+    authenticationContext?.setAuthenticationStatus(logOut())
+  }
 
   const handleMenuClick = (event: React.SyntheticEvent) => {
-    const target = event.target as Element;
-    history.push(target.getAttribute("key") || "/");
-  };
+    const target = event.target as Element
+    history.push(target.getAttribute('key') || '/')
+  }
 
   const MenuContents = () => {
     return (
@@ -115,10 +109,7 @@ export const Menu = () => {
             <ListItemIcon>
               <Domain />
             </ListItemIcon>
-            <ListItemText
-              primary="Change Tenant"
-              secondary={`Current: ${currentTenant}`}
-            />
+            <ListItemText primary="Change Tenant" secondary={`Current: ${currentTenant}`} />
           </ListItem>
           <ListItem button key="Log Out" onClick={doLogOut}>
             <ListItemIcon>
@@ -128,8 +119,8 @@ export const Menu = () => {
           </ListItem>
         </List>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -173,14 +164,14 @@ export const Menu = () => {
             <Drawer
               container={container}
               variant="persistent"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               open={menuOpen}
               onClose={handleMenuToggle}
               ModalProps={{
-                keepMounted: true,
+                keepMounted: true
               }}
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerPaper
               }}
             >
               <MenuContents />
@@ -191,7 +182,7 @@ export const Menu = () => {
               variant="permanent"
               open
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerPaper
               }}
             >
               <MenuContents />
@@ -200,5 +191,5 @@ export const Menu = () => {
         </nav>
       )}
     </div>
-  );
-};
+  )
+}

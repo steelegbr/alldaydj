@@ -1,7 +1,7 @@
-import log from "loglevel";
+import log, { Logger } from 'loglevel'
 
-export const getLogger = () => {
-    const logger = log.getLogger("alldaydj");
-    logger.enableAll();
-    return logger;
-};
+export const getLogger = (): Logger => {
+  const logger = log.getLogger('alldaydj')
+  logger.enableAll()
+  return logger
+}

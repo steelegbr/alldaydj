@@ -108,7 +108,7 @@ export const TenancyChooser = (): React.ReactElement => {
           <CardContent>
             <Select value={selectedTenant} onChange={changeSelectedTenant}>
               {tenancies.map((currentTenant) => (
-                <MenuItem value={currentTenant.slug}>{currentTenant.name}</MenuItem>
+                <MenuItem value={currentTenant.slug} key={currentTenant.slug}>{currentTenant.name}</MenuItem>
               ))}
             </Select>
           </CardContent>

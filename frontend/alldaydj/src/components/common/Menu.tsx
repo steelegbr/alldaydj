@@ -6,34 +6,26 @@ import {
   Hidden,
   Drawer,
   useTheme,
-  Divider,
-  List,
-  ListItemIcon,
-  ListItemText,
   Grid,
   makeStyles,
   createStyles,
-  Theme,
-  ListItem
+  Theme
 } from '@material-ui/core'
-import { Brightness4, Brightness7, Domain, ExitToApp, LibraryMusic } from '@material-ui/icons'
+import { Brightness4, Brightness7 } from '@material-ui/icons'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { Paths } from '../../routing/Paths'
-import { isAuthenticated, logOut } from '../../services/AuthenticationService'
+import { isAuthenticated } from '../../services/AuthenticationService'
 import { AuthenticationContext } from '../context/AuthenticationContext'
 import { ThemeContext } from '../context/ThemeContext'
+import { MenuContents } from './MenuContents'
 
 export const Menu = (): React.ReactElement => {
   const drawerWidth = 240
   const theme = useTheme()
-  const history = useHistory()
   const [menuOpen, setMenuOpen] = React.useState(false)
   const themeContext = React.useContext(ThemeContext)
   const authenticationContext = React.useContext(AuthenticationContext)
   const authenticated = isAuthenticated(authenticationContext, true)
-  const currentTenant = authenticationContext?.authenticationStatus.tenant
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -79,47 +71,6 @@ export const Menu = (): React.ReactElement => {
       }
       themeContext.setThemeSettings(newThemeSettings)
     }
-  }
-
-  const doLogOut = () => {
-    authenticationContext?.setAuthenticationStatus(logOut())
-  }
-
-  const handleMenuClick = (event: React.SyntheticEvent) => {
-    const target = event.target as Element
-    history.push(target.getAttribute('key') || '/')
-  }
-
-  const MenuContents = () => {
-    return (
-      <div>
-        <div className={classes.toolbar} />
-        <Divider />
-        <List>
-          <ListItem button key="Music Library">
-            <ListItemIcon>
-              <LibraryMusic />
-            </ListItemIcon>
-            <ListItemText primary="Music Library" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem button onClick={handleMenuClick} key={Paths.auth.tenancy}>
-            <ListItemIcon>
-              <Domain />
-            </ListItemIcon>
-            <ListItemText primary="Change Tenant" secondary={`Current: ${currentTenant}`} />
-          </ListItem>
-          <ListItem button key="Log Out" onClick={doLogOut}>
-            <ListItemIcon>
-              <ExitToApp />
-            </ListItemIcon>
-            <ListItemText primary="Log Out" />
-          </ListItem>
-        </List>
-      </div>
-    )
   }
 
   return (

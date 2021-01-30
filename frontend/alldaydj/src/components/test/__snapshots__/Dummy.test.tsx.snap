@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dummy component snapshot 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Typography))
+    variant="h1"
+  >
+    Hello from AllDay DJ
+  </WithStyles(ForwardRef(Typography))>
+  <WithStyles(ForwardRef(Typography))
+    paragraph={true}
+  >
+    This is a stand-in component to test routing, etc.
+  </WithStyles(ForwardRef(Typography))>
+</Fragment>
+`;

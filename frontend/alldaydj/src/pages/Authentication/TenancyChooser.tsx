@@ -103,14 +103,14 @@ export function TenancyChooser (): React.ReactElement {
       <Card>
         <CardHeader title="Choose a Tenancy" />
         <CardContent>
-          <Select value={selectedTenant} onChange={changeSelectedTenant}>
+          <Select onChange={changeSelectedTenant} value={selectedTenant}>
             {tenancies.map((currentTenant) => (
-              <MenuItem value={currentTenant.slug} key={currentTenant.slug}>{currentTenant.name}</MenuItem>
+              <MenuItem key={currentTenant.slug} value={currentTenant.slug}>{currentTenant.name}</MenuItem>
             ))}
           </Select>
         </CardContent>
         <CardActions>
-          <Button color="primary" variant="contained" type="submit" disabled={buttonDisabled}>
+          <Button color="primary" disabled={buttonDisabled} type="submit" variant="contained">
             {'Choose'}
           </Button>
         </CardActions>

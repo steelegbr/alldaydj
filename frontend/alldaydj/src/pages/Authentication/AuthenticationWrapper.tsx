@@ -30,8 +30,8 @@ export function AuthenticationWrapper ({ children }: React.PropsWithChildren<Pro
   return (
     <Box className={classes.bgImage}>
       <Box className={classes.toolbar}/>
-      <Grid container justify="center" className={classes.loginBox}>
-        <Grid item xs={12} md={4}>
+      <Grid className={classes.loginBox} container justify="center">
+        <Grid item md={4} xs={12}>
           {children}
         </Grid>
       </Grid>

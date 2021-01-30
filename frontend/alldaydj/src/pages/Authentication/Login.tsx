@@ -156,11 +156,11 @@ export function Login (): React.ReactElement {
   function loginButton () {
     return (
       <Box className={classes.wrapper}>
-        <Button color="primary" variant="contained" type="submit" disabled={disableButtons}>
+        <Button color="primary" disabled={disableButtons} type="submit" variant="contained">
           {'Login'}
         </Button>
         {loginStatus.progress === 'InProgress' && (
-          <CircularProgress size={24} className={classes.loginProgress} />
+          <CircularProgress className={classes.loginProgress} size={24} />
         )}
       </Box>
     )
@@ -171,16 +171,16 @@ export function Login (): React.ReactElement {
       <FormControl fullWidth>
         <InputLabel htmlFor="email">{'Username (e-mail):'}</InputLabel>
         <Input
-          id="email"
-          type="email"
           error={loginStatus.errorEmail !== undefined}
+          id="email"
+          onChange={doSetEmail}
           startAdornment={
             <InputAdornment position="start">
               <Email />
             </InputAdornment>
           }
+          type="email"
           value={loginStatus.email}
-          onChange={doSetEmail}
         />
         {loginStatus.errorEmail && (
           <FormHelperText error>{loginStatus.errorEmail}</FormHelperText>
@@ -194,16 +194,16 @@ export function Login (): React.ReactElement {
       <FormControl fullWidth>
         <InputLabel htmlFor="password">{'Password:'}</InputLabel>
         <Input
-          id="password"
-          type="password"
           error={loginStatus.errorPassword !== undefined}
+          id="password"
+          onChange={doSetPassword}
           startAdornment={
             <InputAdornment position="start">
               <Lock />
             </InputAdornment>
           }
+          type="password"
           value={loginStatus.password}
-          onChange={doSetPassword}
         />
         {loginStatus.errorPassword && (
           <FormHelperText error>{loginStatus.errorPassword}</FormHelperText>
@@ -230,9 +230,9 @@ export function Login (): React.ReactElement {
           {loginButton()}
           <Button
             color="secondary"
-            variant="outlined"
-            onClick={clearForm}
             disabled={disableButtons}
+            onClick={clearForm}
+            variant="outlined"
           >
             {'Clear'}
           </Button>

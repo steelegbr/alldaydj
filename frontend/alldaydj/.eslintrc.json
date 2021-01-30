@@ -9,6 +9,9 @@
       {
         "max": 2
       }
+    ],
+    "react/jsx-sort-props": [
+      "error"
     ]
   },
   "env": {

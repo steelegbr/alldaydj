@@ -40,7 +40,7 @@ export function MenuContents (): React.ReactElement {
 
   function menuItemTenantChanger () {
     return (
-      <ListItem button onClick={changeTenant} key={Paths.auth.tenancy}>
+      <ListItem button key={Paths.auth.tenancy} onClick={changeTenant}>
         <ListItemIcon>
           <Domain />
         </ListItemIcon>

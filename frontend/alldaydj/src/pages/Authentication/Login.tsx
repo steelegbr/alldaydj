@@ -92,6 +92,14 @@ export function Login (): React.ReactElement {
     log.info('Cleared the login form')
   }
 
+  function doSetEmail (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
+    setEmail(event.target.value)
+  }
+
+  function doSetPassword (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
+    setPassword(event.target.value)
+  }
+
   function attemptLogin (event: React.SyntheticEvent) {
     event.preventDefault()
 
@@ -169,9 +177,7 @@ export function Login (): React.ReactElement {
                   </InputAdornment>
                 }
                 value={loginStatus.email}
-                onChange={(event) => {
-                  setEmail(event.target.value)
-                }}
+                onChange={doSetEmail}
               />
               {loginStatus.errorEmail && (
                 <FormHelperText error>{loginStatus.errorEmail}</FormHelperText>
@@ -189,9 +195,7 @@ export function Login (): React.ReactElement {
                   </InputAdornment>
                 }
                 value={loginStatus.password}
-                onChange={(event) => {
-                  setPassword(event.target.value)
-                }}
+                onChange={doSetPassword}
               />
               {loginStatus.errorPassword && (
                 <FormHelperText error>{loginStatus.errorPassword}</FormHelperText>

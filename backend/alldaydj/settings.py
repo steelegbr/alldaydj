@@ -36,6 +36,7 @@ SHARED_APPS = [
     "django_celery_results",
     "colorfield",
     "django_nose",
+    "corsheaders",
 ]
 
 TENANT_APPS = [
@@ -56,6 +57,7 @@ AUTH_USER_MODEL = "users.TenantUser"
 SESSION_COOKIE_DOMAIN = f".{environ.get('ADDJ_USERS_DOMAIN')}"
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django_tenants.middleware.main.TenantMainMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -131,7 +133,7 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-ALLOWED_HOSTS = [f".{environ.get('ADDJ_USERS_DOMAIN')}"]
+ALLOWED_HOSTS = [f".{environ.get('ADDJ_USERS_DOMAIN')}", "localhost"]
 
 # Localisation
 
@@ -203,3 +205,10 @@ ADDJ_DEFAULT_PERMISSIONS = [
 
 ADDJ_COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
 ADDJ_OGG_QUALITY = int(environ.get("ADDJ_OGG_QUALITY", "4"))
+
+# CORS
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https?://localhost:\d+$",
+    f"^https?://.*{environ.get('ADDJ_USERS_DOMAIN')}$",
+]

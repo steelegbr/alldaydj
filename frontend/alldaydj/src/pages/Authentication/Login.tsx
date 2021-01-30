@@ -53,7 +53,7 @@ interface LoginStatus {
   password: string;
 }
 
-export const Login = (): React.ReactElement => {
+export function Login (): React.ReactElement {
   const log = getLogger()
   const history = useHistory()
   const classes = useStyles()

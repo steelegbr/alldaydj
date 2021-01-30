@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const AuthenticationWrapper: React.FC = ({ children }) => {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props {}
+
+export function AuthenticationWrapper ({ children }: React.PropsWithChildren<Props>): React.ReactElement {
   const classes = useStyles()
 
   return (

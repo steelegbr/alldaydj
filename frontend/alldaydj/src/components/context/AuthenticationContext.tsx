@@ -33,7 +33,7 @@ interface AuthenticationProviderProps {
   children: React.ReactElement;
 }
 
-export const AuthenticationProvider = ({ children }: AuthenticationProviderProps): React.ReactElement => {
+export function AuthenticationProvider ({ children }: AuthenticationProviderProps): React.ReactElement {
   const [authenticationStatus, setAuthenticationStatus] = React.useState<AuthenticationStatus>(
     getAuthenticationStatusFromLocalStorage()
   )

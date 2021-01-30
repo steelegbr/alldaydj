@@ -6,7 +6,8 @@ import { TenancyChooser } from '../pages/Authentication/TenancyChooser'
 import { Paths } from './Paths'
 import { PrivateRoute } from './PrivateRoute'
 
-export const ApplicationRouter = () : React.ReactElement => (
+export function ApplicationRouter () : React.ReactElement {
+  return (
     <Switch>
       <Route path={Paths.auth.login}>
         <Login />
@@ -18,4 +19,5 @@ export const ApplicationRouter = () : React.ReactElement => (
         <Dummy />
       </PrivateRoute>
     </Switch>
-)
+  )
+}

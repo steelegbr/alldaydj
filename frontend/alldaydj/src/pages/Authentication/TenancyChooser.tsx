@@ -28,7 +28,7 @@ const useStyles = makeStyles(() =>
   })
 )
 
-export const TenancyChooser = (): React.ReactElement => {
+export function TenancyChooser (): React.ReactElement {
   const log = getLogger()
   const history = useHistory()
   const classes = useStyles()

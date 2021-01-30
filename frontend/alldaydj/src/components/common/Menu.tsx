@@ -19,7 +19,7 @@ import { AuthenticationContext } from '../context/AuthenticationContext'
 import { ThemeContext } from '../context/ThemeContext'
 import { MenuContents } from './MenuContents'
 
-export const Menu = (): React.ReactElement => {
+export function Menu (): React.ReactElement {
   const drawerWidth = 240
   const theme = useTheme()
   const [menuOpen, setMenuOpen] = React.useState(false)

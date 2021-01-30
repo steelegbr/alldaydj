@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const MenuContents = (): React.ReactElement => {
+export function MenuContents (): React.ReactElement {
   const history = useHistory()
   const classes = useStyles()
   const authenticationContext = React.useContext(AuthenticationContext)

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const Layout = () : React.ReactElement => {
+export function Layout () : React.ReactElement {
   const classes = useStyles()
 
   return (

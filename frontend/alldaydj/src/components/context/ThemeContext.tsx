@@ -17,7 +17,7 @@ interface ThemeProviderProps {
   children: React.ReactElement;
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps): React.ReactElement => {
+export function ThemeProvider ({ children }: ThemeProviderProps): React.ReactElement {
   const logger = getLogger()
   const darkMode = localStorage.getItem('darkMode') === 'true'
   logger.info(`Dark mode setting from local storage: ${darkMode}.`)

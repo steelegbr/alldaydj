@@ -14,3 +14,8 @@ enabled = true
 [[analyzers]]
 name = "javascript"
 enabled = true
+
+  [analyzers.meta]
+  plugins = ["react"]
+  dialect = "typescript"
+  environment = ["jest"]

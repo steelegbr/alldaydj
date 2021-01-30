@@ -27,11 +27,11 @@ export default function MenuContents (): React.ReactElement {
 
   function menuItemLibrary () {
     return (
-      <ListItem key="Music Library" button>
+      <ListItem key={'Music Library'} button>
         <ListItemIcon>
           <LibraryMusic />
         </ListItemIcon>
-        <ListItemText primary="Music Library" />
+        <ListItemText primary={'Music Library'} />
       </ListItem>
     )
   }
@@ -42,18 +42,18 @@ export default function MenuContents (): React.ReactElement {
         <ListItemIcon>
           <Domain />
         </ListItemIcon>
-        <ListItemText primary="Change Tenant" secondary={`Current: ${currentTenant}`} />
+        <ListItemText primary={'Change Tenant'} secondary={`Current: ${currentTenant}`} />
       </ListItem>
     )
   }
 
   function menuItemLogout () {
     return (
-      <ListItem key="Log Out" button onClick={doLogOut}>
+      <ListItem key={'Log Out'} button onClick={doLogOut}>
         <ListItemIcon>
           <ExitToApp />
         </ListItemIcon>
-        <ListItemText primary="Log Out" />
+        <ListItemText primary={'Log Out'} />
       </ListItem>
     )
   }

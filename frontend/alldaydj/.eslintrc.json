@@ -37,6 +37,20 @@
         "ts": "never",
         "tsx": "never"
       }
+    ],
+    "react/jsx-no-literals": [
+      "error",
+      {
+        "noStrings": false,
+        "ignoreProps": true
+      }
+    ],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "always",
+        "children": "always"
+      }
     ]
   },
   "env": {

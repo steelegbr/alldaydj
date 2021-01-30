@@ -29,7 +29,7 @@ export default function AuthenticationWrapper
   return (
     <Box className={classes.bgImage}>
       <Box className={classes.toolbar}/>
-      <Grid className={classes.loginBox} container justify="center">
+      <Grid className={classes.loginBox} container justify={'center'}>
         <Grid item md={4} xs={12}>
           {children}
         </Grid>

@@ -86,10 +86,10 @@ export default function TenancyChooser (): React.ReactElement {
   function errorCard () {
     return (
       <Card>
-        <CardHeader title="Choose a Tenancy" />
+        <CardHeader title={'Choose a Tenancy'} />
         <CardContent>
-          <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-            Failed to load the list of tenancies to select from.
+          <Box bgcolor={'error.main'} boxShadow={3} className={classes.errorBox}>
+            {'Failed to load the list of tenancies to select from.'}
           </Box>
         </CardContent>
       </Card>
@@ -99,7 +99,7 @@ export default function TenancyChooser (): React.ReactElement {
   function chooserCard () {
     return (
       <Card>
-        <CardHeader title="Choose a Tenancy" />
+        <CardHeader title={'Choose a Tenancy'} />
         <CardContent>
           <Select onChange={changeSelectedTenant} value={selectedTenant}>
             {tenancies.map((currentTenant) => (
@@ -110,8 +110,8 @@ export default function TenancyChooser (): React.ReactElement {
           </Select>
         </CardContent>
         <CardActions>
-          <Button color="primary" disabled={buttonDisabled} type="submit" variant="contained">
-            Choose
+          <Button color={'primary'} disabled={buttonDisabled} type={'submit'} variant={'contained'}>
+            {'Choose'}
           </Button>
         </CardActions>
       </Card>

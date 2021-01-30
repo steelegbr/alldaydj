@@ -15,7 +15,7 @@ export default function ApplicationRouter () : React.ReactElement {
       <PrivateRoute path={Paths.auth.tenancy}>
         <TenancyChooser />
       </PrivateRoute>
-      <PrivateRoute path="/">
+      <PrivateRoute path={'/'}>
         <Dummy />
       </PrivateRoute>
     </Switch>

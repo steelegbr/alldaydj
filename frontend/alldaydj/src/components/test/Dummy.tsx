@@ -4,11 +4,11 @@ import React from 'react'
 export default function Dummy (): React.ReactElement {
   return (
     <>
-      <Typography variant="h1">
-        Hello from AllDay DJ
+      <Typography variant={'h1'}>
+        {'Hello from AllDay DJ'}
       </Typography>
       <Typography paragraph>
-        This is a stand-in component to test routing, etc.
+        {'This is a stand-in component to test routing, etc.'}
       </Typography>
     </>
   )

@@ -154,8 +154,8 @@ export default function Login (): React.ReactElement {
   function loginButton () {
     return (
       <Box className={classes.wrapper}>
-        <Button color="primary" disabled={disableButtons} type="submit" variant="contained">
-          Login
+        <Button color={'primary'} disabled={disableButtons} type={'submit'} variant={'contained'}>
+          {'Login'}
         </Button>
         {loginStatus.progress === 'InProgress' && (
           <CircularProgress className={classes.loginProgress} size={24} />
@@ -167,19 +167,19 @@ export default function Login (): React.ReactElement {
   function emailInput () {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor="email">
-Username (e-mail):
+        <InputLabel htmlFor={'email'}>
+{'Username (e-mail):'}
 </InputLabel>
         <Input
           error={loginStatus.errorEmail !== undefined}
-          id="email"
+          id={'email'}
           onChange={doSetEmail}
           startAdornment={
-            <InputAdornment position="start">
+            <InputAdornment position={'start'}>
               <Email />
             </InputAdornment>
           }
-          type="email"
+          type={'email'}
           value={loginStatus.email}
         />
         {loginStatus.errorEmail && (
@@ -194,19 +194,19 @@ Username (e-mail):
   function passwordInput () {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor="password">
-Password:
+        <InputLabel htmlFor={'password'}>
+{'Password:'}
 </InputLabel>
         <Input
           error={loginStatus.errorPassword !== undefined}
-          id="password"
+          id={'password'}
           onChange={doSetPassword}
           startAdornment={
-            <InputAdornment position="start">
+            <InputAdornment position={'start'}>
               <Lock />
             </InputAdornment>
           }
-          type="password"
+          type={'password'}
           value={loginStatus.password}
         />
         {loginStatus.errorPassword && (
@@ -221,10 +221,10 @@ Password:
   function loginCard () {
     return (
       <Card>
-        <CardHeader title="Login to AllDay DJ" />
+        <CardHeader title={'Login to AllDay DJ'} />
         <CardContent>
           {loginStatus.progress === 'Error' && (
-            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
+            <Box bgcolor={'error.main'} boxShadow={3} className={classes.errorBox}>
               {`Login failed. Please check your username and password and try again. If you continue
               to see this error, please get in touch with support.`}
             </Box>
@@ -235,12 +235,12 @@ Password:
         <CardActions>
           {loginButton()}
           <Button
-            color="secondary"
+            color={'secondary'}
             disabled={disableButtons}
             onClick={clearForm}
-            variant="outlined"
+            variant={'outlined'}
           >
-            Clear
+            {'Clear'}
           </Button>
         </CardActions>
       </Card>

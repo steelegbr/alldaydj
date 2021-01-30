@@ -77,10 +77,10 @@ export default function Menu (): React.ReactElement {
       <Grid item>
         {authenticated && (
           <IconButton
-            aria-label="open menu"
+            aria-label={'open menu'}
             className={classes.menuButton}
-            color="inherit"
-            edge="start"
+            color={'inherit'}
+            edge={'start'}
             onClick={handleMenuToggle}
           >
             <MenuIcon />
@@ -93,8 +93,8 @@ export default function Menu (): React.ReactElement {
   function menuHeader () {
     return (
       <Grid item>
-        <Typography noWrap variant="h6">
-          AllDay DJ
+        <Typography noWrap variant={'h6'}>
+          {'AllDay DJ'}
         </Typography>
       </Grid>
     )
@@ -104,9 +104,9 @@ export default function Menu (): React.ReactElement {
     return (
       <Grid item>
         <IconButton
-          arial-label="toggle light / dark mode"
-          color="inherit"
-          edge="end"
+          arial-label={'toggle light / dark mode'}
+          color={'inherit'}
+          edge={'end'}
           onClick={handleDarkModeToggle}
         >
           {darkMode ? <Brightness4 /> : <Brightness7 />}
@@ -118,7 +118,7 @@ export default function Menu (): React.ReactElement {
   function headerToolbar () {
     return (
       <Toolbar>
-        <Grid alignItems="center" container justify="space-between">
+        <Grid alignItems={'center'} container justify={'space-between'}>
           {menuToggleButton()}
           {menuHeader()}
           {menuDarkModeToggle()}
@@ -129,7 +129,7 @@ export default function Menu (): React.ReactElement {
 
   function drawerWide () {
     return (
-      <Hidden implementation="css" smUp>
+      <Hidden implementation={'css'} smUp>
         <Drawer
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           classes={{
@@ -141,7 +141,7 @@ export default function Menu (): React.ReactElement {
           }}
           onClose={handleMenuToggle}
           open={menuOpen}
-          variant="persistent"
+          variant={'persistent'}
         >
           <MenuContents />
         </Drawer>
@@ -151,13 +151,13 @@ export default function Menu (): React.ReactElement {
 
   function drawerMobile () {
     return (
-      <Hidden implementation="css" xsDown>
+      <Hidden implementation={'css'} xsDown>
         <Drawer
           classes={{
             paper: classes.drawerPaper
           }}
           open
-          variant="permanent"
+          variant={'permanent'}
         >
           <MenuContents />
         </Drawer>
@@ -167,11 +167,11 @@ export default function Menu (): React.ReactElement {
 
   return (
     <div>
-      <AppBar className={classes.appBar} position="fixed">
+      <AppBar className={classes.appBar} position={'fixed'}>
         {headerToolbar()}
       </AppBar>
       {authenticated && (
-        <nav aria-label="main menu" className={classes.drawer}>
+        <nav aria-label={'main menu'} className={classes.drawer}>
           {drawerWide()}
           {drawerMobile()}
         </nav>

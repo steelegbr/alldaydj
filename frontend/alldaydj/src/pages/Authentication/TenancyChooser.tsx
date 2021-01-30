@@ -17,18 +17,16 @@ import { getTenancies } from '../../api/requests/Authentication'
 import { AuthenticationContext } from '../../components/context/AuthenticationContext'
 import { setTenant } from '../../services/AuthenticationService'
 import { getLogger } from '../../services/LoggingService'
-import { AuthenticationWrapper } from './AuthenticationWrapper'
+import AuthenticationWrapper from './AuthenticationWrapper'
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    errorBox: {
-      marginBottom: 10,
-      padding: 5
-    }
-  })
-)
+const useStyles = makeStyles(() => createStyles({
+  errorBox: {
+    marginBottom: 10,
+    padding: 5
+  }
+}))
 
-export function TenancyChooser (): React.ReactElement {
+export default function TenancyChooser (): React.ReactElement {
   const log = getLogger()
   const history = useHistory()
   const classes = useStyles()
@@ -46,8 +44,8 @@ export function TenancyChooser (): React.ReactElement {
           setError('')
           setTenancies(response.data)
         },
-        (error) => {
-          log.error(error)
+        (tokenUpdateError) => {
+          log.error(tokenUpdateError)
           setError('Failed to load the list of tenancies for the current user.')
         }
       )
@@ -91,7 +89,7 @@ export function TenancyChooser (): React.ReactElement {
         <CardHeader title="Choose a Tenancy" />
         <CardContent>
           <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-            {'Failed to load the list of tenancies to select from.'}
+            Failed to load the list of tenancies to select from.
           </Box>
         </CardContent>
       </Card>
@@ -113,7 +111,7 @@ export function TenancyChooser (): React.ReactElement {
         </CardContent>
         <CardActions>
           <Button color="primary" disabled={buttonDisabled} type="submit" variant="contained">
-            {'Choose'}
+            Choose
           </Button>
         </CardActions>
       </Card>

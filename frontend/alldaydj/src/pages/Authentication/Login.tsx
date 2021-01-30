@@ -22,26 +22,24 @@ import { AuthenticationContext } from '../../components/context/AuthenticationCo
 import { Paths } from '../../routing/Paths'
 import { loginUser } from '../../services/AuthenticationService'
 import { getLogger } from '../../services/LoggingService'
-import { AuthenticationWrapper } from './AuthenticationWrapper'
+import AuthenticationWrapper from './AuthenticationWrapper'
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    loginProgress: {
-      position: 'absolute',
-      left: '50%',
-      top: '50%',
-      marginLeft: -12,
-      marginTop: -12
-    },
-    wrapper: {
-      position: 'relative'
-    },
-    errorBox: {
-      marginBottom: 10,
-      padding: 5
-    }
-  })
-)
+const useStyles = makeStyles(() => createStyles({
+  loginProgress: {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    marginLeft: -12,
+    marginTop: -12
+  },
+  wrapper: {
+    position: 'relative'
+  },
+  errorBox: {
+    marginBottom: 10,
+    padding: 5
+  }
+}))
 
 type LoginProgress = 'Idle' | 'Error' | 'InProgress' | 'Failed';
 
@@ -53,7 +51,7 @@ interface LoginStatus {
   password: string;
 }
 
-export function Login (): React.ReactElement {
+export default function Login (): React.ReactElement {
   const log = getLogger()
   const history = useHistory()
   const classes = useStyles()
@@ -69,7 +67,7 @@ export function Login (): React.ReactElement {
     setLoginStatus({
       ...loginStatus,
       errorEmail: undefined,
-      email: email
+      email
     })
   }
 
@@ -77,7 +75,7 @@ export function Login (): React.ReactElement {
     setLoginStatus({
       ...loginStatus,
       errorPassword: undefined,
-      password: password
+      password
     })
   }
 
@@ -157,7 +155,7 @@ export function Login (): React.ReactElement {
     return (
       <Box className={classes.wrapper}>
         <Button color="primary" disabled={disableButtons} type="submit" variant="contained">
-          {'Login'}
+          Login
         </Button>
         {loginStatus.progress === 'InProgress' && (
           <CircularProgress className={classes.loginProgress} size={24} />
@@ -170,7 +168,7 @@ export function Login (): React.ReactElement {
     return (
       <FormControl fullWidth>
         <InputLabel htmlFor="email">
-{'Username (e-mail):'}
+Username (e-mail):
 </InputLabel>
         <Input
           error={loginStatus.errorEmail !== undefined}
@@ -197,7 +195,7 @@ export function Login (): React.ReactElement {
     return (
       <FormControl fullWidth>
         <InputLabel htmlFor="password">
-{'Password:'}
+Password:
 </InputLabel>
         <Input
           error={loginStatus.errorPassword !== undefined}
@@ -242,7 +240,7 @@ export function Login (): React.ReactElement {
             onClick={clearForm}
             variant="outlined"
           >
-            {'Clear'}
+            Clear
           </Button>
         </CardActions>
       </Card>

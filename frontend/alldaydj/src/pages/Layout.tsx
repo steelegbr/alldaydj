@@ -1,15 +1,13 @@
 import { createStyles, CssBaseline, makeStyles, Theme } from '@material-ui/core'
 import React from 'react'
-import { Menu } from '../components/common/Menu'
-import { ApplicationRouter } from '../routing/ApplicationRouter'
+import Menu from '../components/common/Menu'
+import ApplicationRouter from '../routing/ApplicationRouter'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    toolbar: theme.mixins.toolbar
-  })
-)
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: theme.mixins.toolbar
+}))
 
-export function Layout () : React.ReactElement {
+export default function Layout () : React.ReactElement {
   const classes = useStyles()
 
   return (

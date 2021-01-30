@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import log, { Logger } from 'loglevel'
 
 export const getLogger = (): Logger => {

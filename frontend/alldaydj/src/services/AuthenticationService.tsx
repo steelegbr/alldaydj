@@ -1,20 +1,18 @@
+import jwtDecode from 'jwt-decode'
+import { Logger } from 'loglevel'
+import React from 'react'
 import {
   AuthenticationStatus,
   AuthenticationStatusProps
 } from '../components/context/AuthenticationContext'
-import jwtDecode from 'jwt-decode'
 import { getLogger } from './LoggingService'
 import { postRefreshToken } from '../api/requests/Authentication'
-import { Logger } from 'loglevel'
-import React from 'react'
 
 interface JwtToken {
   exp: number;
 }
 
-const calculateExpiry = (token: JwtToken) => {
-  return new Date(token.exp * 1000)
-}
+const calculateExpiry = (token: JwtToken) => new Date(token.exp * 1000)
 
 export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus => {
   const refreshToken = localStorage.getItem('refreshToken')
@@ -26,7 +24,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
 
   const authenticationStatus: AuthenticationStatus = {
     stage: 'Unauthenticated',
-    tenant: tenant
+    tenant
   }
 
   if (refreshToken) {
@@ -76,9 +74,9 @@ export const loginUser = (refreshToken: string, accessToken: string): Authentica
 
   const authenticationStatus: AuthenticationStatus = {
     stage: 'Authenticated',
-    refreshToken: refreshToken,
+    refreshToken,
     refreshTokenExpiry: refreshExpiry,
-    accessToken: accessToken,
+    accessToken,
     accessTokenExpiry: accessExpiry
   }
 
@@ -106,7 +104,7 @@ export const setTenant = (
   localStorage.setItem('tenant', tenant)
   return {
     ...authenticationStatus,
-    tenant: tenant
+    tenant
   }
 }
 

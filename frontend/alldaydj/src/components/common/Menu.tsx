@@ -17,43 +17,42 @@ import React from 'react'
 import { isAuthenticated } from '../../services/AuthenticationService'
 import { AuthenticationContext } from '../context/AuthenticationContext'
 import { ThemeContext } from '../context/ThemeContext'
-import { MenuContents } from './MenuContents'
+import MenuContents from './MenuContents'
 
-export function Menu (): React.ReactElement {
-  const drawerWidth = 240
+const drawerWidth = 240
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    display: 'flex'
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0
+    }
+  },
+  appBar: {
+    marginLeft: drawerWidth,
+    zIndex: theme.zIndex.drawer + 1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
+    }
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth
+  }
+}))
+
+export default function Menu (): React.ReactElement {
   const theme = useTheme()
   const [menuOpen, setMenuOpen] = React.useState(false)
   const themeContext = React.useContext(ThemeContext)
   const authenticationContext = React.useContext(AuthenticationContext)
   const authenticated = isAuthenticated(authenticationContext, true)
-
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        display: 'flex'
-      },
-      drawer: {
-        [theme.breakpoints.up('sm')]: {
-          width: drawerWidth,
-          flexShrink: 0
-        }
-      },
-      appBar: {
-        marginLeft: drawerWidth,
-        zIndex: theme.zIndex.drawer + 1
-      },
-      menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-          display: 'none'
-        }
-      },
-      toolbar: theme.mixins.toolbar,
-      drawerPaper: {
-        width: drawerWidth
-      }
-    })
-  )
 
   const classes = useStyles()
   const container = window.document.body
@@ -73,7 +72,7 @@ export function Menu (): React.ReactElement {
     }
   }
 
-  function menuToggleButton (authenticated: boolean) {
+  function menuToggleButton () {
     return (
       <Grid item>
         {authenticated && (
@@ -95,7 +94,7 @@ export function Menu (): React.ReactElement {
     return (
       <Grid item>
         <Typography noWrap variant="h6">
-          {'AllDay DJ'}
+          AllDay DJ
         </Typography>
       </Grid>
     )
@@ -120,7 +119,7 @@ export function Menu (): React.ReactElement {
     return (
       <Toolbar>
         <Grid alignItems="center" container justify="space-between">
-          {menuToggleButton(authenticated)}
+          {menuToggleButton()}
           {menuHeader()}
           {menuDarkModeToggle()}
         </Grid>
@@ -132,14 +131,14 @@ export function Menu (): React.ReactElement {
     return (
       <Hidden implementation="css" smUp>
         <Drawer
-          ModalProps={{
-            keepMounted: true
-          }}
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           classes={{
             paper: classes.drawerPaper
           }}
           container={container}
+          ModalProps={{
+            keepMounted: true
+          }}
           onClose={handleMenuToggle}
           open={menuOpen}
           variant="persistent"

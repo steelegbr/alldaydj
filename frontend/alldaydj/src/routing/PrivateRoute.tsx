@@ -6,7 +6,7 @@ import { isAuthenticated } from '../services/AuthenticationService'
 import { getLogger } from '../services/LoggingService'
 import { Paths } from './Paths'
 
-export function PrivateRoute (props: RouteProps): React.ReactElement {
+export default function PrivateRoute (props: RouteProps): React.ReactElement {
   const authenticationContext = React.useContext(AuthenticationContext)
   const authenticated = isAuthenticated(authenticationContext)
   const log = getLogger()

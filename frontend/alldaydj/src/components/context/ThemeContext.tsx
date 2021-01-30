@@ -23,7 +23,7 @@ export function ThemeProvider ({ children }: ThemeProviderProps): React.ReactEle
   logger.info(`Dark mode setting from local storage: ${darkMode}.`)
 
   const [themeSettings, setThemeSettings] = React.useState<ThemeSettings>({
-    darkMode: darkMode
+    darkMode
   })
 
   const theme = createMuiTheme({

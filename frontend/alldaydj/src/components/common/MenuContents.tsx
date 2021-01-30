@@ -6,13 +6,11 @@ import { Paths } from '../../routing/Paths'
 import { logOut } from '../../services/AuthenticationService'
 import { AuthenticationContext } from '../context/AuthenticationContext'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    toolbar: theme.mixins.toolbar
-  })
-)
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: theme.mixins.toolbar
+}))
 
-export function MenuContents (): React.ReactElement {
+export default function MenuContents (): React.ReactElement {
   const history = useHistory()
   const classes = useStyles()
   const authenticationContext = React.useContext(AuthenticationContext)
@@ -29,7 +27,7 @@ export function MenuContents (): React.ReactElement {
 
   function menuItemLibrary () {
     return (
-      <ListItem button key="Music Library">
+      <ListItem key="Music Library" button>
         <ListItemIcon>
           <LibraryMusic />
         </ListItemIcon>
@@ -40,7 +38,7 @@ export function MenuContents (): React.ReactElement {
 
   function menuItemTenantChanger () {
     return (
-      <ListItem button key={Paths.auth.tenancy} onClick={changeTenant}>
+      <ListItem key={Paths.auth.tenancy} button onClick={changeTenant}>
         <ListItemIcon>
           <Domain />
         </ListItemIcon>
@@ -51,7 +49,7 @@ export function MenuContents (): React.ReactElement {
 
   function menuItemLogout () {
     return (
-      <ListItem button key="Log Out" onClick={doLogOut}>
+      <ListItem key="Log Out" button onClick={doLogOut}>
         <ListItemIcon>
           <ExitToApp />
         </ListItemIcon>

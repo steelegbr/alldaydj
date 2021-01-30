@@ -33,7 +33,8 @@ interface AuthenticationProviderProps {
   children: React.ReactElement;
 }
 
-export function AuthenticationProvider ({ children }: AuthenticationProviderProps): React.ReactElement {
+export default function AuthenticationProvider
+({ children }: AuthenticationProviderProps): React.ReactElement {
   const [authenticationStatus, setAuthenticationStatus] = React.useState<AuthenticationStatus>(
     getAuthenticationStatusFromLocalStorage()
   )
@@ -51,7 +52,7 @@ export function AuthenticationProvider ({ children }: AuthenticationProviderProp
     }, Number(process.env.REACT_APP_AUTH_INTERVAL))
 
     return () => clearInterval(interval)
-  }, [])
+  }, [authenticationStatus.stage])
 
   useEffect(() => {
     const log = getLogger()

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
 import { AuthenticationContext } from '../components/context/AuthenticationContext'

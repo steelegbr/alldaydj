@@ -12,6 +12,9 @@
     ],
     "react/jsx-sort-props": [
       "error"
+    ],
+    "react/jsx-props-no-spreading": [
+      "error"
     ]
   },
   "env": {

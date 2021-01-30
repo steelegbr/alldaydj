@@ -15,6 +15,15 @@
     ],
     "react/jsx-props-no-spreading": [
       "error"
+    ],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".tsx",
+          ".ts"
+        ]
+      }
     ]
   },
   "env": {

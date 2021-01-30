@@ -153,12 +153,12 @@ export const Login = (): React.ReactElement => {
           <CardContent>
             {loginStatus.progress === 'Error' && (
               <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-                Login failed. Please check your username and password and try again. If you continue
-                to see this error, please get in touch with support.
+                {`Login failed. Please check your username and password and try again. If you continue
+                to see this error, please get in touch with support.`}
               </Box>
             )}
             <FormControl fullWidth>
-              <InputLabel htmlFor="email">Username (e-mail):</InputLabel>
+              <InputLabel htmlFor="email">{'Username (e-mail):'}</InputLabel>
               <Input
                 id="email"
                 type="email"
@@ -178,7 +178,7 @@ export const Login = (): React.ReactElement => {
               )}
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel htmlFor="password">Password:</InputLabel>
+              <InputLabel htmlFor="password">{'Password:'}</InputLabel>
               <Input
                 id="password"
                 type="password"
@@ -201,7 +201,7 @@ export const Login = (): React.ReactElement => {
           <CardActions>
             <Box className={classes.wrapper}>
               <Button color="primary" variant="contained" type="submit" disabled={disableButtons}>
-                Login
+                {'Login'}
               </Button>
               {loginStatus.progress === 'InProgress' && (
                 <CircularProgress size={24} className={classes.loginProgress} />
@@ -213,7 +213,7 @@ export const Login = (): React.ReactElement => {
               onClick={clearForm}
               disabled={disableButtons}
             >
-              Clear
+              {'Clear'}
             </Button>
           </CardActions>
         </Card>

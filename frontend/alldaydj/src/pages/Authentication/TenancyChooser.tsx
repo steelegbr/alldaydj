@@ -92,7 +92,7 @@ export const TenancyChooser = (): React.ReactElement => {
           <CardHeader title="Choose a Tenancy" />
           <CardContent>
             <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-              Failed to load the list of tenancies to select from.
+              {'Failed to load the list of tenancies to select from.'}
             </Box>
           </CardContent>
         </Card>
@@ -114,7 +114,7 @@ export const TenancyChooser = (): React.ReactElement => {
           </CardContent>
           <CardActions>
             <Button color="primary" variant="contained" type="submit" disabled={buttonDisabled}>
-              Choose
+              {'Choose'}
             </Button>
           </CardActions>
         </Card>

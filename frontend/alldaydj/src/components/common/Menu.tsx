@@ -93,7 +93,7 @@ export const Menu = (): React.ReactElement => {
             </Grid>
             <Grid item>
               <Typography variant="h6" noWrap>
-                AllDay DJ
+                {'AllDay DJ'}
               </Typography>
             </Grid>
             <Grid item>

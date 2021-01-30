@@ -24,6 +24,9 @@
           ".ts"
         ]
       }
+    ],
+    "react/jsx-one-expression-per-line": [
+      "error"
     ]
   },
   "env": {

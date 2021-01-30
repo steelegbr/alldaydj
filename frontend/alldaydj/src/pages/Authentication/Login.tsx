@@ -169,7 +169,9 @@ export function Login (): React.ReactElement {
   function emailInput () {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor="email">{'Username (e-mail):'}</InputLabel>
+        <InputLabel htmlFor="email">
+{'Username (e-mail):'}
+</InputLabel>
         <Input
           error={loginStatus.errorEmail !== undefined}
           id="email"
@@ -183,7 +185,9 @@ export function Login (): React.ReactElement {
           value={loginStatus.email}
         />
         {loginStatus.errorEmail && (
-          <FormHelperText error>{loginStatus.errorEmail}</FormHelperText>
+          <FormHelperText error>
+{loginStatus.errorEmail}
+</FormHelperText>
         )}
       </FormControl>
     )
@@ -192,7 +196,9 @@ export function Login (): React.ReactElement {
   function passwordInput () {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor="password">{'Password:'}</InputLabel>
+        <InputLabel htmlFor="password">
+{'Password:'}
+</InputLabel>
         <Input
           error={loginStatus.errorPassword !== undefined}
           id="password"
@@ -206,7 +212,9 @@ export function Login (): React.ReactElement {
           value={loginStatus.password}
         />
         {loginStatus.errorPassword && (
-          <FormHelperText error>{loginStatus.errorPassword}</FormHelperText>
+          <FormHelperText error>
+{loginStatus.errorPassword}
+</FormHelperText>
         )}
       </FormControl>
     )

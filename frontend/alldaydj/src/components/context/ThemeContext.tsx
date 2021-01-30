@@ -37,7 +37,9 @@ export function ThemeProvider ({ children }: ThemeProviderProps): React.ReactEle
 
   return (
     <ThemeContext.Provider value={{ themeSettings, setThemeSettings }}>
-      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
+{children}
+</MuiThemeProvider>
     </ThemeContext.Provider>
   )
 }

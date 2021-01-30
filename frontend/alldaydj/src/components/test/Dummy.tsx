@@ -4,8 +4,12 @@ import React from 'react'
 export function Dummy (): React.ReactElement {
   return (
     <>
-      <Typography variant="h1">{'Hello from AllDay DJ'}</Typography>
-      <Typography paragraph>{'This is a stand-in component to test routing, etc.'}</Typography>
+      <Typography variant="h1">
+{'Hello from AllDay DJ'}
+</Typography>
+      <Typography paragraph>
+{'This is a stand-in component to test routing, etc.'}
+</Typography>
     </>
   )
 }

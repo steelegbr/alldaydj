@@ -139,9 +139,9 @@ export default function Menu (): React.ReactElement {
             paper: classes.drawerPaper
           }}
           container={container}
+          onClose={handleMenuToggle}
           open={menuOpen}
           variant={'persistent'}
-          onClose={handleMenuToggle}
         >
           <MenuContents />
         </Drawer>

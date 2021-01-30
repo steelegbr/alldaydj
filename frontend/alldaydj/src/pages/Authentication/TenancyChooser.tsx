@@ -54,7 +54,7 @@ export function TenancyChooser (): React.ReactElement {
     }
   }, [token, log])
 
-  const doSetTenant = (tenant: string) => {
+  function doSetTenant (tenant: string) {
     if (authenticationContext) {
       const { authenticationStatus, setAuthenticationStatus } = authenticationContext
       const newAuthenticationStatus = setTenant(tenant, authenticationStatus)
@@ -65,20 +65,20 @@ export function TenancyChooser (): React.ReactElement {
     log.error(`Cannot set tenant to ${tenant} as we don't have an authentication context.`)
   }
 
-  const changeSelectedTenant = (event: React.ChangeEvent<{ value: unknown }>) => {
+  function changeSelectedTenant (event: React.ChangeEvent<{ value: unknown }>) {
     setSelectedTenant(event.target.value as string)
   }
 
-  // if (tenancies && tenancies.length === 1) {
-  //    doSetTenant(tenancies[0].slug);
-  // }
+  if (tenancies && tenancies.length === 1) {
+    doSetTenant(tenancies[0].slug)
+  }
 
   const buttonDisabled = !selectedTenant
   if (buttonDisabled && tenancies.length > 0) {
     setSelectedTenant(tenancies[0].slug)
   }
 
-  const handleSelectTenant = (event: React.SyntheticEvent) => {
+  function handleSelectTenant (event: React.SyntheticEvent) {
     if (selectedTenant) {
       event.preventDefault()
       doSetTenant(selectedTenant)

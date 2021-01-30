@@ -131,17 +131,17 @@ export default function Menu (): React.ReactElement {
     return (
       <Hidden implementation={'css'} smUp>
         <Drawer
+          ModalProps={{
+            keepMounted: true
+          }}
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           classes={{
             paper: classes.drawerPaper
           }}
           container={container}
-          ModalProps={{
-            keepMounted: true
-          }}
-          onClose={handleMenuToggle}
           open={menuOpen}
           variant={'persistent'}
+          onClose={handleMenuToggle}
         >
           <MenuContents />
         </Drawer>

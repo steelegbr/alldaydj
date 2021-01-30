@@ -173,7 +173,6 @@ export default function Login (): React.ReactElement {
         <Input
           error={loginStatus.errorEmail !== undefined}
           id={'email'}
-          onChange={doSetEmail}
           startAdornment={
             <InputAdornment position={'start'}>
               <Email />
@@ -181,6 +180,7 @@ export default function Login (): React.ReactElement {
           }
           type={'email'}
           value={loginStatus.email}
+          onChange={doSetEmail}
         />
         {loginStatus.errorEmail && (
           <FormHelperText error>
@@ -200,7 +200,6 @@ export default function Login (): React.ReactElement {
         <Input
           error={loginStatus.errorPassword !== undefined}
           id={'password'}
-          onChange={doSetPassword}
           startAdornment={
             <InputAdornment position={'start'}>
               <Lock />
@@ -208,6 +207,7 @@ export default function Login (): React.ReactElement {
           }
           type={'password'}
           value={loginStatus.password}
+          onChange={doSetPassword}
         />
         {loginStatus.errorPassword && (
           <FormHelperText error>
@@ -237,8 +237,8 @@ export default function Login (): React.ReactElement {
           <Button
             color={'secondary'}
             disabled={disableButtons}
-            onClick={clearForm}
             variant={'outlined'}
+            onClick={clearForm}
           >
             {'Clear'}
           </Button>

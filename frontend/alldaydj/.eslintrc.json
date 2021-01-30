@@ -11,7 +11,10 @@
       }
     ],
     "react/jsx-sort-props": [
-      "error"
+      "error",
+      {
+        "callbacksLast": true
+      }
     ],
     "react/jsx-props-no-spreading": [
       "error"
@@ -42,7 +45,7 @@
       "error",
       {
         "noStrings": false,
-        "ignoreProps": true
+        "ignoreProps": false
       }
     ],
     "react/jsx-curly-brace-presence": [

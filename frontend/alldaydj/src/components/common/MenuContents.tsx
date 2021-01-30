@@ -27,7 +27,7 @@ export default function MenuContents (): React.ReactElement {
 
   function menuItemLibrary () {
     return (
-      <ListItem key={'Music Library'} button>
+      <ListItem button key={'Music Library'}>
         <ListItemIcon>
           <LibraryMusic />
         </ListItemIcon>
@@ -38,7 +38,7 @@ export default function MenuContents (): React.ReactElement {
 
   function menuItemTenantChanger () {
     return (
-      <ListItem key={Paths.auth.tenancy} button onClick={changeTenant}>
+      <ListItem button key={Paths.auth.tenancy} onClick={changeTenant}>
         <ListItemIcon>
           <Domain />
         </ListItemIcon>
@@ -49,7 +49,7 @@ export default function MenuContents (): React.ReactElement {
 
   function menuItemLogout () {
     return (
-      <ListItem key={'Log Out'} button onClick={doLogOut}>
+      <ListItem button key={'Log Out'} onClick={doLogOut}>
         <ListItemIcon>
           <ExitToApp />
         </ListItemIcon>

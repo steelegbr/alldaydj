@@ -101,7 +101,7 @@ export default function TenancyChooser (): React.ReactElement {
       <Card>
         <CardHeader title={'Choose a Tenancy'} />
         <CardContent>
-          <Select onChange={changeSelectedTenant} value={selectedTenant}>
+          <Select value={selectedTenant} onChange={changeSelectedTenant}>
             {tenancies.map((currentTenant) => (
               <MenuItem key={currentTenant.slug} value={currentTenant.slug}>
 {currentTenant.name}

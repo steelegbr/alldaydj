@@ -59,11 +59,11 @@ export function Menu (): React.ReactElement {
   const container = window.document.body
   const darkMode = themeContext?.themeSettings.darkMode
 
-  const handleMenuToggle = () => {
+  function handleMenuToggle () {
     setMenuOpen(!menuOpen)
   }
 
-  const handleDarkModeToggle = () => {
+  function handleDarkModeToggle () {
     if (themeContext) {
       const newThemeSettings = {
         ...themeContext.themeSettings,

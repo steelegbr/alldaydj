@@ -65,7 +65,7 @@ export function Login (): React.ReactElement {
   })
   const disableButtons = loginStatus.progress === 'InProgress'
 
-  const setEmail = (email: string) => {
+  function setEmail (email: string) {
     setLoginStatus({
       ...loginStatus,
       errorEmail: undefined,
@@ -73,7 +73,7 @@ export function Login (): React.ReactElement {
     })
   }
 
-  const setPassword = (password: string) => {
+  function setPassword (password: string) {
     setLoginStatus({
       ...loginStatus,
       errorPassword: undefined,
@@ -81,7 +81,7 @@ export function Login (): React.ReactElement {
     })
   }
 
-  const clearForm = () => {
+  function clearForm () {
     setLoginStatus({
       progress: 'Idle',
       email: '',
@@ -92,7 +92,7 @@ export function Login (): React.ReactElement {
     log.info('Cleared the login form')
   }
 
-  const attemptLogin = (event: React.SyntheticEvent) => {
+  function attemptLogin (event: React.SyntheticEvent) {
     event.preventDefault()
 
     const newLoginStatus: LoginStatus = {

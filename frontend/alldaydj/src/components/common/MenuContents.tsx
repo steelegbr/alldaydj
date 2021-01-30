@@ -18,11 +18,11 @@ export function MenuContents (): React.ReactElement {
   const authenticationContext = React.useContext(AuthenticationContext)
   const currentTenant = authenticationContext?.authenticationStatus.tenant
 
-  const doLogOut = () => {
+  function doLogOut () {
     authenticationContext?.setAuthenticationStatus(logOut())
   }
 
-  const changeTenant = (event: React.SyntheticEvent) => {
+  function changeTenant (event: React.SyntheticEvent) {
     event.preventDefault()
     history.push(Paths.auth.tenancy)
   }

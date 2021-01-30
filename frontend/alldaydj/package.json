@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint -c './.eslintrc.json' --fix './src/**/*.tsx'"
+    "lint": "eslint -c './.eslintrc.json' --fix './src/**/*.tsx'",
+    "lint-ci": "eslint -c './.eslintrc.json' './src/**/*.tsx'"
   },
   "eslintConfig": {
     "extends": [

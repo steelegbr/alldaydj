@@ -27,32 +27,50 @@ export function MenuContents (): React.ReactElement {
     history.push(Paths.auth.tenancy)
   }
 
+  function menuItemLibrary () {
+    return (
+      <ListItem button key="Music Library">
+        <ListItemIcon>
+          <LibraryMusic />
+        </ListItemIcon>
+        <ListItemText primary="Music Library" />
+      </ListItem>
+    )
+  }
+
+  function menuItemTenantChanger () {
+    return (
+      <ListItem button onClick={changeTenant} key={Paths.auth.tenancy}>
+        <ListItemIcon>
+          <Domain />
+        </ListItemIcon>
+        <ListItemText primary="Change Tenant" secondary={`Current: ${currentTenant}`} />
+      </ListItem>
+    )
+  }
+
+  function menuItemLogout () {
+    return (
+      <ListItem button key="Log Out" onClick={doLogOut}>
+        <ListItemIcon>
+          <ExitToApp />
+        </ListItemIcon>
+        <ListItemText primary="Log Out" />
+      </ListItem>
+    )
+  }
+
   return (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button key="Music Library">
-            <ListItemIcon>
-              <LibraryMusic />
-            </ListItemIcon>
-            <ListItemText primary="Music Library" />
-          </ListItem>
+          {menuItemLibrary()}
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={changeTenant} key={Paths.auth.tenancy}>
-            <ListItemIcon>
-              <Domain />
-            </ListItemIcon>
-            <ListItemText primary="Change Tenant" secondary={`Current: ${currentTenant}`} />
-          </ListItem>
-          <ListItem button key="Log Out" onClick={doLogOut}>
-            <ListItemIcon>
-              <ExitToApp />
-            </ListItemIcon>
-            <ListItemText primary="Log Out" />
-          </ListItem>
+          {menuItemTenantChanger()}
+          {menuItemLogout()}
         </List>
       </div>
   )

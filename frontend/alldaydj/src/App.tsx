@@ -4,13 +4,19 @@ import { AuthenticationProvider } from './components/context/AuthenticationConte
 import { ThemeProvider } from './components/context/ThemeContext'
 import { BrowserRouter } from 'react-router-dom'
 
+function appWithBrowser () {
+  return (
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  )
+}
+
 function App (): React.ReactElement {
   return (
     <ThemeProvider>
       <AuthenticationProvider>
-        <BrowserRouter>
-          <Layout />
-        </BrowserRouter>
+        {appWithBrowser()}
       </AuthenticationProvider>
     </ThemeProvider>
   )

@@ -153,74 +153,98 @@ export function Login (): React.ReactElement {
     )
   }
 
+  function loginButton () {
+    return (
+      <Box className={classes.wrapper}>
+        <Button color="primary" variant="contained" type="submit" disabled={disableButtons}>
+          {'Login'}
+        </Button>
+        {loginStatus.progress === 'InProgress' && (
+          <CircularProgress size={24} className={classes.loginProgress} />
+        )}
+      </Box>
+    )
+  }
+
+  function emailInput () {
+    return (
+      <FormControl fullWidth>
+        <InputLabel htmlFor="email">{'Username (e-mail):'}</InputLabel>
+        <Input
+          id="email"
+          type="email"
+          error={loginStatus.errorEmail !== undefined}
+          startAdornment={
+            <InputAdornment position="start">
+              <Email />
+            </InputAdornment>
+          }
+          value={loginStatus.email}
+          onChange={doSetEmail}
+        />
+        {loginStatus.errorEmail && (
+          <FormHelperText error>{loginStatus.errorEmail}</FormHelperText>
+        )}
+      </FormControl>
+    )
+  }
+
+  function passwordInput () {
+    return (
+      <FormControl fullWidth>
+        <InputLabel htmlFor="password">{'Password:'}</InputLabel>
+        <Input
+          id="password"
+          type="password"
+          error={loginStatus.errorPassword !== undefined}
+          startAdornment={
+            <InputAdornment position="start">
+              <Lock />
+            </InputAdornment>
+          }
+          value={loginStatus.password}
+          onChange={doSetPassword}
+        />
+        {loginStatus.errorPassword && (
+          <FormHelperText error>{loginStatus.errorPassword}</FormHelperText>
+        )}
+      </FormControl>
+    )
+  }
+
+  function loginCard () {
+    return (
+      <Card>
+        <CardHeader title="Login to AllDay DJ" />
+        <CardContent>
+          {loginStatus.progress === 'Error' && (
+            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
+              {`Login failed. Please check your username and password and try again. If you continue
+              to see this error, please get in touch with support.`}
+            </Box>
+          )}
+          {emailInput()}
+          {passwordInput()}
+        </CardContent>
+        <CardActions>
+          {loginButton()}
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={clearForm}
+            disabled={disableButtons}
+          >
+            {'Clear'}
+          </Button>
+        </CardActions>
+      </Card>
+    )
+  }
+
   return (
     <AuthenticationWrapper>
       <form onSubmit={attemptLogin}>
-        <Card>
-          <CardHeader title="Login to AllDay DJ" />
-          <CardContent>
-            {loginStatus.progress === 'Error' && (
-              <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-                {`Login failed. Please check your username and password and try again. If you continue
-                to see this error, please get in touch with support.`}
-              </Box>
-            )}
-            <FormControl fullWidth>
-              <InputLabel htmlFor="email">{'Username (e-mail):'}</InputLabel>
-              <Input
-                id="email"
-                type="email"
-                error={loginStatus.errorEmail !== undefined}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Email />
-                  </InputAdornment>
-                }
-                value={loginStatus.email}
-                onChange={doSetEmail}
-              />
-              {loginStatus.errorEmail && (
-                <FormHelperText error>{loginStatus.errorEmail}</FormHelperText>
-              )}
-            </FormControl>
-            <FormControl fullWidth>
-              <InputLabel htmlFor="password">{'Password:'}</InputLabel>
-              <Input
-                id="password"
-                type="password"
-                error={loginStatus.errorPassword !== undefined}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Lock />
-                  </InputAdornment>
-                }
-                value={loginStatus.password}
-                onChange={doSetPassword}
-              />
-              {loginStatus.errorPassword && (
-                <FormHelperText error>{loginStatus.errorPassword}</FormHelperText>
-              )}
-            </FormControl>
-          </CardContent>
-          <CardActions>
-            <Box className={classes.wrapper}>
-              <Button color="primary" variant="contained" type="submit" disabled={disableButtons}>
-                {'Login'}
-              </Button>
-              {loginStatus.progress === 'InProgress' && (
-                <CircularProgress size={24} className={classes.loginProgress} />
-              )}
-            </Box>
-            <Button
-              color="secondary"
-              variant="outlined"
-              onClick={clearForm}
-              disabled={disableButtons}
-            >
-              {'Clear'}
-            </Button>
-          </CardActions>
-        </Card>
+        {loginCard()}
       </form>
     </AuthenticationWrapper>
   )

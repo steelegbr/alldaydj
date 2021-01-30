@@ -3,6 +3,12 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
       "error"
+    ],
+    "react/jsx-max-depth": [
+      "error",
+      {
+        "max": 2
+      }
     ]
   },
   "env": {
@@ -15,7 +21,8 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

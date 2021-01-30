@@ -85,17 +85,43 @@ export function TenancyChooser (): React.ReactElement {
     }
   }
 
+  function errorCard () {
+    return (
+      <Card>
+        <CardHeader title="Choose a Tenancy" />
+        <CardContent>
+          <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
+            {'Failed to load the list of tenancies to select from.'}
+          </Box>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  function chooserCard () {
+    return (
+      <Card>
+        <CardHeader title="Choose a Tenancy" />
+        <CardContent>
+          <Select value={selectedTenant} onChange={changeSelectedTenant}>
+            {tenancies.map((currentTenant) => (
+              <MenuItem value={currentTenant.slug} key={currentTenant.slug}>{currentTenant.name}</MenuItem>
+            ))}
+          </Select>
+        </CardContent>
+        <CardActions>
+          <Button color="primary" variant="contained" type="submit" disabled={buttonDisabled}>
+            {'Choose'}
+          </Button>
+        </CardActions>
+      </Card>
+    )
+  }
+
   if (error) {
     return (
       <AuthenticationWrapper>
-        <Card>
-          <CardHeader title="Choose a Tenancy" />
-          <CardContent>
-            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
-              {'Failed to load the list of tenancies to select from.'}
-            </Box>
-          </CardContent>
-        </Card>
+        {errorCard()}
       </AuthenticationWrapper>
     )
   }
@@ -103,21 +129,7 @@ export function TenancyChooser (): React.ReactElement {
   return (
     <AuthenticationWrapper>
       <form onSubmit={handleSelectTenant}>
-        <Card>
-          <CardHeader title="Choose a Tenancy" />
-          <CardContent>
-            <Select value={selectedTenant} onChange={changeSelectedTenant}>
-              {tenancies.map((currentTenant) => (
-                <MenuItem value={currentTenant.slug} key={currentTenant.slug}>{currentTenant.name}</MenuItem>
-              ))}
-            </Select>
-          </CardContent>
-          <CardActions>
-            <Button color="primary" variant="contained" type="submit" disabled={buttonDisabled}>
-              {'Choose'}
-            </Button>
-          </CardActions>
-        </Card>
+        {chooserCard()}
       </form>
     </AuthenticationWrapper>
   )

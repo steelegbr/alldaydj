@@ -73,72 +73,108 @@ export function Menu (): React.ReactElement {
     }
   }
 
+  function menuToggleButton (authenticated: boolean) {
+    return (
+      <Grid item>
+        {authenticated && (
+          <IconButton
+            color="inherit"
+            aria-label="open menu"
+            edge="start"
+            onClick={handleMenuToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+      </Grid>
+    )
+  }
+
+  function menuHeader () {
+    return (
+      <Grid item>
+        <Typography variant="h6" noWrap>
+          {'AllDay DJ'}
+        </Typography>
+      </Grid>
+    )
+  }
+
+  function menuDarkModeToggle () {
+    return (
+      <Grid item>
+        <IconButton
+          color="inherit"
+          arial-label="toggle light / dark mode"
+          edge="end"
+          onClick={handleDarkModeToggle}
+        >
+          {darkMode ? <Brightness4 /> : <Brightness7 />}
+        </IconButton>
+      </Grid>
+    )
+  }
+
+  function headerToolbar () {
+    return (
+      <Toolbar>
+        <Grid justify="space-between" alignItems="center" container>
+          {menuToggleButton(authenticated)}
+          {menuHeader()}
+          {menuDarkModeToggle()}
+        </Grid>
+      </Toolbar>
+    )
+  }
+
+  function drawerWide () {
+    return (
+      <Hidden smUp implementation="css">
+        <Drawer
+          container={container}
+          variant="persistent"
+          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          open={menuOpen}
+          onClose={handleMenuToggle}
+          ModalProps={{
+            keepMounted: true
+          }}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <MenuContents />
+        </Drawer>
+      </Hidden>
+    )
+  }
+
+  function drawerMobile () {
+    return (
+      <Hidden xsDown implementation="css">
+        <Drawer
+          variant="permanent"
+          open
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <MenuContents />
+        </Drawer>
+      </Hidden>
+    )
+  }
+
   return (
     <div>
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Grid justify="space-between" alignItems="center" container>
-            <Grid item>
-              {authenticated && (
-                <IconButton
-                  color="inherit"
-                  aria-label="open menu"
-                  edge="start"
-                  onClick={handleMenuToggle}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
-              )}
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" noWrap>
-                {'AllDay DJ'}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <IconButton
-                color="inherit"
-                arial-label="toggle light / dark mode"
-                edge="end"
-                onClick={handleDarkModeToggle}
-              >
-                {darkMode ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Toolbar>
+        {headerToolbar()}
       </AppBar>
       {authenticated && (
         <nav aria-label="main menu" className={classes.drawer}>
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="persistent"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={menuOpen}
-              onClose={handleMenuToggle}
-              ModalProps={{
-                keepMounted: true
-              }}
-              classes={{
-                paper: classes.drawerPaper
-              }}
-            >
-              <MenuContents />
-            </Drawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              variant="permanent"
-              open
-              classes={{
-                paper: classes.drawerPaper
-              }}
-            >
-              <MenuContents />
-            </Drawer>
-          </Hidden>
+          {drawerWide()}
+          {drawerMobile()}
         </nav>
       )}
     </div>

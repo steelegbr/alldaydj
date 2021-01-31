@@ -20,4 +20,3 @@ enabled = true
   dialect = "typescript"
   environment = ["jest"]
   style_guide = "airbnb"
-  module_system = "es-modules"

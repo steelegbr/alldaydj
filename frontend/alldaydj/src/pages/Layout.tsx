@@ -1,14 +1,16 @@
-import { createStyles, CssBaseline, makeStyles, Theme } from '@material-ui/core'
-import React from 'react'
-import Menu from '../components/common/Menu'
-import ApplicationRouter from '../routing/ApplicationRouter'
+import {
+  createStyles, CssBaseline, makeStyles, Theme,
+} from '@material-ui/core';
+import React from 'react';
+import Menu from '../components/common/Menu';
+import ApplicationRouter from '../routing/ApplicationRouter';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-  toolbar: theme.mixins.toolbar
-}))
+  toolbar: theme.mixins.toolbar,
+}));
 
-export default function Layout () : React.ReactElement {
-  const classes = useStyles()
+export default function Layout() : React.ReactElement {
+  const classes = useStyles();
 
   return (
     <div>
@@ -17,5 +19,5 @@ export default function Layout () : React.ReactElement {
       <div className={classes.toolbar} />
       <ApplicationRouter />
     </div>
-  )
+  );
 }

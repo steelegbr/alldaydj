@@ -19,3 +19,4 @@ enabled = true
   plugins = ["react"]
   dialect = "typescript"
   environment = ["jest"]
+  style_guide = "airbnb"

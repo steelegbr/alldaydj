@@ -1,14 +1,14 @@
-import React from 'react'
-import { mount } from 'enzyme'
-import Dummy from './Dummy'
+import React from 'react';
+import { mount } from 'enzyme';
+import Dummy from './Dummy';
 
 describe('dummy component', () => {
-  function mountComponent () {
-    return mount(<Dummy />)
+  function mountComponent() {
+    return mount(<Dummy />);
   }
 
   it('snapshot', () => {
-    const dummy = mountComponent()
-    expect(dummy).toMatchSnapshot()
-  })
-})
+    const dummy = mountComponent();
+    expect(dummy).toMatchSnapshot();
+  });
+});

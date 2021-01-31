@@ -291,6 +291,7 @@ exports[`menu contents snapshot 1`] = `
         >
           <WithStyles(ForwardRef(ListItem))
             button={true}
+            data-test="button-change-tenant"
             key="/tenancy/"
             onClick={[Function]}
           >
@@ -311,11 +312,13 @@ exports[`menu contents snapshot 1`] = `
                   "selected": "Mui-selected",
                 }
               }
+              data-test="button-change-tenant"
               onClick={[Function]}
             >
               <WithStyles(ForwardRef(ButtonBase))
                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                 component="div"
+                data-test="button-change-tenant"
                 disabled={false}
                 focusVisibleClassName="Mui-focusVisible"
                 onClick={[Function]}
@@ -330,6 +333,7 @@ exports[`menu contents snapshot 1`] = `
                     }
                   }
                   component="div"
+                  data-test="button-change-tenant"
                   disabled={false}
                   focusVisibleClassName="Mui-focusVisible"
                   onClick={[Function]}
@@ -337,6 +341,7 @@ exports[`menu contents snapshot 1`] = `
                   <div
                     aria-disabled={false}
                     className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                    data-test="button-change-tenant"
                     onBlur={[Function]}
                     onClick={[Function]}
                     onDragLeave={[Function]}
@@ -402,7 +407,7 @@ exports[`menu contents snapshot 1`] = `
                     <WithStyles(ForwardRef(ListItemText))
                       key=".1"
                       primary="Change Tenant"
-                      secondary="Current: undefined"
+                      secondary="Current: tenant1"
                     >
                       <ForwardRef(ListItemText)
                         classes={
@@ -416,7 +421,7 @@ exports[`menu contents snapshot 1`] = `
                           }
                         }
                         primary="Change Tenant"
-                        secondary="Current: undefined"
+                        secondary="Current: tenant1"
                       >
                         <div
                           className="MuiListItemText-root MuiListItemText-multiline"
@@ -523,7 +528,7 @@ exports[`menu contents snapshot 1`] = `
                               <p
                                 className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
                               >
-                                Current: undefined
+                                Current: tenant1
                               </p>
                             </ForwardRef(Typography)>
                           </WithStyles(ForwardRef(Typography))>
@@ -565,6 +570,7 @@ exports[`menu contents snapshot 1`] = `
           </WithStyles(ForwardRef(ListItem))>
           <WithStyles(ForwardRef(ListItem))
             button={true}
+            data-test="button-logout"
             key="Log Out"
             onClick={[Function]}
           >
@@ -585,11 +591,13 @@ exports[`menu contents snapshot 1`] = `
                   "selected": "Mui-selected",
                 }
               }
+              data-test="button-logout"
               onClick={[Function]}
             >
               <WithStyles(ForwardRef(ButtonBase))
                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                 component="div"
+                data-test="button-logout"
                 disabled={false}
                 focusVisibleClassName="Mui-focusVisible"
                 onClick={[Function]}
@@ -604,6 +612,7 @@ exports[`menu contents snapshot 1`] = `
                     }
                   }
                   component="div"
+                  data-test="button-logout"
                   disabled={false}
                   focusVisibleClassName="Mui-focusVisible"
                   onClick={[Function]}
@@ -611,6 +620,7 @@ exports[`menu contents snapshot 1`] = `
                   <div
                     aria-disabled={false}
                     className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                    data-test="button-logout"
                     onBlur={[Function]}
                     onClick={[Function]}
                     onDragLeave={[Function]}

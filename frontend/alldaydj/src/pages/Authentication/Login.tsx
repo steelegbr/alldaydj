@@ -12,17 +12,17 @@ import {
   createStyles,
   Box,
   FormHelperText,
-  CircularProgress
-} from '@material-ui/core'
-import { Email, Lock } from '@material-ui/icons'
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { userLogin } from '../../api/requests/Authentication'
-import { AuthenticationContext } from '../../components/context/AuthenticationContext'
-import { Paths } from '../../routing/Paths'
-import { loginUser } from '../../services/AuthenticationService'
-import { getLogger } from '../../services/LoggingService'
-import AuthenticationWrapper from './AuthenticationWrapper'
+  CircularProgress,
+} from '@material-ui/core';
+import { Email, Lock } from '@material-ui/icons';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { userLogin } from '../../api/requests/Authentication';
+import { AuthenticationContext } from '../../components/context/AuthenticationContext';
+import { Paths } from '../../routing/Paths';
+import { loginUser } from '../../services/AuthenticationService';
+import { getLogger } from '../../services/LoggingService';
+import AuthenticationWrapper from './AuthenticationWrapper';
 
 const useStyles = makeStyles(() => createStyles({
   loginProgress: {
@@ -30,16 +30,16 @@ const useStyles = makeStyles(() => createStyles({
     left: '50%',
     top: '50%',
     marginLeft: -12,
-    marginTop: -12
+    marginTop: -12,
   },
   wrapper: {
-    position: 'relative'
+    position: 'relative',
   },
   errorBox: {
     marginBottom: 10,
-    padding: 5
-  }
-}))
+    padding: 5,
+  },
+}));
 
 type LoginProgress = 'Idle' | 'Error' | 'InProgress' | 'Failed';
 
@@ -51,180 +51,180 @@ interface LoginStatus {
   password: string;
 }
 
-export default function Login (): React.ReactElement {
-  const log = getLogger()
-  const history = useHistory()
-  const classes = useStyles()
-  const authenticationContext = React.useContext(AuthenticationContext)
+export default function Login(): React.ReactElement {
+  const log = getLogger();
+  const history = useHistory();
+  const classes = useStyles();
+  const authenticationContext = React.useContext(AuthenticationContext);
   const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
     progress: 'Idle',
     email: '',
-    password: ''
-  })
-  const disableButtons = loginStatus.progress === 'InProgress'
+    password: '',
+  });
+  const disableButtons = loginStatus.progress === 'InProgress';
 
-  function setEmail (email: string) {
+  function setEmail(email: string) {
     setLoginStatus({
       ...loginStatus,
       errorEmail: undefined,
-      email
-    })
+      email,
+    });
   }
 
-  function setPassword (password: string) {
+  function setPassword(password: string) {
     setLoginStatus({
       ...loginStatus,
       errorPassword: undefined,
-      password
-    })
+      password,
+    });
   }
 
-  function clearForm () {
+  function clearForm() {
     setLoginStatus({
       progress: 'Idle',
       email: '',
       password: '',
       errorEmail: undefined,
-      errorPassword: undefined
-    })
-    log.info('Cleared the login form')
+      errorPassword: undefined,
+    });
+    log.info('Cleared the login form');
   }
 
-  function doSetEmail (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
-    setEmail(event.target.value)
+  function doSetEmail(event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
+    setEmail(event.target.value);
   }
 
-  function doSetPassword (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
-    setPassword(event.target.value)
+  function doSetPassword(event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
+    setPassword(event.target.value);
   }
 
-  function attemptLogin (event: React.SyntheticEvent) {
-    event.preventDefault()
+  function attemptLogin(event: React.SyntheticEvent) {
+    event.preventDefault();
 
     const newLoginStatus: LoginStatus = {
       progress: 'InProgress',
       email: loginStatus.email,
-      password: loginStatus.password
-    }
+      password: loginStatus.password,
+    };
 
-    log.info('Starting login validation.')
+    log.info('Starting login validation.');
 
-    let errors = false
+    let errors = false;
 
     if (!loginStatus.email) {
-      newLoginStatus.errorEmail = 'You must supply a username'
-      errors = true
+      newLoginStatus.errorEmail = 'You must supply a username';
+      errors = true;
     }
 
     if (!loginStatus.password) {
-      newLoginStatus.errorPassword = 'You must supply a password'
-      errors = true
+      newLoginStatus.errorPassword = 'You must supply a password';
+      errors = true;
     }
 
     if (errors) {
-      newLoginStatus.progress = 'Idle'
-      setLoginStatus(newLoginStatus)
-      log.error('Login validation failed!')
-      return
+      newLoginStatus.progress = 'Idle';
+      setLoginStatus(newLoginStatus);
+      log.error('Login validation failed!');
+      return;
     }
 
-    log.info('Login validation complete.')
-    setLoginStatus(newLoginStatus)
+    log.info('Login validation complete.');
+    setLoginStatus(newLoginStatus);
 
     userLogin({
       email: newLoginStatus.email,
-      password: newLoginStatus.password
+      password: newLoginStatus.password,
     }).then(
       (result) => {
-        log.info('User login success!')
-        const user = loginUser(result.data.refresh, result.data.access)
-        authenticationContext?.setAuthenticationStatus(user)
-        history.push(Paths.auth.tenancy)
+        log.info('User login success!');
+        const user = loginUser(result.data.refresh, result.data.access);
+        authenticationContext?.setAuthenticationStatus(user);
+        history.push(Paths.auth.tenancy);
       },
       (error) => {
-        log.warn(`User login failed - ${error}`)
+        log.warn(`User login failed - ${error}`);
         setLoginStatus({
           ...newLoginStatus,
-          progress: 'Error'
-        })
-      }
-    )
+          progress: 'Error',
+        });
+      },
+    );
   }
 
-  function loginButton () {
+  function loginButton() {
     return (
       <Box className={classes.wrapper}>
-        <Button color={'primary'} disabled={disableButtons} type={'submit'} variant={'contained'}>
-          {'Login'}
+        <Button color="primary" disabled={disableButtons} type="submit" variant="contained">
+          Login
         </Button>
         {loginStatus.progress === 'InProgress' && (
           <CircularProgress className={classes.loginProgress} size={24} />
         )}
       </Box>
-    )
+    );
   }
 
-  function emailInput () {
+  function emailInput() {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor={'email'}>
-{'Username (e-mail):'}
-</InputLabel>
+        <InputLabel htmlFor="email">
+          Username (e-mail):
+        </InputLabel>
         <Input
           error={loginStatus.errorEmail !== undefined}
-          id={'email'}
+          id="email"
           onChange={doSetEmail}
-          startAdornment={
-            <InputAdornment position={'start'}>
+          startAdornment={(
+            <InputAdornment position="start">
               <Email />
             </InputAdornment>
-          }
-          type={'email'}
+          )}
+          type="email"
           value={loginStatus.email}
         />
         {loginStatus.errorEmail && (
           <FormHelperText error>
-{loginStatus.errorEmail}
-</FormHelperText>
+            {loginStatus.errorEmail}
+          </FormHelperText>
         )}
       </FormControl>
-    )
+    );
   }
 
-  function passwordInput () {
+  function passwordInput() {
     return (
       <FormControl fullWidth>
-        <InputLabel htmlFor={'password'}>
-{'Password:'}
-</InputLabel>
+        <InputLabel htmlFor="password">
+          Password:
+        </InputLabel>
         <Input
           error={loginStatus.errorPassword !== undefined}
-          id={'password'}
+          id="password"
           onChange={doSetPassword}
-          startAdornment={
-            <InputAdornment position={'start'}>
+          startAdornment={(
+            <InputAdornment position="start">
               <Lock />
             </InputAdornment>
-          }
-          type={'password'}
+          )}
+          type="password"
           value={loginStatus.password}
         />
         {loginStatus.errorPassword && (
           <FormHelperText error>
-{loginStatus.errorPassword}
-</FormHelperText>
+            {loginStatus.errorPassword}
+          </FormHelperText>
         )}
       </FormControl>
-    )
+    );
   }
 
-  function loginCard () {
+  function loginCard() {
     return (
       <Card>
-        <CardHeader title={'Login to AllDay DJ'} />
+        <CardHeader title="Login to AllDay DJ" />
         <CardContent>
           {loginStatus.progress === 'Error' && (
-            <Box bgcolor={'error.main'} boxShadow={3} className={classes.errorBox}>
+            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
               {`Login failed. Please check your username and password and try again. If you continue
               to see this error, please get in touch with support.`}
             </Box>
@@ -235,16 +235,16 @@ export default function Login (): React.ReactElement {
         <CardActions>
           {loginButton()}
           <Button
-            color={'secondary'}
+            color="secondary"
             disabled={disableButtons}
             onClick={clearForm}
-            variant={'outlined'}
+            variant="outlined"
           >
-            {'Clear'}
+            Clear
           </Button>
         </CardActions>
       </Card>
-    )
+    );
   }
 
   return (
@@ -253,5 +253,5 @@ export default function Login (): React.ReactElement {
         {loginCard()}
       </form>
     </AuthenticationWrapper>
-  )
+  );
 }

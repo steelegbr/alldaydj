@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode';
-import { Logger } from 'loglevel';
 import React from 'react';
 import {
   AuthenticationStatus,
@@ -109,9 +108,9 @@ export const setTenant = (
 
 export const refreshAccessToken = (
   refreshToken: string,
-  log: Logger,
   setAuthenticationStatus: React.Dispatch<React.SetStateAction<AuthenticationStatus>>,
 ): void => {
+  const log = getLogger();
   postRefreshToken({ refresh: refreshToken }).then(
     (response) => {
       log.info('Access token refreshed.');

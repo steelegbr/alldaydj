@@ -29,18 +29,18 @@ export const AuthenticationContext = React.createContext<undefined | Authenticat
   undefined,
 );
 
-interface AuthenticationProviderProps {
+export interface AuthenticationProviderProps {
   children: React.ReactElement;
 }
 
-export default function
-AuthenticationProvider({ children }: AuthenticationProviderProps): React.ReactElement {
+const AuthenticationProvider = ({ children }: AuthenticationProviderProps): React.ReactElement => {
   const [authenticationStatus, setAuthenticationStatus] = React.useState<AuthenticationStatus>(
     getAuthenticationStatusFromLocalStorage(),
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log('goodlsl');
       const log = getLogger();
       log.debug('Checking current authentication status.');
 
@@ -49,15 +49,14 @@ AuthenticationProvider({ children }: AuthenticationProviderProps): React.ReactEl
         log.info(`Change of authentication stage to ${newAuthStatus.stage}.`);
         setAuthenticationStatus(newAuthStatus);
       }
-    }, Number(process.env.REACT_APP_AUTH_INTERVAL));
+    }, Number(process.env.REACT_APP_AUTH_INTERVAL || '5000'));
 
     return () => clearInterval(interval);
   }, [authenticationStatus.stage]);
 
   useEffect(() => {
-    const log = getLogger();
     if (authenticationStatus.stage === 'AccessTokenRefreshNeeded') {
-      refreshAccessToken(authenticationStatus.refreshToken || '', log, setAuthenticationStatus);
+      refreshAccessToken(authenticationStatus.refreshToken || '', setAuthenticationStatus);
     }
   }, [authenticationStatus]);
 
@@ -66,4 +65,6 @@ AuthenticationProvider({ children }: AuthenticationProviderProps): React.ReactEl
       {children}
     </AuthenticationContext.Provider>
   );
-}
+};
+
+export default AuthenticationProvider;

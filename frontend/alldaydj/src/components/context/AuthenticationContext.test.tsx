@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import AuthenticationProvider from './AuthenticationContext';
 import { refreshAccessToken, getAuthenticationStatusFromLocalStorage } from '../../services/AuthenticationService';
 import Dummy from '../test/Dummy';
-import { getLogger } from '../../services/LoggingService';
+// import { getLogger } from '../../services/LoggingService';
 
 jest.mock('../../services/AuthenticationService');
 jest.mock('../../services/LoggingService');

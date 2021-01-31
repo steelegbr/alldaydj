@@ -40,7 +40,6 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps): Reac
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log('goodlsl');
       const log = getLogger();
       log.debug('Checking current authentication status.');
 

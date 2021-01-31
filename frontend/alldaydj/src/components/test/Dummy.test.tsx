@@ -1,10 +1,10 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Dummy from './Dummy'
 
 describe('dummy component', () => {
   function mountComponent () {
-    return shallow(<Dummy />)
+    return mount(<Dummy />)
   }
 
   it('snapshot', () => {

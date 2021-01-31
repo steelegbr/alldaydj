@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-export default function Menu(): React.ReactElement {
+const Menu = (): React.ReactElement => {
   const theme = useTheme();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const themeContext = React.useContext(ThemeContext);
@@ -80,6 +80,7 @@ export default function Menu(): React.ReactElement {
             aria-label="open menu"
             className={classes.menuButton}
             color="inherit"
+            data-test="button-menu-toggle"
             edge="start"
             onClick={handleMenuToggle}
           >
@@ -178,4 +179,6 @@ export default function Menu(): React.ReactElement {
       )}
     </div>
   );
-}
+};
+
+export default Menu;

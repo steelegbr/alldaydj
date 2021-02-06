@@ -3,7 +3,8 @@ import { mount } from 'enzyme';
 import AuthenticationProvider from './AuthenticationContext';
 import { refreshAccessToken, getAuthenticationStatusFromLocalStorage } from '../../services/AuthenticationService';
 import Dummy from '../test/Dummy';
-// import { getLogger } from '../../services/LoggingService';
+
+const mockGetAuthenticationStatus = getAuthenticationStatusFromLocalStorage as jest.Mock;
 
 jest.mock('../../services/AuthenticationService');
 jest.mock('../../services/LoggingService');
@@ -17,7 +18,7 @@ describe('authentication context', () => {
   );
 
   it('refresh needed triggers an API call', () => {
-    getAuthenticationStatusFromLocalStorage.mockReturnValue({
+    mockGetAuthenticationStatus.mockReturnValue({
       stage: 'AccessTokenRefreshNeeded',
       refreshToken: 'refreshTokenValue',
     });
@@ -26,24 +27,4 @@ describe('authentication context', () => {
 
     expect(refreshAccessToken).toBeCalledWith('refreshTokenValue', expect.any(Function));
   });
-
-  //   it('status change noticed', () => {
-  //     const mockLogger = jest.fn();
-
-  //     getAuthenticationStatusFromLocalStorage.mockReturnValue({
-  //       stage: 'Authenticated',
-  //     });
-
-  //     getLogger.mockReturnValue(mockLogger);
-
-  //     mountComponent();
-
-  //     getAuthenticationStatusFromLocalStorage.mockReturnValue({
-  //       stage: 'AccessTokenRefreshNeeded',
-  //     });
-
-  //     jest.runAllTimers();
-
-//     expect(mockLogger).toBeCalledWith({});
-//   });
 });

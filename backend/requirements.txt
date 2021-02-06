@@ -22,8 +22,6 @@ django-colorfield==0.4.1
 django-cors-headers==3.7.0
 django-nose==1.4.7
 django-storages==1.11.1
-django-tenant-users==0.3.12
-django-tenants==3.2.1
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.6.0
 drf-jwt==1.17.3

@@ -1,12 +1,7 @@
 from alldaydj.models import Artist
-from alldaydj.test.test_0000_init_tenancies import SetupTests
-from alldaydj.test.utils import (
-    set_bearer_token,
-    create_tenancy,
-    create_tenant_user,
-)
+from alldaydj.test.utils import set_bearer_token
+from django.contrib.auth.models import User
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized
 from rest_framework import status
@@ -21,25 +16,12 @@ class ArtistTests(APITestCase):
 
     USERNAME = "artist@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "artist"
 
     @classmethod
     def setUpClass(cls):
 
         super(ArtistTests, cls).setUpClass()
-
-        # Create the tenancy
-
-        with tenant_context(SetupTests.PUBLIC_TENANT):
-            (fqdn, tenancy) = create_tenancy(
-                cls.TENANCY_NAME, SetupTests.ADMIN_USERNAME
-            )
-            cls.fqdn = fqdn
-            cls.tenancy = tenancy
-
-            # Create our test user
-
-            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+        User.objects.create_user(username=cls.USERNAME, password=cls.PASSWORD)
 
     @parameterized.expand(
         [
@@ -55,16 +37,14 @@ class ArtistTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            artist = Artist(name=name)
-            artist.save()
-
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        artist = Artist(name=name)
+        artist.save()
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-detail", kwargs={"pk": artist.id})
 
         # Act
 
-        response = self.client.get(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.get(url)
 
         # Assert
 
@@ -88,13 +68,12 @@ class ArtistTests(APITestCase):
         # Arrange
 
         artist_request = {"name": name}
-
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-list")
 
         # Act
 
-        response = self.client.post(url, artist_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(url, artist_request)
 
         # Assert
 
@@ -118,18 +97,16 @@ class ArtistTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            artist = Artist(name=original_name)
-            artist.save()
-
+        artist = Artist(name=original_name)
+        artist.save()
         artist_request = {"name": new_name}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-detail", kwargs={"pk": artist.id})
 
         # Act
 
-        response = self.client.put(url, artist_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(url, artist_request)
 
         # Assert
 
@@ -146,16 +123,14 @@ class ArtistTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            artist = Artist(name="Artist to Delete")
-            artist.save()
-
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        artist = Artist(name="Artist to Delete")
+        artist.save()
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-detail", kwargs={"pk": artist.id})
 
         # Act
 
-        response = self.client.delete(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.delete(url)
 
         # Assert
 
@@ -168,19 +143,18 @@ class ArtistTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            artist = Artist(name="Colliding Artist 1")
-            artist.save()
-            colliding_artist = Artist(name="Colliding Artist 2")
-            colliding_artist.save()
+        artist = Artist(name="Colliding Artist 1")
+        artist.save()
+        colliding_artist = Artist(name="Colliding Artist 2")
+        colliding_artist.save()
 
         artist_request = {"name": "Colliding Artist 1"}
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-detail", kwargs={"pk": colliding_artist.id})
 
         # Act
 
-        response = self.client.put(url, artist_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(url, artist_request)
         response_json = json.loads(response.content)
 
         # Assert
@@ -197,17 +171,16 @@ class ArtistTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            artist = Artist(name="Colliding Artist 1")
-            artist.save()
+        artist = Artist(name="Colliding Artist 1")
+        artist.save()
 
         artist_request = {"name": "Colliding Artist 1"}
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("artist-list")
 
         # Act
 
-        response = self.client.post(url, artist_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(url, artist_request)
         response_json = json.loads(response.content)
 
         # Assert

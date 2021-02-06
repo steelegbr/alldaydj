@@ -44,7 +44,7 @@ need the following variables.
  - ADDJ_DB_PORT - The port to connect to the database on. Defaults to 5432.
  - ADDJ_LANG_CODE - The language code we're installed with. Defaults to en-gb.
  - ADDJ_TIMEZONE - The server timezone. Defaults to UTC.
- - ADDJ_USERS_DOMAIN - Base URL to match tenants on.
+ - ADDJ_USERS_DOMAIN - The URL the application is installed on.
  - ADDJ_RABBIT_HOST - The host RabbitMQ is running on. Defaults to localhost.
  - ADDJ_RABBIT_PORT - The port RabbitMQ is running on. Defaults to 5672.
  - ADDJ_RABBIT_USER - The username to log into RabbitMQ with. Defaults to "guest".
@@ -76,14 +76,6 @@ To start the database engine:
     brew services start postgresql
 
 This creates a user with your username but no password.
-
-## Migrations
-
-Due to the use of django-tenants for schema level segregation, we need to handle migrations with the following command:
-
-    python manage.py makemigrations
-    python manage.py makemigrations alldaydj
-    python manage.py migrate_schemas
 
 ## Rabbit... Rabbit, Rabbit, Rabbit!
 

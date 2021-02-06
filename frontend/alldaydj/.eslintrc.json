@@ -1,35 +1,10 @@
 {
   "rules": {
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error"
-    ],
-    "react/jsx-max-depth": [
-      "error",
-      {
-        "max": 2
-      }
-    ],
     "react/jsx-sort-props": [
       "error",
       {
         "callbacksLast": false
       }
-    ],
-    "react/jsx-props-no-spreading": [
-      "error"
-    ],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        "extensions": [
-          ".tsx",
-          ".ts"
-        ]
-      }
-    ],
-    "react/jsx-one-expression-per-line": [
-      "error"
     ],
     "import/extensions": [
       "error",
@@ -41,35 +16,32 @@
         "tsx": "never"
       }
     ],
-    "react/jsx-no-literals": [
+    "react/jsx-filename-extension": [
       "error",
       {
-        "noStrings": false,
-        "ignoreProps": false
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     ],
-    "react/jsx-curly-brace-presence": [
-      "error",
-      {
-        "props": "always",
-        "children": "always"
-      }
+    "no-use-before-define": [
+      "off"
+    ],
+    "@typescript-eslint/no-use-before-define": [
+      "error"
     ]
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "extends": [
     "airbnb",
-    "airbnb/hooks",
-    "standard",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier/react",
-    "prettier/@typescript-eslint",
-    "plugin:react/recommended"
+    "airbnb/hooks"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -80,7 +52,6 @@
     }
   },
   "plugins": [
-    "prettier",
     "@typescript-eslint"
   ],
   "settings": {

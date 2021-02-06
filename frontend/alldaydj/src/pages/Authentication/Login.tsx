@@ -171,6 +171,7 @@ export default function Login(): React.ReactElement {
           Username (e-mail):
         </InputLabel>
         <Input
+          data-test="input-email"
           error={loginStatus.errorEmail !== undefined}
           id="email"
           onChange={doSetEmail}
@@ -183,7 +184,7 @@ export default function Login(): React.ReactElement {
           value={loginStatus.email}
         />
         {loginStatus.errorEmail && (
-          <FormHelperText error>
+          <FormHelperText data-test="error-email" error>
             {loginStatus.errorEmail}
           </FormHelperText>
         )}
@@ -198,6 +199,7 @@ export default function Login(): React.ReactElement {
           Password:
         </InputLabel>
         <Input
+          data-test="input-password"
           error={loginStatus.errorPassword !== undefined}
           id="password"
           onChange={doSetPassword}
@@ -210,7 +212,7 @@ export default function Login(): React.ReactElement {
           value={loginStatus.password}
         />
         {loginStatus.errorPassword && (
-          <FormHelperText error>
+          <FormHelperText data-test="error-password" error>
             {loginStatus.errorPassword}
           </FormHelperText>
         )}
@@ -224,7 +226,7 @@ export default function Login(): React.ReactElement {
         <CardHeader title="Login to AllDay DJ" />
         <CardContent>
           {loginStatus.progress === 'Error' && (
-            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox}>
+            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox} data-test="box-error">
               {`Login failed. Please check your username and password and try again. If you continue
               to see this error, please get in touch with support.`}
             </Box>
@@ -236,6 +238,7 @@ export default function Login(): React.ReactElement {
           {loginButton()}
           <Button
             color="secondary"
+            data-test="button-clear"
             disabled={disableButtons}
             onClick={clearForm}
             variant="outlined"
@@ -249,7 +252,7 @@ export default function Login(): React.ReactElement {
 
   return (
     <AuthenticationWrapper>
-      <form onSubmit={attemptLogin}>
+      <form data-test="form-login" onSubmit={attemptLogin}>
         {loginCard()}
       </form>
     </AuthenticationWrapper>

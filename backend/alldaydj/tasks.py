@@ -152,7 +152,7 @@ def validate_audio_upload(job_id: str) -> str:
             if compression == WaveCompression.UNCOMPRESSED:
                 logger.info(f"Audio upload job {job_id} encountered a WAVE file.")
                 _move_audio_file(inbound_file_name, uncompressed_file_name)
-                extract_audio_metadata.apply_async(args=(job_id))
+                extract_audio_metadata.apply_async(args=(job_id,))
             elif compression == WaveCompression.INVALID:
                 logger.warning(
                     f"Audio upload job {job_id} encountered a WAVE file with no format chunk."
@@ -215,7 +215,7 @@ def decompress_audio(job_id: str, mime: str):
     # Delete the compressed file and move onto metadata extraction
 
     default_storage.delete(inbound_file_name)
-    extract_audio_metadata.apply_async(args=(job_id))
+    extract_audio_metadata.apply_async(args=(job_id,))
 
 
 def __get_timer(
@@ -279,7 +279,7 @@ def extract_audio_metadata(job_id: str):
 
     # Move on to generating the compressed audio file
 
-    generate_compressed_audio.apply_async(args=(job_id))
+    generate_compressed_audio.apply_async(args=(job_id,))
 
 
 @shared_task
@@ -305,7 +305,7 @@ def generate_compressed_audio(job_id: str):
         logger.info(f"Compressing WAV to OGG for job {job_id}.")
         OggEncoder().encode(audio_file, compressed_file, settings.ADDJ_OGG_QUALITY)
 
-    generate_hashes.apply_async(args=(job_id))
+    generate_hashes.apply_async(args=(job_id,))
 
 
 @shared_task

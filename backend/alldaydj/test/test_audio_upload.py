@@ -7,12 +7,8 @@ from alldaydj.tasks import (
     generate_compressed_audio,
     generate_hashes,
 )
-from alldaydj.test.test_0000_init_tenancies import SetupTests
-from alldaydj.test.utils import (
-    set_bearer_token,
-    create_tenancy,
-    create_tenant_user,
-)
+from alldaydj.test.utils import set_bearer_token
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django_tenants.utils import tenant_context
 from io import BytesIO
@@ -31,60 +27,48 @@ class AudioUploadTests(APITestCase):
 
     USERNAME = "upload@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "upload"
 
     @classmethod
     def setUpClass(cls):
 
         super(AudioUploadTests, cls).setUpClass()
 
-        # Create the tenancy
+        #  Create our test user
 
-        with tenant_context(SetupTests.PUBLIC_TENANT):
-            (fqdn, tenancy) = create_tenancy(
-                cls.TENANCY_NAME, SetupTests.ADMIN_USERNAME
-            )
-            cls.fqdn = fqdn
-            cls.tenancy = tenancy
-
-            # Create our test user
-
-            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+        User.objects.create_user(username=cls.USERNAME, password=cls.PASSWORD)
 
         # Create a test cart
 
-        with tenant_context(cls.tenancy):
+        artist = Artist(name="Test Artist")
+        artist.save()
 
-            artist = Artist(name="Test Artist")
-            artist.save()
+        tag = Tag(tag="Test Tag")
+        tag.save()
 
-            tag = Tag(tag="Test Tag")
-            tag.save()
+        cart_type = Type(name="Test Type")
+        cart_type.save()
 
-            cart_type = Type(name="Test Type")
-            cart_type.save()
+        cls.cart = Cart(
+            label="TEST123",
+            title="Test Cart",
+            display_artist="Test Artist",
+            cue_audio_start=0,
+            cue_audio_end=0,
+            cue_intro_start=0,
+            cue_intro_end=0,
+            cue_segue=0,
+            sweeper=False,
+            year=2020,
+            isrc="ISRC123",
+            composer="Composer Name",
+            publisher="Publisher Name",
+            record_label="Record Label",
+            type=cart_type,
+        )
 
-            cls.cart = Cart(
-                label="TEST123",
-                title="Test Cart",
-                display_artist="Test Artist",
-                cue_audio_start=0,
-                cue_audio_end=0,
-                cue_intro_start=0,
-                cue_intro_end=0,
-                cue_segue=0,
-                sweeper=False,
-                year=2020,
-                isrc="ISRC123",
-                composer="Composer Name",
-                publisher="Publisher Name",
-                record_label="Record Label",
-                type=cart_type,
-            )
-
-            cls.cart.artists.set([artist])
-            cls.cart.tags.set([tag])
-            cls.cart.save()
+        cls.cart.artists.set([artist])
+        cls.cart.tags.set([tag])
+        cls.cart.save()
 
     def test_bad_cart(self):
         """
@@ -95,14 +79,12 @@ class AudioUploadTests(APITestCase):
 
         audio_request = {"file": "RIFFTESTFILE"}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("audio", kwargs={"pk": "00000000-0000-0000-0000-000000000000"})
 
         #  Act
 
-        response = self.client.post(
-            url, audio_request, format="multipart", **{"HTTP_HOST": self.fqdn}
-        )
+        response = self.client.post(url, audio_request, format="multipart")
 
         # Assert
 
@@ -117,14 +99,12 @@ class AudioUploadTests(APITestCase):
 
         audio_request = {}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("audio", kwargs={"pk": self.cart.id})
 
         #  Act
 
-        response = self.client.post(
-            url, audio_request, format="multipart", **{"HTTP_HOST": self.fqdn}
-        )
+        response = self.client.post(url, audio_request, format="multipart")
 
         # Assert
 
@@ -150,14 +130,12 @@ class AudioUploadTests(APITestCase):
 
         audio_request = {"file": open(file_name, "rb")}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("audio", kwargs={"pk": self.cart.id})
 
         # Act
 
-        response = self.client.post(
-            url, audio_request, format="multipart", **{"HTTP_HOST": self.fqdn}
-        )
+        response = self.client.post(url, audio_request, format="multipart")
 
         # Assert
 
@@ -170,11 +148,11 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(json_response["status"], "QUEUED")
 
         storage_mock.assert_called_with(
-            generate_file_name(job, self.tenancy, FileStage.QUEUED),
+            generate_file_name(job, FileStage.QUEUED),
             ANY,
         )
 
-        validate_mock.assert_called_with(args=(UUID(job_id), self.TENANCY_NAME))
+        validate_mock.assert_called_with(args=(UUID(job_id)))
 
     def _create_job(self) -> AudioUploadJob:
         """
@@ -184,9 +162,8 @@ class AudioUploadTests(APITestCase):
             AudioUploadJob: The job we created.
         """
 
-        with tenant_context(self.tenancy):
-            job = AudioUploadJob(cart=self.cart)
-            job.save()
+        job = AudioUploadJob(cart=self.cart)
+        job.save()
 
         return job
 
@@ -211,12 +188,12 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.return_value = open(file_name, "rb")
-        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+        storage_file_name = generate_file_name(job, FileStage.QUEUED)
         expected_mime_error = f"{mime} is not a valid audio file MIME type."
 
         # Act
 
-        result = validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        result = validate_audio_upload.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -248,11 +225,11 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.return_value = open(file_name, "rb")
-        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+        storage_file_name = generate_file_name(job, FileStage.QUEUED)
 
         # Act
 
-        validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        validate_audio_upload.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -282,16 +259,16 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.return_value = open(file_name, "rb")
-        storage_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+        storage_file_name = generate_file_name(job, FileStage.QUEUED)
 
         # Act
 
-        validate_audio_upload.apply(args=(job.id, self.TENANCY_NAME))
+        validate_audio_upload.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
 
-        extract_metadata_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        extract_metadata_mock.assert_called_with(args=(job.id,))
         self.assertEqual(
             updated_job.status, AudioUploadJob.AudioUploadStatus.VALIDATING
         )
@@ -319,11 +296,11 @@ class AudioUploadTests(APITestCase):
 
         job = self._create_job()
         open_mock.side_effect = [open(file_name, "rb"), BytesIO()]
-        delete_file_name = generate_file_name(job, self.tenancy, FileStage.QUEUED)
+        delete_file_name = generate_file_name(job, FileStage.QUEUED)
 
         # Act
 
-        decompress_audio.apply(args=(job.id, self.TENANCY_NAME, mime))
+        decompress_audio.apply(args=(job.id, mime))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -331,7 +308,7 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(
             updated_job.status, AudioUploadJob.AudioUploadStatus.DECOMPRESSING
         )
-        extract_metadata_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        extract_metadata_mock.assert_called_with(args=(job.id,))
         delete_mock.assert_called_with(delete_file_name)
 
     @parameterized.expand(
@@ -352,7 +329,7 @@ class AudioUploadTests(APITestCase):
 
         # Act
 
-        result = decompress_audio.apply(args=(job.id, self.TENANCY_NAME, mime))
+        result = decompress_audio.apply(args=(job.id, mime))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -387,7 +364,7 @@ class AudioUploadTests(APITestCase):
 
         # Act
 
-        extract_audio_metadata.apply(args=(job.id, self.TENANCY_NAME))
+        extract_audio_metadata.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -398,9 +375,7 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(updated_job.cart.cue_intro_end, expected_intro_end)
         self.assertEqual(updated_job.cart.cue_segue, expected_segue)
         self.assertEqual(updated_job.cart.cue_audio_end, expected_audio_end)
-        generate_compressed_audio_mock.assert_called_with(
-            args=(job.id, self.TENANCY_NAME)
-        )
+        generate_compressed_audio_mock.assert_called_with(args=(job.id,))
 
     @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
     @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
@@ -422,15 +397,13 @@ class AudioUploadTests(APITestCase):
 
         # Act
 
-        extract_audio_metadata.apply(args=(job.id, self.TENANCY_NAME))
+        extract_audio_metadata.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
 
         self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.METADATA)
-        generate_compressed_audio_mock.assert_called_with(
-            args=(job.id, self.TENANCY_NAME)
-        )
+        generate_compressed_audio_mock.assert_called_with(args=(job.id,))
 
     @parameterized.expand([("./alldaydj/test/files/valid_no_markers.wav")])
     @patch("alldaydj.tasks.generate_hashes.apply_async")
@@ -447,7 +420,7 @@ class AudioUploadTests(APITestCase):
 
         # Act
 
-        generate_compressed_audio.apply(args=(job.id, self.TENANCY_NAME))
+        generate_compressed_audio.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert
@@ -455,7 +428,7 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(
             updated_job.status, AudioUploadJob.AudioUploadStatus.COMPRESSING
         )
-        generate_hashes_mock.assert_called_with(args=(job.id, self.TENANCY_NAME))
+        generate_hashes_mock.assert_called_with(args=(job.id,))
 
     @parameterized.expand(
         [
@@ -490,7 +463,7 @@ class AudioUploadTests(APITestCase):
 
         # Act
 
-        generate_hashes.apply(args=(job.id, self.TENANCY_NAME))
+        generate_hashes.apply(args=(job.id,))
         updated_job = AudioUploadJob.objects.get(id=job.id)
 
         # Assert

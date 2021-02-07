@@ -17,7 +17,6 @@ export interface AuthenticationStatus {
   refreshToken?: string;
   accessTokenExpiry?: Date;
   refreshTokenExpiry?: Date;
-  tenant?: string;
 }
 
 export interface AuthenticationStatusProps {

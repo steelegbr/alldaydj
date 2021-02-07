@@ -16,14 +16,12 @@ const calculateExpiry = (token: JwtToken) => new Date(token.exp * 1000);
 export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus => {
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = localStorage.getItem('accessToken');
-  const tenant = localStorage.getItem('tenant') || undefined;
   const log = getLogger();
 
   log.info('Attempting to get authentication status from local storage.');
 
   const authenticationStatus: AuthenticationStatus = {
     stage: 'Unauthenticated',
-    tenant,
   };
 
   if (refreshToken) {
@@ -54,14 +52,11 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
 
 export const isAuthenticated = (
   props: AuthenticationStatusProps | undefined,
-  requireTenant = false,
 ): boolean => {
   const authenticationStage = props?.authenticationStatus.stage;
-  const tenant = props?.authenticationStatus.tenant;
-  const authenticated = authenticationStage === 'Authenticated'
+  return authenticationStage === 'Authenticated'
     || authenticationStage === 'RefreshingAccessToken'
     || authenticationStage === 'AccessTokenRefreshNeeded';
-  return requireTenant ? !!(authenticated && tenant) : authenticated;
 };
 
 export const loginUser = (refreshToken: string, accessToken: string): AuthenticationStatus => {
@@ -87,23 +82,11 @@ export const loginUser = (refreshToken: string, accessToken: string): Authentica
 export const logOut = (): AuthenticationStatus => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  localStorage.removeItem('tenant');
 
   const status: AuthenticationStatus = {
     stage: 'Unauthenticated',
   };
   return status;
-};
-
-export const setTenant = (
-  tenant: string,
-  authenticationStatus: AuthenticationStatus,
-): AuthenticationStatus => {
-  localStorage.setItem('tenant', tenant);
-  return {
-    ...authenticationStatus,
-    tenant,
-  };
 };
 
 export const refreshAccessToken = (

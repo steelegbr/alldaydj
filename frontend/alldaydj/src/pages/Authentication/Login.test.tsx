@@ -70,7 +70,11 @@ describe('login page', () => {
       await loginSuccess;
     });
 
-    expect(mockPush).toBeCalledWith('/tenancy/');
+    expect(mockUserLogin).toBeCalledWith({
+      username: 'user@example.com',
+      password: 'p@55w0rd1',
+    });
+    expect(mockPush).toBeCalledWith('/');
   });
 
   it('login failure presents an error message', async () => {
@@ -97,12 +101,13 @@ describe('login page', () => {
 
     const errorBox = component.find("[data-test='box-error']").last();
     expect(errorBox.getDOMNode().textContent).toContain('Login failed.');
+    expect(mockUserLogin).toBeCalledWith({
+      username: 'user@example.com',
+      password: 'p@55w0rd1',
+    });
   });
 
   it('clear button clears the form', () => {
-    const loginFail = Promise.reject(new Error('Bad Credentials'));
-    mockUserLogin.mockReturnValue(loginFail);
-
     const component = getComponent();
     const emailInput = component.find("[data-test='input-email']").find('input');
     const passwordInput = component.find("[data-test='input-password']").find('input');

@@ -1,5 +1,5 @@
 import mockAxios from 'jest-mock-axios';
-import { getTenancies, postRefreshToken, userLogin } from './Authentication';
+import { postRefreshToken, userLogin } from './Authentication';
 
 describe('authentication API calls', () => {
   beforeEach(() => {
@@ -8,27 +8,14 @@ describe('authentication API calls', () => {
 
   it('user login', async () => {
     await userLogin({
-      email: 'user@example.com',
+      username: 'user@example.com',
       password: 'pass',
     });
 
     expect(mockAxios.post)
       .toHaveBeenCalledWith(
-        'undefined://login.undefined/api/token/',
-        { email: 'user@example.com', password: 'pass' },
-      );
-  });
-
-  it('get tenancy list', async () => {
-    await getTenancies('token1');
-    expect(mockAxios.get)
-      .toHaveBeenCalledWith(
-        'undefined://login.undefined/api/token/tenancies/',
-        {
-          headers: {
-            Authorization: 'Bearer token1',
-          },
-        },
+        '/api/token/',
+        { username: 'user@example.com', password: 'pass' },
       );
   });
 
@@ -39,7 +26,7 @@ describe('authentication API calls', () => {
     await postRefreshToken(refreshData);
     expect(mockAxios.post)
       .toHaveBeenCalledWith(
-        'undefined://login.undefined/api/token/refresh/',
+        '/api/token/refresh/',
         refreshData,
       );
   });

@@ -20,45 +20,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
 
-SHARED_APPS = [
-    "django_tenants",
-    "alldaydj.tenants",
-    "alldaydj.users",
+INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.admin",
     "django.contrib.staticfiles",
-    "tenant_users.permissions",
-    "tenant_users.tenants",
     "rest_framework",
     "django_celery_results",
     "colorfield",
     "django_nose",
     "corsheaders",
-]
-
-TENANT_APPS = [
-    "django.contrib.contenttypes",
-    "tenant_users.permissions",
     "alldaydj",
-    "rest_framework",
-    "django_celery_results",
-    "colorfield",
 ]
-
-INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
-
-TENANT_MODEL = "tenants.Tenant"
-TENANT_DOMAIN_MODEL = "tenants.Domain"
-TENANT_USERS_DOMAIN = environ.get("ADDJ_USERS_DOMAIN")
-AUTH_USER_MODEL = "users.TenantUser"
-SESSION_COOKIE_DOMAIN = f".{environ.get('ADDJ_USERS_DOMAIN')}"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "django_tenants.middleware.main.TenantMainMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -94,7 +72,7 @@ WSGI_APPLICATION = "alldaydj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django_tenants.postgresql_backend",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": environ.get("ADDJ_DB_NAME"),
         "USER": environ.get("ADDJ_DB_USER"),
         "PASSWORD": environ.get("ADDJ_DB_PASS"),
@@ -102,8 +80,6 @@ DATABASES = {
         "PORT": environ.get("ADDJ_DB_PORT", 5432),
     }
 }
-
-DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 
 # Password validation
@@ -124,8 +100,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = ["tenant_users.permissions.backend.UserBackend"]
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -133,7 +107,7 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-ALLOWED_HOSTS = [f".{environ.get('ADDJ_USERS_DOMAIN')}", "localhost"]
+ALLOWED_HOSTS = [environ.get("ADDJ_USERS_DOMAIN"), "localhost"]
 
 # Localisation
 
@@ -203,6 +177,7 @@ ADDJ_DEFAULT_PERMISSIONS = [
     "view_type",
 ]
 
+ADDJ_DEFAULT_GROUP = environ.get("ADDJ_DEFAULT_GROUP", "alldaydj_users")
 ADDJ_COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
 ADDJ_OGG_QUALITY = int(environ.get("ADDJ_OGG_QUALITY", "4"))
 
@@ -210,5 +185,5 @@ ADDJ_OGG_QUALITY = int(environ.get("ADDJ_OGG_QUALITY", "4"))
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https?://localhost:\d+$",
-    f"^https?://.*{environ.get('ADDJ_USERS_DOMAIN')}$",
+    f"^https?://{environ.get('ADDJ_USERS_DOMAIN')}$",
 ]

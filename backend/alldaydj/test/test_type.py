@@ -1,13 +1,7 @@
 from alldaydj.models import Type
-from alldaydj.test.test_0000_init_tenancies import SetupTests
-from alldaydj.test.utils import (
-    set_bearer_token,
-    create_tenancy,
-    create_public_tenant,
-    create_tenant_user,
-)
+from alldaydj.test.utils import set_bearer_token
+from django.contrib.auth.models import User
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized
 from rest_framework import status
@@ -24,24 +18,15 @@ class TypeTests(APITestCase):
     ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "type@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "type"
 
     @classmethod
     def setUpClass(cls):
 
         super(TypeTests, cls).setUpClass()
 
-        # Create the tenancy
+        # Create our test user
 
-        with tenant_context(SetupTests.PUBLIC_TENANT):
-            create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
-            (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
-            cls.fqdn = fqdn
-            cls.tenancy = tenancy
-
-            # Create our test user
-
-            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+        User.objects.create_user(username=cls.USERNAME, password=cls.PASSWORD)
 
     @parameterized.expand(
         [
@@ -57,16 +42,15 @@ class TypeTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart_type = Type(name=name, colour=colour, now_playing=now_playing)
-            cart_type.save()
+        cart_type = Type(name=name, colour=colour, now_playing=now_playing)
+        cart_type.save()
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
-        response = self.client.get(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.get(url)
 
         # Assert
 
@@ -93,12 +77,15 @@ class TypeTests(APITestCase):
 
         type_request = {"name": name, "colour": colour, "now_playing": now_playing}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-list")
 
         # Act
 
-        response = self.client.post(url, type_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(
+            url,
+            type_request,
+        )
 
         # Assert
 
@@ -126,18 +113,20 @@ class TypeTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart_type = Type(name=original_name, colour=colour, now_playing=now_playing)
-            cart_type.save()
+        cart_type = Type(name=original_name, colour=colour, now_playing=now_playing)
+        cart_type.save()
 
         type_request = {"name": new_name, "colour": colour, "now_playing": now_playing}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
-        response = self.client.put(url, type_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(
+            url,
+            type_request,
+        )
 
         # Assert
 
@@ -156,16 +145,17 @@ class TypeTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart_type = Type(name="Type to Delete", colour="#C0C0C0", now_playing=False)
-            cart_type.save()
+        cart_type = Type(name="Type to Delete", colour="#C0C0C0", now_playing=False)
+        cart_type.save()
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-detail", kwargs={"pk": cart_type.id})
 
         # Act
 
-        response = self.client.delete(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.delete(
+            url,
+        )
 
         # Assert
 
@@ -178,27 +168,27 @@ class TypeTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart_type = Type(
-                name="Colliding Type 1", colour="#C0C0C0", now_playing=False
-            )
-            cart_type.save()
-            colliding_type = Type(
-                name="Colliding Type 2", colour="#C0C0C0", now_playing=False
-            )
-            colliding_type.save()
+        cart_type = Type(name="Colliding Type 1", colour="#C0C0C0", now_playing=False)
+        cart_type.save()
+        colliding_type = Type(
+            name="Colliding Type 2", colour="#C0C0C0", now_playing=False
+        )
+        colliding_type.save()
 
         type_request = {
             "name": "Colliding Type 1",
             "colour": "#C0C0C0",
             "now_playing": False,
         }
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-detail", kwargs={"pk": colliding_type.id})
 
         # Act
 
-        response = self.client.put(url, type_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(
+            url,
+            type_request,
+        )
         response_json = json.loads(response.content)
 
         # Assert
@@ -213,23 +203,23 @@ class TypeTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart_type = Type(
-                name="Colliding Type 1", colour="#C0C0C0", now_playing=False
-            )
-            cart_type.save()
+        cart_type = Type(name="Colliding Type 1", colour="#C0C0C0", now_playing=False)
+        cart_type.save()
 
         type_request = {
             "name": "Colliding Type 1",
             "colour": "#C0C0C0",
             "now_playing": False,
         }
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("type-list")
 
         # Act
 
-        response = self.client.post(url, type_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(
+            url,
+            type_request,
+        )
         response_json = json.loads(response.content)
 
         # Assert

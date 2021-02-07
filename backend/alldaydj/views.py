@@ -57,7 +57,6 @@ class AudioView(views.APIView):
         # Check we have a cart to match on
 
         cart = get_object_or_404(Cart, id=pk)
-        tenant = request.tenant
 
         # Check we have a file uploaded to us
 
@@ -73,9 +72,9 @@ class AudioView(views.APIView):
 
         # Save the file to the queue folder and trigger the process
 
-        generated_file_name = f"queued/{tenant.name}_{job.id}_{cart.id}"
+        generated_file_name = f"queued/{job.id}_{cart.id}"
         default_storage.save(generated_file_name, request.data["file"])
-        validate_audio_upload.apply_async(args=(job.id, tenant.name))
+        validate_audio_upload.apply_async(args=(job.id,))
 
         # Let the user know we're in progress
 

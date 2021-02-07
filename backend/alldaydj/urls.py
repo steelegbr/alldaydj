@@ -10,7 +10,6 @@ from alldaydj.views import (
     TagViewSet,
     TypeViewSet,
 )
-from alldaydj.tenants.views import TenantViewSet
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
@@ -36,7 +35,6 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("api/token/tenancies/", TenantViewSet.as_view(), name="tenancies"),
     path("api/audio/<uuid:pk>/", AudioView.as_view(), name="audio"),
     path("api/", include(router.urls)),
 ]

@@ -52,7 +52,7 @@ const Menu = (): React.ReactElement => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const themeContext = React.useContext(ThemeContext);
   const authenticationContext = React.useContext(AuthenticationContext);
-  const authenticated = isAuthenticated(authenticationContext, true);
+  const authenticated = isAuthenticated(authenticationContext);
 
   const classes = useStyles();
   const container = window.document.body;

@@ -10,7 +10,6 @@ describe('main menu', () => {
     const contextValue : AuthenticationStatusProps = {
       authenticationStatus: {
         stage: 'Authenticated',
-        tenant: 'tenant1',
       },
       setAuthenticationStatus: mockSetAuthStatus,
     };

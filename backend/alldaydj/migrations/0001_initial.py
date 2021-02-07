@@ -2,6 +2,7 @@
 
 import colorfield.fields
 import django.contrib.postgres.fields.citext
+from django.contrib.postgres.operations import CITextExtension
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
@@ -15,6 +16,7 @@ class Migration(migrations.Migration):
     dependencies = []
 
     operations = [
+        CITextExtension(),
         migrations.CreateModel(
             name="Artist",
             fields=[

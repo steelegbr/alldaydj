@@ -19,10 +19,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { userLogin } from '../../api/requests/Authentication';
 import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import { Paths } from '../../routing/Paths';
+import Paths from '../../routing/Paths';
 import { loginUser } from '../../services/AuthenticationService';
 import { getLogger } from '../../services/LoggingService';
-import AuthenticationWrapper from './AuthenticationWrapper';
 
 const useStyles = makeStyles(() => createStyles({
   loginProgress: {
@@ -132,14 +131,14 @@ export default function Login(): React.ReactElement {
     setLoginStatus(newLoginStatus);
 
     userLogin({
-      email: newLoginStatus.email,
+      username: newLoginStatus.email,
       password: newLoginStatus.password,
     }).then(
       (result) => {
         log.info('User login success!');
         const user = loginUser(result.data.refresh, result.data.access);
         authenticationContext?.setAuthenticationStatus(user);
-        history.push(Paths.auth.tenancy);
+        history.push(Paths.base);
       },
       (error) => {
         log.warn(`User login failed - ${error}`);
@@ -251,10 +250,8 @@ export default function Login(): React.ReactElement {
   }
 
   return (
-    <AuthenticationWrapper>
-      <form data-test="form-login" onSubmit={attemptLogin}>
-        {loginCard()}
-      </form>
-    </AuthenticationWrapper>
+    <form data-test="form-login" onSubmit={attemptLogin}>
+      {loginCard()}
+    </form>
   );
 }

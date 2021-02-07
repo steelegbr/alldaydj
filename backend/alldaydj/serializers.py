@@ -2,9 +2,11 @@
     Serializers for AllDay DJ.
 """
 
-from django.core.files.storage import default_storage
-from rest_framework import serializers
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
+from alldaydj.search_indexes import CartIndex
+from django.core.files.storage import default_storage
+from drf_haystack.serializers import HaystackSerializer
+from rest_framework import serializers
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -89,3 +91,9 @@ class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = ("id", "name", "colour", "now_playing")
+
+
+class CartSearchSerializer(HaystackSerializer):
+    class Meta:
+        index_classes = [CartIndex]
+        fields = ["q", "display_artist", "title", "label", "year"]

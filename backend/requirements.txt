@@ -20,10 +20,14 @@ Django==3.1.6
 django-celery-results==2.0.1
 django-colorfield==0.4.1
 django-cors-headers==3.7.0
+django-haystack==3.0
 django-nose==1.4.7
 django-storages==1.11.1
+django-tenant-users==0.3.12
+django-tenants==3.2.1
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.6.0
+drf-haystack==1.8.9
 drf-jwt==1.17.3
 ffmpeg-python==0.2.0
 filelock==3.0.12

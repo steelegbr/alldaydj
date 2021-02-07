@@ -7,6 +7,7 @@ from alldaydj.views import (
     AudioUploadJobViewSet,
     AudioView,
     CartViewSet,
+    CartSearchView,
     TagViewSet,
     TypeViewSet,
 )
@@ -21,6 +22,7 @@ from rest_framework_simplejwt.views import (
 
 router = DefaultRouter()
 router.register("artist", ArtistViewSet)
+router.register("cart/search", CartSearchView)
 router.register("cart", CartViewSet)
 router.register("job", AudioUploadJobViewSet)
 router.register("tag", TagViewSet)

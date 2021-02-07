@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "colorfield",
     "django_nose",
     "corsheaders",
+    "haystack",
     "alldaydj",
 ]
 
@@ -126,6 +127,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 100,
 }
 
 # Celery
@@ -187,3 +190,14 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https?://localhost:\d+$",
     f"^https?://{environ.get('ADDJ_USERS_DOMAIN')}$",
 ]
+
+# Haystack
+
+HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
+HAYSTACK_CONNECTIONS = {
+    "default": {
+        "ENGINE": "haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine",
+        "URL": f"http://{environ.get('ADDJ_ELASTIC_SERVER', 'elastic')}:{environ.get('ADDJ_ELASTIC_PORT', 9200)}/",
+        "INDEX_NAME": environ.get("ADDJ_ELASTIC_INDEX", "alldaydj"),
+    }
+}

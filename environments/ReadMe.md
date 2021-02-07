@@ -16,3 +16,10 @@ This assumes you want to call the bucket "alldaydj".
 To get the latest image, remember to pull!
 
     docker-compose --env ../../.env pull
+
+
+## Users
+
+You will need to create a superuser for initial login:
+
+    python manage.py createsuperuser

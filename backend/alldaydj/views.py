@@ -74,7 +74,7 @@ class AudioView(views.APIView):
 
         generated_file_name = f"queued/{job.id}_{cart.id}"
         default_storage.save(generated_file_name, request.data["file"])
-        validate_audio_upload.apply_async(args=(job.id))
+        validate_audio_upload.apply_async(args=(job.id,))
 
         # Let the user know we're in progress
 

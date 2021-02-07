@@ -151,7 +151,7 @@ class AudioUploadTests(APITestCase):
             ANY,
         )
 
-        validate_mock.assert_called_with(args=(UUID(job_id)))
+        validate_mock.assert_called_with(args=(UUID(job_id),))
 
     def _create_job(self) -> AudioUploadJob:
         """

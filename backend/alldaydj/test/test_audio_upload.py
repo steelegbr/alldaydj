@@ -10,7 +10,6 @@ from alldaydj.tasks import (
 from alldaydj.test.utils import set_bearer_token
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 from io import BytesIO
 import json
 from parameterized import parameterized

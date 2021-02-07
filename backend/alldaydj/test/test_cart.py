@@ -1,12 +1,7 @@
 from alldaydj.models import Artist, Cart, Tag, Type
-from alldaydj.test.test_0000_init_tenancies import SetupTests
-from alldaydj.test.utils import (
-    set_bearer_token,
-    create_tenancy,
-    create_tenant_user,
-)
+from alldaydj.test.utils import set_bearer_token
+from django.contrib.auth.models import User
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized
 from rest_framework import status
@@ -21,7 +16,6 @@ class CartTests(APITestCase):
 
     USERNAME = "cart@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "cart"
 
     artists: List[Artist] = []
     tags: List[Tag] = []
@@ -32,34 +26,24 @@ class CartTests(APITestCase):
 
         super(CartTests, cls).setUpClass()
 
-        # Create the tenancy
+        #  Create our test user
 
-        with tenant_context(SetupTests.PUBLIC_TENANT):
-            (fqdn, tenancy) = create_tenancy(
-                cls.TENANCY_NAME, SetupTests.ADMIN_USERNAME
-            )
-            cls.fqdn = fqdn
-            cls.tenancy = tenancy
-
-            # Create our test user
-
-            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+        User.objects.create_user(username=cls.USERNAME, password=cls.PASSWORD)
 
         # Create some test data
 
-        with tenant_context(cls.tenancy):
-            for i in range(4):
-                artist = Artist(name=f"Artist {i}")
-                tag = Tag(tag=f"Tag {i}")
-                cart_type = Type(name=f"Type {i}")
+        for i in range(4):
+            artist = Artist(name=f"Artist {i}")
+            tag = Tag(tag=f"Tag {i}")
+            cart_type = Type(name=f"Type {i}")
 
-                artist.save()
-                tag.save()
-                cart_type.save()
+            artist.save()
+            tag.save()
+            cart_type.save()
 
-                cls.artists.append(artist)
-                cls.tags.append(tag)
-                cls.types.append(cart_type)
+            cls.artists.append(artist)
+            cls.tags.append(tag)
+            cls.types.append(cart_type)
 
     @parameterized.expand(
         [
@@ -114,34 +98,33 @@ class CartTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart = Cart(
-                label=label,
-                title=title,
-                display_artist=display_artist,
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=sweeper,
-                year=year,
-                isrc=isrc,
-                composer=composer,
-                publisher=publisher,
-                record_label=record_label,
-                type=Type.objects.get(name=cart_type),
-            )
-            cart.artists.set([Artist.objects.get(name=artist) for artist in artists])
-            cart.tags.set([Tag.objects.get(tag=tag) for tag in tags])
-            cart.save()
+        cart = Cart(
+            label=label,
+            title=title,
+            display_artist=display_artist,
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=sweeper,
+            year=year,
+            isrc=isrc,
+            composer=composer,
+            publisher=publisher,
+            record_label=record_label,
+            type=Type.objects.get(name=cart_type),
+        )
+        cart.artists.set([Artist.objects.get(name=artist) for artist in artists])
+        cart.tags.set([Tag.objects.get(tag=tag) for tag in tags])
+        cart.save()
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("cart-detail", kwargs={"pk": cart.id})
 
         # Act
 
-        response = self.client.get(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.get(url)
 
         # Assert
 
@@ -244,12 +227,12 @@ class CartTests(APITestCase):
         if record_label:
             cart_request["record_label"] = record_label
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("cart-list")
 
         # Act
 
-        response = self.client.post(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(url, cart_request)
 
         # Assert
 
@@ -282,27 +265,26 @@ class CartTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart = Cart(
-                label="CART5",
-                title="More Audio Variety",
-                display_artist="Artist 1",
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=False,
-                year=800,
-                isrc="ABC123",
-                composer="Some Person",
-                publisher="Evil Bandits",
-                record_label="Money Makers",
-                type=Type.objects.get(name="Type 1"),
-            )
-            cart.artists.set([Artist.objects.get(name="Artist 1")])
-            cart.tags.set([Tag.objects.get(tag="Tag 1")])
-            cart.save()
+        cart = Cart(
+            label="CART5",
+            title="More Audio Variety",
+            display_artist="Artist 1",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        cart.artists.set([Artist.objects.get(name="Artist 1")])
+        cart.tags.set([Tag.objects.get(tag="Tag 1")])
+        cart.save()
 
         cart_request = {
             "label": "CART6",
@@ -325,11 +307,11 @@ class CartTests(APITestCase):
         }
 
         url = reverse("cart-detail", kwargs={"pk": cart.id})
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
 
         # Act
 
-        response = self.client.put(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(url, cart_request)
 
         # Assert
 
@@ -362,34 +344,33 @@ class CartTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            cart = Cart(
-                label="CART7",
-                title="More Audio Variety",
-                display_artist="Artist 1",
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=False,
-                year=800,
-                isrc="ABC123",
-                composer="Some Person",
-                publisher="Evil Bandits",
-                record_label="Money Makers",
-                type=Type.objects.get(name="Type 1"),
-            )
-            cart.artists.set([Artist.objects.get(name="Artist 1")])
-            cart.tags.set([Tag.objects.get(tag="Tag 1")])
-            cart.save()
+        cart = Cart(
+            label="CART7",
+            title="More Audio Variety",
+            display_artist="Artist 1",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        cart.artists.set([Artist.objects.get(name="Artist 1")])
+        cart.tags.set([Tag.objects.get(tag="Tag 1")])
+        cart.save()
 
         url = reverse("cart-detail", kwargs={"pk": cart.id})
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
 
         # Act
 
-        response = self.client.delete(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.delete(url)
 
         # Assert
 
@@ -400,48 +381,47 @@ class CartTests(APITestCase):
         Tests we can't re-name a cart to collide.
         """
 
-        with tenant_context(self.tenancy):
-            existing_cart = Cart(
-                label="CART8",
-                title="Cart 8 for Collision",
-                display_artist="Artist 1",
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=False,
-                year=800,
-                isrc="ABC123",
-                composer="Some Person",
-                publisher="Evil Bandits",
-                record_label="Money Makers",
-                type=Type.objects.get(name="Type 1"),
-            )
-            existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
-            existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
-            existing_cart.save()
+        existing_cart = Cart(
+            label="CART8",
+            title="Cart 8 for Collision",
+            display_artist="Artist 1",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
+        existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
+        existing_cart.save()
 
-            cart = Cart(
-                label="CART9",
-                title="Cart 9 for Collision",
-                display_artist="Artist 1",
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=False,
-                year=800,
-                isrc="ABC123",
-                composer="Some Person",
-                publisher="Evil Bandits",
-                record_label="Money Makers",
-                type=Type.objects.get(name="Type 1"),
-            )
-            cart.artists.set([Artist.objects.get(name="Artist 1")])
-            cart.tags.set([Tag.objects.get(tag="Tag 1")])
-            cart.save()
+        cart = Cart(
+            label="CART9",
+            title="Cart 9 for Collision",
+            display_artist="Artist 1",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        cart.artists.set([Artist.objects.get(name="Artist 1")])
+        cart.tags.set([Tag.objects.get(tag="Tag 1")])
+        cart.save()
 
         cart_request = {
             "label": "cart8",
@@ -464,11 +444,11 @@ class CartTests(APITestCase):
         }
 
         url = reverse("cart-detail", kwargs={"pk": cart.id})
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
 
         # Act
 
-        response = self.client.put(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(url, cart_request)
         response_json = json.loads(response.content)
 
         # Assert
@@ -483,27 +463,26 @@ class CartTests(APITestCase):
         Tests we can't create a new cart to collide.
         """
 
-        with tenant_context(self.tenancy):
-            existing_cart = Cart(
-                label="CART10",
-                title="Cart 8 for Collision",
-                display_artist="Artist 1",
-                cue_audio_start=0,
-                cue_audio_end=233040,
-                cue_intro_start=0,
-                cue_intro_end=29350,
-                cue_segue=22606,
-                sweeper=False,
-                year=800,
-                isrc="ABC123",
-                composer="Some Person",
-                publisher="Evil Bandits",
-                record_label="Money Makers",
-                type=Type.objects.get(name="Type 1"),
-            )
-            existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
-            existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
-            existing_cart.save()
+        existing_cart = Cart(
+            label="CART10",
+            title="Cart 8 for Collision",
+            display_artist="Artist 1",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_start=0,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        existing_cart.artists.set([Artist.objects.get(name="Artist 1")])
+        existing_cart.tags.set([Tag.objects.get(tag="Tag 1")])
+        existing_cart.save()
 
         cart_request = {
             "label": "cart10",
@@ -526,11 +505,11 @@ class CartTests(APITestCase):
         }
 
         url = reverse("cart-list")
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
 
         # Act
 
-        response = self.client.post(url, cart_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(url, cart_request)
         response_json = json.loads(response.content)
 
         # Assert

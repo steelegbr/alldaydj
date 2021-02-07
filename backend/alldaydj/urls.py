@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import (
 
 router = DefaultRouter()
 router.register("artist", ArtistViewSet)
-router.register("cart/search", CartSearchView)
+router.register("cart/search", CartSearchView, basename="carts-search")
 router.register("cart", CartViewSet)
 router.register("job", AudioUploadJobViewSet)
 router.register("tag", TagViewSet)

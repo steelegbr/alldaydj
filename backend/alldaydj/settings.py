@@ -3,7 +3,7 @@ Django Settings for AllDay DJ.
 """
 
 from distutils.util import strtobool
-from os import environ
+from os import environ, path
 from pathlib import Path
 
 # Unique secret key per instalation
@@ -52,7 +52,9 @@ ROOT_URLCONF = "alldaydj.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            path.join(BASE_DIR, "templates/"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -121,9 +123,9 @@ USE_TZ = True
 # REST Framework
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissions",
-    ],
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #    "rest_framework.permissions.DjangoModelPermissions",
+    # ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
@@ -196,8 +198,8 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 HAYSTACK_CONNECTIONS = {
     "default": {
-        "ENGINE": "haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine",
-        "URL": f"http://{environ.get('ADDJ_ELASTIC_SERVER', 'elastic')}:{environ.get('ADDJ_ELASTIC_PORT', 9200)}/",
+        "ENGINE": "haystack.backends.elasticsearch5_backend.Elasticsearch5SearchEngine",
+        "URL": f"http://{environ.get('ADDJ_ELASTIC_SERVER', 'elasticsearch')}:{environ.get('ADDJ_ELASTIC_PORT', 9200)}/",
         "INDEX_NAME": environ.get("ADDJ_ELASTIC_INDEX", "alldaydj"),
     }
 }

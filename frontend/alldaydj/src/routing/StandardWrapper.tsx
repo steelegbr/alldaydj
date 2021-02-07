@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props {}
 
-const StandardWrapper = ({ children }: React.PropsWithChildren<Props>) => {
+const StandardWrapper = ({ children }: React.PropsWithChildren<Props>) : React.ReactElement => {
   const classes = useStyles();
   return (
     <div className={classes.content}>

@@ -14,12 +14,9 @@ from alldaydj.codecs import get_decoder, OggEncoder
 from alldaydj.hash import generate_hash
 from celery import shared_task
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.files.storage import default_storage
-from functools import wraps
 from logging import getLogger
 import magic
-from os import environ
 from typing import Any, List, Tuple
 from wave_chunk_parser.chunks import CartTimer
 

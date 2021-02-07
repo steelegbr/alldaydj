@@ -2,10 +2,8 @@
     Test utility functions.
 """
 
-from django.conf import settings
 from django.urls import reverse
 import json
-from os import environ
 from rest_framework import status
 from rest_framework.test import APIClient
 from typing import List, Tuple

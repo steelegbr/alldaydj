@@ -1,8 +1,6 @@
-from alldaydj.test.utils import set_bearer_token
 from django.contrib.auth.models import User
 from django.urls import reverse
 import json
-from os import environ
 from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase

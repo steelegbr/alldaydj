@@ -1,13 +1,7 @@
 from alldaydj.models import Tag
-from alldaydj.test.test_0000_init_tenancies import SetupTests
-from alldaydj.test.utils import (
-    set_bearer_token,
-    create_tenancy,
-    create_public_tenant,
-    create_tenant_user,
-)
+from alldaydj.test.utils import set_bearer_token
+from django.contrib.auth.models import User
 from django.urls import reverse
-from django_tenants.utils import tenant_context
 import json
 from parameterized import parameterized
 from rest_framework import status
@@ -24,24 +18,15 @@ class TagTests(APITestCase):
     ADMIN_PASSWORD = "1337h@x0r"
     USERNAME = "tag@example.com"
     PASSWORD = "$up3rS3cur3"
-    TENANCY_NAME = "tag"
 
     @classmethod
     def setUpClass(cls):
 
         super(TagTests, cls).setUpClass()
 
-        # Create the tenancy
+        # Create our test user
 
-        with tenant_context(SetupTests.PUBLIC_TENANT):
-            create_public_tenant(cls.ADMIN_USERNAME, cls.ADMIN_PASSWORD)
-            (fqdn, tenancy) = create_tenancy(cls.TENANCY_NAME, cls.ADMIN_USERNAME)
-            cls.fqdn = fqdn
-            cls.tenancy = tenancy
-
-            # Create our test user
-
-            create_tenant_user(cls.USERNAME, cls.PASSWORD, cls.TENANCY_NAME)
+        User.objects.create_user(username=cls.USERNAME, password=cls.PASSWORD)
 
     @parameterized.expand(
         [
@@ -57,16 +42,15 @@ class TagTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            tag = Tag(tag=name)
-            tag.save()
+        tag = Tag(tag=name)
+        tag.save()
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-detail", kwargs={"pk": tag.id})
 
         # Act
 
-        response = self.client.get(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.get(url)
 
         # Assert
 
@@ -91,12 +75,15 @@ class TagTests(APITestCase):
 
         tag_request = {"tag": name}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-list")
 
         # Act
 
-        response = self.client.post(url, tag_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(
+            url,
+            tag_request,
+        )
 
         # Assert
 
@@ -120,18 +107,20 @@ class TagTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            tag = Tag(tag=original_name)
-            tag.save()
+        tag = Tag(tag=original_name)
+        tag.save()
 
         tag_request = {"tag": new_name}
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-detail", kwargs={"pk": tag.id})
 
         # Act
 
-        response = self.client.put(url, tag_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(
+            url,
+            tag_request,
+        )
 
         # Assert
 
@@ -148,16 +137,17 @@ class TagTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            tag = Tag(tag="Tag to Delete")
-            tag.save()
+        tag = Tag(tag="Tag to Delete")
+        tag.save()
 
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-detail", kwargs={"pk": tag.id})
 
         # Act
 
-        response = self.client.delete(url, **{"HTTP_HOST": self.fqdn})
+        response = self.client.delete(
+            url,
+        )
 
         # Assert
 
@@ -170,19 +160,21 @@ class TagTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            tag = Tag(tag="Colliding Tag 1")
-            tag.save()
-            colliding_tag = Tag(tag="Colliding Tag 2")
-            colliding_tag.save()
+        tag = Tag(tag="Colliding Tag 1")
+        tag.save()
+        colliding_tag = Tag(tag="Colliding Tag 2")
+        colliding_tag.save()
 
         tag_request = {"tag": "Colliding Tag 1"}
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-detail", kwargs={"pk": colliding_tag.id})
 
         # Act
 
-        response = self.client.put(url, tag_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.put(
+            url,
+            tag_request,
+        )
         response_json = json.loads(response.content)
 
         # Assert
@@ -197,17 +189,19 @@ class TagTests(APITestCase):
 
         # Arrange
 
-        with tenant_context(self.tenancy):
-            tag = Tag(tag="Colliding Tag 1")
-            tag.save()
+        tag = Tag(tag="Colliding Tag 1")
+        tag.save()
 
         tag_request = {"tag": "Colliding Tag 1"}
-        set_bearer_token(self.USERNAME, self.PASSWORD, self.fqdn, self.client)
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
         url = reverse("tag-list")
 
         # Act
 
-        response = self.client.post(url, tag_request, **{"HTTP_HOST": self.fqdn})
+        response = self.client.post(
+            url,
+            tag_request,
+        )
         response_json = json.loads(response.content)
 
         # Assert

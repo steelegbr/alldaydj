@@ -107,7 +107,7 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-ALLOWED_HOSTS = [f".{environ.get('ADDJ_USERS_DOMAIN')}", "localhost"]
+ALLOWED_HOSTS = [environ.get("ADDJ_USERS_DOMAIN"), "localhost"]
 
 # Localisation
 
@@ -185,5 +185,5 @@ ADDJ_OGG_QUALITY = int(environ.get("ADDJ_OGG_QUALITY", "4"))
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https?://localhost:\d+$",
-    f"^https?://.*{environ.get('ADDJ_USERS_DOMAIN')}$",
+    f"^https?://{environ.get('ADDJ_USERS_DOMAIN')}$",
 ]

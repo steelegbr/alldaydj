@@ -96,4 +96,4 @@ class TypeSerializer(serializers.ModelSerializer):
 class CartSearchSerializer(HaystackSerializer):
     class Meta:
         index_classes = [CartIndex]
-        fields = ["q", "display_artist", "title", "label", "year"]
+        fields = ["text", "display_artist", "title", "label", "year"]

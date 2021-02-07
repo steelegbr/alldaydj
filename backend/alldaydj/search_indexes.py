@@ -3,7 +3,7 @@ from alldaydj.models import Cart
 
 
 class CartIndex(indexes.SearchIndex, indexes.Indexable):
-    q = indexes.CharField(document=True, use_template=True)
+    text = indexes.CharField(document=True, use_template=True)
     display_artist = indexes.CharField()
     title = indexes.CharField()
     label = indexes.CharField()

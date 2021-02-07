@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     height: '100vh',
     width: '100vw',
     position: 'absolute',
-    left: 0,
     top: 0,
+    left: 0,
   },
   loginBox: {
     paddingTop: 10,

@@ -4,7 +4,7 @@ import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { AuthenticationContext } from '../components/context/AuthenticationContext';
 import { isAuthenticated } from '../services/AuthenticationService';
 import { getLogger } from '../services/LoggingService';
-import { Paths } from './Paths';
+import Paths from './Paths';
 
 export default function PrivateRoute(props: RouteProps): React.ReactElement {
   const authenticationContext = React.useContext(AuthenticationContext);

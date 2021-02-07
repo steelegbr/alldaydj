@@ -40,7 +40,6 @@ class JwtAuthTests(APITestCase):
         Args:
             username (str): The username to test.
             password (str): The password to test.
-            tenant_name (str): The name of the tenancy.
         """
 
         # Arrange
@@ -76,7 +75,6 @@ class JwtAuthTests(APITestCase):
         Args:
             username (str): The username to try.
             password (str): The password to try.
-            tenant_name (str): The tenancy to try logging in on.
         """
 
         # Arrange

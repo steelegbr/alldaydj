@@ -17,7 +17,6 @@ describe('menu contents', () => {
     const contextValue : AuthenticationStatusProps = {
       authenticationStatus: {
         stage: 'Authenticated',
-        tenant: 'tenant1',
       },
       setAuthenticationStatus: mockSetAuthStatus,
     };
@@ -31,19 +30,6 @@ describe('menu contents', () => {
   it('snapshot', () => {
     const component = mountComponent();
     expect(component).toMatchSnapshot();
-  });
-
-  it('change tenant should redirect', () => {
-    const component = mountComponent();
-    const tenantSelectorButton = component.find("[data-test='button-change-tenant']").first();
-    tenantSelectorButton.simulate('click');
-    expect(mockPush).toBeCalledWith('/tenancy/');
-  });
-
-  it('tenant name in menu', () => {
-    const component = mountComponent();
-    const tenantSelectorButton = component.find("[data-test='button-change-tenant']").first();
-    expect(tenantSelectorButton.text()).toContain('tenant1');
   });
 
   it('log out', () => {

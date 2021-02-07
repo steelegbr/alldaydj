@@ -26,7 +26,7 @@ from wave_chunk_parser.chunks import CartTimer
 
 def __get_upload_job(job_id: str) -> AudioUploadJob:
     """
-    Obtains the upload job and associated tenancy.
+    Obtains the upload job.
 
     Args:
         job_id (str): The job ID to search for.

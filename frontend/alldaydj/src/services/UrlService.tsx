@@ -1,2 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-export const getUrl = (tenancy: string, path: string): string => `${process.env.REACT_APP_BASE_PROTOCOL}://${tenancy}.${process.env.REACT_APP_BASE_DOMAIN_NAME}${path}`;
+import isDev from './DevelopmentService';
+
+const getUrl = (path: string): string => (isDev() ? `http://localhost:8000${path}` : path);
+export default getUrl;

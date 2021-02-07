@@ -1,8 +1,9 @@
-/* eslint-disable import/prefer-default-export */
-export const Paths = {
+const Paths = {
+  base: '/',
   auth: {
     login: '/login/',
     logout: '/logout/',
-    tenancy: '/tenancy/',
   },
 };
+
+export default Paths;

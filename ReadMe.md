@@ -99,16 +99,6 @@ On macOS, libmagic needs to be manually installed:
 
     brew install libmagic
 
-## LAME
-
-On macOS
-
-    brew install lame
-
-On Ubuntu
-
-    apt install libmp3lame-dev
-
 ## FFMPEG
 
 FFMPEG is used to handle the odd and wonderous array of codecs out there. It needs to be installed as a binary we can call.

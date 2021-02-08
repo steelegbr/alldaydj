@@ -8,12 +8,10 @@ from alldaydj.serializers import (
     AudioSerlializer,
     AudioUploadJobSerializer,
     CartSerializer,
-    CartSearchSerializer,
     TagSerializer,
     TypeSerializer,
 )
 from alldaydj.tasks import validate_audio_upload
-from drf_haystack.viewsets import HaystackViewSet
 from django.core.files.storage import default_storage
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
@@ -91,8 +89,3 @@ class AudioView(views.APIView):
         cart = get_object_or_404(Cart, id=pk)
         cart_serial = AudioSerlializer(cart)
         return Response(cart_serial.data)
-
-
-class CartSearchView(HaystackViewSet):
-    index_models = [Cart]
-    serializer_class = CartSearchSerializer

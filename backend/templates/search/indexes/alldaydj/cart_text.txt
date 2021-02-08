@@ -1,3 +1,0 @@
-{{ object.label }}
-{{ object.display_artist }}
-{{ object.title }}

@@ -2,12 +2,14 @@
     Views for AllDay DJ.
 """
 
+from alldaydj.documents.cart import CartDocument
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 from alldaydj.serializers import (
     ArtistSerializer,
     AudioSerlializer,
     AudioUploadJobSerializer,
     CartSerializer,
+    CartDocumentSerializer,
     TagSerializer,
     TypeSerializer,
 )
@@ -16,6 +18,27 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
+from django_elasticsearch_dsl_drf.constants import (
+    LOOKUP_FILTER_TERMS,
+    LOOKUP_FILTER_RANGE,
+    LOOKUP_FILTER_PREFIX,
+    LOOKUP_FILTER_WILDCARD,
+    LOOKUP_QUERY_IN,
+    LOOKUP_QUERY_GT,
+    LOOKUP_QUERY_GTE,
+    LOOKUP_QUERY_LT,
+    LOOKUP_QUERY_LTE,
+    LOOKUP_QUERY_EXCLUDE,
+)
+from django_elasticsearch_dsl_drf.filter_backends import (
+    FilteringFilterBackend,
+    IdsFilterBackend,
+    OrderingFilterBackend,
+    DefaultOrderingFilterBackend,
+    SearchFilterBackend,
+)
+from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
+from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser
 from rest_framework import views
 from rest_framework import viewsets
@@ -89,3 +112,38 @@ class AudioView(views.APIView):
         cart = get_object_or_404(Cart, id=pk)
         cart_serial = AudioSerlializer(cart)
         return Response(cart_serial.data)
+
+
+class CartDocumentView(BaseDocumentViewSet):
+    document = CartDocument
+    serializer_class = CartDocumentSerializer
+    pagination_class = PageNumberPagination
+    lookup_field = "id"
+    filter_backends = [
+        FilteringFilterBackend,
+        IdsFilterBackend,
+        OrderingFilterBackend,
+        DefaultOrderingFilterBackend,
+        SearchFilterBackend,
+    ]
+    search_fields = ["label", "artist", "title", "year"]
+    filter_fields = {
+        "label": "label.raw",
+        "title": "title.raw",
+        "artist": "artist.raw",
+        "year": {
+            "lookups": [
+                LOOKUP_FILTER_RANGE,
+                LOOKUP_QUERY_GT,
+                LOOKUP_QUERY_GTE,
+                LOOKUP_QUERY_LT,
+                LOOKUP_QUERY_LTE,
+            ]
+        },
+    }
+    ordering_fields = {"label": "label", "artist": "artist", "title": "title"}
+    ordering = (
+        "label",
+        "artist",
+        "title",
+    )

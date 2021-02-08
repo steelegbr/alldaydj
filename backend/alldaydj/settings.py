@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "colorfield",
     "django_nose",
     "corsheaders",
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf",
     "alldaydj",
 ]
 
@@ -189,3 +191,15 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https?://localhost:\d+$",
     f"^https?://{environ.get('ADDJ_USERS_DOMAIN')}$",
 ]
+
+# Search
+
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": f"{environ.get('ADDJ_ELASTIC_SERVER', 'elasticsearch')}:{environ.get('ADDJ_ELASTIC_PORT', 9200)}"
+    }
+}
+
+ELASTICSEARCH_INDEX_NAMES = {
+    "alldaydj.documents.cart": f"{environ.get('ADDJ_ELASTIC_INDEX', 'alldaydj')}-cart"
+}

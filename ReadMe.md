@@ -103,10 +103,14 @@ On macOS, libmagic needs to be manually installed:
 
 FFMPEG is used to handle the odd and wonderous array of codecs out there. It needs to be installed as a binary we can call.
 
-## Elasticsearch / Haystack
+## Elasticsearch
+
+To create the index:
+
+    python manage.py search_index --create -f
 
 To rebuild the index:
 
-    python manage.py rebuild_index
+    python manage.py search_index --populate -f
 
 An elasticsearch server (or cluster) is required for search functionality.

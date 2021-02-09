@@ -19,6 +19,7 @@ env:
   ADDJ_S3_KEY_ID: key123
   ADDJ_S3_KEY_SECRET: secret123
   ADDJ_S3_BUCKET: alldaydj
+  ADDJ_ELASTIC_SERVER: localhost
 
 jobs:
   django-tests:
@@ -39,6 +40,12 @@ jobs:
           RABBITMQ_DEFAULT_PASS: ${{ env.ADDJ_RABBIT_PASS }}
         ports:
           - 5672:5672
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+        env:
+          discovery.type: single-node
+        ports:
+          - 9200:9200
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the commit
@@ -60,6 +67,8 @@ jobs:
         working-directory: ./backend
         run: |
           black . --check
+      - name: Setup the elasticearch index
+        run: python manage.py search_index --create -f
       - name: Test with django
         working-directory: ./backend
         run: python manage.py test

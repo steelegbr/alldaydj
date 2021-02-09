@@ -1,15 +1,15 @@
 from django.conf import settings
 from django_elasticsearch_dsl import Document, Index, fields
-from elasticsearch_dsl import analyzer
+from elasticsearch_dsl import analyzer, tokenizer
 
 from alldaydj.models import Cart
 
 INDEX = Index(settings.ELASTICSEARCH_INDEX_NAMES[__name__])
 INDEX.settings(number_of_shards=1, number_of_replicas=1)
 
-CASE_INSENSITIVE_ANALYZER = analyzer(
-    "case_insensitive",
-    tokenizer="keyword",
+ALLDAYDJ_ANALYZER = analyzer(
+    "alldaydj",
+    tokenizer=tokenizer("trigram", "ngram", min_gram=3, max_gram=3),
     filter=["lowercase", "stop", "snowball"],
 )
 
@@ -17,23 +17,23 @@ CASE_INSENSITIVE_ANALYZER = analyzer(
 @INDEX.doc_type
 class CartDocument(Document):
     id = fields.KeywordField(attr="id")
-    title = fields.KeywordField(
-        analyzer=CASE_INSENSITIVE_ANALYZER,
+    title = fields.TextField(
+        analyzer=ALLDAYDJ_ANALYZER,
         fields={
-            "raw": fields.TextField(analyzer="keyword"),
+            "raw": fields.KeywordField(),
         },
     )
-    artist = fields.KeywordField(
-        analyzer=CASE_INSENSITIVE_ANALYZER,
+    artist = fields.TextField(
+        analyzer=ALLDAYDJ_ANALYZER,
         attr="display_artist",
         fields={
-            "raw": fields.TextField(analyzer="keyword"),
+            "raw": fields.KeywordField(),
         },
     )
-    label = fields.KeywordField(
-        analyzer=CASE_INSENSITIVE_ANALYZER,
+    label = fields.TextField(
+        analyzer=ALLDAYDJ_ANALYZER,
         fields={
-            "raw": fields.TextField(analyzer="keyword"),
+            "raw": fields.KeywordField(),
         },
     )
     year = fields.IntegerField()

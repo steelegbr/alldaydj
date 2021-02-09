@@ -126,7 +126,7 @@ class CartDocumentView(BaseDocumentViewSet):
         DefaultOrderingFilterBackend,
         SearchFilterBackend,
     ]
-    search_fields = ["label", "artist", "title", "year"]
+    search_fields = ["label", "artist", "title"]
     filter_fields = {
         "label": "label.raw",
         "title": "title.raw",
@@ -141,7 +141,11 @@ class CartDocumentView(BaseDocumentViewSet):
             ]
         },
     }
-    ordering_fields = {"label": "label", "artist": "artist", "title": "title"}
+    ordering_fields = {
+        "label": "label.raw",
+        "artist": "artist.raw",
+        "title": "title.raw",
+    }
     ordering = (
         "label",
         "artist",

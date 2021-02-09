@@ -68,6 +68,7 @@ jobs:
         run: |
           black . --check
       - name: Setup the elasticearch index
+        working-directory: ./backend
         run: python manage.py search_index --create -f
       - name: Test with django
         working-directory: ./backend

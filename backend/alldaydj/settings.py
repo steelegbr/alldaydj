@@ -179,6 +179,10 @@ ADDJ_DEFAULT_PERMISSIONS = [
     "change_type",
     "delete_type",
     "view_type",
+    "add_audiouploadjob",
+    "change_audiouploadjob",
+    "delete_audiouploadjob",
+    "view_audiouploadjob",
 ]
 
 ADDJ_DEFAULT_GROUP = environ.get("ADDJ_DEFAULT_GROUP", "alldaydj_users")

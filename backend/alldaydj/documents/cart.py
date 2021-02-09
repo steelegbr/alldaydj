@@ -7,15 +7,35 @@ from alldaydj.models import Cart
 INDEX = Index(settings.ELASTICSEARCH_INDEX_NAMES[__name__])
 INDEX.settings(number_of_shards=1, number_of_replicas=1)
 
+CASE_INSENSITIVE_ANALYZER = analyzer(
+    "case_insensitive",
+    tokenizer="keyword",
+    filter=["lowercase", "stop", "snowball"],
+)
+
 
 @INDEX.doc_type
 class CartDocument(Document):
-    id = fields.TextField(attr="id")
-    title = fields.TextField(fields={"raw": fields.KeywordField()})
-    artist = fields.TextField(
-        attr="display_artist", fields={"raw": fields.KeywordField()}
+    id = fields.KeywordField(attr="id")
+    title = fields.KeywordField(
+        analyzer=CASE_INSENSITIVE_ANALYZER,
+        fields={
+            "raw": fields.TextField(analyzer="keyword"),
+        },
     )
-    label = fields.TextField(fields={"raw": fields.KeywordField()})
+    artist = fields.KeywordField(
+        analyzer=CASE_INSENSITIVE_ANALYZER,
+        attr="display_artist",
+        fields={
+            "raw": fields.TextField(analyzer="keyword"),
+        },
+    )
+    label = fields.KeywordField(
+        analyzer=CASE_INSENSITIVE_ANALYZER,
+        fields={
+            "raw": fields.TextField(analyzer="keyword"),
+        },
+    )
     year = fields.IntegerField()
 
     class Django(object):

@@ -3,6 +3,8 @@ import {
 } from '@material-ui/core';
 import { ExitToApp, LibraryMusic } from '@material-ui/icons';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import Paths from '../../routing/Paths';
 import { logOut } from '../../services/AuthenticationService';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 
@@ -13,13 +15,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 const MenuContents = (): React.ReactElement => {
   const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
+  const history = useHistory();
 
   const doLogOut = () => {
     authenticationContext?.setAuthenticationStatus(logOut());
   };
 
   const menuItemLibrary = () => (
-    <ListItem button key="Music Library">
+    <ListItem
+      button
+      key="Music Library"
+      onClick={(event) => {
+        event.preventDefault();
+        history.push(Paths.library.search);
+      }}
+    >
       <ListItemIcon>
         <LibraryMusic />
       </ListItemIcon>

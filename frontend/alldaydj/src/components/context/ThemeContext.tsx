@@ -29,6 +29,18 @@ export function ThemeProvider({ children }: ThemeProviderProps): React.ReactElem
   const theme = createMuiTheme({
     palette: {
       type: themeSettings.darkMode ? 'dark' : 'light',
+      primary: {
+        light: '#e1ffb1',
+        main: '#aed581',
+        dark: '#7da453',
+        contrastText: '#000000',
+      },
+      secondary: {
+        light: '#efdcd5',
+        main: '#bcaaa4',
+        dark: '#8c7b75',
+        contrastText: '#000000',
+      },
     },
   });
 

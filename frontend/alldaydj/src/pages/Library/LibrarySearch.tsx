@@ -12,7 +12,7 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Paths from '../../routing/Paths';
 
-type SearchConditionFields = 'advanced' | 'search';
+type SearchConditionFields = 'advanced' | 'search' | 'artist' | 'title';
 
 type SearchConditions = Record<SearchConditionFields, string>;
 
@@ -31,6 +31,8 @@ const LibrarySearch = (): React.ReactElement => {
     {
       advanced: query.get('advanced') || 'false',
       search: query.get('search') || '',
+      artist: query.get('artist') || '',
+      title: query.get('title') || '',
     },
   );
   const classes = useStyles();
@@ -97,7 +99,7 @@ const LibrarySearch = (): React.ReactElement => {
                   <Person />
                 </InputAdornment>
           )}
-              value={conditions.search}
+              value={conditions.artist}
             />
           </FormControl>
           <FormControl>
@@ -113,7 +115,7 @@ const LibrarySearch = (): React.ReactElement => {
                   <Toc />
                 </InputAdornment>
           )}
-              value={conditions.search}
+              value={conditions.title}
             />
           </FormControl>
         </AccordionDetails>

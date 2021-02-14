@@ -240,7 +240,7 @@ export default function Login(): React.ReactElement {
             data-test="button-clear"
             disabled={disableButtons}
             onClick={clearForm}
-            variant="outlined"
+            variant="contained"
           >
             Clear
           </Button>

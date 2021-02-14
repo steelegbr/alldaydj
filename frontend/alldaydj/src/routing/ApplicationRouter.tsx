@@ -7,6 +7,7 @@ import Paths from './Paths';
 import PrivateRoute from './PrivateRoute';
 import StandardWrapper from './StandardWrapper';
 import Library from '../pages/Library/Library';
+import Logout from '../pages/Authentication/Logout';
 
 export default function ApplicationRouter() : React.ReactElement {
   return (
@@ -16,11 +17,16 @@ export default function ApplicationRouter() : React.ReactElement {
           <Login />
         </AuthenticationWrapper>
       </Route>
-      <Route path={Paths.library.search}>
+      <Route path={Paths.auth.logout}>
+        <AuthenticationWrapper>
+          <Logout />
+        </AuthenticationWrapper>
+      </Route>
+      <PrivateRoute path={Paths.library.search}>
         <StandardWrapper>
           <Library />
         </StandardWrapper>
-      </Route>
+      </PrivateRoute>
       <PrivateRoute path={Paths.base}>
         <StandardWrapper>
           <Dummy />

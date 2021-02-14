@@ -5,8 +5,6 @@ import { ExitToApp, LibraryMusic } from '@material-ui/icons';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Paths from '../../routing/Paths';
-import { logOut } from '../../services/AuthenticationService';
-import { AuthenticationContext } from '../context/AuthenticationContext';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: theme.mixins.toolbar,
@@ -14,12 +12,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MenuContents = (): React.ReactElement => {
   const classes = useStyles();
-  const authenticationContext = React.useContext(AuthenticationContext);
   const history = useHistory();
-
-  const doLogOut = () => {
-    authenticationContext?.setAuthenticationStatus(logOut());
-  };
 
   const menuItemLibrary = () => (
     <ListItem
@@ -38,7 +31,15 @@ const MenuContents = (): React.ReactElement => {
   );
 
   const menuItemLogout = () => (
-    <ListItem button data-test="button-logout" key="Log Out" onClick={doLogOut}>
+    <ListItem
+      button
+      data-test="button-logout"
+      key="Log Out"
+      onClick={(event) => {
+        event.preventDefault();
+        history.push(Paths.auth.logout);
+      }}
+    >
       <ListItemIcon>
         <ExitToApp />
       </ListItemIcon>

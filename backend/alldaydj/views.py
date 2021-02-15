@@ -38,7 +38,7 @@ from django_elasticsearch_dsl_drf.filter_backends import (
     SearchFilterBackend,
 )
 from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
-from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
+from django_elasticsearch_dsl_drf.pagination import QueryFriendlyPageNumberPagination
 from rest_framework.parsers import MultiPartParser
 from rest_framework import views
 from rest_framework import viewsets
@@ -117,7 +117,7 @@ class AudioView(views.APIView):
 class CartDocumentView(BaseDocumentViewSet):
     document = CartDocument
     serializer_class = CartDocumentSerializer
-    pagination_class = PageNumberPagination
+    pagination_class = QueryFriendlyPageNumberPagination
     lookup_field = "id"
     filter_backends = [
         FilteringFilterBackend,

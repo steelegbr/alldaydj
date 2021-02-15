@@ -10,11 +10,9 @@ import { Person, Search, Toc } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { SearchConditions } from '../../api/models/Search';
 import Paths from '../../routing/Paths';
-
-type SearchConditionFields = 'advanced' | 'search' | 'artist' | 'title';
-
-type SearchConditions = Record<SearchConditionFields, string>;
+import { paramsToSearchConditions } from '../../services/SearchService';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   formLayout: {
@@ -28,12 +26,7 @@ const LibrarySearch = (): React.ReactElement => {
   const query = new URLSearchParams(useLocation().search);
   const history = useHistory();
   const [conditions, setConditions] = React.useState<SearchConditions>(
-    {
-      advanced: query.get('advanced') || 'false',
-      search: query.get('search') || '',
-      artist: query.get('artist') || '',
-      title: query.get('title') || '',
-    },
+    paramsToSearchConditions(query),
   );
   const classes = useStyles();
 
@@ -49,11 +42,35 @@ const LibrarySearch = (): React.ReactElement => {
     });
   };
 
+  const updateArtist = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+    event.preventDefault();
+    updateConditions({
+      ...conditions,
+      artist: event.target.value,
+    });
+  };
+
+  const updateTitle = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+    event.preventDefault();
+    updateConditions({
+      ...conditions,
+      title: event.target.value,
+    });
+  };
+
   const performSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();
     history.push({
       pathname: Paths.library.search,
       search: `?${new URLSearchParams(conditions).toString()}`,
+    });
+  };
+
+  const toggleAdvanced = () => {
+    const nextAdvancedState = !(conditions.advanced === 'true');
+    updateConditions({
+      ...conditions,
+      advanced: nextAdvancedState ? 'true' : 'false',
     });
   };
 
@@ -79,7 +96,7 @@ const LibrarySearch = (): React.ReactElement => {
       <Button color="primary" type="submit" variant="contained">
         Search
       </Button>
-      <Accordion>
+      <Accordion expanded={conditions.advanced === 'true'} onChange={toggleAdvanced}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
         >
@@ -94,6 +111,7 @@ const LibrarySearch = (): React.ReactElement => {
               data-test="input-artist"
               id="artist"
               name="artist"
+              onChange={updateArtist}
               startAdornment={(
                 <InputAdornment position="start">
                   <Person />
@@ -110,6 +128,7 @@ const LibrarySearch = (): React.ReactElement => {
               data-test="input-title"
               id="title"
               name="title"
+              onChange={updateTitle}
               startAdornment={(
                 <InputAdornment position="start">
                   <Toc />

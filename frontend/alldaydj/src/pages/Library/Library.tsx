@@ -1,4 +1,5 @@
-import { Box, Typography } from '@material-ui/core';
+import { Snackbar, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { CartSearchResults } from '../../api/models/Search';
@@ -48,11 +49,11 @@ const Library = (): React.ReactElement => {
         Music Library
       </Typography>
       <LibrarySearch />
-      {state === 'Error' && (
-        <Box bgcolor="error.main" boxShadow={3} data-test="box-error">
+      <Snackbar autoHideDuration={6000} data-test="box-error" open={state === 'Error'}>
+        <Alert elevation={6} severity="error" variant="filled">
           {errorMessage}
-        </Box>
-      )}
+        </Alert>
+      </Snackbar>
       {searchResults && (
       <LibraryTable results={searchResults} />
       )}

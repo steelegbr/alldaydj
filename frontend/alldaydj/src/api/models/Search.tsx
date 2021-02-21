@@ -1,15 +1,15 @@
 export interface CartSearchResult {
-    label: String,
-    id: String,
-    title: String,
-    artist: String,
-    year: Number
+    label: string,
+    id: string,
+    title: string,
+    artist: string,
+    year: number
 }
 
 export interface CartSearchResults {
-    count: Number,
-    next?: String,
-    previous?: String,
+    count: number,
+    next?: string,
+    previous?: string,
     results: CartSearchResult[]
 }
 

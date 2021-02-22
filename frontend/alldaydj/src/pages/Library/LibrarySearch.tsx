@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Button,
   createStyles,
   FormControl, Input, InputAdornment, InputLabel, makeStyles, Theme, Typography,
 } from '@material-ui/core';
@@ -11,6 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartSearchConditions } from '../../api/models/Search';
+import LoadingButton from '../../components/common/LoadingButton';
 import CartSearchContext, { CartSearchStatus } from '../../components/context/CartSearchContext';
 import Paths from '../../routing/Paths';
 
@@ -101,9 +101,9 @@ const LibrarySearch = (): React.ReactElement => {
           value={search.conditions.search}
         />
       </FormControl>
-      <Button color="primary" type="submit" variant="contained">
+      <LoadingButton color="primary" loading={search.status === 'Searching'} type="submit" variant="contained">
         Search
-      </Button>
+      </LoadingButton>
       <Accordion expanded={search.conditions.advanced === 'true'} onChange={toggleAdvanced}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

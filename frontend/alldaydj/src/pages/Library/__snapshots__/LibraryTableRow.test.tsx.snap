@@ -1,0 +1,362 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`library table row renders single result 1`] = `
+<LibraryTableRow
+  result={
+    Object {
+      "artist": "Artist Name",
+      "id": "957dbe30-007d-442e-975e-42e096e60fa2",
+      "label": "abc123",
+      "title": "Cart Title",
+      "year": 1988,
+    }
+  }
+>
+  <WithStyles(ForwardRef(TableRow))>
+    <ForwardRef(TableRow)
+      classes={
+        Object {
+          "footer": "MuiTableRow-footer",
+          "head": "MuiTableRow-head",
+          "hover": "MuiTableRow-hover",
+          "root": "MuiTableRow-root",
+          "selected": "Mui-selected",
+        }
+      }
+    >
+      <tr
+        className="MuiTableRow-root"
+        role={null}
+      >
+        <WithStyles(ForwardRef(TableCell))>
+          <ForwardRef(TableCell)
+            classes={
+              Object {
+                "alignCenter": "MuiTableCell-alignCenter",
+                "alignJustify": "MuiTableCell-alignJustify",
+                "alignLeft": "MuiTableCell-alignLeft",
+                "alignRight": "MuiTableCell-alignRight",
+                "body": "MuiTableCell-body",
+                "footer": "MuiTableCell-footer",
+                "head": "MuiTableCell-head",
+                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
+                "paddingNone": "MuiTableCell-paddingNone",
+                "root": "MuiTableCell-root",
+                "sizeSmall": "MuiTableCell-sizeSmall",
+                "stickyHeader": "MuiTableCell-stickyHeader",
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root"
+            >
+              <WithStyles(ForwardRef(IconButton))
+                aria-label="expand search result"
+                onClick={[Function]}
+                size="small"
+              >
+                <ForwardRef(IconButton)
+                  aria-label="expand search result"
+                  classes={
+                    Object {
+                      "colorInherit": "MuiIconButton-colorInherit",
+                      "colorPrimary": "MuiIconButton-colorPrimary",
+                      "colorSecondary": "MuiIconButton-colorSecondary",
+                      "disabled": "Mui-disabled",
+                      "edgeEnd": "MuiIconButton-edgeEnd",
+                      "edgeStart": "MuiIconButton-edgeStart",
+                      "label": "MuiIconButton-label",
+                      "root": "MuiIconButton-root",
+                      "sizeSmall": "MuiIconButton-sizeSmall",
+                    }
+                  }
+                  onClick={[Function]}
+                  size="small"
+                >
+                  <WithStyles(ForwardRef(ButtonBase))
+                    aria-label="expand search result"
+                    centerRipple={true}
+                    className="MuiIconButton-root MuiIconButton-sizeSmall"
+                    disabled={false}
+                    focusRipple={true}
+                    onClick={[Function]}
+                  >
+                    <ForwardRef(ButtonBase)
+                      aria-label="expand search result"
+                      centerRipple={true}
+                      className="MuiIconButton-root MuiIconButton-sizeSmall"
+                      classes={
+                        Object {
+                          "disabled": "Mui-disabled",
+                          "focusVisible": "Mui-focusVisible",
+                          "root": "MuiButtonBase-root",
+                        }
+                      }
+                      disabled={false}
+                      focusRipple={true}
+                      onClick={[Function]}
+                    >
+                      <button
+                        aria-label="expand search result"
+                        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
+                        disabled={false}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onDragLeave={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        onKeyUp={[Function]}
+                        onMouseDown={[Function]}
+                        onMouseLeave={[Function]}
+                        onMouseUp={[Function]}
+                        onTouchEnd={[Function]}
+                        onTouchMove={[Function]}
+                        onTouchStart={[Function]}
+                        tabIndex={0}
+                        type="button"
+                      >
+                        <span
+                          className="MuiIconButton-label"
+                        >
+                          <ForwardRef(KeyboardArrowDownIcon)>
+                            <WithStyles(ForwardRef(SvgIcon))>
+                              <ForwardRef(SvgIcon)
+                                classes={
+                                  Object {
+                                    "colorAction": "MuiSvgIcon-colorAction",
+                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                    "colorError": "MuiSvgIcon-colorError",
+                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                    "root": "MuiSvgIcon-root",
+                                  }
+                                }
+                              >
+                                <svg
+                                  aria-hidden={true}
+                                  className="MuiSvgIcon-root"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                                  />
+                                </svg>
+                              </ForwardRef(SvgIcon)>
+                            </WithStyles(ForwardRef(SvgIcon))>
+                          </ForwardRef(KeyboardArrowDownIcon)>
+                        </span>
+                        <WithStyles(memo)
+                          center={true}
+                        >
+                          <ForwardRef(TouchRipple)
+                            center={true}
+                            classes={
+                              Object {
+                                "child": "MuiTouchRipple-child",
+                                "childLeaving": "MuiTouchRipple-childLeaving",
+                                "childPulsate": "MuiTouchRipple-childPulsate",
+                                "ripple": "MuiTouchRipple-ripple",
+                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
+                                "rippleVisible": "MuiTouchRipple-rippleVisible",
+                                "root": "MuiTouchRipple-root",
+                              }
+                            }
+                          >
+                            <span
+                              className="MuiTouchRipple-root"
+                            >
+                              <TransitionGroup
+                                childFactory={[Function]}
+                                component={null}
+                                exit={true}
+                              />
+                            </span>
+                          </ForwardRef(TouchRipple)>
+                        </WithStyles(memo)>
+                      </button>
+                    </ForwardRef(ButtonBase)>
+                  </WithStyles(ForwardRef(ButtonBase))>
+                </ForwardRef(IconButton)>
+              </WithStyles(ForwardRef(IconButton))>
+            </td>
+          </ForwardRef(TableCell)>
+        </WithStyles(ForwardRef(TableCell))>
+        <WithStyles(ForwardRef(TableCell))>
+          <ForwardRef(TableCell)
+            classes={
+              Object {
+                "alignCenter": "MuiTableCell-alignCenter",
+                "alignJustify": "MuiTableCell-alignJustify",
+                "alignLeft": "MuiTableCell-alignLeft",
+                "alignRight": "MuiTableCell-alignRight",
+                "body": "MuiTableCell-body",
+                "footer": "MuiTableCell-footer",
+                "head": "MuiTableCell-head",
+                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
+                "paddingNone": "MuiTableCell-paddingNone",
+                "root": "MuiTableCell-root",
+                "sizeSmall": "MuiTableCell-sizeSmall",
+                "stickyHeader": "MuiTableCell-stickyHeader",
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root"
+            >
+              abc123
+            </td>
+          </ForwardRef(TableCell)>
+        </WithStyles(ForwardRef(TableCell))>
+        <WithStyles(ForwardRef(TableCell))>
+          <ForwardRef(TableCell)
+            classes={
+              Object {
+                "alignCenter": "MuiTableCell-alignCenter",
+                "alignJustify": "MuiTableCell-alignJustify",
+                "alignLeft": "MuiTableCell-alignLeft",
+                "alignRight": "MuiTableCell-alignRight",
+                "body": "MuiTableCell-body",
+                "footer": "MuiTableCell-footer",
+                "head": "MuiTableCell-head",
+                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
+                "paddingNone": "MuiTableCell-paddingNone",
+                "root": "MuiTableCell-root",
+                "sizeSmall": "MuiTableCell-sizeSmall",
+                "stickyHeader": "MuiTableCell-stickyHeader",
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root"
+            >
+              Artist Name
+            </td>
+          </ForwardRef(TableCell)>
+        </WithStyles(ForwardRef(TableCell))>
+        <WithStyles(ForwardRef(TableCell))>
+          <ForwardRef(TableCell)
+            classes={
+              Object {
+                "alignCenter": "MuiTableCell-alignCenter",
+                "alignJustify": "MuiTableCell-alignJustify",
+                "alignLeft": "MuiTableCell-alignLeft",
+                "alignRight": "MuiTableCell-alignRight",
+                "body": "MuiTableCell-body",
+                "footer": "MuiTableCell-footer",
+                "head": "MuiTableCell-head",
+                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
+                "paddingNone": "MuiTableCell-paddingNone",
+                "root": "MuiTableCell-root",
+                "sizeSmall": "MuiTableCell-sizeSmall",
+                "stickyHeader": "MuiTableCell-stickyHeader",
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root"
+            >
+              Cart Title
+            </td>
+          </ForwardRef(TableCell)>
+        </WithStyles(ForwardRef(TableCell))>
+      </tr>
+    </ForwardRef(TableRow)>
+  </WithStyles(ForwardRef(TableRow))>
+  <WithStyles(ForwardRef(TableRow))>
+    <ForwardRef(TableRow)
+      classes={
+        Object {
+          "footer": "MuiTableRow-footer",
+          "head": "MuiTableRow-head",
+          "hover": "MuiTableRow-hover",
+          "root": "MuiTableRow-root",
+          "selected": "Mui-selected",
+        }
+      }
+    >
+      <tr
+        className="MuiTableRow-root"
+        role={null}
+      >
+        <WithStyles(ForwardRef(TableCell))
+          className="makeStyles-collapsedRow-1"
+          colSpan={4}
+        >
+          <ForwardRef(TableCell)
+            className="makeStyles-collapsedRow-1"
+            classes={
+              Object {
+                "alignCenter": "MuiTableCell-alignCenter",
+                "alignJustify": "MuiTableCell-alignJustify",
+                "alignLeft": "MuiTableCell-alignLeft",
+                "alignRight": "MuiTableCell-alignRight",
+                "body": "MuiTableCell-body",
+                "footer": "MuiTableCell-footer",
+                "head": "MuiTableCell-head",
+                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
+                "paddingNone": "MuiTableCell-paddingNone",
+                "root": "MuiTableCell-root",
+                "sizeSmall": "MuiTableCell-sizeSmall",
+                "stickyHeader": "MuiTableCell-stickyHeader",
+              }
+            }
+            colSpan={4}
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root makeStyles-collapsedRow-1"
+              colSpan={4}
+            >
+              <WithStyles(ForwardRef(Collapse))
+                in={false}
+                timeout="auto"
+                unmountOnExit={true}
+              >
+                <ForwardRef(Collapse)
+                  classes={
+                    Object {
+                      "container": "MuiCollapse-container",
+                      "entered": "MuiCollapse-entered",
+                      "hidden": "MuiCollapse-hidden",
+                      "wrapper": "MuiCollapse-wrapper",
+                      "wrapperInner": "MuiCollapse-wrapperInner",
+                    }
+                  }
+                  in={false}
+                  timeout="auto"
+                  unmountOnExit={true}
+                >
+                  <Transition
+                    addEndListener={[Function]}
+                    appear={false}
+                    enter={true}
+                    exit={true}
+                    in={false}
+                    mountOnEnter={false}
+                    onEnter={[Function]}
+                    onEntered={[Function]}
+                    onEntering={[Function]}
+                    onExit={[Function]}
+                    onExited={[Function]}
+                    onExiting={[Function]}
+                    timeout={null}
+                    unmountOnExit={true}
+                  />
+                </ForwardRef(Collapse)>
+              </WithStyles(ForwardRef(Collapse))>
+            </td>
+          </ForwardRef(TableCell)>
+        </WithStyles(ForwardRef(TableCell))>
+      </tr>
+    </ForwardRef(TableRow)>
+  </WithStyles(ForwardRef(TableRow))>
+</LibraryTableRow>
+`;

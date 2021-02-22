@@ -20,15 +20,13 @@ const Library = (): React.ReactElement => {
 
   useEffect(() => {
     if (accessToken && search.status === 'ReadyToSearch') {
-      const page = Number.parseInt(search.conditions.page, 10);
-      const resultsPerPage = Number.parseInt(search.conditions.resultsPerPage, 10);
       setSearch({
         conditions: {
           ...search.conditions,
         },
         status: 'Searching',
       });
-      cartSearch(search.conditions, page, resultsPerPage, accessToken).then(
+      cartSearch(search.conditions, accessToken).then(
         (results) => {
           setSearch({
             conditions: {

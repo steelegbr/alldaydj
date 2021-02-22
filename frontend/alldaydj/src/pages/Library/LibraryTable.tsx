@@ -1,6 +1,4 @@
 import {
-  createStyles,
-  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -17,12 +15,6 @@ import CartSearchContext, { CartSearch } from '../../components/context/CartSear
 import Paths from '../../routing/Paths';
 import LibraryTableRow from './LibraryTableRow';
 
-const useStyles = makeStyles(() => createStyles({
-  searchTableContainer: {
-    // tableLayout: 'fixed',
-  },
-}));
-
 interface LibraryTableProps {
     results: CartSearchResults
 }
@@ -30,7 +22,6 @@ interface LibraryTableProps {
 const LibraryTable = ({ results }: LibraryTableProps) => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const history = useHistory();
-  const classes = useStyles();
 
   const page = Number.parseInt(search.conditions.page, 10);
   const resultsPerPage = Number.parseInt(search.conditions.resultsPerPage, 10);
@@ -68,7 +59,7 @@ const LibraryTable = ({ results }: LibraryTableProps) => {
 
   return (
     <>
-      <TableContainer className={classes.searchTableContainer} component={Paper}>
+      <TableContainer component={Paper}>
         <Table aria-label="library search results">
           <TableHead>
             <TableRow>

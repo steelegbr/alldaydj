@@ -29,7 +29,7 @@ const Logout = () => {
       <CardActions>
         <Button
           color="primary"
-          data-test="button-clear"
+          data-test="button-login"
           onClick={redirectToLogin}
           variant="contained"
         >

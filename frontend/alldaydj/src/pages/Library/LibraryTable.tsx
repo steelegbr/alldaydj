@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
   TablePagination,
   TableRow,
@@ -20,7 +19,7 @@ import LibraryTableRow from './LibraryTableRow';
 
 const useStyles = makeStyles(() => createStyles({
   searchTableContainer: {
-    tableLayout: 'fixed',
+    // tableLayout: 'fixed',
   },
 }));
 
@@ -68,34 +67,32 @@ const LibraryTable = ({ results }: LibraryTableProps) => {
   };
 
   return (
-    <TableContainer className={classes.searchTableContainer} component={Paper}>
-      <Table aria-label="library search results">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Label</TableCell>
-            <TableCell>Artist</TableCell>
-            <TableCell>Title</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {results.results.map((result) => (<LibraryTableRow key={result.id} result={result} />))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              component="div"
-              count={results.count}
-              onChangePage={changePage}
-              onChangeRowsPerPage={changeResultsPerPage}
-              page={page - 1}
-              rowsPerPage={resultsPerPage}
-              rowsPerPageOptions={[5, 10, 25]}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer className={classes.searchTableContainer} component={Paper}>
+        <Table aria-label="library search results">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Label</TableCell>
+              <TableCell>Artist</TableCell>
+              <TableCell>Title</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {results.results.map((result) => (<LibraryTableRow key={result.id} result={result} />))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={results.count}
+        onChangePage={changePage}
+        onChangeRowsPerPage={changeResultsPerPage}
+        page={page - 1}
+        rowsPerPage={resultsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
+    </>
   );
 };
 

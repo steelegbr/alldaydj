@@ -8,14 +8,12 @@ const wildcardWrap = (term: string) : string => (term ? `*${term}*` : '*');
 
 export const cartSearch = (
   conditions: CartSearchConditions,
-  page: number,
-  pageSize: number,
   token: string,
 ): Promise<AxiosResponse<CartSearchResults>> => {
   const params = new URLSearchParams();
   params.append('search', wildcardWrap(conditions.search));
-  params.append('page', `${page}`);
-  params.append('page_size', `${pageSize}`);
+  params.append('page', conditions.page);
+  params.append('page_size', conditions.resultsPerPage);
 
   if (conditions.advanced === 'true') {
     params.append('search', `title:${wildcardWrap(conditions.title)}`);

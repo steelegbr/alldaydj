@@ -14,7 +14,7 @@ click-didyoumean==0.0.3
 click-repl==0.1.6
 coverage==5.4
 cryptography==3.4.6
-Cython==0.29.21
+Cython==0.29.22
 distlib==0.3.1
 Django==3.1.6
 django-celery-results==2.0.1

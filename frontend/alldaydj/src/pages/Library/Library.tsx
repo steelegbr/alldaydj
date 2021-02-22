@@ -1,47 +1,55 @@
 import { Snackbar, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import { CartSearchResults } from '../../api/models/Search';
 import { cartSearch } from '../../api/requests/Search';
 import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import { paramsToSearchConditions } from '../../services/SearchService';
+import CartSearchContext from '../../components/context/CartSearchContext';
 import LibrarySearch from './LibrarySearch';
 import LibraryTable from './LibraryTable';
 
-type SearchState = 'Idle' | 'Loading' | 'Error';
-
 const Library = (): React.ReactElement => {
-  const history = useHistory();
-  const query = new URLSearchParams(useLocation().search);
-  const searchConditions = paramsToSearchConditions(query);
+  const { search, setSearch } = React.useContext(CartSearchContext);
   const [
     searchResults,
     setSearchResults,
   ] = React.useState<CartSearchResults | undefined>(undefined);
-  const [state, setState] = React.useState<SearchState>('Idle');
   const [errorMessage, setErrorMessage] = React.useState<string>('');
   const authenticatonContext = React.useContext(AuthenticationContext);
   const accessToken = authenticatonContext?.authenticationStatus.accessToken;
 
   useEffect(() => {
-    history.listen(() => {
-      if (accessToken) {
-        setState('Loading');
-        cartSearch(searchConditions, 1, 10, accessToken).then(
-          (results) => {
-            setState('Idle');
-            setSearchResults(results.data);
-          },
-          (error) => {
-            setState('Error');
-            setErrorMessage(`Failed to load the search results. Reason: ${error}`);
-          },
-        );
-      }
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (accessToken && search.status === 'ReadyToSearch') {
+      const page = Number.parseInt(search.conditions.page, 10);
+      const resultsPerPage = Number.parseInt(search.conditions.resultsPerPage, 10);
+      setSearch({
+        conditions: {
+          ...search.conditions,
+        },
+        status: 'Searching',
+      });
+      cartSearch(search.conditions, page, resultsPerPage, accessToken).then(
+        (results) => {
+          setSearch({
+            conditions: {
+              ...search.conditions,
+            },
+            status: 'ResultsReturned',
+          });
+          setSearchResults(results.data);
+        },
+        (error) => {
+          setSearch({
+            conditions: {
+              ...search.conditions,
+            },
+            status: 'Error',
+          });
+          setErrorMessage(`Failed to load the search results. Reason: ${error}`);
+        },
+      );
+    }
+  }, [search, setSearch, accessToken]);
 
   return (
     <>
@@ -49,7 +57,7 @@ const Library = (): React.ReactElement => {
         Music Library
       </Typography>
       <LibrarySearch />
-      <Snackbar autoHideDuration={6000} data-test="box-error" open={state === 'Error'}>
+      <Snackbar autoHideDuration={6000} data-test="box-error" open={search.status === 'Error'}>
         <Alert elevation={6} severity="error" variant="filled">
           {errorMessage}
         </Alert>

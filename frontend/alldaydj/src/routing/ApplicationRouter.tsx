@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import StandardWrapper from './StandardWrapper';
 import Library from '../pages/Library/Library';
 import Logout from '../pages/Authentication/Logout';
+import { CartSearchProvider } from '../components/context/CartSearchContext';
 
 export default function ApplicationRouter() : React.ReactElement {
   return (
@@ -24,7 +25,9 @@ export default function ApplicationRouter() : React.ReactElement {
       </Route>
       <PrivateRoute path={Paths.library.search}>
         <StandardWrapper>
-          <Library />
+          <CartSearchProvider>
+            <Library />
+          </CartSearchProvider>
         </StandardWrapper>
       </PrivateRoute>
       <PrivateRoute path={Paths.base}>

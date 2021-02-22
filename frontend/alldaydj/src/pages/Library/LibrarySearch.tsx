@@ -9,10 +9,10 @@ import {
 import { Person, Search, Toc } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { SearchConditions } from '../../api/models/Search';
+import { useHistory } from 'react-router-dom';
+import { CartSearchConditions } from '../../api/models/Search';
+import CartSearchContext, { CartSearchStatus } from '../../components/context/CartSearchContext';
 import Paths from '../../routing/Paths';
-import { paramsToSearchConditions } from '../../services/SearchService';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   formLayout: {
@@ -23,55 +23,63 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 const LibrarySearch = (): React.ReactElement => {
-  const query = new URLSearchParams(useLocation().search);
+  const { search, setSearch } = React.useContext(CartSearchContext);
   const history = useHistory();
-  const [conditions, setConditions] = React.useState<SearchConditions>(
-    paramsToSearchConditions(query),
-  );
   const classes = useStyles();
 
-  const updateConditions = (newConditions: SearchConditions) => {
-    setConditions(newConditions);
+  const updateConditions = (newConditions: CartSearchConditions, status: CartSearchStatus) => {
+    setSearch({
+      conditions: newConditions,
+      status,
+    });
   };
 
   const updateSeachTerm = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
     event.preventDefault();
     updateConditions({
-      ...conditions,
+      ...search.conditions,
       search: event.target.value,
-    });
+    },
+    search.status);
   };
 
   const updateArtist = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
     event.preventDefault();
     updateConditions({
-      ...conditions,
+      ...search.conditions,
       artist: event.target.value,
-    });
+    },
+    search.status);
   };
 
   const updateTitle = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
     event.preventDefault();
     updateConditions({
-      ...conditions,
+      ...search.conditions,
       title: event.target.value,
-    });
+    },
+    search.status);
   };
 
   const performSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    updateConditions(
+      search.conditions,
+      'ReadyToSearch',
+    );
     history.push({
       pathname: Paths.library.search,
-      search: `?${new URLSearchParams(conditions).toString()}`,
+      search: `?${new URLSearchParams(search.conditions).toString()}`,
     });
   };
 
   const toggleAdvanced = () => {
-    const nextAdvancedState = !(conditions.advanced === 'true');
+    const nextAdvancedState = !(search.conditions.advanced === 'true');
     updateConditions({
-      ...conditions,
+      ...search.conditions,
       advanced: nextAdvancedState ? 'true' : 'false',
-    });
+    },
+    search.status);
   };
 
   return (
@@ -90,13 +98,13 @@ const LibrarySearch = (): React.ReactElement => {
               <Search />
             </InputAdornment>
           )}
-          value={conditions.search}
+          value={search.conditions.search}
         />
       </FormControl>
       <Button color="primary" type="submit" variant="contained">
         Search
       </Button>
-      <Accordion expanded={conditions.advanced === 'true'} onChange={toggleAdvanced}>
+      <Accordion expanded={search.conditions.advanced === 'true'} onChange={toggleAdvanced}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
         >
@@ -117,7 +125,7 @@ const LibrarySearch = (): React.ReactElement => {
                   <Person />
                 </InputAdornment>
           )}
-              value={conditions.artist}
+              value={search.conditions.artist}
             />
           </FormControl>
           <FormControl>
@@ -134,7 +142,7 @@ const LibrarySearch = (): React.ReactElement => {
                   <Toc />
                 </InputAdornment>
           )}
-              value={conditions.title}
+              value={search.conditions.title}
             />
           </FormControl>
         </AccordionDetails>

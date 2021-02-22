@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import axios, { AxiosResponse } from 'axios';
 import getUrl from '../../services/UrlService';
-import { CartSearchResults, SearchConditions } from '../models/Search';
+import { CartSearchResults, CartSearchConditions } from '../models/Search';
 import { generateRequestConfig } from './Helpers';
 
 interface CartSearchParams {
@@ -14,10 +14,10 @@ interface CartSearchParams {
     year?: number
 }
 
-const wildcardWrap = (term: string) : string => `*${term}*`;
+const wildcardWrap = (term: string) : string => (term ? `*${term}*` : '*');
 
 export const cartSearch = (
-  conditions: SearchConditions,
+  conditions: CartSearchConditions,
   page: number,
   pageSize: number,
   token: string,

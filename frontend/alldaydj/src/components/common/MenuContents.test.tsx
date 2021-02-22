@@ -36,6 +36,13 @@ describe('menu contents', () => {
     const component = mountComponent();
     const logoutButton = component.find("[data-test='button-logout']").first();
     logoutButton.simulate('click');
-    expect(mockSetAuthStatus).toBeCalledWith({ stage: 'Unauthenticated' });
+    expect(mockPush).toBeCalledWith('/logout/');
+  });
+
+  it('library', () => {
+    const component = mountComponent();
+    const libraryButton = component.find("[data-test='button-library']").first();
+    libraryButton.simulate('click');
+    expect(mockPush).toBeCalledWith('/library/');
   });
 });

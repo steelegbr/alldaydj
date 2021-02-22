@@ -1038,6 +1038,7 @@ exports[`main menu snapshot 1`] = `
                                   <div
                                     aria-disabled="false"
                                     class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                    data-test="button-library"
                                     role="button"
                                     tabindex="0"
                                   >
@@ -1228,7 +1229,9 @@ exports[`main menu snapshot 1`] = `
                                       >
                                         <WithStyles(ForwardRef(ListItem))
                                           button={true}
+                                          data-test="button-library"
                                           key="Music Library"
+                                          onClick={[Function]}
                                         >
                                           <ForwardRef(ListItem)
                                             button={true}
@@ -1247,12 +1250,16 @@ exports[`main menu snapshot 1`] = `
                                                 "selected": "Mui-selected",
                                               }
                                             }
+                                            data-test="button-library"
+                                            onClick={[Function]}
                                           >
                                             <WithStyles(ForwardRef(ButtonBase))
                                               className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                                               component="div"
+                                              data-test="button-library"
                                               disabled={false}
                                               focusVisibleClassName="Mui-focusVisible"
+                                              onClick={[Function]}
                                             >
                                               <ForwardRef(ButtonBase)
                                                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1264,13 +1271,17 @@ exports[`main menu snapshot 1`] = `
                                                   }
                                                 }
                                                 component="div"
+                                                data-test="button-library"
                                                 disabled={false}
                                                 focusVisibleClassName="Mui-focusVisible"
+                                                onClick={[Function]}
                                               >
                                                 <div
                                                   aria-disabled={false}
                                                   className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                                  data-test="button-library"
                                                   onBlur={[Function]}
+                                                  onClick={[Function]}
                                                   onDragLeave={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -1884,7 +1895,9 @@ exports[`main menu snapshot 1`] = `
                                   >
                                     <WithStyles(ForwardRef(ListItem))
                                       button={true}
+                                      data-test="button-library"
                                       key="Music Library"
+                                      onClick={[Function]}
                                     >
                                       <ForwardRef(ListItem)
                                         button={true}
@@ -1903,12 +1916,16 @@ exports[`main menu snapshot 1`] = `
                                             "selected": "Mui-selected",
                                           }
                                         }
+                                        data-test="button-library"
+                                        onClick={[Function]}
                                       >
                                         <WithStyles(ForwardRef(ButtonBase))
                                           className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                                           component="div"
+                                          data-test="button-library"
                                           disabled={false}
                                           focusVisibleClassName="Mui-focusVisible"
+                                          onClick={[Function]}
                                         >
                                           <ForwardRef(ButtonBase)
                                             className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -1920,13 +1937,17 @@ exports[`main menu snapshot 1`] = `
                                               }
                                             }
                                             component="div"
+                                            data-test="button-library"
                                             disabled={false}
                                             focusVisibleClassName="Mui-focusVisible"
+                                            onClick={[Function]}
                                           >
                                             <div
                                               aria-disabled={false}
                                               className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                              data-test="button-library"
                                               onBlur={[Function]}
+                                              onClick={[Function]}
                                               onDragLeave={[Function]}
                                               onFocus={[Function]}
                                               onKeyDown={[Function]}
@@ -3414,6 +3435,7 @@ exports[`main menu snapshot menu opened 1`] = `
                                   <div
                                     aria-disabled="false"
                                     class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                    data-test="button-library"
                                     role="button"
                                     tabindex="0"
                                   >
@@ -3604,7 +3626,9 @@ exports[`main menu snapshot menu opened 1`] = `
                                       >
                                         <WithStyles(ForwardRef(ListItem))
                                           button={true}
+                                          data-test="button-library"
                                           key="Music Library"
+                                          onClick={[Function]}
                                         >
                                           <ForwardRef(ListItem)
                                             button={true}
@@ -3623,12 +3647,16 @@ exports[`main menu snapshot menu opened 1`] = `
                                                 "selected": "Mui-selected",
                                               }
                                             }
+                                            data-test="button-library"
+                                            onClick={[Function]}
                                           >
                                             <WithStyles(ForwardRef(ButtonBase))
                                               className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                                               component="div"
+                                              data-test="button-library"
                                               disabled={false}
                                               focusVisibleClassName="Mui-focusVisible"
+                                              onClick={[Function]}
                                             >
                                               <ForwardRef(ButtonBase)
                                                 className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -3640,13 +3668,17 @@ exports[`main menu snapshot menu opened 1`] = `
                                                   }
                                                 }
                                                 component="div"
+                                                data-test="button-library"
                                                 disabled={false}
                                                 focusVisibleClassName="Mui-focusVisible"
+                                                onClick={[Function]}
                                               >
                                                 <div
                                                   aria-disabled={false}
                                                   className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                                  data-test="button-library"
                                                   onBlur={[Function]}
+                                                  onClick={[Function]}
                                                   onDragLeave={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -4260,7 +4292,9 @@ exports[`main menu snapshot menu opened 1`] = `
                                   >
                                     <WithStyles(ForwardRef(ListItem))
                                       button={true}
+                                      data-test="button-library"
                                       key="Music Library"
+                                      onClick={[Function]}
                                     >
                                       <ForwardRef(ListItem)
                                         button={true}
@@ -4279,12 +4313,16 @@ exports[`main menu snapshot menu opened 1`] = `
                                             "selected": "Mui-selected",
                                           }
                                         }
+                                        data-test="button-library"
+                                        onClick={[Function]}
                                       >
                                         <WithStyles(ForwardRef(ButtonBase))
                                           className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
                                           component="div"
+                                          data-test="button-library"
                                           disabled={false}
                                           focusVisibleClassName="Mui-focusVisible"
+                                          onClick={[Function]}
                                         >
                                           <ForwardRef(ButtonBase)
                                             className="MuiListItem-root MuiListItem-gutters MuiListItem-button"
@@ -4296,13 +4334,17 @@ exports[`main menu snapshot menu opened 1`] = `
                                               }
                                             }
                                             component="div"
+                                            data-test="button-library"
                                             disabled={false}
                                             focusVisibleClassName="Mui-focusVisible"
+                                            onClick={[Function]}
                                           >
                                             <div
                                               aria-disabled={false}
                                               className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+                                              data-test="button-library"
                                               onBlur={[Function]}
+                                              onClick={[Function]}
                                               onDragLeave={[Function]}
                                               onFocus={[Function]}
                                               onKeyDown={[Function]}

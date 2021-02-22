@@ -17,6 +17,7 @@ const MenuContents = (): React.ReactElement => {
   const menuItemLibrary = () => (
     <ListItem
       button
+      data-test="button-library"
       key="Music Library"
       onClick={(event) => {
         event.preventDefault();

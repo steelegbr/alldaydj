@@ -18,4 +18,12 @@ describe('library table row', () => {
     const component = getComponent(sampleResult);
     expect(component).toMatchSnapshot();
   });
+
+  it('renders single result expanded', () => {
+    const component = getComponent(sampleResult);
+    const expandButton = component.find("[data-test='result-expand']").first();
+    expandButton.simulate('click');
+    component.update();
+    expect(component).toMatchSnapshot();
+  });
 });

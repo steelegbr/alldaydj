@@ -29,7 +29,7 @@ const LibraryTableRow = ({ result }: TableRowProps) => {
     <>
       <TableRow>
         <TableCell>
-          <IconButton aria-label="expand search result" onClick={() => setOpen(!open)} size="small">
+          <IconButton aria-label="expand search result" data-test="result-expand" onClick={() => setOpen(!open)} size="small">
             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </IconButton>
         </TableCell>

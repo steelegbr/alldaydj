@@ -63,10 +63,16 @@ const LibrarySearch = (): React.ReactElement => {
 
   const performSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
+    if (search.status === 'Searching') {
+      return;
+    }
+
     updateConditions(
       search.conditions,
       'ReadyToSearch',
     );
+
     history.push({
       pathname: Paths.library.search,
       search: `?${new URLSearchParams(search.conditions).toString()}`,
@@ -101,7 +107,7 @@ const LibrarySearch = (): React.ReactElement => {
           value={search.conditions.search}
         />
       </FormControl>
-      <LoadingButton color="primary" loading={search.status === 'Searching'} type="submit" variant="contained">
+      <LoadingButton color="primary" data-test="button-search" loading={search.status === 'Searching'} type="submit" variant="contained">
         Search
       </LoadingButton>
       <Accordion expanded={search.conditions.advanced === 'true'} onChange={toggleAdvanced}>

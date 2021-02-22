@@ -10,7 +10,7 @@ export interface CartSearch {
     status: CartSearchStatus
 }
 
-interface CartSearchContextType {
+export interface CartSearchContextType {
     search: CartSearch,
     setSearch: React.Dispatch<React.SetStateAction<CartSearch>>
 }

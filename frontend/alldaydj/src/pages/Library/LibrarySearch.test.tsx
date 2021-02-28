@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { CartSearchConditionFields } from '../../api/models/Search';
-import CartSearchContext, { CartSearchContextType, CartSearchStatus } from '../../components/context/CartSearchContext';
-import LibrarySearch from './LibrarySearch';
+import { CartSearchConditionFields } from 'api/models/Search';
+import CartSearchContext, { CartSearchContextType, CartSearchStatus } from 'components/context/CartSearchContext';
+import LibrarySearch from 'pages/Library/LibrarySearch';
 
 const mockPush = jest.fn();
 const mockSetSearch = jest.fn();
@@ -93,6 +93,9 @@ describe('cart library search', () => {
       },
       'Searching',
     );
+
+    component.update();
+    jest.clearAllMocks();
 
     const searchButton = component.find("[data-test='button-search']").find('button');
     searchButton.simulate('submit');

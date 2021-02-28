@@ -9,7 +9,6 @@ const parseNumber = (raw: string | null, defaultValue: number = 1): string => {
   return `${parsedInt}`;
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const paramsToSearchConditions = (query: URLSearchParams) : CartSearchConditions => ({
   advanced: query.get('advanced') || 'false',
   search: query.get('search') || '',

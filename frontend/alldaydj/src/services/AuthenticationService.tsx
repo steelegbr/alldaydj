@@ -3,9 +3,9 @@ import React from 'react';
 import {
   AuthenticationStatus,
   AuthenticationStatusProps,
-} from '../components/context/AuthenticationContext';
+} from 'components/context/AuthenticationContext';
+import { postRefreshToken } from 'api/requests/Authentication';
 import { getLogger } from './LoggingService';
-import { postRefreshToken } from '../api/requests/Authentication';
 
 interface JwtToken {
   exp: number;
@@ -26,6 +26,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
 
   if (refreshToken) {
     const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
+    console.log(decodedRefreshToken);
     const expiry = calculateExpiry(decodedRefreshToken);
     if (expiry > new Date()) {
       log.info(`Valid refresh token expires ${expiry}`);

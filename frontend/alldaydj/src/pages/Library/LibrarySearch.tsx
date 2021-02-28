@@ -34,7 +34,7 @@ const LibrarySearch = (): React.ReactElement => {
     });
   };
 
-  const updateSeachTerm = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+  const updateSearchTerm = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
     event.preventDefault();
     updateConditions({
       ...search.conditions,
@@ -98,7 +98,7 @@ const LibrarySearch = (): React.ReactElement => {
           data-test="input-search"
           id="search"
           name="search"
-          onChange={updateSeachTerm}
+          onChange={updateSearchTerm}
           startAdornment={(
             <InputAdornment position="start">
               <Search />

@@ -1,5 +1,5 @@
-import { CartSearchConditions } from '../api/models/Search';
-import { CartSearch } from '../components/context/CartSearchContext';
+import { CartSearchConditions } from 'api/models/Search';
+import { CartSearch } from 'components/context/CartSearchContext';
 
 const parseNumber = (raw: string | null, defaultValue: number = 1): string => {
   const parsedInt = parseInt(raw || '', 10);

@@ -1,7 +1,7 @@
 import { CartSearchConditions } from 'api/models/Search';
 import { CartSearch } from 'components/context/CartSearchContext';
 
-const parseNumber = (raw: string | null, defaultValue: number = 1): string => {
+const parseNumber = (raw: string | null, defaultValue = 1): string => {
   const parsedInt = parseInt(raw || '', 10);
   if (Number.isNaN(parsedInt) || parsedInt <= 0) {
     return `${defaultValue}`;

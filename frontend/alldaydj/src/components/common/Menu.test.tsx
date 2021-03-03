@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Menu from './Menu';
-import { AuthenticationContext, AuthenticationStatusProps } from '../context/AuthenticationContext';
+import Menu from 'components/common/Menu';
+import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 
 const mockSetAuthStatus = jest.fn();
 

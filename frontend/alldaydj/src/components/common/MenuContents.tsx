@@ -4,7 +4,7 @@ import {
 import { ExitToApp, LibraryMusic } from '@material-ui/icons';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Paths from '../../routing/Paths';
+import Paths from 'routing/Paths';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: theme.mixins.toolbar,

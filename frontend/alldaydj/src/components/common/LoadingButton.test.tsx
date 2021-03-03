@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import LoadingButton from './LoadingButton';
+import LoadingButton from 'components/common/LoadingButton';
 
 describe('loading button', () => {
   const getComponent = (

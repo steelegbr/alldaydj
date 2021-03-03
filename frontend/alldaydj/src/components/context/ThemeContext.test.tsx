@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { ThemeProvider } from './ThemeContext';
+import { ThemeProvider } from 'components/context/ThemeContext';
 
 describe('theme context', () => {
   it('snapshot', () => {

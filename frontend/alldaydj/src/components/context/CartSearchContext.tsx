@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { CartSearchConditions } from '../../api/models/Search';
-import { cartSearchContextFromQueryString } from '../../services/SearchService';
+import { CartSearchConditions } from 'api/models/Search';
+import { cartSearchContextFromQueryString } from 'services/SearchService';
 
 export type CartSearchStatus = 'NotStarted' | 'ReadyToSearch' | 'Searching' | 'ResultsReturned' | 'Error';
 

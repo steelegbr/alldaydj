@@ -1,6 +1,6 @@
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
-import { getLogger } from '../../services/LoggingService';
+import { getLogger } from 'services/LoggingService';
 
 export interface ThemeSettings {
   darkMode: boolean;

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import {
   getAuthenticationStatusFromLocalStorage,
   refreshAccessToken,
-} from '../../services/AuthenticationService';
-import { getLogger } from '../../services/LoggingService';
+} from 'services/AuthenticationService';
+import { getLogger } from 'services/LoggingService';
 
 export type AuthenticationStage =
   | 'Unauthenticated'

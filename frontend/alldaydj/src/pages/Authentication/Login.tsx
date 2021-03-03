@@ -15,12 +15,12 @@ import { Email, Lock } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { userLogin } from '../../api/requests/Authentication';
-import LoadingButton from '../../components/common/LoadingButton';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import Paths from '../../routing/Paths';
-import { loginUser } from '../../services/AuthenticationService';
-import { getLogger } from '../../services/LoggingService';
+import { userLogin } from 'api/requests/Authentication';
+import LoadingButton from 'components/common/LoadingButton';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import Paths from 'routing/Paths';
+import { loginUser } from 'services/AuthenticationService';
+import { getLogger } from 'services/LoggingService';
 
 type LoginProgress = 'Idle' | 'Error' | 'InProgress' | 'Failed';
 

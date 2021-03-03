@@ -5,7 +5,7 @@ import {
   GetApp, KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@material-ui/icons';
 import React from 'react';
-import { CartSearchResult } from '../../api/models/Search';
+import { CartSearchResult } from 'api/models/Search';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {

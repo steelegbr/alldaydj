@@ -1,12 +1,12 @@
 import { Snackbar, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useEffect } from 'react';
-import { CartSearchResults } from '../../api/models/Search';
-import { cartSearch } from '../../api/requests/Search';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import CartSearchContext from '../../components/context/CartSearchContext';
-import LibrarySearch from './LibrarySearch';
-import LibraryTable from './LibraryTable';
+import { CartSearchResults } from 'api/models/Search';
+import { cartSearch } from 'api/requests/Search';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import CartSearchContext from 'components/context/CartSearchContext';
+import LibrarySearch from 'pages/Library/LibrarySearch';
+import LibraryTable from 'pages/Library/LibraryTable';
 
 const Library = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);

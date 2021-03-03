@@ -3,9 +3,9 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import Paths from '../../routing/Paths';
-import { logOut } from '../../services/AuthenticationService';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import Paths from 'routing/Paths';
+import { logOut } from 'services/AuthenticationService';
 
 const Logout = () => {
   const history = useHistory();

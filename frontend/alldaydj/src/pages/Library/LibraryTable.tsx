@@ -10,10 +10,10 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { CartSearchResults } from '../../api/models/Search';
-import CartSearchContext, { CartSearch } from '../../components/context/CartSearchContext';
-import Paths from '../../routing/Paths';
-import LibraryTableRow from './LibraryTableRow';
+import { CartSearchResults } from 'api/models/Search';
+import CartSearchContext, { CartSearch } from 'components/context/CartSearchContext';
+import Paths from 'routing/Paths';
+import LibraryTableRow from 'pages/Library/LibraryTableRow';
 
 interface LibraryTableProps {
     results: CartSearchResults

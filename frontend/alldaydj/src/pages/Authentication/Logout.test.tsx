@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Logout from './Logout';
-import { AuthenticationContext, AuthenticationStage, AuthenticationStatusProps } from '../../components/context/AuthenticationContext';
+import Logout from 'pages/Authentication/Logout';
+import { AuthenticationContext, AuthenticationStage, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 
 const mockPush = jest.fn();
 const mockSetAuthenticationStatus = jest.fn();

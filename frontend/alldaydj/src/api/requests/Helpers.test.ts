@@ -1,4 +1,4 @@
-import { generateHeaders } from './Helpers';
+import { generateRequestConfig } from 'api/requests/Helpers';
 
 it('generate headers correctly', () => {
   const expected = {
@@ -6,6 +6,6 @@ it('generate headers correctly', () => {
       Authorization: 'Bearer token123',
     },
   };
-  const actual = generateHeaders('token123');
+  const actual = generateRequestConfig('token123');
   expect(actual).toStrictEqual(expected);
 });

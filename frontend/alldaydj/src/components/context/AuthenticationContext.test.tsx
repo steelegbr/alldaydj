@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import AuthenticationProvider from './AuthenticationContext';
-import { refreshAccessToken, getAuthenticationStatusFromLocalStorage } from '../../services/AuthenticationService';
-import Dummy from '../test/Dummy';
+import AuthenticationProvider from 'components/context/AuthenticationContext';
+import { refreshAccessToken, getAuthenticationStatusFromLocalStorage } from 'services/AuthenticationService';
+import Dummy from 'components/test/Dummy';
 
 const mockGetAuthenticationStatus = getAuthenticationStatusFromLocalStorage as jest.Mock;
 
-jest.mock('../../services/AuthenticationService');
-jest.mock('../../services/LoggingService');
+jest.mock('services/AuthenticationService');
+jest.mock('services/LoggingService');
 jest.useFakeTimers();
 
 describe('authentication context', () => {

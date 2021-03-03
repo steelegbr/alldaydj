@@ -14,10 +14,10 @@ import {
 import { Brightness4, Brightness7 } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
-import { isAuthenticated } from '../../services/AuthenticationService';
-import { AuthenticationContext } from '../context/AuthenticationContext';
-import { ThemeContext } from '../context/ThemeContext';
-import MenuContents from './MenuContents';
+import { isAuthenticated } from 'services/AuthenticationService';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import { ThemeContext } from 'components/context/ThemeContext';
+import MenuContents from 'components/common/MenuContents';
 
 const drawerWidth = 240;
 

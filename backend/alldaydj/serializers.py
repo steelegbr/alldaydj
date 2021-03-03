@@ -2,9 +2,11 @@
     Serializers for AllDay DJ.
 """
 
-from django.core.files.storage import default_storage
-from rest_framework import serializers
+from alldaydj.documents.cart import CartDocument
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
+from django.core.files.storage import default_storage
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
+from rest_framework import serializers
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -89,3 +91,15 @@ class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = ("id", "name", "colour", "now_playing")
+
+
+class CartDocumentSerializer(DocumentSerializer):
+    class Meta:
+        document = CartDocument
+        fields = (
+            "label",
+            "id",
+            "title",
+            "artist",
+            "year",
+        )

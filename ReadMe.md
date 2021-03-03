@@ -54,6 +54,9 @@ need the following variables.
  - ADDJ_S3_ENDPOINT - The S3 endpoint to use.
  - ADDJ_S3_KEY_ID - The S3 key.
  - ADDJ_S3_KEY_SECRET - The S3 secret.
+ - ADDJ_ELASTIC_SERVER - The elasticsearch server. Defaults to "elasticsearch".
+ - ADDJ_ELASTIC_PORT - The elasticsearch server port. Defaults to 9200.
+ - ADDJ_ELASTIC_INDEX - The elasticsearch index. Defaults to "alldaydj".
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
@@ -96,16 +99,18 @@ On macOS, libmagic needs to be manually installed:
 
     brew install libmagic
 
-## LAME
-
-On macOS
-
-    brew install lame
-
-On Ubuntu
-
-    apt install libmp3lame-dev
-
 ## FFMPEG
 
 FFMPEG is used to handle the odd and wonderous array of codecs out there. It needs to be installed as a binary we can call.
+
+## Elasticsearch
+
+To create the index:
+
+    python manage.py search_index --create -f
+
+To rebuild the index:
+
+    python manage.py search_index --populate -f
+
+An elasticsearch server (or cluster) is required for search functionality.

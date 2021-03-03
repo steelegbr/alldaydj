@@ -3,8 +3,8 @@ import {
 } from '@material-ui/core';
 import { ExitToApp, LibraryMusic } from '@material-ui/icons';
 import React from 'react';
-import { logOut } from '../../services/AuthenticationService';
-import { AuthenticationContext } from '../context/AuthenticationContext';
+import { useHistory } from 'react-router-dom';
+import Paths from 'routing/Paths';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: theme.mixins.toolbar,
@@ -12,14 +12,18 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MenuContents = (): React.ReactElement => {
   const classes = useStyles();
-  const authenticationContext = React.useContext(AuthenticationContext);
-
-  const doLogOut = () => {
-    authenticationContext?.setAuthenticationStatus(logOut());
-  };
+  const history = useHistory();
 
   const menuItemLibrary = () => (
-    <ListItem button key="Music Library">
+    <ListItem
+      button
+      data-test="button-library"
+      key="Music Library"
+      onClick={(event) => {
+        event.preventDefault();
+        history.push(Paths.library.search);
+      }}
+    >
       <ListItemIcon>
         <LibraryMusic />
       </ListItemIcon>
@@ -28,7 +32,15 @@ const MenuContents = (): React.ReactElement => {
   );
 
   const menuItemLogout = () => (
-    <ListItem button data-test="button-logout" key="Log Out" onClick={doLogOut}>
+    <ListItem
+      button
+      data-test="button-logout"
+      key="Log Out"
+      onClick={(event) => {
+        event.preventDefault();
+        history.push(Paths.auth.logout);
+      }}
+    >
       <ListItemIcon>
         <ExitToApp />
       </ListItemIcon>

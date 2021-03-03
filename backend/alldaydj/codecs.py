@@ -1,18 +1,9 @@
 from abc import ABC, abstractmethod
 import ffmpeg
 from logging import getLogger, Logger
-import numpy as np
 import os
-from streamp3 import MP3Decoder
 from tempfile import NamedTemporaryFile
 from typing import BinaryIO, Dict, Literal
-from wave_chunk_parser.chunks import (
-    RiffChunk,
-    DataChunk,
-    FormatChunk,
-    WaveFormat,
-    Chunk,
-)
 
 
 class AudioDecoder(ABC):
@@ -89,43 +80,15 @@ class OggEncoder:
             os.remove(out_ogg_filename)
 
 
-class Mp3AudioDecoder(AudioDecoder):
-    """
-    LAME based MP3 audio decoder.
-    """
-
-    def decode(self, input_stream: BinaryIO, output_stream: BinaryIO) -> None:
-
-        # Read the file
-
-        decoder = MP3Decoder(input_stream)
-
-        # Create the chunks
-
-        chunks: Dict[str, Chunk] = {}
-
-        chunks[FormatChunk.HEADER_FORMAT] = FormatChunk(
-            WaveFormat.PCM, False, decoder.num_channels, decoder.sample_rate, 16
-        )
-        chunks[DataChunk.HEADER_DATA] = DataChunk(
-            np.fromstring(b"".join(decoder), dtype=np.dtype("<i2"))
-        )
-
-        # Generate the wave file and write out
-
-        wave_file = RiffChunk(chunks)
-        output_stream.write(wave_file.to_bytes())
-
-
 class MpegCodec(AudioDecoder):
     """
     Uses the FFMPEG library to encode and decode.
     """
 
-    __file_format: Literal["ogg", "flac"]
+    __file_format: Literal["ogg", "flac", "mp3"]
     __logger: Logger
 
-    def __init__(self, file_format: Literal["ogg", "flac"]):
+    def __init__(self, file_format: Literal["ogg", "flac", "mp3"]):
         self.__file_format = file_format
         self.__logger = getLogger(__name__)
 
@@ -187,7 +150,7 @@ def get_decoder(mime: str) -> AudioDecoder:
     """
 
     if "ID3" in mime:
-        return Mp3AudioDecoder()
+        return MpegCodec("mp3")
     if "Ogg data, Vorbis audio" in mime:
         return MpegCodec("ogg")
     if "FLAC" in mime:

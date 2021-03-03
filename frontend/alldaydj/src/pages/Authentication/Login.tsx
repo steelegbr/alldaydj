@@ -8,37 +8,19 @@ import {
   Button,
   CardHeader,
   CardActions,
-  makeStyles,
-  createStyles,
-  Box,
   FormHelperText,
-  CircularProgress,
+  Snackbar,
 } from '@material-ui/core';
 import { Email, Lock } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { userLogin } from '../../api/requests/Authentication';
-import { AuthenticationContext } from '../../components/context/AuthenticationContext';
-import Paths from '../../routing/Paths';
-import { loginUser } from '../../services/AuthenticationService';
-import { getLogger } from '../../services/LoggingService';
-
-const useStyles = makeStyles(() => createStyles({
-  loginProgress: {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    marginLeft: -12,
-    marginTop: -12,
-  },
-  wrapper: {
-    position: 'relative',
-  },
-  errorBox: {
-    marginBottom: 10,
-    padding: 5,
-  },
-}));
+import { userLogin } from 'api/requests/Authentication';
+import LoadingButton from 'components/common/LoadingButton';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import Paths from 'routing/Paths';
+import { loginUser } from 'services/AuthenticationService';
+import { getLogger } from 'services/LoggingService';
 
 type LoginProgress = 'Idle' | 'Error' | 'InProgress' | 'Failed';
 
@@ -53,7 +35,6 @@ interface LoginStatus {
 export default function Login(): React.ReactElement {
   const log = getLogger();
   const history = useHistory();
-  const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
   const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
     progress: 'Idle',
@@ -150,19 +131,6 @@ export default function Login(): React.ReactElement {
     );
   }
 
-  function loginButton() {
-    return (
-      <Box className={classes.wrapper}>
-        <Button color="primary" disabled={disableButtons} type="submit" variant="contained">
-          Login
-        </Button>
-        {loginStatus.progress === 'InProgress' && (
-          <CircularProgress className={classes.loginProgress} size={24} />
-        )}
-      </Box>
-    );
-  }
-
   function emailInput() {
     return (
       <FormControl fullWidth>
@@ -224,23 +192,25 @@ export default function Login(): React.ReactElement {
       <Card>
         <CardHeader title="Login to AllDay DJ" />
         <CardContent>
-          {loginStatus.progress === 'Error' && (
-            <Box bgcolor="error.main" boxShadow={3} className={classes.errorBox} data-test="box-error">
+          <Snackbar autoHideDuration={6000} data-test="box-error" open={loginStatus.progress === 'Error'}>
+            <Alert elevation={6} severity="error" variant="filled">
               {`Login failed. Please check your username and password and try again. If you continue
               to see this error, please get in touch with support.`}
-            </Box>
-          )}
+            </Alert>
+          </Snackbar>
           {emailInput()}
           {passwordInput()}
         </CardContent>
         <CardActions>
-          {loginButton()}
+          <LoadingButton color="primary" loading={disableButtons} type="submit" variant="contained">
+            Login
+          </LoadingButton>
           <Button
             color="secondary"
             data-test="button-clear"
             disabled={disableButtons}
             onClick={clearForm}
-            variant="outlined"
+            variant="contained"
           >
             Clear
           </Button>

@@ -1,17 +1,17 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
-import Login from './Login';
-import { userLogin } from '../../api/requests/Authentication';
-import { loginUser } from '../../services/AuthenticationService';
-import { AuthenticationStatus } from '../../components/context/AuthenticationContext';
+import Login from 'pages/Authentication/Login';
+import { userLogin } from 'api/requests/Authentication';
+import { loginUser } from 'services/AuthenticationService';
+import { AuthenticationStatus } from 'components/context/AuthenticationContext';
 
 const mockUserLogin = userLogin as jest.Mock;
 const mockLoginUser = loginUser as jest.Mock;
 const mockPush = jest.fn();
 
-jest.mock('../../api/requests/Authentication');
-jest.mock('../../services/AuthenticationService');
+jest.mock('api/requests/Authentication');
+jest.mock('services/AuthenticationService');
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({
     push: mockPush,

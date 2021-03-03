@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "colorfield",
     "django_nose",
     "corsheaders",
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf",
     "alldaydj",
 ]
 
@@ -126,6 +128,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 # Celery
@@ -175,6 +179,10 @@ ADDJ_DEFAULT_PERMISSIONS = [
     "change_type",
     "delete_type",
     "view_type",
+    "add_audiouploadjob",
+    "change_audiouploadjob",
+    "delete_audiouploadjob",
+    "view_audiouploadjob",
 ]
 
 ADDJ_DEFAULT_GROUP = environ.get("ADDJ_DEFAULT_GROUP", "alldaydj_users")
@@ -187,3 +195,15 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https?://localhost:\d+$",
     f"^https?://{environ.get('ADDJ_USERS_DOMAIN')}$",
 ]
+
+# Search
+
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": f"{environ.get('ADDJ_ELASTIC_SERVER', 'elasticsearch')}:{environ.get('ADDJ_ELASTIC_PORT', 9200)}"
+    }
+}
+
+ELASTICSEARCH_INDEX_NAMES = {
+    "alldaydj.documents.cart": f"{environ.get('ADDJ_ELASTIC_INDEX', 'alldaydj')}-cart"
+}

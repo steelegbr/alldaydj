@@ -2,12 +2,12 @@ import mockAxios from 'jest-mock-axios';
 import { postRefreshToken, userLogin } from './Authentication';
 
 describe('authentication API calls', () => {
-  beforeEach(() => {
+  afterEach(() => {
     mockAxios.reset();
   });
 
   it('user login', async () => {
-    await userLogin({
+    userLogin({
       username: 'user@example.com',
       password: 'pass',
     });
@@ -23,7 +23,7 @@ describe('authentication API calls', () => {
     const refreshData = {
       refresh: 'refresh1',
     };
-    await postRefreshToken(refreshData);
+    postRefreshToken(refreshData);
     expect(mockAxios.post)
       .toHaveBeenCalledWith(
         '/api/token/refresh/',

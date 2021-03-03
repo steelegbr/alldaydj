@@ -1,17 +1,9 @@
 from abc import ABC, abstractmethod
 import ffmpeg
 from logging import getLogger, Logger
-import numpy as np
 import os
 from tempfile import NamedTemporaryFile
 from typing import BinaryIO, Dict, Literal
-from wave_chunk_parser.chunks import (
-    RiffChunk,
-    DataChunk,
-    FormatChunk,
-    WaveFormat,
-    Chunk,
-)
 
 
 class AudioDecoder(ABC):

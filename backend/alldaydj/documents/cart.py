@@ -38,5 +38,5 @@ class CartDocument(Document):
     )
     year = fields.IntegerField()
 
-    class Django(object):
+    class Django:
         model = Cart

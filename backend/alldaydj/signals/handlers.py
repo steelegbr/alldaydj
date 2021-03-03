@@ -30,9 +30,8 @@ def update_document(sender, **kwargs):
     model_name = sender._meta.model_name
     instance = kwargs["instance"]
 
-    if app_label == "alldaydj":
-        if model_name == "Cart":
-            registry.update(instance)
+    if app_label == "alldaydj" and model_name == "Cart":
+        registry.update(instance)
 
 
 @receiver(post_delete)
@@ -41,6 +40,5 @@ def delete_document(sender, **kwargs):
     model_name = sender._meta.model_name
     instance = kwargs["instance"]
 
-    if app_label == "alldaydj":
-        if model_name == "Cart":
-            registry.delete(instance, raise_on_error=False)
+    if app_label == "alldaydj" and model_name == "Cart":
+        registry.delete(instance, raise_on_error=False)

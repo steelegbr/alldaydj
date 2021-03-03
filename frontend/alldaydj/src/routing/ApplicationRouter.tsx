@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Dummy from 'components/test/Dummy';
 import AuthenticationWrapper from 'pages/Authentication/AuthenticationWrapper';
-import Login from '/pages/Authentication/Login';
+import Login from 'pages/Authentication/Login';
 import Paths from 'routing/Paths';
 import PrivateRoute from 'routing/PrivateRoute';
 import StandardWrapper from 'routing/StandardWrapper';

@@ -15,6 +15,10 @@ export interface CartSearchContextType {
     setSearch: React.Dispatch<React.SetStateAction<CartSearch>>
 }
 
+const noOp = () => {
+  // Do nothing
+};
+
 const CartSearchContext = React.createContext<CartSearchContextType>({
   search: {
     conditions: {
@@ -27,7 +31,7 @@ const CartSearchContext = React.createContext<CartSearchContextType>({
     },
     status: 'NotStarted',
   },
-  setSearch: () => {},
+  setSearch: noOp,
 });
 
 export interface CartSearchProviderProps {

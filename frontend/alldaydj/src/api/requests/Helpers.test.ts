@@ -1,4 +1,4 @@
-import { generateRequestConfig } from './Helpers';
+import { generateRequestConfig } from 'api/requests/Helpers';
 
 it('generate headers correctly', () => {
   const expected = {

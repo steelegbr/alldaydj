@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import axios, { AxiosResponse } from 'axios';
-import getUrl from '../../services/UrlService';
-import { CartSearchResults, CartSearchConditions } from '../models/Search';
-import { generateRequestConfig } from './Helpers';
+import getUrl from 'services/UrlService';
+import { CartSearchResults, CartSearchConditions } from 'api/models/Search';
+import { generateRequestConfig } from 'api/requests/Helpers';
 
 const wildcardWrap = (term: string) : string => (term ? `*${term}*` : '*');
 

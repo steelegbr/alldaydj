@@ -1,5 +1,5 @@
 import mockAxios from 'jest-mock-axios';
-import { cartSearch } from './Search';
+import { cartSearch } from 'api/requests/Search';
 
 describe('cart search', () => {
   beforeEach(() => {
@@ -7,7 +7,7 @@ describe('cart search', () => {
   });
 
   it('basic search', async () => {
-    await cartSearch({
+    cartSearch({
       advanced: 'false',
       artist: '',
       page: '1',
@@ -21,7 +21,7 @@ describe('cart search', () => {
   });
 
   it('advanced search', async () => {
-    await cartSearch({
+    cartSearch({
       advanced: 'true',
       artist: 'artist',
       page: '1',

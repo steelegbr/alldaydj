@@ -21,7 +21,7 @@ interface LoadingButtonProps {
     loading: boolean
 }
 
-const LoadingButton = (props : LoadingButtonProps & ButtonProps) => {
+const LoadingButton = (props : LoadingButtonProps & ButtonProps): React.ReactElement => {
   const { loading } = props;
   const classes = useStyles();
 

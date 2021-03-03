@@ -19,7 +19,7 @@ interface LibraryTableProps {
     results: CartSearchResults
 }
 
-const LibraryTable = ({ results }: LibraryTableProps) => {
+const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const history = useHistory();
 

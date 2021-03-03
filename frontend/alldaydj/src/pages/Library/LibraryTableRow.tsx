@@ -21,7 +21,7 @@ interface TableRowProps {
     result: CartSearchResult
 }
 
-const LibraryTableRow = ({ result }: TableRowProps) => {
+const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

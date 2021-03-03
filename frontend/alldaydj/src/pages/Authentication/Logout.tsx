@@ -7,7 +7,7 @@ import { AuthenticationContext } from 'components/context/AuthenticationContext'
 import Paths from 'routing/Paths';
 import { logOut } from 'services/AuthenticationService';
 
-const Logout = () => {
+const Logout = (): React.ReactElement => {
   const history = useHistory();
   const authenticationContext = React.useContext(AuthenticationContext);
   if (authenticationContext?.authenticationStatus.stage !== 'Unauthenticated') {

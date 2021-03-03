@@ -38,7 +38,7 @@ export interface CartSearchProviderProps {
     children: React.ReactElement;
   }
 
-export const CartSearchProvider = ({ children }: CartSearchProviderProps) => {
+export const CartSearchProvider = ({ children }: CartSearchProviderProps): React.ReactElement => {
   const query = new URLSearchParams(useLocation().search);
   const [search, setSearch] = React.useState<CartSearch>(
     cartSearchContextFromQueryString(query),

@@ -26,7 +26,6 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
 
   if (refreshToken) {
     const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
-    console.log(decodedRefreshToken);
     const expiry = calculateExpiry(decodedRefreshToken);
     if (expiry > new Date()) {
       log.info(`Valid refresh token expires ${expiry}`);

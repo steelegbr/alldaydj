@@ -22,7 +22,13 @@ env:
   ADDJ_ELASTIC_SERVER: localhost
 
 jobs:
+  prerequisites:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
   django-tests:
+    needs: prerequisites
     services:
       postgres:
         image: postgres:latest
@@ -78,7 +84,7 @@ jobs:
         run: |
           curl https://deepsource.io/cli | sh
           ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml
-  web-backend-container:
+  backend-container:
     needs: django-tests
     runs-on: ubuntu-latest
     steps:
@@ -110,8 +116,9 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: "True"
-          tags: steelegbr/alldaydj-web-backend:${{ env.GITHUB_REF_SLUG }}
+          tags: steelegbr/alldaydj-backend:${{ env.GITHUB_REF_SLUG }}
   react-tests:
+    needs: prerequisites
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the commit
@@ -136,8 +143,6 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -163,3 +168,45 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: "True"
           tags: steelegbr/alldaydj-frontend:${{ env.GITHUB_REF_SLUG }}
+  integration-tests:
+    needs: [backend-container, frontend-container]
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ env.ADDJ_DB_NAME }}
+          POSTGRES_PASSWORD: ${{ env.ADDJ_DB_PASS }}
+          POSTGRES_USER: ${{ env.ADDJ_DB_USER }}
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      rabbitmq:
+        image: rabbitmq
+        env:
+          RABBITMQ_DEFAULT_USER: ${{ env.ADDJ_RABBIT_USER }}
+          RABBITMQ_DEFAULT_PASS: ${{ env.ADDJ_RABBIT_PASS }}
+        ports:
+          - 5672:5672
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+        env:
+          discovery.type: single-node
+        ports:
+          - 9200:9200
+      frontend:
+        image: steelegbr/alldaydj-frontend:${{ env.GITHUB_REF_SLUG }}
+        ports:
+          - 80:3000
+      backend:
+        image: steelegbr/alldaydj-backend:${{ env.GITHUB_REF_SLUG }}
+        ports:
+          - 8000:8000
+    steps:
+      - name: Cypress integration tests
+        uses: cypress-io/github-action@v2
+        with:
+          spec: frontend/cypress/integration/*.ts
+        env:
+          CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}

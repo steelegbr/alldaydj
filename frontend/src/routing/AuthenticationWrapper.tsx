@@ -33,7 +33,9 @@ AuthenticationWrapper({ children }: React.PropsWithChildren<Props>): React.React
       <Box className={classes.toolbar} />
       <Grid className={classes.loginBox} container justify="center">
         <Grid item md={4} xs={12}>
-          {children}
+          <div role="main">
+            {children}
+          </div>
         </Grid>
       </Grid>
     </Box>

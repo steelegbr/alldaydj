@@ -3,7 +3,6 @@ WORKDIR /opt/alldaydj
 
 COPY ./frontend/ .
 
-RUN npm install --global yarn
 RUN yarn
 RUN yarn run build
 

@@ -751,43 +751,60 @@ exports[`main menu snapshot 1`] = `
                               <div
                                 className="MuiGrid-root MuiGrid-item"
                               >
-                                <WithStyles(ForwardRef(IconButton))
-                                  arial-label="toggle light / dark mode"
+                                <WithStyles(ForwardRef(Button))
                                   color="inherit"
-                                  edge="end"
                                   onClick={[Function]}
+                                  startIcon={<Memo />}
                                 >
-                                  <ForwardRef(IconButton)
-                                    arial-label="toggle light / dark mode"
+                                  <ForwardRef(Button)
                                     classes={
                                       Object {
-                                        "colorInherit": "MuiIconButton-colorInherit",
-                                        "colorPrimary": "MuiIconButton-colorPrimary",
-                                        "colorSecondary": "MuiIconButton-colorSecondary",
+                                        "colorInherit": "MuiButton-colorInherit",
+                                        "contained": "MuiButton-contained",
+                                        "containedPrimary": "MuiButton-containedPrimary",
+                                        "containedSecondary": "MuiButton-containedSecondary",
+                                        "containedSizeLarge": "MuiButton-containedSizeLarge",
+                                        "containedSizeSmall": "MuiButton-containedSizeSmall",
+                                        "disableElevation": "MuiButton-disableElevation",
                                         "disabled": "Mui-disabled",
-                                        "edgeEnd": "MuiIconButton-edgeEnd",
-                                        "edgeStart": "MuiIconButton-edgeStart",
-                                        "label": "MuiIconButton-label",
-                                        "root": "MuiIconButton-root",
-                                        "sizeSmall": "MuiIconButton-sizeSmall",
+                                        "endIcon": "MuiButton-endIcon",
+                                        "focusVisible": "Mui-focusVisible",
+                                        "fullWidth": "MuiButton-fullWidth",
+                                        "iconSizeLarge": "MuiButton-iconSizeLarge",
+                                        "iconSizeMedium": "MuiButton-iconSizeMedium",
+                                        "iconSizeSmall": "MuiButton-iconSizeSmall",
+                                        "label": "MuiButton-label",
+                                        "outlined": "MuiButton-outlined",
+                                        "outlinedPrimary": "MuiButton-outlinedPrimary",
+                                        "outlinedSecondary": "MuiButton-outlinedSecondary",
+                                        "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
+                                        "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
+                                        "root": "MuiButton-root",
+                                        "sizeLarge": "MuiButton-sizeLarge",
+                                        "sizeSmall": "MuiButton-sizeSmall",
+                                        "startIcon": "MuiButton-startIcon",
+                                        "text": "MuiButton-text",
+                                        "textPrimary": "MuiButton-textPrimary",
+                                        "textSecondary": "MuiButton-textSecondary",
+                                        "textSizeLarge": "MuiButton-textSizeLarge",
+                                        "textSizeSmall": "MuiButton-textSizeSmall",
                                       }
                                     }
                                     color="inherit"
-                                    edge="end"
                                     onClick={[Function]}
+                                    startIcon={<Memo />}
                                   >
                                     <WithStyles(ForwardRef(ButtonBase))
-                                      arial-label="toggle light / dark mode"
-                                      centerRipple={true}
-                                      className="MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                      className="MuiButton-root MuiButton-text MuiButton-colorInherit"
+                                      component="button"
                                       disabled={false}
                                       focusRipple={true}
+                                      focusVisibleClassName="Mui-focusVisible"
                                       onClick={[Function]}
+                                      type="button"
                                     >
                                       <ForwardRef(ButtonBase)
-                                        arial-label="toggle light / dark mode"
-                                        centerRipple={true}
-                                        className="MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                        className="MuiButton-root MuiButton-text MuiButton-colorInherit"
                                         classes={
                                           Object {
                                             "disabled": "Mui-disabled",
@@ -795,13 +812,15 @@ exports[`main menu snapshot 1`] = `
                                             "root": "MuiButtonBase-root",
                                           }
                                         }
+                                        component="button"
                                         disabled={false}
                                         focusRipple={true}
+                                        focusVisibleClassName="Mui-focusVisible"
                                         onClick={[Function]}
+                                        type="button"
                                       >
                                         <button
-                                          arial-label="toggle light / dark mode"
-                                          className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                          className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
                                           disabled={false}
                                           onBlur={[Function]}
                                           onClick={[Function]}
@@ -819,44 +838,49 @@ exports[`main menu snapshot 1`] = `
                                           type="button"
                                         >
                                           <span
-                                            className="MuiIconButton-label"
+                                            className="MuiButton-label"
                                           >
-                                            <ForwardRef(Brightness7Icon)>
-                                              <WithStyles(ForwardRef(SvgIcon))>
-                                                <ForwardRef(SvgIcon)
-                                                  classes={
-                                                    Object {
-                                                      "colorAction": "MuiSvgIcon-colorAction",
-                                                      "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                                      "colorError": "MuiSvgIcon-colorError",
-                                                      "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                                      "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                                      "root": "MuiSvgIcon-root",
+                                            <span
+                                              className="MuiButton-startIcon MuiButton-iconSizeMedium"
+                                            >
+                                              <ForwardRef(Brightness7Icon)>
+                                                <WithStyles(ForwardRef(SvgIcon))>
+                                                  <ForwardRef(SvgIcon)
+                                                    classes={
+                                                      Object {
+                                                        "colorAction": "MuiSvgIcon-colorAction",
+                                                        "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                                        "colorError": "MuiSvgIcon-colorError",
+                                                        "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                                        "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                                        "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                                        "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                                        "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                                        "root": "MuiSvgIcon-root",
+                                                      }
                                                     }
-                                                  }
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="MuiSvgIcon-root"
-                                                    focusable="false"
-                                                    viewBox="0 0 24 24"
                                                   >
-                                                    <path
-                                                      d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
-                                                    />
-                                                  </svg>
-                                                </ForwardRef(SvgIcon)>
-                                              </WithStyles(ForwardRef(SvgIcon))>
-                                            </ForwardRef(Brightness7Icon)>
+                                                    <svg
+                                                      aria-hidden={true}
+                                                      className="MuiSvgIcon-root"
+                                                      focusable="false"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path
+                                                        d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                                                      />
+                                                    </svg>
+                                                  </ForwardRef(SvgIcon)>
+                                                </WithStyles(ForwardRef(SvgIcon))>
+                                              </ForwardRef(Brightness7Icon)>
+                                            </span>
+                                            Dark Mode
                                           </span>
                                           <WithStyles(memo)
-                                            center={true}
+                                            center={false}
                                           >
                                             <ForwardRef(TouchRipple)
-                                              center={true}
+                                              center={false}
                                               classes={
                                                 Object {
                                                   "child": "MuiTouchRipple-child",
@@ -883,8 +907,8 @@ exports[`main menu snapshot 1`] = `
                                         </button>
                                       </ForwardRef(ButtonBase)>
                                     </WithStyles(ForwardRef(ButtonBase))>
-                                  </ForwardRef(IconButton)>
-                                </WithStyles(ForwardRef(IconButton))>
+                                  </ForwardRef(Button)>
+                                </WithStyles(ForwardRef(Button))>
                               </div>
                             </ForwardRef(Grid)>
                           </WithStyles(ForwardRef(Grid))>
@@ -3148,43 +3172,60 @@ exports[`main menu snapshot menu opened 1`] = `
                               <div
                                 className="MuiGrid-root MuiGrid-item"
                               >
-                                <WithStyles(ForwardRef(IconButton))
-                                  arial-label="toggle light / dark mode"
+                                <WithStyles(ForwardRef(Button))
                                   color="inherit"
-                                  edge="end"
                                   onClick={[Function]}
+                                  startIcon={<Memo />}
                                 >
-                                  <ForwardRef(IconButton)
-                                    arial-label="toggle light / dark mode"
+                                  <ForwardRef(Button)
                                     classes={
                                       Object {
-                                        "colorInherit": "MuiIconButton-colorInherit",
-                                        "colorPrimary": "MuiIconButton-colorPrimary",
-                                        "colorSecondary": "MuiIconButton-colorSecondary",
+                                        "colorInherit": "MuiButton-colorInherit",
+                                        "contained": "MuiButton-contained",
+                                        "containedPrimary": "MuiButton-containedPrimary",
+                                        "containedSecondary": "MuiButton-containedSecondary",
+                                        "containedSizeLarge": "MuiButton-containedSizeLarge",
+                                        "containedSizeSmall": "MuiButton-containedSizeSmall",
+                                        "disableElevation": "MuiButton-disableElevation",
                                         "disabled": "Mui-disabled",
-                                        "edgeEnd": "MuiIconButton-edgeEnd",
-                                        "edgeStart": "MuiIconButton-edgeStart",
-                                        "label": "MuiIconButton-label",
-                                        "root": "MuiIconButton-root",
-                                        "sizeSmall": "MuiIconButton-sizeSmall",
+                                        "endIcon": "MuiButton-endIcon",
+                                        "focusVisible": "Mui-focusVisible",
+                                        "fullWidth": "MuiButton-fullWidth",
+                                        "iconSizeLarge": "MuiButton-iconSizeLarge",
+                                        "iconSizeMedium": "MuiButton-iconSizeMedium",
+                                        "iconSizeSmall": "MuiButton-iconSizeSmall",
+                                        "label": "MuiButton-label",
+                                        "outlined": "MuiButton-outlined",
+                                        "outlinedPrimary": "MuiButton-outlinedPrimary",
+                                        "outlinedSecondary": "MuiButton-outlinedSecondary",
+                                        "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
+                                        "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
+                                        "root": "MuiButton-root",
+                                        "sizeLarge": "MuiButton-sizeLarge",
+                                        "sizeSmall": "MuiButton-sizeSmall",
+                                        "startIcon": "MuiButton-startIcon",
+                                        "text": "MuiButton-text",
+                                        "textPrimary": "MuiButton-textPrimary",
+                                        "textSecondary": "MuiButton-textSecondary",
+                                        "textSizeLarge": "MuiButton-textSizeLarge",
+                                        "textSizeSmall": "MuiButton-textSizeSmall",
                                       }
                                     }
                                     color="inherit"
-                                    edge="end"
                                     onClick={[Function]}
+                                    startIcon={<Memo />}
                                   >
                                     <WithStyles(ForwardRef(ButtonBase))
-                                      arial-label="toggle light / dark mode"
-                                      centerRipple={true}
-                                      className="MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                      className="MuiButton-root MuiButton-text MuiButton-colorInherit"
+                                      component="button"
                                       disabled={false}
                                       focusRipple={true}
+                                      focusVisibleClassName="Mui-focusVisible"
                                       onClick={[Function]}
+                                      type="button"
                                     >
                                       <ForwardRef(ButtonBase)
-                                        arial-label="toggle light / dark mode"
-                                        centerRipple={true}
-                                        className="MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                        className="MuiButton-root MuiButton-text MuiButton-colorInherit"
                                         classes={
                                           Object {
                                             "disabled": "Mui-disabled",
@@ -3192,13 +3233,15 @@ exports[`main menu snapshot menu opened 1`] = `
                                             "root": "MuiButtonBase-root",
                                           }
                                         }
+                                        component="button"
                                         disabled={false}
                                         focusRipple={true}
+                                        focusVisibleClassName="Mui-focusVisible"
                                         onClick={[Function]}
+                                        type="button"
                                       >
                                         <button
-                                          arial-label="toggle light / dark mode"
-                                          className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+                                          className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
                                           disabled={false}
                                           onBlur={[Function]}
                                           onClick={[Function]}
@@ -3216,44 +3259,49 @@ exports[`main menu snapshot menu opened 1`] = `
                                           type="button"
                                         >
                                           <span
-                                            className="MuiIconButton-label"
+                                            className="MuiButton-label"
                                           >
-                                            <ForwardRef(Brightness7Icon)>
-                                              <WithStyles(ForwardRef(SvgIcon))>
-                                                <ForwardRef(SvgIcon)
-                                                  classes={
-                                                    Object {
-                                                      "colorAction": "MuiSvgIcon-colorAction",
-                                                      "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                                      "colorError": "MuiSvgIcon-colorError",
-                                                      "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                                      "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                                      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                                      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                                      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                                      "root": "MuiSvgIcon-root",
+                                            <span
+                                              className="MuiButton-startIcon MuiButton-iconSizeMedium"
+                                            >
+                                              <ForwardRef(Brightness7Icon)>
+                                                <WithStyles(ForwardRef(SvgIcon))>
+                                                  <ForwardRef(SvgIcon)
+                                                    classes={
+                                                      Object {
+                                                        "colorAction": "MuiSvgIcon-colorAction",
+                                                        "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                                        "colorError": "MuiSvgIcon-colorError",
+                                                        "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                                        "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                                        "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                                        "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                                        "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                                        "root": "MuiSvgIcon-root",
+                                                      }
                                                     }
-                                                  }
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="MuiSvgIcon-root"
-                                                    focusable="false"
-                                                    viewBox="0 0 24 24"
                                                   >
-                                                    <path
-                                                      d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
-                                                    />
-                                                  </svg>
-                                                </ForwardRef(SvgIcon)>
-                                              </WithStyles(ForwardRef(SvgIcon))>
-                                            </ForwardRef(Brightness7Icon)>
+                                                    <svg
+                                                      aria-hidden={true}
+                                                      className="MuiSvgIcon-root"
+                                                      focusable="false"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path
+                                                        d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                                                      />
+                                                    </svg>
+                                                  </ForwardRef(SvgIcon)>
+                                                </WithStyles(ForwardRef(SvgIcon))>
+                                              </ForwardRef(Brightness7Icon)>
+                                            </span>
+                                            Dark Mode
                                           </span>
                                           <WithStyles(memo)
-                                            center={true}
+                                            center={false}
                                           >
                                             <ForwardRef(TouchRipple)
-                                              center={true}
+                                              center={false}
                                               classes={
                                                 Object {
                                                   "child": "MuiTouchRipple-child",
@@ -3280,8 +3328,8 @@ exports[`main menu snapshot menu opened 1`] = `
                                         </button>
                                       </ForwardRef(ButtonBase)>
                                     </WithStyles(ForwardRef(ButtonBase))>
-                                  </ForwardRef(IconButton)>
-                                </WithStyles(ForwardRef(IconButton))>
+                                  </ForwardRef(Button)>
+                                </WithStyles(ForwardRef(Button))>
                               </div>
                             </ForwardRef(Grid)>
                           </WithStyles(ForwardRef(Grid))>

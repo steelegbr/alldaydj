@@ -220,7 +220,7 @@ jobs:
       - name: Cypress integration tests
         uses: cypress-io/github-action@v2
         with:
-          spec: frontend/cypress/integration/*.ts
+          working-directory: frontend
         env:
           CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
           CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}

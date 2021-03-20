@@ -202,10 +202,11 @@ export default function Login(): React.ReactElement {
           {passwordInput()}
         </CardContent>
         <CardActions>
-          <LoadingButton color="primary" loading={disableButtons} type="submit" variant="contained">
+          <LoadingButton arial-label="Login" color="primary" loading={disableButtons} type="submit" variant="contained">
             Login
           </LoadingButton>
           <Button
+            aria-label="Clear the login form"
             color="secondary"
             data-test="button-clear"
             disabled={disableButtons}

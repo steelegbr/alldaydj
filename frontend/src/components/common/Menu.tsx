@@ -105,7 +105,7 @@ const Menu = (): React.ReactElement => {
     return (
       <Grid item>
         <IconButton
-          arial-label="toggle light / dark mode"
+          arial-hidden="true"
           color="inherit"
           edge="end"
           onClick={handleDarkModeToggle}

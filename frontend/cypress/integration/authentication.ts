@@ -1,5 +1,8 @@
 describe('Login Screen', () => {
-    it('Login Happy Path', () => {
+    it('Redirect and accessability', () => {
         cy.visit('http://localhost:3000/');
+        cy.url().should('eq', 'http://localhost:3000/login/');
+        cy.injectAxe();
+        cy.checkA11y();
     });
 });

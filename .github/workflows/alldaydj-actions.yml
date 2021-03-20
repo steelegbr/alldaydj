@@ -189,11 +189,11 @@ jobs:
         ports:
           - 9200:9200
       frontend:
-        image: steelegbr/alldaydj-frontend:latest
+        image: steelegbr/alldaydj-frontend
         ports:
           - 80:3000
       backend:
-        image: steelegbr/alldaydj-backend:latest
+        image: steelegbr/alldaydj-backend
         ports:
           - 8000:8000
     steps:

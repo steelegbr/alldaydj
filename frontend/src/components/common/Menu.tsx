@@ -10,6 +10,7 @@ import {
   makeStyles,
   createStyles,
   Theme,
+  Button,
 } from '@material-ui/core';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -104,14 +105,13 @@ const Menu = (): React.ReactElement => {
   function menuDarkModeToggle() {
     return (
       <Grid item>
-        <IconButton
-          arial-hidden="true"
+        <Button
           color="inherit"
-          edge="end"
           onClick={handleDarkModeToggle}
+          startIcon={darkMode ? <Brightness4 /> : <Brightness7 />}
         >
-          {darkMode ? <Brightness4 /> : <Brightness7 />}
-        </IconButton>
+          {darkMode ? 'Light Mode' : 'Dark Mode'}
+        </Button>
       </Grid>
     );
   }

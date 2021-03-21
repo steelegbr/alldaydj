@@ -6,7 +6,6 @@ import {
   InputAdornment,
   Input,
   Button,
-  CardHeader,
   CardActions,
   FormHelperText,
   Snackbar,
@@ -190,8 +189,8 @@ export default function Login(): React.ReactElement {
   function loginCard() {
     return (
       <Card>
-        <CardHeader title="Login to AllDay DJ" />
         <CardContent>
+          <h1>Login to AllDay DJ</h1>
           <Snackbar autoHideDuration={6000} data-test="box-error" open={loginStatus.progress === 'Error'}>
             <Alert elevation={6} severity="error" variant="filled">
               {`Login failed. Please check your username and password and try again. If you continue
@@ -202,10 +201,11 @@ export default function Login(): React.ReactElement {
           {passwordInput()}
         </CardContent>
         <CardActions>
-          <LoadingButton color="primary" loading={disableButtons} type="submit" variant="contained">
+          <LoadingButton arial-label="Login" color="primary" loading={disableButtons} type="submit" variant="contained">
             Login
           </LoadingButton>
           <Button
+            aria-label="Clear the login form"
             color="secondary"
             data-test="button-clear"
             disabled={disableButtons}

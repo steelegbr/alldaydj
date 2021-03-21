@@ -7,3 +7,4 @@ set_params_dev.ps1
 .coverage
 coverage.xml
 *.env
+node_modules

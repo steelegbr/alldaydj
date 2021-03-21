@@ -1,5 +1,5 @@
 import {
-  Button, Card, CardActions, CardContent, CardHeader, Typography,
+  Button, Card, CardActions, CardContent, Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -20,8 +20,8 @@ const Logout = (): React.ReactElement => {
 
   return (
     <Card>
-      <CardHeader title="Log Out" />
       <CardContent>
+        <h1>Log Out</h1>
         <Typography>
           You have successfully logged out of AllDay DJ.
         </Typography>

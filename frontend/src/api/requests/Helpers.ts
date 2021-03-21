@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios';
 
 export const generateRequestConfig = (
   token: string,
-  params?: Record<string, unknown>,
+  params?: object,
 ): AxiosRequestConfig => {
   const requestConfig : AxiosRequestConfig = {
     headers: {

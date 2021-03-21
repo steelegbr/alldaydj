@@ -24,7 +24,7 @@ describe('Login Screen', () => {
         cy.get('[data-test="input-email"]').type(Cypress.env('USERNAME'));
         cy.get('[data-test="input-password"]').type(Cypress.env('PASSWORD')).type('{enter}');
 
-        cy.wait('@postToken').its('request.body').should('equal', 'accessToken');
+        cy.wait('@postToken').its('response.headers').should('equal', 'accessToken');
         cy.url().should('eq', 'http://localhost:3000/');
     });
 });

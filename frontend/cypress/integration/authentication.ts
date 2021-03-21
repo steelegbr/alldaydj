@@ -18,11 +18,13 @@ describe('Login Screen', () => {
     });
 
     it('Good user credentials', () => {
+        cy.intercept('POST', '/api/token/').as('postToken')
         cy.visit('http://localhost:3000/login/');
 
         cy.get('[data-test="input-email"]').type(Cypress.env('USERNAME'));
         cy.get('[data-test="input-password"]').type(Cypress.env('PASSWORD')).type('{enter}');
 
+        cy.wait('@postToken').its('response.body').should('equal', 'accessToken');
         cy.url().should('eq', 'http://localhost:3000/');
     });
 });

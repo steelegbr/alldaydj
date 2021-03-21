@@ -34,7 +34,7 @@ elasticsearch-dsl==7.3.0
 ffmpeg-python==0.2.0
 filelock==3.0.12
 future==0.18.2
-isort==5.7.0
+isort==5.8.0
 jmespath==0.10.0
 kombu==4.6.11
 lazy-object-proxy==1.4.3

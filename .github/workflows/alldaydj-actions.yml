@@ -223,9 +223,11 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v2
-      - name: Docker PS
+      - name: Set the username and password
         run: |
-          docker ps
+          export RUNNING_CONTAINER=`docker ps > awk -F " " '$3 ~ "frontend" {print $2}'`
+          echo Creating superuser on $RUNNING_CONTAINER
+          docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
       - name: Install NPM
         uses: actions/setup-node@v2
       - name: Install NPM packages

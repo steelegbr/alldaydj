@@ -218,7 +218,7 @@ jobs:
           - 8000:8000
     steps:
       - name: Checkout the commit
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Install NPM
         uses: actions/setup-node@v2
       - name: Install yarn packages

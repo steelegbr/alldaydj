@@ -225,7 +225,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Set the username and password
         run: |
-          export RUNNING_CONTAINER=`docker ps > awk -F " " '$3 ~ "frontend" {print $2}'`
+          export RUNNING_CONTAINER=`docker ps | awk -F " " '$3 ~ "frontend" {print $2}'`
           echo Creating superuser on $RUNNING_CONTAINER
           docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
       - name: Install NPM

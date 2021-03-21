@@ -258,7 +258,7 @@ jobs:
           ADDJ_S3_KEY_ID: key123
           ADDJ_S3_KEY_SECRET: secret123
           ADDJ_S3_BUCKET: alldaydj
-          ADDJ_ELASTIC_SERVER: elastic
+          ADDJ_ELASTIC_SERVER: elasticsearch
       localstack:
         image: localstack/localstack
         env:

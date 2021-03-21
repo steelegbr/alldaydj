@@ -219,6 +219,12 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+      - name: Install NPM
+        uses: actions/setup-node@v2
+      - name: Install yarn packages
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: --cwd frontend install
       - name: Cypress integration tests
         uses: cypress-io/github-action@v2
         with:

@@ -117,7 +117,7 @@ An elasticsearch server (or cluster) is required for search functionality.
 
 ## Cypress on WSL
 
-To make Cypress run on WSL, you'll need to re-poin the DISPLAY variable. Add the following to your bashrc file:
+To make Cypress run on WSL, you'll need to re-point the DISPLAY variable. Add the following to your bashrc file:
 
     # set DISPLAY variable to the IP automatically assigned to WSL2
     export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0

@@ -247,7 +247,7 @@ jobs:
           ADDJ_DB_USER: alldaydj
           ADDJ_DB_PASS: ${{ secrets.ADDJ_DB_PASS }}
           ADDJ_DB_HOST: postgres
-          ADDJ_RABIT_HOST: rabbit
+          ADDJ_RABIT_HOST: rabbitmq
           ADDJ_RABBIT_USER: alldaydj
           ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
           PYTHON_VER: 3.9

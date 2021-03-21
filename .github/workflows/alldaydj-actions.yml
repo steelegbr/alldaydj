@@ -182,7 +182,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: "True"
           tags: steelegbr/alldaydj-frontend
-  loadbanacer-contaner:
+  loadbalancer-contaner:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the commit
@@ -215,7 +215,7 @@ jobs:
           push: "True"
           tags: steelegbr/alldaydj-loadbalancer
   integration-tests:
-    needs: [backend-container, frontend-container, loadbanacer-contaner]
+    needs: [backend-container, frontend-container, loadbalancer-contaner]
     runs-on: ubuntu-latest
     services:
       postgres:

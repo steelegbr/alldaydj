@@ -214,11 +214,18 @@ jobs:
           - 3000:80
       backend:
         image: steelegbr/alldaydj-backend
+        env:
+          DJANGO_SUPERUSER_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+          DJANGO_SUPERUSER_EMAIL: ${{ secrets.CYPRESS_USERNAME }}
+          DJANGO_SUPERUSER_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
         ports:
           - 8000:8000
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v2
+      - name: Docker PS
+        run: |
+          docker ps
       - name: Install NPM
         uses: actions/setup-node@v2
       - name: Install NPM packages

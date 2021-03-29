@@ -1,14 +1,15 @@
 import click
-from logging import DEBUG, getLogger, StreamHandler
+from logging import getLogger, Logger
+from logging.config import fileConfig
 from typing import List
 from repositories.cart_type import PlayoutOneCartTypeRepository
 
 PLAYOUT_SYSTEMS: List[str] = ["PlayoutONE", "AutoTrack"]
-LOGGER = getLogger(__name__)
-LOGGER.setLevel(DEBUG)
-HANDLER = StreamHandler()
-HANDLER.setLevel(DEBUG)
-LOGGER.addHandler(HANDLER)
+
+
+def _get_logger(logger_file: str) -> Logger:
+    fileConfig(logger_file)
+    return getLogger(__name__)
 
 
 @click.group()
@@ -21,7 +22,10 @@ def main():
 @click.option("--database", required=True, envvar="PLAYOUT_SYNC_DATABASE")
 @click.option("--username", required=True, envvar="PLAYOUT_SYNC_USERNAME")
 @click.option("--password", required=True, envvar="PLAYOUT_SYNC_PASSWORD")
-def playout_one(server: str, database: str, username: str, password: str):
+@click.option("--logging-config", default="logging.ini")
+def playout_one(
+    server: str, database: str, username: str, password: str, logging_config: str
+):
     """Import data from PlayoutONE.
 
     Args:
@@ -30,8 +34,10 @@ def playout_one(server: str, database: str, username: str, password: str):
         username (str): The SQL username.
         password (str): The SQL password.
     """
+    logger = _get_logger(logging_config)
+
     cart_type_repo = PlayoutOneCartTypeRepository(
-        LOGGER, server, database, username, password
+        logger, server, database, username, password
     )
     cart_type_repo.get_all()
 

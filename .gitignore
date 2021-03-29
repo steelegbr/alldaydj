@@ -9,3 +9,4 @@ set_params_dev.ps1
 coverage.xml
 *.env
 node_modules
+sync.log

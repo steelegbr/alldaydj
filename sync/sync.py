@@ -1,10 +1,14 @@
 import click
-from logging import getLogger
+from logging import DEBUG, getLogger, StreamHandler
 from typing import List
 from repositories.cart_type import PlayoutOneCartTypeRepository
 
 PLAYOUT_SYSTEMS: List[str] = ["PlayoutONE", "AutoTrack"]
 LOGGER = getLogger(__name__)
+LOGGER.setLevel(DEBUG)
+HANDLER = StreamHandler()
+HANDLER.setLevel(DEBUG)
+LOGGER.addHandler(HANDLER)
 
 
 @click.group()
@@ -29,7 +33,7 @@ def playout_one(server: str, database: str, username: str, password: str):
     cart_type_repo = PlayoutOneCartTypeRepository(
         LOGGER, server, database, username, password
     )
-    print(cart_type_repo.get_all())
+    cart_type_repo.get_all()
 
 
 if __name__ == "__main__":

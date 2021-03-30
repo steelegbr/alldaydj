@@ -13,31 +13,44 @@ def _get_logger(logger_file: str) -> Logger:
 
 
 @click.group()
-def main():
-    pass
+@click.option("--url", required=True, envvar="ADDJ_URL")
+@click.option("--username", required=True, envvar="ADDJ_USERNAME")
+@click.option("--password", required=True, envvar="ADDJ_PASSWORD")
+@click.pass_context
+def main(context: click.Context, url: str, username: str, password: str):
+    context.ensure_object(dict)
+    context.obj["url"] = url
+    context.obj["username"] = username
+    context.obj["password"] = password
 
 
 @main.command("PlayoutONE")
-@click.option("--server", required=True, envvar="PLAYOUT_SYNC_SERVER")
+@click.option("--db-server", required=True, envvar="PLAYOUT_SYNC_SERVER")
 @click.option("--database", required=True, envvar="PLAYOUT_SYNC_DATABASE")
-@click.option("--username", required=True, envvar="PLAYOUT_SYNC_USERNAME")
-@click.option("--password", required=True, envvar="PLAYOUT_SYNC_PASSWORD")
+@click.option("--db-username", required=True, envvar="PLAYOUT_SYNC_USERNAME")
+@click.option("--db-password", required=True, envvar="PLAYOUT_SYNC_PASSWORD")
 @click.option("--logging-config", default="logging.ini")
+@click.pass_context
 def playout_one(
-    server: str, database: str, username: str, password: str, logging_config: str
+    context: click.Context,
+    server: str,
+    db_server: str,
+    db_username: str,
+    db_password: str,
+    logging_config: str,
 ):
     """Import data from PlayoutONE.
 
     Args:
-        server (str): The SQL server to connect to.
+        db_server (str): The SQL server to connect to.
         database (str): The SQL database name.
-        username (str): The SQL username.
-        password (str): The SQL password.
+        db_username (str): The SQL username.
+        db_password (str): The SQL password.
     """
     logger = _get_logger(logging_config)
 
     cart_type_repo = PlayoutOneCartTypeRepository(
-        logger, server, database, username, password
+        logger, db_server, database, db_username, db_password
     )
     cart_type_repo.get_all()
 

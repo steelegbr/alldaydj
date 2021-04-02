@@ -10,7 +10,7 @@ class Authenticator:
     Provides utility methods for authenticating a user against AllDay DJ.
     """
 
-    __instance__: Authenticator = None
+    __instance__ = None
     __logger: Logger
     __secure: bool = False
     __url: str
@@ -19,15 +19,15 @@ class Authenticator:
     __lock: Lock
     __token_refresh: str
     __token_access: str
-    __valid_token_refresh: datetime
-    __valid_token_access: datetime
+    __valid_token_refresh: datetime = None
+    __valid_token_access: datetime = None
 
     def __init__(
         self,
         secure: bool,
-        url: string,
-        username: string,
-        password: string,
+        url: str,
+        username: str,
+        password: str,
         logger: Logger,
     ):
         if Authenticator.__instance__ is None:
@@ -43,9 +43,7 @@ class Authenticator:
         self.__lock = Lock()
 
     @staticmethod
-    def instance(
-        secure: bool, url: string, username: string, password: string
-    ) -> Authenticator:
+    def instance(secure: bool, url: str, username: str, password: str, logger: Logger):
         """
             Instantiates the authenticator.
 
@@ -54,15 +52,16 @@ class Authenticator:
             url (string): The URL to connect to.
             username (string): The username to log in with.
             password (string): The password to log in with.
+            logger (Logger): Logger to record into.
 
         Returns:
             Authenticator: [description]
         """
         if not Authenticator.__instance__:
-            Authenticator(secure, url, username, password)
+            Authenticator(secure, url, username, password, logger)
         return Authenticator.__instance__
 
-    async def get_token() -> str:
+    async def get_token(self) -> str:
         """
             Obtains a currently valid token to make API requests with.
 
@@ -106,15 +105,15 @@ class Authenticator:
         """
 
         url = self.__get_url("/api/token/")
-        self.__logger.debug(f"Obtaining tokens from {url}")
+        self.__logger.info(f"Obtaining tokens from {url}")
         response = post(url, {"username": self.__username, "password": self.__password})
         response.raise_for_status()
 
         response_parts = response.json()
         self.__token_access = response_parts["access"]
         self.__token_refresh = response_parts["refresh"]
-        self.__valid_token_access = __expiry_date_from_token(self.__token_access)
-        self.__valid_token_refresh = __expiry_date_from_token(self.__token_refresh)
+        self.__valid_token_access = self.__expiry_date_from_token(self.__token_access)
+        self.__valid_token_refresh = self.__expiry_date_from_token(self.__token_refresh)
 
         self.__logger.info(f"Access token expires {self.__valid_token_access}")
         self.__logger.info(f"Refresh token expires {self.__valid_token_refresh}")

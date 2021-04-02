@@ -1,5 +1,5 @@
 from asyncio import Lock
-from datetime import datetime
+from datetime import datetime, timezone
 from jwt import decode
 from logging import Logger
 from requests import post
@@ -72,13 +72,18 @@ class Authenticator:
 
             # Check if the current token is valid
 
-            if self.__valid_token_access and self.__valid_token_access > datetime():
+            if self.__valid_token_access and self.__valid_token_access > datetime.now(
+                timezone.utc
+            ):
                 self.__logger.info("Access token is still valid.")
                 return self.__token_access
 
             # Fall back to the refresh token and get a new access token
 
-            if self.__valid_token_refresh and self.__valid_token_refresh > datetime():
+            if (
+                self.__valid_token_refresh
+                and self.__valid_token_refresh > datetime.now(timezone.utc)
+            ):
                 self.__logger.info(
                     "Refresh token is still valid, obtaining new access token."
                 )
@@ -88,6 +93,15 @@ class Authenticator:
             self.__logger.info("No valid tokens. New login session.")
             self.__get_refresh_token()
             return self.__token_access
+
+    async def generate_headers(self):
+        """
+            Generates the headers to make an authenticated request.
+
+        Returns:
+            object: The headers to use in a HTTP request.
+        """
+        return {"Authorization": f"Bearer {await self.get_token()}"}
 
     def __get_url(self, path: str) -> str:
         """
@@ -131,4 +145,4 @@ class Authenticator:
         """
         claims = decode(token, options={"verify_signature": False})
         if claims and "exp" in claims:
-            return datetime.fromtimestamp(claims["exp"])
+            return datetime.fromtimestamp(claims["exp"], tz=timezone.utc)

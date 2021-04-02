@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from alldaydj.http import Authenticator
 from logging import Logger
-from requests import get
+from requests import get, post
 from sqlalchemy import Boolean, Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
@@ -53,7 +53,25 @@ class CartTypeRepository(ABC):
 
     @abstractmethod
     def get_all(self) -> List[CartType]:
+        """
+            Retrieves the list of cart types in the repository.
+
+        Returns:
+            List[CartType]: The list of cart types.
+        """
         pass
+
+    @abstractmethod
+    def save(self, cart_type: CartType) -> bool:
+        """Saves the cart type to the repository.
+
+        Args:
+            cart_type (CartType): The cart type to save.
+
+        Returns:
+            bool: An indication if the process was successful.
+        """
+        return False
 
 
 class PlayoutOneCartType(Base):
@@ -95,6 +113,9 @@ class PlayoutOneCartTypeRepository(CartTypeRepository):
         self._logger.info(f"Found {len(types)} cart types.")
         return types
 
+    def save(self, cart_type: CartType) -> bool:
+        return False
+
 
 class AllDayDjCartTypeRepository(CartTypeRepository):
 
@@ -127,9 +148,7 @@ class AllDayDjCartTypeRepository(CartTypeRepository):
 
         next_url = self.__get_type_url()
         while next_url:
-            headers = {
-                "Authorization": f"Bearer {await self.__authenticator.get_token()}"
-            }
+            headers = await self.__authenticator.generate_headers()
             response = get(next_url, headers=headers)
             if response.ok:
                 response_json = response.json()
@@ -149,3 +168,12 @@ class AllDayDjCartTypeRepository(CartTypeRepository):
                 next_url = None
 
         return cart_types
+
+    async def save(self, cart_type: CartType) -> bool:
+        self.__logger.info(
+            f"Attempting to add cart type {cart_type.name} to the repository."
+        )
+        headers = await self.__authenticator.generate_headers()
+        data = {"name": cart_type.name, "now_playing": cart_type.now_playing}
+        response = post(self.__get_type_url(), data, headers=headers)
+        return response.ok

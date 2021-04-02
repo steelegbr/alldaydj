@@ -1,5 +1,5 @@
 from alldaydj.http import Authenticator
-from asyncio import gather, get_event_loop
+from asyncio import as_completed, run
 import click
 from logging import getLogger, Logger
 from logging.config import fileConfig
@@ -14,18 +14,33 @@ PLAYOUT_SYSTEMS: List[str] = ["PlayoutONE", "AutoTrack"]
 
 
 def _get_logger(logger_file: str) -> Logger:
+    """Configure the logger from file.
+
+    Args:
+        logger_file (str): The configuration file.
+
+    Returns:
+        Logger: The configured logger.
+    """
     fileConfig(logger_file)
     return getLogger(__name__)
 
 
-def sync(
+async def sync_cart_types(
     logger: Logger, src_type_repo: CartTypeRepository, dst_type_repo: CartTypeRepository
-):
+) -> List[bool]:
+    """Synchronises cart types.
 
-    event_loop = get_event_loop()
+    Args:
+        logger (Logger): The logger to record into.
+        src_type_repo (CartTypeRepository): The source cart type repository.
+        dst_type_repo (CartTypeRepository): The destination cart type repository.
 
-    src_types = event_loop.run_until_complete(src_type_repo.get_all())
-    dst_types = event_loop.run_until_complete(dst_type_repo.get_all())
+    Returns:
+        List[bool]: A list of True/False values indicating how successful the synchronisation was.
+    """
+    src_types = await src_type_repo.get_all()
+    dst_types = await dst_type_repo.get_all()
 
     dst_type_names = [cart_type.name for cart_type in dst_types]
 
@@ -36,6 +51,31 @@ def sync(
     logger.info(
         f"Found {len(missing_types)} cart type(s) missing from the destination."
     )
+
+    missing_type_tasks = [dst_type_repo.save(cart_type) for cart_type in missing_types]
+    missing_type_save_results = []
+    for missing_type_task in as_completed(missing_type_tasks):
+        missing_type_save_results.append(await missing_type_task)
+
+    return missing_type_save_results
+
+
+async def sync(
+    logger: Logger, src_type_repo: CartTypeRepository, dst_type_repo: CartTypeRepository
+):
+
+    missing_type_sync_results = await sync_cart_types(
+        logger, src_type_repo, dst_type_repo
+    )
+    if all(missing_type_sync_results):
+        logger.info(
+            f"Added {len(missing_type_sync_results)} cart type(s) to the destination."
+        )
+    else:
+        logger.error(
+            f"Added {sum(missing_type_sync_results)} of {len(missing_type_sync_results)} cart type(s) to the destination."
+        )
+        return
 
 
 @click.group()
@@ -93,7 +133,7 @@ def playout_one(
         authenticator, logger, context.obj["url"], context.obj["secure"]
     )
 
-    sync(logger, src_cart_type_repo, dst_cart_type_repo)
+    run(sync(logger, src_cart_type_repo, dst_cart_type_repo))
 
 
 if __name__ == "__main__":

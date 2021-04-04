@@ -2,11 +2,10 @@ from abc import ABC, abstractmethod
 from alldaydj.http import Authenticator
 from logging import Logger
 from requests import get, post
-from sqlalchemy import Boolean, Column, Integer, String, create_engine
+from repositories.generic import MsSqlRepository
+from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
 from typing import List
-from urllib.parse import quote_plus, urlencode
 
 Base = declarative_base()
 
@@ -85,27 +84,10 @@ class PlayoutOneCartType(Base):
     Billboard = Column(Boolean())
 
 
-class PlayoutOneCartTypeRepository(CartTypeRepository):
+class PlayoutOneCartTypeRepository(CartTypeRepository, MsSqlRepository):
     """
     PlayoutONE implementation of the cart type repository.
     """
-
-    _session: Session
-    _logger: Logger
-
-    def __init__(
-        self, logger: Logger, server: str, database: str, username: str, password: str
-    ):
-        self._logger = logger
-        encoded_username = quote_plus(username)
-        encoded_password = quote_plus(password)
-        query = urlencode({"driver": "ODBC Driver 17 for SQL Server"})
-        url = f"mssql+pyodbc://{encoded_username}:{encoded_password}@{server}/{database}?{query}"
-
-        logger.info(f"Connecting to MS SQL server at {server}")
-        engine = create_engine(url)
-        db_session = sessionmaker(bind=engine)
-        self._session = db_session()
 
     async def get_all(self):
         db_types = self._session.query(PlayoutOneCartType).all()

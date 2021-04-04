@@ -4,11 +4,13 @@ import click
 from logging import getLogger, Logger
 from logging.config import fileConfig
 from typing import List
+from repositories.cart import CartRepository, PlayoutOneCartRepository
 from repositories.cart_type import (
     AllDayDjCartTypeRepository,
     CartTypeRepository,
     PlayoutOneCartTypeRepository,
 )
+
 
 PLAYOUT_SYSTEMS: List[str] = ["PlayoutONE", "AutoTrack"]
 
@@ -61,7 +63,10 @@ async def sync_cart_types(
 
 
 async def sync(
-    logger: Logger, src_type_repo: CartTypeRepository, dst_type_repo: CartTypeRepository
+    logger: Logger,
+    src_type_repo: CartTypeRepository,
+    dst_type_repo: CartTypeRepository,
+    src_cart_repo: CartRepository,
 ):
 
     missing_type_sync_results = await sync_cart_types(
@@ -76,6 +81,8 @@ async def sync(
             f"Added {sum(missing_type_sync_results)} of {len(missing_type_sync_results)} cart type(s) to the destination."
         )
         return
+
+    await src_cart_repo.get_all()
 
 
 @click.group()
@@ -133,7 +140,11 @@ def playout_one(
         authenticator, logger, context.obj["url"], context.obj["secure"]
     )
 
-    run(sync(logger, src_cart_type_repo, dst_cart_type_repo))
+    src_cart_repo = PlayoutOneCartRepository(
+        logger, db_server, database, db_username, db_password
+    )
+
+    run(sync(logger, src_cart_type_repo, dst_cart_type_repo, src_cart_repo))
 
 
 if __name__ == "__main__":

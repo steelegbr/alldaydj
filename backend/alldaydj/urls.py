@@ -6,6 +6,7 @@ from alldaydj.views import (
     ArtistViewSet,
     AudioUploadJobViewSet,
     AudioView,
+    CartByLabelViewSet,
     CartDocumentView,
     CartViewSet,
     TagViewSet,
@@ -23,6 +24,7 @@ from rest_framework_simplejwt.views import (
 router = DefaultRouter()
 router.register("artist", ArtistViewSet)
 router.register("cart/search", CartDocumentView, basename="cart-document")
+router.register("cart/by-label", CartByLabelViewSet, basename="cart-label")
 router.register("cart", CartViewSet)
 router.register("job", AudioUploadJobViewSet)
 router.register("tag", TagViewSet)

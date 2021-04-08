@@ -55,6 +55,13 @@ class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializer
 
 
+class CartByLabelViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    lookup_field = "label"
+    lookup_value_regex = "[A-Z0-9]+"
+
+
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

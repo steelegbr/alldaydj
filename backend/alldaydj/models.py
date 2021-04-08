@@ -80,6 +80,7 @@ class Cart(models.Model):
     hash_compressed = models.TextField(null=True)
     audio = models.TextField(null=True)
     compressed = models.TextField(null=True)
+    fade = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"[{self.label}] {self.display_artist} - {self.title}"

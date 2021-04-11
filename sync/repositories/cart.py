@@ -202,6 +202,34 @@ class CartRepository:
         """
         pass
 
+    def cart_to_dictionary(self, cart: Cart) -> dict:
+        """Translates a cart object into a dictionary.
+
+        Args:
+            cart (Cart): The cart to translate.
+
+        Returns:
+            dict: The translated cart.
+        """
+        return {
+            "label": cart.label,
+            "title": cart.title or "",
+            "display_artist": cart.display_artist or "",
+            "cue_audio_start": cart.cue_audio_start,
+            "cue_audio_end": cart.cue_audio_end,
+            "cue_intro_start": cart.cue_intro_start,
+            "cue_intro_end": cart.cue_intro_end,
+            "cue_segue": cart.cue_segue,
+            "sweeper": cart.sweeper,
+            "year": cart.year or 0,
+            "isrc": cart.isrc,
+            "composer": cart.composer,
+            "publisher": cart.publisher,
+            "record_label": cart.record_label,
+            "type": cart.cart_type,
+            "fade": cart.fade,
+        }
+
 
 class PlayoutOneCart(Base):
     """
@@ -300,24 +328,7 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
     async def save_new(self, cart: Cart):
         self._logger.info(f"Attempting to add cart {cart.label} to the repository.")
         headers = await self._authenticator.generate_headers()
-        data = {
-            "label": cart.label,
-            "title": cart.title,
-            "display_artist": cart.display_artist,
-            "cue_audio_start": cart.cue_audio_start,
-            "cue_audio_end": cart.cue_audio_end,
-            "cue_intro_start": cart.cue_intro_start,
-            "cue_intro_end": cart.cue_intro_end,
-            "cue_segue": cart.cue_segue,
-            "sweeper": cart.sweeper,
-            "year": cart.year,
-            "isrc": cart.isrc,
-            "composer": cart.composer,
-            "publisher": cart.publisher,
-            "record_label": cart.record_label,
-            "type": cart.cart_type,
-            "fade": cart.fade,
-        }
+        data = self.cart_to_dictionary(cart)
         response = post(self.__post_cart_url(), data, headers=headers)
         if response.ok:
             self._logger.info(

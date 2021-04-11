@@ -13,6 +13,6 @@ export interface CartSearchResults {
     results: CartSearchResult[]
 }
 
-export type CartSearchConditionFields = 'advanced' | 'search' | 'artist' | 'title' | 'page' | 'resultsPerPage';
+export type CartSearchConditionFields = 'search' | 'page' | 'resultsPerPage';
 
 export type CartSearchConditions = Record<CartSearchConditionFields, string>;

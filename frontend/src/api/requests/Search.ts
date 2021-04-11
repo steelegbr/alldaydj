@@ -12,11 +12,5 @@ export const cartSearch = (
   params.append('search', conditions.search);
   params.append('page', conditions.page);
   params.append('page_size', conditions.resultsPerPage);
-
-  if (conditions.advanced === 'true') {
-    params.append('search', `title:${conditions.title}`);
-    params.append('search', `artist:${conditions.artist}`);
-  }
-
   return axios.get<CartSearchResults>(getUrl('/api/cart/search/'), generateRequestConfig(token, params));
 };

@@ -68,14 +68,19 @@ const LibrarySearch = (): React.ReactElement => {
       return;
     }
 
+    const newConditions = {
+      ...search.conditions,
+      page: '1',
+    };
+
     updateConditions(
-      search.conditions,
+      newConditions,
       'ReadyToSearch',
     );
 
     history.push({
       pathname: Paths.library.search,
-      search: `?${new URLSearchParams(search.conditions).toString()}`,
+      search: `?${new URLSearchParams(newConditions).toString()}`,
     });
   };
 

@@ -9,7 +9,7 @@ INDEX.settings(number_of_shards=1, number_of_replicas=1)
 
 ALLDAYDJ_ANALYZER = analyzer(
     "alldaydj",
-    tokenizer="standard",
+    tokenizer=tokenizer("trigram", "ngram", min_gram=3, max_gram=3),
     filter=["lowercase", "stop", "snowball"],
 )
 

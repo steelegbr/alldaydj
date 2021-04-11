@@ -2,6 +2,7 @@
     Views for AllDay DJ.
 """
 
+from alldaydj.documents.backends import MatchPhraseFilterBackend
 from alldaydj.documents.cart import CartDocument
 from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
 from alldaydj.serializers import (
@@ -30,7 +31,6 @@ from django_elasticsearch_dsl_drf.filter_backends import (
     IdsFilterBackend,
     OrderingFilterBackend,
     DefaultOrderingFilterBackend,
-    SearchFilterBackend,
 )
 from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
 from django_elasticsearch_dsl_drf.pagination import QueryFriendlyPageNumberPagination
@@ -126,7 +126,7 @@ class CartDocumentView(BaseDocumentViewSet):
         IdsFilterBackend,
         OrderingFilterBackend,
         DefaultOrderingFilterBackend,
-        SearchFilterBackend,
+        MatchPhraseFilterBackend,
     ]
     search_fields = ["label", "artist", "title"]
     filter_fields = {
@@ -144,11 +144,13 @@ class CartDocumentView(BaseDocumentViewSet):
         },
     }
     ordering_fields = {
+        "_score": "_score",
         "label": "label.raw",
         "artist": "artist.raw",
         "title": "title.raw",
     }
     ordering = (
+        "_score",
         "label",
         "artist",
         "title",

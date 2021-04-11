@@ -327,4 +327,4 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
             self._logger.error(
                 f"Error code {response.status_code} adding cart {cart.label} to the repository."
             )
-        return response.ok
+        return response.ok or False

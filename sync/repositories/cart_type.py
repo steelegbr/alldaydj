@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from alldaydj.http import Authenticator
 from logging import Logger
 from requests import get, post
-from repositories.generic import MsSqlRepository
+from repositories.generic import AllDayDjRepository, MsSqlRepository
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from typing import List
@@ -99,21 +99,7 @@ class PlayoutOneCartTypeRepository(CartTypeRepository, MsSqlRepository):
         return False
 
 
-class AllDayDjCartTypeRepository(CartTypeRepository):
-
-    __authenticator: Authenticator
-    __logger: Logger
-    __base_url: str
-    __secure: bool
-
-    def __init__(
-        self, authenticator: Authenticator, logger: Logger, base_url: str, secure: bool
-    ):
-        self.__authenticator = authenticator
-        self.__logger = logger
-        self.__base_url = base_url
-        self.__secure = secure
-
+class AllDayDjCartTypeRepository(CartTypeRepository, AllDayDjRepository):
     def __get_type_url(self) -> str:
         """
             Gets the URL to list from and add cart types to.
@@ -121,16 +107,16 @@ class AllDayDjCartTypeRepository(CartTypeRepository):
         Returns:
             str: The URL.
         """
-        if self.__secure:
-            return f"https://{self.__base_url}/api/type/"
-        return f"http://{self.__base_url}/api/type/"
+        if self._secure:
+            return f"https://{self._base_url}/api/type/"
+        return f"http://{self._base_url}/api/type/"
 
     async def get_all(self):
         cart_types = []
 
         next_url = self.__get_type_url()
         while next_url:
-            headers = await self.__authenticator.generate_headers()
+            headers = await self._authenticator.generate_headers()
             response = get(next_url, headers=headers)
             if response.ok:
                 response_json = response.json()
@@ -139,12 +125,10 @@ class AllDayDjCartTypeRepository(CartTypeRepository):
                     CartType(cart_type["name"], cart_type["now_playing"])
                     for cart_type in json_results
                 ]
-                self.__logger.info(
-                    f"Found {len(json_results)} cart types at {next_url}"
-                )
+                self._logger.info(f"Found {len(json_results)} cart types at {next_url}")
                 next_url = response_json["next"]
             else:
-                self.__logger.error(
+                self._logger.error(
                     f"Error code {response.status_code} getting cart types from {next_url}"
                 )
                 next_url = None
@@ -152,10 +136,10 @@ class AllDayDjCartTypeRepository(CartTypeRepository):
         return cart_types
 
     async def save(self, cart_type: CartType) -> bool:
-        self.__logger.info(
+        self._logger.info(
             f"Attempting to add cart type {cart_type.name} to the repository."
         )
-        headers = await self.__authenticator.generate_headers()
+        headers = await self._authenticator.generate_headers()
         data = {"name": cart_type.name, "now_playing": cart_type.now_playing}
         response = post(self.__get_type_url(), data, headers=headers)
         return response.ok

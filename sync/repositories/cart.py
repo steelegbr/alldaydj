@@ -3,7 +3,7 @@ from alldaydj.http import Authenticator
 from logging import Logger
 from requests import get, post
 from repositories.cart_type import PlayoutOneCartType
-from repositories.generic import MsSqlRepository
+from repositories.generic import AllDayDjRepository, MsSqlRepository
 from sqlalchemy import Boolean, Column, Integer, ForeignKey, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -34,6 +34,7 @@ class Cart:
     __tags: List[str]
     __cart_type: str
     __internal_id: str
+    __fade: bool
 
     def __init__(
         self,
@@ -55,6 +56,7 @@ class Cart:
         tags: List[str],
         cart_type: str,
         internal_id: str,
+        fade: bool,
     ):
         self.__label = label
         self.__title = title
@@ -74,6 +76,7 @@ class Cart:
         self.__tags = tags
         self.__cart_type = cart_type
         self.__internal_id = internal_id
+        self.__fade = fade
 
     @property
     def label(self) -> str:
@@ -147,6 +150,10 @@ class Cart:
     def internal_id(self) -> str:
         return self.__internal_id
 
+    @property
+    def fade(self) -> bool:
+        return self.__fade
+
 
 class CartRepository:
     """Repository for holding cart data."""
@@ -214,6 +221,7 @@ class PlayoutOneCart(Base):
     AudioYear = Column(Integer)
     Type_id = Column("Type", Integer, ForeignKey(PlayoutOneCartType.ID))
     Type = relationship(PlayoutOneCartType)
+    Fade = Column(Boolean)
 
 
 class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
@@ -243,8 +251,80 @@ class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
                 [],
                 db_cart.Type.Type,
                 db_cart.ID,
+                db_cart.Fade,
             )
             for db_cart in db_carts
         ]
         self._logger.info(f"Found {len(carts)} cart(s).")
         return carts
+
+
+class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
+    def __post_cart_url(self) -> str:
+        """
+            Gets the URL to post a cart to.
+
+        Returns:
+            str: The URL to post new carts to.
+        """
+        if self._secure:
+            return f"https://{self._base_url}/api/cart/"
+        return f"http://{self._base_url}/api/cart/"
+
+    def __get_cart_url_by_label(self, label: str) -> str:
+        """
+            Gets the URL for a cart based on its label.
+
+        Args:
+            label (str): The cart label.
+
+        Returns:
+            str: The URL.
+        """
+        if self._secure:
+            return f"https://{self._base_url}/api/cart/by-label/{label}/"
+        return f"http://{self._base_url}/api/cart/by-label/{label}/"
+
+    async def get_by_label(self, label: str):
+        url = self.__get_cart_url_by_label(label)
+        self._logger.info(f"Retrieving cart {label} from AllDay DJ.")
+
+        headers = await self._authenticator.generate_headers()
+        response = get(url, headers=headers)
+
+        if response.ok:
+            self._logger.info(f"Successfully retrieved cart {label} from AllDay DJ.")
+            return response.json()
+        self._logger.info(f"Failed to retrieve cart {label} from AllDay DJ.")
+
+    async def save_new(self, cart: Cart):
+        self._logger.info(f"Attempting to add cart {cart.label} to the repository.")
+        headers = await self._authenticator.generate_headers()
+        data = {
+            "label": cart.label,
+            "title": cart.title,
+            "display_artist": cart.display_artist,
+            "cue_audio_start": cart.cue_audio_start,
+            "cue_audio_end": cart.cue_audio_end,
+            "cue_intro_start": cart.cue_intro_start,
+            "cue_intro_end": cart.cue_intro_end,
+            "cue_segue": cart.cue_segue,
+            "sweeper": cart.sweeper,
+            "year": cart.year,
+            "isrc": cart.isrc,
+            "composer": cart.composer,
+            "publisher": cart.publisher,
+            "record_label": cart.record_label,
+            "type": cart.cart_type,
+            "fade": cart.fade,
+        }
+        response = post(self.__post_cart_url(), data, headers=headers)
+        if response.ok:
+            self._logger.info(
+                f"Successfully added cart {cart.label} to the repository."
+            )
+        else:
+            self._logger.error(
+                f"Error code {response.status_code} adding cart {cart.label} to the repository."
+            )
+        return response.ok

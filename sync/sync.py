@@ -4,7 +4,12 @@ import click
 from logging import getLogger, Logger
 from logging.config import fileConfig
 from typing import List
-from repositories.cart import CartRepository, PlayoutOneCartRepository
+from repositories.cart import (
+    AllDayDjCartRepository,
+    Cart,
+    CartRepository,
+    PlayoutOneCartRepository,
+)
 from repositories.cart_type import (
     AllDayDjCartTypeRepository,
     CartTypeRepository,
@@ -62,11 +67,37 @@ async def sync_cart_types(
     return missing_type_save_results
 
 
+async def sync_cart(logger: Logger, cart: Cart, dst_cart_repo: CartRepository) -> bool:
+    existing = await dst_cart_repo.get_by_label(cart.label)
+    if not existing:
+        return await dst_cart_repo.save_new(cart)
+
+
+async def sync_carts(
+    logger: Logger, src_cart_repo: CartRepository, dst_cart_repo: CartRepository
+):
+
+    carts = await src_cart_repo.get_all()
+    sync_cart_tasks = [sync_cart(logger, cart, dst_cart_repo) for cart in carts]
+    sync_cart_results = []
+
+    # for sync_cart_task in as_completed(sync_cart_tasks):
+    #     sync_cart_results.append(await sync_cart_task)
+
+    for sync_cart_task in sync_cart_tasks:
+        sync_cart_results.append(await sync_cart_task)
+
+    logger.info(
+        f"Successfully synchronised {sum(sync_cart_results)} of {len(sync_cart_results)} carts."
+    )
+
+
 async def sync(
     logger: Logger,
     src_type_repo: CartTypeRepository,
     dst_type_repo: CartTypeRepository,
     src_cart_repo: CartRepository,
+    dst_cart_repo: CartRepository,
 ):
 
     missing_type_sync_results = await sync_cart_types(
@@ -82,7 +113,7 @@ async def sync(
         )
         return
 
-    await src_cart_repo.get_all()
+    await sync_carts(logger, src_cart_repo, dst_cart_repo)
 
 
 @click.group()
@@ -144,7 +175,15 @@ def playout_one(
         logger, db_server, database, db_username, db_password
     )
 
-    run(sync(logger, src_cart_type_repo, dst_cart_type_repo, src_cart_repo))
+    dst_cart_repo = AllDayDjCartRepository(
+        authenticator, logger, context.obj["url"], context.obj["secure"]
+    )
+
+    run(
+        sync(
+            logger, src_cart_type_repo, dst_cart_type_repo, src_cart_repo, dst_cart_repo
+        )
+    )
 
 
 if __name__ == "__main__":

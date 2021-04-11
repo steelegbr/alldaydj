@@ -1,3 +1,4 @@
+from alldaydj.http import Authenticator
 from logging import Logger
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
@@ -25,3 +26,22 @@ class MsSqlRepository:
         engine = create_engine(url)
         db_session = sessionmaker(bind=engine)
         self._session = db_session()
+
+
+class AllDayDjRepository:
+    """
+    Base class for an AllDay DJ repository.
+    """
+
+    _authenticator: Authenticator
+    _logger: Logger
+    _base_url: str
+    _secure: bool
+
+    def __init__(
+        self, authenticator: Authenticator, logger: Logger, base_url: str, secure: bool
+    ):
+        self._authenticator = authenticator
+        self._logger = logger
+        self._base_url = base_url
+        self._secure = secure

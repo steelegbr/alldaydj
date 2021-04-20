@@ -5,7 +5,7 @@ asgiref==3.3.1
 astroid==2.5
 billiard==3.6.3.0
 black==20.8b1
-boto3==1.17.33
+boto3==1.17.54
 botocore==1.20.33
 celery==4.4.6
 certifi==2020.12.5

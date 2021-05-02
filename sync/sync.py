@@ -102,8 +102,7 @@ async def sync_carts(
         except Exception as ex:
             logger.error(ex)
             result = False
-
-    sync_cart_results.append(result)
+        sync_cart_results.append(result)
 
     # for sync_cart_task in sync_cart_tasks:
     #     sync_cart_results.append(await sync_cart_task)

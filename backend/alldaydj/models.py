@@ -61,7 +61,7 @@ class Cart(models.Model):
         validators=[RegexValidator(r"[a-zA-Z0-9]+")],
     )
     title = models.TextField(blank=False, null=False)
-    display_artist = models.TextField()
+    display_artist = models.TextField(blank=True)
     artists = models.ManyToManyField(Artist)
     cue_audio_start = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_audio_end = models.IntegerField(default=0, validators=[MinValueValidator(0)])

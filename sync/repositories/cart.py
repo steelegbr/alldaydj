@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 from alldaydj.http import Authenticator
 from logging import Logger
-from requests import get, post
+from requests import get, patch, post
 from repositories.cart_type import PlayoutOneCartType
 from repositories.generic import AllDayDjRepository, MsSqlRepository
 from sqlalchemy import Boolean, Column, Integer, ForeignKey, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from typing import List
+from typing import List, Dict
 from urllib.parse import quote_plus, urlencode
 
 Base = declarative_base()
@@ -154,6 +154,10 @@ class Cart:
     def fade(self) -> bool:
         return self.__fade
 
+    @property
+    def tags(self) -> List[str]:
+        return self.__tags
+
 
 class CartRepository:
     """Repository for holding cart data."""
@@ -190,12 +194,12 @@ class CartRepository:
         """
         pass
 
-    async def update(self, cart: Cart, existing_cart: Cart) -> bool:
+    async def update(self, differences: Dict, cart_id: str) -> bool:
         """Updates an existing cart in the repository.
 
         Args:
-            cart (Cart): The new information to add to the cart.
-            existing_cart (Cart): The existing cart in the database.
+            differences (Dict): The new information to add to the cart.
+            cart_id (str): The ID of the cart in the destination database.
 
         Returns:
             bool: [description]
@@ -221,13 +225,15 @@ class CartRepository:
             "cue_intro_end": cart.cue_intro_end,
             "cue_segue": cart.cue_segue,
             "sweeper": cart.sweeper,
-            "year": cart.year or 0,
+            "year": int(cart.year) if cart.year else 0,
             "isrc": cart.isrc,
             "composer": cart.composer,
             "publisher": cart.publisher,
             "record_label": cart.record_label,
             "type": cart.cart_type,
             "fade": cart.fade,
+            "tags": cart.tags or [],
+            "artists": cart.artists or [],
         }
 
 
@@ -313,6 +319,20 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
             return f"https://{self._base_url}/api/cart/by-label/{label}/"
         return f"http://{self._base_url}/api/cart/by-label/{label}/"
 
+    def __get_cart_url_by_id(self, cart_id: str) -> str:
+        """
+            Gets the URL for a cart based on its ID.
+
+        Args:
+            cart_id (str): The ID for the cart.
+
+        Returns:
+            str: The URL.
+        """
+        if self._secure:
+            return f"https://{self._base_url}/api/cart/{cart_id}/"
+        return f"http://{self._base_url}/api/cart/{cart_id}/"
+
     async def get_by_label(self, label: str):
         url = self.__get_cart_url_by_label(label)
         self._logger.info(f"Retrieving cart {label} from AllDay DJ.")
@@ -338,4 +358,21 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
             self._logger.error(
                 f"Error code {response.status_code} adding cart {cart.label} to the repository."
             )
-        return response.ok or False
+        return bool(response.ok)
+
+    async def update(self, differences: Dict, cart_id: Cart) -> bool:
+        self._logger.info(f"Attempting to update cart {cart_id} in the repository.")
+        self._logger.debug(f"Updating cart {cart_id} with the following: {differences}")
+        headers = await self._authenticator.generate_headers()
+        response = patch(
+            self.__get_cart_url_by_id(cart_id),
+            differences,
+            headers=headers,
+        )
+        if response.ok:
+            self._logger.info(f"Successfully updated cart {cart_id} in the repository.")
+        else:
+            self._logger.error(
+                f"Error code {response.status_code} updating cart {cart_id} in the repository."
+            )
+        return bool(response.ok)

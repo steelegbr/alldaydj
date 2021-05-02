@@ -71,6 +71,21 @@ async def sync_cart(logger: Logger, cart: Cart, dst_cart_repo: CartRepository) -
     existing = await dst_cart_repo.get_by_label(cart.label)
     if not existing:
         return await dst_cart_repo.save_new(cart)
+    else:
+
+        # Work out if/what we need to update
+
+        new_dict = dst_cart_repo.cart_to_dictionary(cart)
+        differences = {}
+        for key, value in new_dict.items():
+            if value and not existing[key] == value:
+                differences[key] = value
+
+        if differences:
+            return await dst_cart_repo.update(differences, existing["id"])
+
+    logger.info(f"No changes required for cart {cart.label}")
+    return False
 
 
 async def sync_carts(
@@ -81,11 +96,17 @@ async def sync_carts(
     sync_cart_tasks = [sync_cart(logger, cart, dst_cart_repo) for cart in carts]
     sync_cart_results = []
 
-    # for sync_cart_task in as_completed(sync_cart_tasks):
-    #     sync_cart_results.append(await sync_cart_task)
+    for sync_cart_task in as_completed(sync_cart_tasks):
+        try:
+            result = await sync_cart_task
+        except Exception as ex:
+            logger.error(ex)
+            result = False
 
-    for sync_cart_task in sync_cart_tasks:
-        sync_cart_results.append(await sync_cart_task)
+    sync_cart_results.append(result)
+
+    # for sync_cart_task in sync_cart_tasks:
+    #     sync_cart_results.append(await sync_cart_task)
 
     logger.info(
         f"Successfully synchronised {sum(sync_cart_results)} of {len(sync_cart_results)} carts."

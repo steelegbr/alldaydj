@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from alldaydj.http import Authenticator
 from logging import Logger
+from pathlib import Path
 from requests import get, patch, post
 from repositories.cart_type import PlayoutOneCartType
 from repositories.generic import AllDayDjRepository, MsSqlRepository
@@ -236,6 +237,33 @@ class CartRepository:
             "artists": cart.artists or [],
         }
 
+    @abstractmethod
+    def get_file_path(self, cart: Cart) -> str:
+        """
+            Obtains the file path for a given cart.
+
+        Args:
+            cart (Cart): The cart to get the file path for.
+
+        Returns:
+            Path: The file path.
+        """
+        pass
+
+    @abstractmethod
+    async def upload_audio(self, cart_id: str, file_path: Path) -> bool:
+        """
+            Uploads a given audio file to the repository.
+
+        Args:
+            cart_id (str): The cart we matched on to.
+            file_path (Path): The file to be upload.
+
+        Returns:
+            bool: A flag indicating if the process was successful
+        """
+        pass
+
 
 class PlayoutOneCart(Base):
     """
@@ -262,6 +290,23 @@ class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
     """
     PlayoutONE implementation of the cart repository.
     """
+
+    __file_path: str
+    EXPECTED_FILE_TYPES = [".WAV", ".wav", ".MP3", ".mp3"]
+
+    def __init__(
+        self,
+        logger: Logger,
+        server: str,
+        database: str,
+        username: str,
+        password: str,
+        file_path: str,
+    ):
+        self.__file_path = file_path
+        super(PlayoutOneCartRepository, self).__init__(
+            logger, server, database, username, password
+        )
 
     async def get_all(self):
         db_carts = self._session.query(PlayoutOneCart).join(PlayoutOneCartType).all()
@@ -291,6 +336,13 @@ class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
         ]
         self._logger.info(f"Found {len(carts)} cart(s).")
         return carts
+
+    def get_file_path(self, cart: Cart) -> str:
+        base_path = Path(self.__file_path)
+        for file_type in self.EXPECTED_FILE_TYPES:
+            path = base_path / f"{cart.label}{file_type}"
+            if path.exists():
+                return path
 
 
 class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
@@ -333,6 +385,20 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
             return f"https://{self._base_url}/api/cart/{cart_id}/"
         return f"http://{self._base_url}/api/cart/{cart_id}/"
 
+    def __get_audio_url_by_id(self, cart_id: str) -> str:
+        """
+            Gets the URL for a cart's audio based on its ID.
+
+        Args:
+            cart_id (str): The ID for the cart.
+
+        Returns:
+            str: The URL.
+        """
+        if self._secure:
+            return f"https://{self._base_url}/api/audio/{cart_id}/"
+        return f"http://{self._base_url}/api/audio/{cart_id}/"
+
     async def get_by_label(self, label: str):
         url = self.__get_cart_url_by_label(label)
         self._logger.info(f"Retrieving cart {label} from AllDay DJ.")
@@ -350,6 +416,7 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
         headers = await self._authenticator.generate_headers()
         data = self.cart_to_dictionary(cart)
         response = post(self.__post_cart_url(), data, headers=headers)
+
         if response.ok:
             self._logger.info(
                 f"Successfully added cart {cart.label} to the repository."
@@ -369,10 +436,31 @@ class AllDayDjCartRepository(CartRepository, AllDayDjRepository):
             differences,
             headers=headers,
         )
+
         if response.ok:
             self._logger.info(f"Successfully updated cart {cart_id} in the repository.")
         else:
             self._logger.error(
                 f"Error code {response.status_code} updating cart {cart_id} in the repository."
+            )
+        return bool(response.ok)
+
+    async def upload_audio(self, cart_id: str, file_path: Path) -> bool:
+        self._logger.info(
+            f"Attempting to upload audio for cart {cart_id} from {file_path}."
+        )
+        headers = await self._authenticator.generate_headers()
+        files = {"file": file_path.open("rb")}
+        response = post(
+            self.__get_audio_url_by_id(cart_id), files=files, headers=headers
+        )
+
+        if response.ok:
+            self._logger.info(
+                f"Successfully uploaded audio for cart {cart_id} from {file_path}."
+            )
+        else:
+            self._logger.error(
+                f"Error code {response.status_code} uploading audio for cart {cart_id} from {file_path}."
             )
         return bool(response.ok)

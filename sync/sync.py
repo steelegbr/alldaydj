@@ -67,7 +67,9 @@ async def sync_cart_types(
     return missing_type_save_results
 
 
-async def sync_cart(logger: Logger, cart: Cart, dst_cart_repo: CartRepository) -> bool:
+async def sync_cart_data(
+    logger: Logger, cart: Cart, dst_cart_repo: CartRepository
+) -> bool:
     existing = await dst_cart_repo.get_by_label(cart.label)
     if not existing:
         return await dst_cart_repo.save_new(cart)
@@ -84,16 +86,59 @@ async def sync_cart(logger: Logger, cart: Cart, dst_cart_repo: CartRepository) -
         if differences:
             return await dst_cart_repo.update(differences, existing["id"])
 
-    logger.info(f"No changes required for cart {cart.label}")
+    logger.info(f"No changes required for cart {cart.label}.")
     return False
 
 
+async def sync_cart_audio(
+    logger: Logger,
+    cart: Cart,
+    src_cart_repo: CartRepository,
+    dst_cart_repo: CartRepository,
+) -> bool:
+
+    file_path = src_cart_repo.get_file_path(cart)
+    if not file_path:
+        logger.warning(f"Failed to find the audio file for cart {cart.label}.")
+        return False
+
+    existing_cart = await dst_cart_repo.get_by_label(cart.label)
+    if not existing_cart:
+        logger.warning(
+            f"Failed to find cart {cart.label} in the destination system to upload audio to."
+        )
+        return False
+
+    return await dst_cart_repo.upload_audio(existing_cart["id"], file_path)
+
+
+async def sync_cart(
+    logger: Logger,
+    cart: Cart,
+    src_cart_repo: CartRepository,
+    dst_cart_repo: CartRepository,
+    force_audio_update: bool,
+) -> bool:
+
+    data_updated = await sync_cart_data(logger, cart, dst_cart_repo)
+    if force_audio_update or data_updated:
+        return await sync_cart_audio(logger, cart, src_cart_repo, dst_cart_repo)
+
+    return data_updated
+
+
 async def sync_carts(
-    logger: Logger, src_cart_repo: CartRepository, dst_cart_repo: CartRepository
+    logger: Logger,
+    src_cart_repo: CartRepository,
+    dst_cart_repo: CartRepository,
+    force_audio_update: bool,
 ):
 
     carts = await src_cart_repo.get_all()
-    sync_cart_tasks = [sync_cart(logger, cart, dst_cart_repo) for cart in carts]
+    sync_cart_tasks = [
+        sync_cart(logger, cart, src_cart_repo, dst_cart_repo, force_audio_update)
+        for cart in carts
+    ]
     sync_cart_results = []
 
     for sync_cart_task in as_completed(sync_cart_tasks):
@@ -103,9 +148,6 @@ async def sync_carts(
             logger.error(ex)
             result = False
         sync_cart_results.append(result)
-
-    # for sync_cart_task in sync_cart_tasks:
-    #     sync_cart_results.append(await sync_cart_task)
 
     logger.info(
         f"Successfully synchronised {sum(sync_cart_results)} of {len(sync_cart_results)} carts."
@@ -118,6 +160,7 @@ async def sync(
     dst_type_repo: CartTypeRepository,
     src_cart_repo: CartRepository,
     dst_cart_repo: CartRepository,
+    force_audio_update: bool,
 ):
 
     missing_type_sync_results = await sync_cart_types(
@@ -133,7 +176,7 @@ async def sync(
         )
         return
 
-    await sync_carts(logger, src_cart_repo, dst_cart_repo)
+    await sync_carts(logger, src_cart_repo, dst_cart_repo, force_audio_update)
 
 
 @click.group()
@@ -141,13 +184,22 @@ async def sync(
 @click.option("--username", required=True, envvar="ADDJ_SYNC_USERNAME")
 @click.option("--password", required=True, envvar="ADDJ_SYNC_PASSWORD")
 @click.option("--secure/--insecure", default=False)
+@click.option("--force-audio-update/--no-force-audio-update", default=False)
 @click.pass_context
-def main(context: click.Context, url: str, username: str, password: str, secure: bool):
+def main(
+    context: click.Context,
+    url: str,
+    username: str,
+    password: str,
+    secure: bool,
+    force_audio_update: bool,
+):
     context.ensure_object(dict)
     context.obj["url"] = url
     context.obj["username"] = username
     context.obj["password"] = password
     context.obj["secure"] = secure
+    context.obj["force_audio_update"] = force_audio_update
 
 
 @main.command("PlayoutONE")
@@ -155,6 +207,7 @@ def main(context: click.Context, url: str, username: str, password: str, secure:
 @click.option("--database", required=True, envvar="PLAYOUT_SYNC_DATABASE")
 @click.option("--db-username", required=True, envvar="PLAYOUT_SYNC_USERNAME")
 @click.option("--db-password", required=True, envvar="PLAYOUT_SYNC_PASSWORD")
+@click.option("--file-path", required=True, envvar="PLAYOUT_SYNC_FILE_PATH")
 @click.option("--logging-config", default="logging.ini")
 @click.pass_context
 def playout_one(
@@ -163,6 +216,7 @@ def playout_one(
     database: str,
     db_username: str,
     db_password: str,
+    file_path: str,
     logging_config: str,
 ):
     """Import data from PlayoutONE.
@@ -192,7 +246,7 @@ def playout_one(
     )
 
     src_cart_repo = PlayoutOneCartRepository(
-        logger, db_server, database, db_username, db_password
+        logger, db_server, database, db_username, db_password, file_path
     )
 
     dst_cart_repo = AllDayDjCartRepository(
@@ -201,7 +255,12 @@ def playout_one(
 
     run(
         sync(
-            logger, src_cart_type_repo, dst_cart_type_repo, src_cart_repo, dst_cart_repo
+            logger,
+            src_cart_type_repo,
+            dst_cart_type_repo,
+            src_cart_repo,
+            dst_cart_repo,
+            context.obj["force_audio_update"],
         )
     )
 

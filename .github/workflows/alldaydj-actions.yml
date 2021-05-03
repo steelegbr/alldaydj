@@ -130,17 +130,14 @@ jobs:
         with:
           node-version: 14
       - name: Install yarn packages
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend install
+        run: yarn install
+        working-directory: ./frontend
       - name: ECMA Script Linting
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend lint-ci
+        run: yarn lint-ci
+        working-directory: ./frontend
       - name: Jest Unit Tests
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend test
+        run: yarn test
+        working-directory: ./frontend
   frontend-container:
     needs: react-tests
     runs-on: ubuntu-latest

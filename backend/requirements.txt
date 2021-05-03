@@ -28,7 +28,7 @@ django-nose==1.4.7
 django-storages==1.11.1
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.6.0
-drf-jwt==1.18.0
+drf-jwt==1.19.0
 elasticsearch==7.12.1
 elasticsearch-dsl==7.3.0
 ffmpeg-python==0.2.0

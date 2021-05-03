@@ -54,7 +54,7 @@ python-magic==0.4.22
 pytz==2021.1
 regex==2021.4.4
 rope==0.19.0
-s3transfer==0.3.6
+s3transfer==0.4.2
 six==1.15.0
 sqlparse==0.4.1
 toml==0.10.2

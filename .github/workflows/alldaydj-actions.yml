@@ -11,6 +11,7 @@ env:
   ADDJ_RABBIT_USER: alldaydj
   ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
   PYTHON_VER: 3.9
+  YARN_VER: 14
   ADDJ_CELERY_ALWAYS_EAGER: "True"
   DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
   ADDJ_S3_REGION: dummy-region
@@ -128,7 +129,7 @@ jobs:
       - name: Install NPM
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: ${{ env.YARN_VER }}
       - name: Install yarn packages
         run: yarn install
         working-directory: ./frontend
@@ -283,7 +284,7 @@ jobs:
       - name: Install NPM
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: ${{ env.YARN_VER }}
       - name: Install NPM packages
         working-directory: ./frontend
         run: |

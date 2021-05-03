@@ -116,10 +116,6 @@ class Cart:
         return self.__cue_segue
 
     @property
-    def title(self) -> str:
-        return self.__title
-
-    @property
     def sweeper(self) -> bool:
         return self.__sweeper
 

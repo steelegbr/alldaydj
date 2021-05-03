@@ -21,7 +21,7 @@ Django==3.2
 django-celery-results==2.0.1
 django-colorfield==0.4.1
 django-cors-headers==3.7.0
-django-elasticsearch-dsl==7.1.4
+django-elasticsearch-dsl==7.2.0
 django-elasticsearch-dsl-drf==0.22.1
 django-nine==0.2.4
 django-nose==1.4.7

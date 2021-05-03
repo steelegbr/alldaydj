@@ -283,6 +283,8 @@ jobs:
           docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
       - name: Install NPM
         uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Install NPM packages
         working-directory: ./frontend
         run: |

@@ -73,18 +73,17 @@ async def sync_cart_data(
     existing = await dst_cart_repo.get_by_label(cart.label)
     if not existing:
         return await dst_cart_repo.save_new(cart)
-    else:
 
-        # Work out if/what we need to update
+    # Work out if/what we need to update
 
-        new_dict = dst_cart_repo.cart_to_dictionary(cart)
-        differences = {}
-        for key, value in new_dict.items():
-            if value and not existing[key] == value:
-                differences[key] = value
+    new_dict = dst_cart_repo.cart_to_dictionary(cart)
+    differences = {}
+    for key, value in new_dict.items():
+        if value and not existing[key] == value:
+            differences[key] = value
 
-        if differences:
-            return await dst_cart_repo.update(differences, existing["id"])
+    if differences:
+        return await dst_cart_repo.update(differences, existing["id"])
 
     logger.info(f"No changes required for cart {cart.label}.")
     return False

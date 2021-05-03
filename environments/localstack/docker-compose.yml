@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  alldaydj-localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "8080:8080"
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=eu-west-1
+      - AWS_DEFAULT_REGION=eu-west-1
+      - HOSTNAME_EXTERNAL=localhost
+      - USE_SSL=false
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+      - PORT_WEB_UI=8080
+      - START_WEB=1
+    volumes:
+      - "alldaydj-localstack:/tmp/localstack"
+volumes:
+  alldaydj-localstack:
+  alldaydj-elasticsearch:

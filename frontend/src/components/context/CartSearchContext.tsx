@@ -22,12 +22,9 @@ const noOp = () => {
 const CartSearchContext = React.createContext<CartSearchContextType>({
   search: {
     conditions: {
-      advanced: 'false',
-      artist: '',
       page: '1',
       resultsPerPage: '10',
       search: '',
-      title: '',
     },
     status: 'NotStarted',
   },

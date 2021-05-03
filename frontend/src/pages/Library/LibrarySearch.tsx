@@ -1,12 +1,8 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   createStyles,
-  FormControl, Input, InputAdornment, InputLabel, makeStyles, Theme, Typography,
+  FormControl, Input, InputAdornment, InputLabel, makeStyles, Theme,
 } from '@material-ui/core';
-import { Person, Search, Toc } from '@material-ui/icons';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Search } from '@material-ui/icons';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartSearchConditions } from 'api/models/Search';
@@ -43,24 +39,6 @@ const LibrarySearch = (): React.ReactElement => {
     search.status);
   };
 
-  const updateArtist = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
-    event.preventDefault();
-    updateConditions({
-      ...search.conditions,
-      artist: event.target.value,
-    },
-    search.status);
-  };
-
-  const updateTitle = (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
-    event.preventDefault();
-    updateConditions({
-      ...search.conditions,
-      title: event.target.value,
-    },
-    search.status);
-  };
-
   const performSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
@@ -68,24 +46,20 @@ const LibrarySearch = (): React.ReactElement => {
       return;
     }
 
+    const newConditions = {
+      ...search.conditions,
+      page: '1',
+    };
+
     updateConditions(
-      search.conditions,
+      newConditions,
       'ReadyToSearch',
     );
 
     history.push({
       pathname: Paths.library.search,
-      search: `?${new URLSearchParams(search.conditions).toString()}`,
+      search: `?${new URLSearchParams(newConditions).toString()}`,
     });
-  };
-
-  const toggleAdvanced = () => {
-    const nextAdvancedState = !(search.conditions.advanced === 'true');
-    updateConditions({
-      ...search.conditions,
-      advanced: nextAdvancedState ? 'true' : 'false',
-    },
-    search.status);
   };
 
   return (
@@ -110,49 +84,6 @@ const LibrarySearch = (): React.ReactElement => {
       <LoadingButton color="primary" data-test="button-search" loading={search.status === 'Searching'} type="submit" variant="contained">
         Search
       </LoadingButton>
-      <Accordion expanded={search.conditions.advanced === 'true'} onChange={toggleAdvanced}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
-          <Typography>Advanced Search</Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.formLayout}>
-          <FormControl>
-            <InputLabel htmlFor="artist">
-              Artist:
-            </InputLabel>
-            <Input
-              data-test="input-artist"
-              id="artist"
-              name="artist"
-              onChange={updateArtist}
-              startAdornment={(
-                <InputAdornment position="start">
-                  <Person />
-                </InputAdornment>
-          )}
-              value={search.conditions.artist}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="title">
-              Title:
-            </InputLabel>
-            <Input
-              data-test="input-title"
-              id="title"
-              name="title"
-              onChange={updateTitle}
-              startAdornment={(
-                <InputAdornment position="start">
-                  <Toc />
-                </InputAdornment>
-          )}
-              value={search.conditions.title}
-            />
-          </FormControl>
-        </AccordionDetails>
-      </Accordion>
     </form>
   );
 };

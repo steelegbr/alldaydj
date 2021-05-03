@@ -38,7 +38,7 @@ const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
     updateSearch({
       conditions: {
         ...search.conditions,
-        page: `${newPage}`,
+        page: `${newPage + 1}`,
       },
       status: 'ReadyToSearch',
     });

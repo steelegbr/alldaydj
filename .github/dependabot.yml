@@ -1,7 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: "pip" #
+  - package-ecosystem: "pip"
     directory: "/backend/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "/sync/"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"

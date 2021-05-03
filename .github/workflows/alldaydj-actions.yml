@@ -11,6 +11,7 @@ env:
   ADDJ_RABBIT_USER: alldaydj
   ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
   PYTHON_VER: 3.9
+  YARN_VER: 14
   ADDJ_CELERY_ALWAYS_EAGER: "True"
   DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
   ADDJ_S3_REGION: dummy-region
@@ -127,18 +128,17 @@ jobs:
         uses: actions/checkout@v1
       - name: Install NPM
         uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.YARN_VER }}
       - name: Install yarn packages
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend install
+        run: yarn install
+        working-directory: ./frontend
       - name: ECMA Script Linting
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend lint-ci
+        run: yarn lint-ci
+        working-directory: ./frontend
       - name: Jest Unit Tests
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: --cwd ./frontend test
+        run: yarn test
+        working-directory: ./frontend
   frontend-container:
     needs: react-tests
     runs-on: ubuntu-latest
@@ -283,6 +283,8 @@ jobs:
           docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
       - name: Install NPM
         uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.YARN_VER }}
       - name: Install NPM packages
         working-directory: ./frontend
         run: |

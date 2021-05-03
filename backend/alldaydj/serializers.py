@@ -75,6 +75,7 @@ class CartSerializer(serializers.ModelSerializer):
             "type",
             "hash_audio",
             "hash_compressed",
+            "fade",
         )
 
 

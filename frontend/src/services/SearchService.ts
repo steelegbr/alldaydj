@@ -10,10 +10,7 @@ const parseNumber = (raw: string | null, defaultValue = 1): string => {
 };
 
 export const paramsToSearchConditions = (query: URLSearchParams) : CartSearchConditions => ({
-  advanced: query.get('advanced') || 'false',
   search: query.get('search') || '',
-  artist: query.get('artist') || '',
-  title: query.get('title') || '',
   page: parseNumber(query.get('page')),
   resultsPerPage: parseNumber(query.get('resultsPerPage'), 10),
 });

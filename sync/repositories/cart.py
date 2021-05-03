@@ -207,7 +207,8 @@ class CartRepository:
         """
         pass
 
-    def cart_to_dictionary(self, cart: Cart) -> dict:
+    @staticmethod
+    def cart_to_dictionary(cart: Cart) -> dict:
         """Translates a cart object into a dictionary.
 
         Args:

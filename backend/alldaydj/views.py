@@ -85,7 +85,7 @@ class AudioView(views.APIView):
 
         # Check we have a file uploaded to us
 
-        if not "file" in request.data or not request.data["file"]:
+        if "file" not in request.data or not request.data["file"]:
             return HttpResponseBadRequest(
                 _("You must upload an audio file to process.")
             )

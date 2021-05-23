@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_elasticsearch_dsl",
     "django_elasticsearch_dsl_drf",
+    "django_rest_passwordreset",
     "alldaydj",
 ]
 
@@ -207,3 +208,8 @@ ELASTICSEARCH_DSL = {
 ELASTICSEARCH_INDEX_NAMES = {
     "alldaydj.documents.cart": f"{environ.get('ADDJ_ELASTIC_INDEX', 'alldaydj')}-cart"
 }
+
+# Password Reset
+
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False

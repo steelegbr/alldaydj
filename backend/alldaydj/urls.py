@@ -40,5 +40,9 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("api/audio/<uuid:pk>/", AudioView.as_view(), name="audio"),
+    path(
+        "api/password-reset/",
+        include("django_rest_passwordreset.urls", namespace="password_reset"),
+    ),
     path("api/", include(router.urls)),
 ]

@@ -1,6 +1,6 @@
 # AllDay DJ
 
-Radio playout for the modern, cloud-driven world. This is the API for AllDay DJ, handing media storage, logs, VT, etc.
+Radio playout for the modern, cloud-driven world. The API is Django with DRF. Celery runs asynchronous jobs. The front-end is React with TypeScript.
 
 ![Test and Build](https://github.com/steelegbr/alldaydj/workflows/alldaydj-actions/badge.svg)
 [![DeepSource](https://deepsource.io/gh/steelegbr/alldaydj.svg/?label=active+issues&show_trend=true&token=GaOCuVhfpV_A47FO4RVupPrF)](https://deepsource.io/gh/steelegbr/alldaydj/?ref=repository-badge)

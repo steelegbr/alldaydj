@@ -17,7 +17,7 @@ coverage==5.5
 cryptography==3.4.7
 Cython==0.29.23
 distlib==0.3.1
-Django==3.2.1
+Django==3.2.3
 django-celery-results==2.0.1
 django-colorfield==0.4.1
 django-cors-headers==3.7.0

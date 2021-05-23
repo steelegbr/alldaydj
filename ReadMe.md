@@ -11,7 +11,7 @@ The plan for delivering AllDay DJ in stages:
 
  - [X] JWT auth integration.
  - [ ] Audio library (can store and edit carts).
- - [ ] Search
+ - [X] Search
  - [ ] Log editing.
  - [ ] VT.
  - [ ] Scheduling.
@@ -57,6 +57,13 @@ need the following variables.
  - ADDJ_ELASTIC_SERVER - The elasticsearch server. Defaults to "elasticsearch".
  - ADDJ_ELASTIC_PORT - The elasticsearch server port. Defaults to 9200.
  - ADDJ_ELASTIC_INDEX - The elasticsearch index. Defaults to "alldaydj".
+ - ADDJ_FROM_EMAIL - The e-mail address to send message from.
+ - ADDJ_SMTP_HOST - The SMTP server to send e-mails through.
+ - ADDJ_SMTP_PORT - SMTP port number. Defaults to 25.
+ - ADDJ_SMTP_USERNAME - Username to send e-mails with.
+ - ADDJ_SMTP_PASSWORD - Password to send e-mails with.
+ - ADDJ_SMTP_TLS - Indicates if TLS should be used. Ideally this is TRUE in the modern world...
+ - ADDJ_SMTP_SSL - Indicates if SSL should be used. Ideally this is FALSE in the modern world...
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 

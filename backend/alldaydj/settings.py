@@ -214,4 +214,13 @@ ELASTICSEARCH_INDEX_NAMES = {
 DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
 DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
 PASSWORD_RESET_SUBJECT = "AllDay DJ Password Reset"
-DEFAULT_FROM_EMAIL = "noreply@alldaydj.net"
+
+# E-mail
+
+DEFAULT_FROM_EMAIL = environ.get("ADDJ_FROM_EMAIL", "noreply@alldaydj.net")
+EMAIL_HOST = environ.get("ADDJ_SMTP_HOST", "localhost")
+EMAIL_PORT = int(environ.get("ADDJ_SMTP_PORT", "25"))
+EMAIL_HOST_USER = environ.get("ADDJ_SMTP_USERNAME", "")
+EMAIL_HOST_PASSWORD = environ.get("ADDJ_SMTP_PASSWORD", "")
+EMAIL_USE_TLS = strtobool(environ.get("ADDJ_SMTP_TLS", "False"))
+EMAIL_USE_SSL = strtobool(environ.get("ADDJ_SMTP_SSL", "False"))

@@ -27,7 +27,7 @@ django-nine==0.2.4
 django-nose==1.4.7
 django-storages==1.11.1
 djangorestframework==3.12.4
-djangorestframework-simplejwt==4.6.0
+djangorestframework-simplejwt==4.7.0
 drf-jwt==1.19.1
 elasticsearch==7.12.1
 elasticsearch-dsl==7.3.0

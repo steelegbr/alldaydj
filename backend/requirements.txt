@@ -29,7 +29,7 @@ django-storages==1.11.1
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.0
 drf-jwt==1.19.1
-elasticsearch==7.12.1
+elasticsearch==7.13.0
 elasticsearch-dsl==7.3.0
 ffmpeg-python==0.2.0
 filelock==3.0.12

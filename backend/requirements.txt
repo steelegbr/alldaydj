@@ -12,7 +12,7 @@ certifi==2020.12.5
 cffi==1.14.5
 click==8.0.1
 click-didyoumean==0.0.3
-click-repl==0.1.6
+click-repl==0.2.0
 coverage==5.5
 cryptography==3.4.7
 Cython==0.29.23

@@ -61,7 +61,7 @@ const ForgottenPassword = (): React.ReactElement => {
       <Card>
         <CardContent>
           <h1>Forgotten Password</h1>
-          <Snackbar autoHideDuration={6000} data-test="box-error" open={requestState === 'Complete'}>
+          <Snackbar autoHideDuration={6000} data-test="box-info" open={requestState === 'Complete'}>
             <Alert elevation={6} severity="info" variant="filled">
               If the account exists, an e-mail has been sent to the account.
             </Alert>

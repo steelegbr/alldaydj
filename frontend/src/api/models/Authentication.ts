@@ -15,3 +15,7 @@ export interface ApiRefresh {
 export interface ApiAccess {
   access: string;
 }
+
+export interface ApiForgottenPassword {
+  email: string;
+}

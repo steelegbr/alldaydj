@@ -9,6 +9,7 @@ import StandardWrapper from 'routing/StandardWrapper';
 import Library from 'pages/Library/Library';
 import Logout from 'pages/Authentication/Logout';
 import { CartSearchProvider } from 'components/context/CartSearchContext';
+import ForgottenPassword from 'pages/Authentication/ForgottenPassword';
 
 export default function ApplicationRouter() : React.ReactElement {
   return (
@@ -21,6 +22,11 @@ export default function ApplicationRouter() : React.ReactElement {
       <Route path={Paths.auth.logout}>
         <AuthenticationWrapper>
           <Logout />
+        </AuthenticationWrapper>
+      </Route>
+      <Route path={Paths.auth.forgottenPassword}>
+        <AuthenticationWrapper>
+          <ForgottenPassword />
         </AuthenticationWrapper>
       </Route>
       <PrivateRoute path={Paths.library.search}>

@@ -98,7 +98,7 @@ const ForgottenPassword = (): React.ReactElement => {
           </FormControl>
         </CardContent>
         <CardActions>
-          <LoadingButton arial-label="Login" color="primary" loading={requestState === 'InFlight'} type="submit" variant="contained">
+          <LoadingButton arial-label="Reset" color="primary" loading={requestState === 'InFlight'} type="submit" variant="contained">
             Reset
           </LoadingButton>
           <Button

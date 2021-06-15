@@ -57,9 +57,9 @@ def password_reset_token_created(
 
     render_context = {
         "full_name": reset_password_token.user.get_full_name(),
-        "username": reset_password_token.username,
-        "email": reset_password_token.email,
-        "url": f'{reverse("password_reset:reset-password-request")}?token={reset_password_token.key}',
+        "username": reset_password_token.user.username,
+        "email": reset_password_token.user.email,
+        "url": f"https://{settings.DOMAIN}/password-reset/{reset_password_token.key}",
     }
 
     email_html = render_to_string("email/reset_password.html", render_context)

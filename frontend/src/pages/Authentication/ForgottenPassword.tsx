@@ -99,7 +99,7 @@ const ForgottenPassword = (): React.ReactElement => {
         </CardContent>
         <CardActions>
           <LoadingButton arial-label="Login" color="primary" loading={requestState === 'InFlight'} type="submit" variant="contained">
-            Login
+            Reset
           </LoadingButton>
           <Button
             aria-label="Clear the login form"

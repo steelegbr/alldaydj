@@ -110,7 +110,7 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-DOMAIN = environ.get("ADDJ_USERS_DOMAIN")
+DOMAIN = environ.get("ADDJ_USERS_DOMAIN", "dev.alldaydj.net")
 ALLOWED_HOSTS = [DOMAIN, "localhost", "backend", "frontend"]
 
 # Localisation

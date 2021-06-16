@@ -129,6 +129,7 @@ To make Cypress run on WSL, you'll need to re-point the DISPLAY variable. Add th
     # set DISPLAY variable to the IP automatically assigned to WSL2
     export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
     sudo /etc/init.d/dbus start &> /dev/null
+    npx cypress open
 
 You will also need VcXsrv running on Windows and DBUS passwordless sudo access. Details can be found at https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress
 

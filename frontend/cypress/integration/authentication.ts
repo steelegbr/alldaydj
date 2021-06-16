@@ -38,3 +38,18 @@ describe('Log out screen', () => {
         cy.url().should('eq', 'http://localhost:3000/login/');
     });
 })
+
+describe('Forgotten password', () => {
+    it('Any e-mail appears successful', () => {
+        cy.visit('http://localhost:3000/login/');
+        cy.get('[data-test="button-reset"]').click();
+
+        cy.url().should('eq', 'http://localhost:3000/request-password-reset/');
+        cy.injectAxe();
+        cy.checkA11y();
+
+        cy.get('[data-test="input-email"]').type("user@example.com").type('{enter}');
+
+        cy.get('[data-test="box-info"]').contains('If the account exists');
+    });
+})

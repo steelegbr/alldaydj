@@ -15,3 +15,16 @@ export interface ApiRefresh {
 export interface ApiAccess {
   access: string;
 }
+
+export interface ApiForgottenPassword {
+  email: string;
+}
+
+export interface ApiCheckPasswordResetToken {
+  token: string;
+}
+
+export interface ApiPasswordReset {
+  token: string;
+  password: string;
+}

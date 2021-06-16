@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_elasticsearch_dsl",
     "django_elasticsearch_dsl_drf",
+    "django_rest_passwordreset",
     "alldaydj",
 ]
 
@@ -109,7 +110,8 @@ STATIC_URL = "/static/"
 
 # The hosts we can connect to the application on.
 
-ALLOWED_HOSTS = [environ.get("ADDJ_USERS_DOMAIN"), "localhost", "backend", "frontend"]
+DOMAIN = environ.get("ADDJ_USERS_DOMAIN", "dev.alldaydj.net")
+ALLOWED_HOSTS = [DOMAIN, "localhost", "backend", "frontend"]
 
 # Localisation
 
@@ -207,3 +209,19 @@ ELASTICSEARCH_DSL = {
 ELASTICSEARCH_INDEX_NAMES = {
     "alldaydj.documents.cart": f"{environ.get('ADDJ_ELASTIC_INDEX', 'alldaydj')}-cart"
 }
+
+# Password Reset
+
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = False
+PASSWORD_RESET_SUBJECT = "AllDay DJ Password Reset"
+
+# E-mail
+
+DEFAULT_FROM_EMAIL = environ.get("ADDJ_FROM_EMAIL", "noreply@alldaydj.net")
+EMAIL_HOST = environ.get("ADDJ_SMTP_HOST", "localhost")
+EMAIL_PORT = int(environ.get("ADDJ_SMTP_PORT", "25"))
+EMAIL_HOST_USER = environ.get("ADDJ_SMTP_USERNAME", "")
+EMAIL_HOST_PASSWORD = environ.get("ADDJ_SMTP_PASSWORD", "")
+EMAIL_USE_TLS = strtobool(environ.get("ADDJ_SMTP_TLS", "False"))
+EMAIL_USE_SSL = strtobool(environ.get("ADDJ_SMTP_SSL", "False"))

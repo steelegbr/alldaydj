@@ -1,6 +1,6 @@
 # AllDay DJ
 
-Radio playout for the modern, cloud-driven world. This is the API for AllDay DJ, handing media storage, logs, VT, etc.
+Radio playout for the modern, cloud-driven world. The API is Django with DRF. Celery runs asynchronous jobs. The front-end is React with TypeScript.
 
 ![Test and Build](https://github.com/steelegbr/alldaydj/workflows/alldaydj-actions/badge.svg)
 [![DeepSource](https://deepsource.io/gh/steelegbr/alldaydj.svg/?label=active+issues&show_trend=true&token=GaOCuVhfpV_A47FO4RVupPrF)](https://deepsource.io/gh/steelegbr/alldaydj/?ref=repository-badge)
@@ -11,7 +11,7 @@ The plan for delivering AllDay DJ in stages:
 
  - [X] JWT auth integration.
  - [ ] Audio library (can store and edit carts).
- - [ ] Search
+ - [X] Search
  - [ ] Log editing.
  - [ ] VT.
  - [ ] Scheduling.
@@ -57,6 +57,13 @@ need the following variables.
  - ADDJ_ELASTIC_SERVER - The elasticsearch server. Defaults to "elasticsearch".
  - ADDJ_ELASTIC_PORT - The elasticsearch server port. Defaults to 9200.
  - ADDJ_ELASTIC_INDEX - The elasticsearch index. Defaults to "alldaydj".
+ - ADDJ_FROM_EMAIL - The e-mail address to send message from.
+ - ADDJ_SMTP_HOST - The SMTP server to send e-mails through.
+ - ADDJ_SMTP_PORT - SMTP port number. Defaults to 25.
+ - ADDJ_SMTP_USERNAME - Username to send e-mails with.
+ - ADDJ_SMTP_PASSWORD - Password to send e-mails with.
+ - ADDJ_SMTP_TLS - Indicates if TLS should be used. Ideally this is TRUE in the modern world...
+ - ADDJ_SMTP_SSL - Indicates if SSL should be used. Ideally this is FALSE in the modern world...
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
@@ -122,5 +129,13 @@ To make Cypress run on WSL, you'll need to re-point the DISPLAY variable. Add th
     # set DISPLAY variable to the IP automatically assigned to WSL2
     export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
     sudo /etc/init.d/dbus start &> /dev/null
+    npx cypress open
 
 You will also need VcXsrv running on Windows and DBUS passwordless sudo access. Details can be found at https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress
+
+## FakeSMTP
+
+A fake SMTP server [can be downloaded|http://nilhcem.com/FakeSMTP/] and run locally.
+
+    export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+    sudo java -jar fakeSMTP-2.0.jar

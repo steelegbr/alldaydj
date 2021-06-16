@@ -130,6 +130,10 @@ export default function Login(): React.ReactElement {
     );
   }
 
+  function forgottenPassword() {
+    history.push(Paths.auth.forgottenPassword);
+  }
+
   function emailInput() {
     return (
       <FormControl fullWidth>
@@ -213,6 +217,13 @@ export default function Login(): React.ReactElement {
             variant="contained"
           >
             Clear
+          </Button>
+          <Button
+            aria-label="Request a password reset"
+            data-test="button-reset"
+            onClick={forgottenPassword}
+          >
+            Forgotten Password?
           </Button>
         </CardActions>
       </Card>

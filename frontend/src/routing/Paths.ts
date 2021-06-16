@@ -3,6 +3,8 @@ const Paths = {
   auth: {
     login: '/login/',
     logout: '/logout/',
+    forgottenPassword: '/request-password-reset/',
+    passwordReset: '/password-reset/',
   },
   library: {
     search: '/library/',

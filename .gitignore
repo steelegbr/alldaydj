@@ -10,3 +10,5 @@ coverage.xml
 *.env
 node_modules
 sync.log
+**/cypress/**/*.png
+**/cypress/**/*.mp4

@@ -135,7 +135,7 @@ You will also need VcXsrv running on Windows and DBUS passwordless sudo access. 
 
 ## FakeSMTP
 
-A fake SMTP server [can be downloaded|http://nilhcem.com/FakeSMTP/] and run locally.
+A fake SMTP server [can be downloaded](http://nilhcem.com/FakeSMTP/) and run locally.
 
     export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
     sudo java -jar fakeSMTP-2.0.jar

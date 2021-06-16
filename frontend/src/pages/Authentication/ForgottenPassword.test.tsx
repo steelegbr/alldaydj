@@ -66,29 +66,4 @@ describe('forgotten password', () => {
       email: 'user@example.com',
     });
   });
-
-  it('bad request renders error box', async () => {
-    const component = getComponent();
-    const resetRequest = Promise.reject(new Error('Whoops!'));
-    mockForgottenPassword.mockReturnValue(resetRequest);
-
-    const emailInput = component.find("[data-test='input-email']").find('input');
-    emailInput.simulate('change', { target: { value: 'user@example.com' } });
-    component.update();
-
-    const resetForm = component.find("form[data-test='form-reset']");
-    resetForm.simulate('submit');
-
-    await act(async () => {
-      await resetRequest;
-    });
-
-    component.update();
-
-    const errorBox = component.find("[data-test='box-error']").last();
-    expect(errorBox.getDOMNode().textContent).toContain('Login failed.');
-    expect(mockForgottenPassword).toBeCalledWith({
-      email: 'user@example.com',
-    });
-  });
 });

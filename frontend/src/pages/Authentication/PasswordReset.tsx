@@ -171,7 +171,7 @@ const PasswordReset = (): React.ReactElement => {
     <Card>
       <CardContent>
         <h1>Reset Password</h1>
-        <p>
+        <p data-test="message-error">
           Unfortunately, your password reset token has expired.
         </p>
       </CardContent>
@@ -193,7 +193,7 @@ const PasswordReset = (): React.ReactElement => {
     <Card>
       <CardContent>
         <h1>Reset Password</h1>
-        <p>
+        <p data-test="message-success">
           Password reset successful.
         </p>
       </CardContent>
@@ -215,7 +215,7 @@ const PasswordReset = (): React.ReactElement => {
     <Card>
       <CardContent>
         <h1>Reset Password</h1>
-        <p>
+        <p data-test="message-error">
           Unfortunately something went wrong with the password reset.
         </p>
       </CardContent>

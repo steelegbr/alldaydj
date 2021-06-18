@@ -7,7 +7,7 @@ billiard==3.6.4.0
 black==21.6b0
 boto3==1.17.95
 botocore==1.20.96
-celery==4.4.6
+celery==5.1.1
 certifi==2021.5.30
 cffi==1.14.5
 click==8.0.1

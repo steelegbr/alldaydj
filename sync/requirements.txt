@@ -9,7 +9,7 @@ mypy-extensions==0.4.3
 pathspec==0.8.1
 PyJWT==2.1.0
 pyodbc==4.0.30
-regex==2021.4.4
+regex==2021.7.1
 requests==2.25.1
 SQLAlchemy==1.4.20
 toml==0.10.2

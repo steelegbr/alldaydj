@@ -328,9 +328,9 @@ exports[`library table row renders single result 1`] = `
                 <ForwardRef(Collapse)
                   classes={
                     Object {
-                      "container": "MuiCollapse-container",
                       "entered": "MuiCollapse-entered",
                       "hidden": "MuiCollapse-hidden",
+                      "root": "MuiCollapse-root",
                       "wrapper": "MuiCollapse-wrapper",
                       "wrapperInner": "MuiCollapse-wrapperInner",
                     }
@@ -694,9 +694,9 @@ exports[`library table row renders single result expanded 1`] = `
                 <ForwardRef(Collapse)
                   classes={
                     Object {
-                      "container": "MuiCollapse-container",
                       "entered": "MuiCollapse-entered",
                       "hidden": "MuiCollapse-hidden",
+                      "root": "MuiCollapse-root",
                       "wrapper": "MuiCollapse-wrapper",
                       "wrapperInner": "MuiCollapse-wrapperInner",
                     }
@@ -722,7 +722,7 @@ exports[`library table row renders single result expanded 1`] = `
                     unmountOnExit={true}
                   >
                     <div
-                      className="MuiCollapse-container"
+                      className="MuiCollapse-root"
                       style={
                         Object {
                           "minHeight": "0px",

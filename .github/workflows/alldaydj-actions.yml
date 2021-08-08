@@ -50,6 +50,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Python ${{ env.PYTHON_VER }}
         uses: actions/setup-python@v1
         with:
@@ -84,6 +87,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
       - name: Login to DockerHub
@@ -126,6 +132,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install NPM
         uses: actions/setup-node@v2
         with:
@@ -145,6 +154,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
       - name: Login to DockerHub
@@ -187,6 +199,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
       - name: Login to DockerHub
@@ -276,6 +291,9 @@ jobs:
     steps:
       - name: Checkout the commit
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup the superuser
         run: |
           RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "backend" {print $1}'`

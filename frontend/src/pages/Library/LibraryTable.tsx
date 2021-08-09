@@ -95,8 +95,8 @@ const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
       <TablePagination
         component="div"
         count={results.count}
-        onChangePage={changePage}
         onChangeRowsPerPage={changeResultsPerPage}
+        onPageChange={changePage}
         page={page - 1}
         rowsPerPage={resultsPerPage}
         rowsPerPageOptions={[5, 10, 25]}

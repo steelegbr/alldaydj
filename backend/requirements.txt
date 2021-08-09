@@ -64,7 +64,7 @@ typing-extensions==3.10.0.0
 Unidecode==1.2.0
 urllib3==1.26.6
 vine==1.3.0
-virtualenv==20.4.7
+virtualenv==20.7.0
 wave-chunk-parser==1.0.4
 wcwidth==0.2.5
 wrapt==1.12.1

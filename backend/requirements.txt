@@ -31,7 +31,7 @@ djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.1
 drf-jwt==1.19.1
 elasticsearch==7.14.0
-elasticsearch-dsl==7.3.0
+elasticsearch-dsl==7.4.0
 ffmpeg-python==0.2.0
 filelock==3.0.12
 future==0.18.2

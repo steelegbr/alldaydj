@@ -20,7 +20,7 @@ distlib==0.3.2
 Django==3.2.6
 django-celery-results==2.0.1
 django-colorfield==0.4.2
-django-cors-headers==3.7.0
+django-cors-headers==3.8.0
 django-elasticsearch-dsl==7.2.0
 django-elasticsearch-dsl-drf==0.22.1
 django-nine==0.2.4

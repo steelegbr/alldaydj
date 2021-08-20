@@ -8,7 +8,7 @@ idna==3.2
 mypy-extensions==0.4.3
 pathspec==0.9.0
 PyJWT==2.1.0
-pyodbc==4.0.31
+pyodbc==4.0.32
 regex==2021.8.3
 requests==2.26.0
 SQLAlchemy==1.4.23

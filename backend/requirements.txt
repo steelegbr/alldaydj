@@ -14,7 +14,7 @@ click==8.0.1
 click-didyoumean==0.0.3
 click-repl==0.2.0
 coverage==5.5
-cryptography==3.4.7
+cryptography==3.4.8
 Cython==0.29.24
 distlib==0.3.2
 Django==3.2.6

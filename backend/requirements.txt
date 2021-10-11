@@ -8,7 +8,7 @@ black==21.9b0
 boto3==1.18.58
 botocore==1.21.58
 celery==4.4.6
-certifi==2021.5.30
+certifi==2021.10.8
 cffi==1.14.6
 click==8.0.1
 click-didyoumean==0.0.3

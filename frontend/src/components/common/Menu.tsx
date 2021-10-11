@@ -143,7 +143,7 @@ const Menu = (): React.ReactElement => {
   function headerToolbar() {
     return (
       <Toolbar>
-        <Grid alignItems="center" container justify="space-between">
+        <Grid alignItems="center" container justifyContent="space-between">
           {menuToggleButton()}
           {menuHeader()}
           {menuDarkModeToggle()}

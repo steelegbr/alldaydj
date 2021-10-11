@@ -30,7 +30,7 @@ import {
 } from '@material-ui/core';
 import { Email, Lock } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { userLogin } from 'api/requests/Authentication';
 import LoadingButton from 'components/common/LoadingButton';
@@ -60,97 +60,118 @@ export default function Login(): React.ReactElement {
   });
   const disableButtons = loginStatus.progress === 'InProgress';
 
-  function setEmail(email: string) {
-    setLoginStatus({
-      ...loginStatus,
-      errorEmail: undefined,
-      email,
-    });
-  }
+  const setEmail = useCallback(
+    (email: string) => {
+      setLoginStatus({
+        ...loginStatus,
+        errorEmail: undefined,
+        email,
+      });
+    },
+    [loginStatus, setLoginStatus],
+  );
 
-  function setPassword(password: string) {
-    setLoginStatus({
-      ...loginStatus,
-      errorPassword: undefined,
-      password,
-    });
-  }
+  const setPassword = useCallback(
+    (password: string) => {
+      setLoginStatus({
+        ...loginStatus,
+        errorPassword: undefined,
+        password,
+      });
+    },
+    [loginStatus, setLoginStatus],
+  );
 
-  function clearForm() {
-    setLoginStatus({
-      progress: 'Idle',
-      email: '',
-      password: '',
-      errorEmail: undefined,
-      errorPassword: undefined,
-    });
-    log.info('Cleared the login form');
-  }
+  const clearForm = useCallback(
+    () => {
+      setLoginStatus({
+        progress: 'Idle',
+        email: '',
+        password: '',
+        errorEmail: undefined,
+        errorPassword: undefined,
+      });
+      log.info('Cleared the login form');
+    },
+    [setLoginStatus, log],
+  );
 
-  function doSetEmail(event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
-    setEmail(event.target.value);
-  }
+  const doSetEmail = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+      setEmail(event.target.value);
+    },
+    [setEmail],
+  );
 
-  function doSetPassword(event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) {
-    setPassword(event.target.value);
-  }
+  const doSetPassword = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+      setPassword(event.target.value);
+    },
+    [setPassword],
+  );
 
-  function attemptLogin(event: React.SyntheticEvent) {
-    event.preventDefault();
+  const attemptLogin = useCallback(
+    (event: React.SyntheticEvent) => {
+      event.preventDefault();
 
-    const newLoginStatus: LoginStatus = {
-      progress: 'InProgress',
-      email: loginStatus.email,
-      password: loginStatus.password,
-    };
+      const newLoginStatus: LoginStatus = {
+        progress: 'InProgress',
+        email: loginStatus.email,
+        password: loginStatus.password,
+      };
 
-    log.info('Starting login validation.');
+      log.info('Starting login validation.');
 
-    let errors = false;
+      let errors = false;
 
-    if (!loginStatus.email) {
-      newLoginStatus.errorEmail = 'You must supply a username';
-      errors = true;
-    }
+      if (!loginStatus.email) {
+        newLoginStatus.errorEmail = 'You must supply a username';
+        errors = true;
+      }
 
-    if (!loginStatus.password) {
-      newLoginStatus.errorPassword = 'You must supply a password';
-      errors = true;
-    }
+      if (!loginStatus.password) {
+        newLoginStatus.errorPassword = 'You must supply a password';
+        errors = true;
+      }
 
-    if (errors) {
-      newLoginStatus.progress = 'Idle';
+      if (errors) {
+        newLoginStatus.progress = 'Idle';
+        setLoginStatus(newLoginStatus);
+        log.error('Login validation failed!');
+        return;
+      }
+
+      log.info('Login validation complete.');
       setLoginStatus(newLoginStatus);
-      log.error('Login validation failed!');
-      return;
-    }
 
-    log.info('Login validation complete.');
-    setLoginStatus(newLoginStatus);
+      userLogin({
+        username: newLoginStatus.email,
+        password: newLoginStatus.password,
+      }).then(
+        (result) => {
+          log.info('User login success!');
+          const user = loginUser(result.data.refresh, result.data.access);
+          authenticationContext?.setAuthenticationStatus(user);
+          history.push(Paths.base);
+        },
+        (error) => {
+          log.warn(`User login failed - ${error}`);
+          setLoginStatus({
+            ...newLoginStatus,
+            progress: 'Error',
+          });
+        },
+      );
+    },
+    [authenticationContext, history, log, loginStatus],
+  );
 
-    userLogin({
-      username: newLoginStatus.email,
-      password: newLoginStatus.password,
-    }).then(
-      (result) => {
-        log.info('User login success!');
-        const user = loginUser(result.data.refresh, result.data.access);
-        authenticationContext?.setAuthenticationStatus(user);
-        history.push(Paths.base);
-      },
-      (error) => {
-        log.warn(`User login failed - ${error}`);
-        setLoginStatus({
-          ...newLoginStatus,
-          progress: 'Error',
-        });
-      },
-    );
-  }
-
-  function forgottenPassword() {
-    history.push(Paths.auth.forgottenPassword);
-  }
+  const forgottenPassword = useCallback(
+    () => {
+      history.push(Paths.auth.forgottenPassword);
+    },
+    [history],
+  );
 
   function emailInput() {
     return (

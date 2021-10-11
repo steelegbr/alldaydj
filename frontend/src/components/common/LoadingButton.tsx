@@ -46,7 +46,7 @@ const LoadingButton = (props : LoadingButtonProps & ButtonProps): React.ReactEle
 
   return (
     <Box className={classes.wrapper}>
-      <Button disabled={loading} {...props} />
+      <Button disabled={loading ? true : undefined} {...props} />
       {loading && (
         <CircularProgress className={classes.loadingSpinner} size={24} />
       )}

@@ -90,7 +90,7 @@ exports[`main menu snapshot 1`] = `
                     <WithStyles(ForwardRef(Grid))
                       alignItems="center"
                       container={true}
-                      justify="space-between"
+                      justifyContent="space-between"
                     >
                       <ForwardRef(Grid)
                         alignItems="center"
@@ -202,7 +202,7 @@ exports[`main menu snapshot 1`] = `
                           }
                         }
                         container={true}
-                        justify="space-between"
+                        justifyContent="space-between"
                       >
                         <div
                           className="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
@@ -2511,7 +2511,7 @@ exports[`main menu snapshot menu opened 1`] = `
                     <WithStyles(ForwardRef(Grid))
                       alignItems="center"
                       container={true}
-                      justify="space-between"
+                      justifyContent="space-between"
                     >
                       <ForwardRef(Grid)
                         alignItems="center"
@@ -2623,7 +2623,7 @@ exports[`main menu snapshot menu opened 1`] = `
                           }
                         }
                         container={true}
-                        justify="space-between"
+                        justifyContent="space-between"
                       >
                         <div
                           className="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"

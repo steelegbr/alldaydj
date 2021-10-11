@@ -8,12 +8,12 @@ black==21.9b0
 boto3==1.18.58
 botocore==1.21.58
 celery==4.4.6
-certifi==2021.5.30
+certifi==2021.10.8
 cffi==1.14.6
-click==8.0.1
+click==8.0.3
 click-didyoumean==0.0.3
 click-repl==0.2.0
-coverage==5.5
+coverage==6.0.1
 cryptography==3.4.8
 Cython==0.29.24
 distlib==0.3.2
@@ -54,7 +54,7 @@ python-dateutil==2.8.2
 python-magic==0.4.24
 pytz==2021.1
 regex==2021.10.8
-rope==0.19.0
+rope==0.20.1
 s3transfer==0.5.0
 six==1.16.0
 sqlparse==0.4.2

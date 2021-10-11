@@ -14,5 +14,5 @@ requests==2.26.0
 SQLAlchemy==1.4.25
 toml==0.10.2
 typed-ast==1.4.3
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.2
 urllib3==1.26.7

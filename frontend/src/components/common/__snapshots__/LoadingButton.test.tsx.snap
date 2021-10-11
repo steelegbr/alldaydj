@@ -11,7 +11,6 @@ exports[`loading button idle state 1`] = `
       className="MuiBox-root MuiBox-root-3 makeStyles-wrapper-1"
     >
       <WithStyles(ForwardRef(Button))
-        disabled={false}
         loading={false}
       >
         <ForwardRef(Button)
@@ -48,7 +47,6 @@ exports[`loading button idle state 1`] = `
               "textSizeSmall": "MuiButton-textSizeSmall",
             }
           }
-          disabled={false}
           loading={false}
         >
           <WithStyles(ForwardRef(ButtonBase))

@@ -32,7 +32,7 @@ import {
 } from '@material-ui/core';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { isAuthenticated } from 'services/AuthenticationService';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import { ThemeContext } from 'components/context/ThemeContext';
@@ -77,19 +77,25 @@ const Menu = (): React.ReactElement => {
   const container = window.document.body;
   const darkMode = themeContext?.themeSettings.darkMode;
 
-  function handleMenuToggle() {
-    setMenuOpen(!menuOpen);
-  }
+  const handleMenuToggle = useCallback(
+    () => {
+      setMenuOpen(!menuOpen);
+    },
+    [menuOpen],
+  );
 
-  function handleDarkModeToggle() {
-    if (themeContext) {
-      const newThemeSettings = {
-        ...themeContext.themeSettings,
-        darkMode: !darkMode,
-      };
-      themeContext.setThemeSettings(newThemeSettings);
-    }
-  }
+  const handleDarkModeToggle = useCallback(
+    () => {
+      if (themeContext) {
+        const newThemeSettings = {
+          ...themeContext.themeSettings,
+          darkMode: !darkMode,
+        };
+        themeContext.setThemeSettings(newThemeSettings);
+      }
+    },
+    [themeContext, darkMode],
+  );
 
   function menuToggleButton() {
     return (

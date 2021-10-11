@@ -5,7 +5,7 @@ asgiref==3.4.1
 astroid==2.5.6
 billiard==3.6.4.0
 black==21.9b0
-boto3==1.18.28
+boto3==1.18.58
 botocore==1.21.58
 celery==4.4.6
 certifi==2021.5.30
@@ -54,10 +54,10 @@ python-dateutil==2.8.2
 python-magic==0.4.24
 pytz==2021.1
 regex==2021.10.8
-rope==0.19.0
+rope==0.20.1
 s3transfer==0.5.0
 six==1.16.0
-sqlparse==0.4.1
+sqlparse==0.4.2
 toml==0.10.2
 typed-ast==1.4.3
 typing-extensions==3.10.0.2

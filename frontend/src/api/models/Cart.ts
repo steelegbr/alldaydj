@@ -16,28 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import {
-  createStyles, CssBaseline, makeStyles, Theme,
-} from '@material-ui/core';
-import PreviewPlayer from 'components/audio/PreviewPlayer';
-import React from 'react';
-import Menu from '../components/common/Menu';
-import ApplicationRouter from '../routing/ApplicationRouter';
+export interface Cart {
+    title: string;
+    display_artist: string,
+    cue_audio_start: Number,
+    cue_audio_end: Number,
+    cue_intro_start: Number,
+    cue_intro_end: Number,
+    cue_segue: Number
+}
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  toolbar: theme.mixins.toolbar,
-}));
-
-export default function Layout() : React.ReactElement {
-  const classes = useStyles();
-
-  return (
-    <div>
-      <CssBaseline />
-      <Menu />
-      <div className={classes.toolbar} />
-      <ApplicationRouter />
-      <PreviewPlayer />
-    </div>
-  );
+export interface CartAudio {
+    audio: string;
+    compressed: string;
+    hash_audio: string;
+    hash_compressed: string;
 }

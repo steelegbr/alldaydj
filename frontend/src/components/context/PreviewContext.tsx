@@ -18,11 +18,12 @@
 
 import React from 'react';
 
-export type PreviewCartId = String | undefined;
+export type PreviewCartId = string | undefined;
 
 export interface PreviewContextType {
     cartId: PreviewCartId;
     setCartId: React.Dispatch<React.SetStateAction<PreviewCartId>>;
+    clearCart: Function;
 }
 
 const noOp = () => {
@@ -32,6 +33,7 @@ const noOp = () => {
 export const PreviewContext = React.createContext<PreviewContextType>({
   cartId: undefined,
   setCartId: noOp,
+  clearCart: noOp,
 });
 
 export interface PreviewProviderProps {
@@ -40,8 +42,12 @@ export interface PreviewProviderProps {
 
 export const PreviewProvider = ({ children }: PreviewProviderProps): React.ReactElement => {
   const [cartId, setCartId] = React.useState<PreviewCartId>();
+  const clearCart = () => {
+    setCartId(undefined);
+  };
+
   return (
-    <PreviewContext.Provider value={{ cartId, setCartId }}>
+    <PreviewContext.Provider value={{ cartId, setCartId, clearCart }}>
       {children}
     </PreviewContext.Provider>
   );

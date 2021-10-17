@@ -24,6 +24,7 @@ import {
 } from '@material-ui/icons';
 import React from 'react';
 import { CartSearchResult } from 'api/models/Search';
+import { PreviewContext } from 'components/context/PreviewContext';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -42,6 +43,15 @@ interface TableRowProps {
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const { setCartId } = React.useContext(PreviewContext);
+  const cartId = result.id;
+
+  const previewCart = React.useCallback(
+    () => {
+      setCartId(cartId);
+    },
+    [cartId, setCartId],
+  );
 
   return (
     <>
@@ -59,7 +69,7 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
         <TableCell className={classes.collapsedRow} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box className={classes.collapsedBox}>
-              <Button aria-controls="preview audio">
+              <Button aria-controls="preview audio" onClick={previewCart}>
                 <PlayArrow />
                 {' '}
                 Preview Cart

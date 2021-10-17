@@ -17,9 +17,12 @@
 */
 
 import {
-  createStyles, Divider, List, ListItem, ListItemIcon, ListItemText, makeStyles, Theme,
-} from '@material-ui/core';
-import { ExitToApp, LibraryMusic } from '@material-ui/icons';
+  Divider, List, ListItem, ListItemIcon, ListItemText,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Theme } from '@mui/material/styles';
+import { ExitToApp, LibraryMusic } from '@mui/icons-material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Paths from 'routing/Paths';

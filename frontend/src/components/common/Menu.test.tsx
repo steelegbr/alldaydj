@@ -20,8 +20,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Menu from 'components/common/Menu';
 import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const mockSetAuthStatus = jest.fn();
+const theme = createTheme();
 
 describe('main menu', () => {
   const mountComponent = () => {
@@ -33,7 +35,9 @@ describe('main menu', () => {
     };
     return mount(
       <AuthenticationContext.Provider value={contextValue}>
-        <Menu />
+        <ThemeProvider theme={theme}>
+          <Menu />
+        </ThemeProvider>
       </AuthenticationContext.Provider>,
     );
   };

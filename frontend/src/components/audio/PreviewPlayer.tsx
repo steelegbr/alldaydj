@@ -4,17 +4,17 @@ import {
   Button,
   ButtonGroup,
   CircularProgress,
-  createStyles,
   Grid,
-  makeStyles,
   Slider,
   SwipeableDrawer,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { getLogger } from 'services/LoggingService';
 import {
   Close, Pause, PlayArrow, Stop,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { getCartAudio, getCartDetails } from 'api/requests/Cart';
 import { Cart, CartAudio } from 'api/models/Cart';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
@@ -180,7 +180,7 @@ const PreviewPlayer = () : React.ReactElement => {
   };
 
   const errorMessage = () => {
-    <Grid alignItems="center" container justifyContent="center">
+    <Grid alignItems="center" container justifyContent="space-between">
       <Grid item>
         <span>Something went wrong trying to preview cart audio. Please try again later.</span>
       </Grid>

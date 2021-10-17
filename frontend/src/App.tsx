@@ -20,26 +20,29 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Layout from 'pages/Layout';
 import AuthenticationProvider from 'components/context/AuthenticationContext';
-import { ThemeProvider } from 'components/context/ThemeContext';
+import { AppThemeProvider } from 'components/context/ThemeContext';
 import { PreviewProvider } from 'components/context/PreviewContext';
+import { StyledEngineProvider, Theme } from '@mui/material/styles';
 
-function appWithBrowser() {
-  return (
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-  );
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  // eslint-disable-next-line no-unused-vars
+  interface DefaultTheme extends Theme {}
 }
 
 function App(): React.ReactElement {
   return (
-    <ThemeProvider>
-      <AuthenticationProvider>
-        <PreviewProvider>
-          {appWithBrowser()}
-        </PreviewProvider>
-      </AuthenticationProvider>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <AppThemeProvider>
+        <AuthenticationProvider>
+          <PreviewProvider>
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </PreviewProvider>
+        </AuthenticationProvider>
+      </AppThemeProvider>
+    </StyledEngineProvider>
   );
 }
 

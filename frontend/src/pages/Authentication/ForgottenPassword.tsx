@@ -17,14 +17,14 @@
 */
 
 import {
+  Alert,
   Button,
   Card,
   CardActions,
   CardContent,
   FormControl, FormHelperText, Input, InputAdornment, InputLabel, Snackbar,
-} from '@material-ui/core';
-import { Email } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Email } from '@mui/icons-material';
 import { forgottenPassword } from 'api/requests/Authentication';
 import LoadingButton from 'components/common/LoadingButton';
 import React from 'react';
@@ -92,7 +92,7 @@ const ForgottenPassword = (): React.ReactElement => {
           <p>
             Please enter the e-mail address of the account you have forgotten the password for.
           </p>
-          <FormControl fullWidth>
+          <FormControl fullWidth variant="standard">
             <InputLabel htmlFor="email">
               Username (e-mail):
             </InputLabel>

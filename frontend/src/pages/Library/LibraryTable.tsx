@@ -25,7 +25,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartSearchResults } from 'api/models/Search';
@@ -95,8 +95,8 @@ const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
       <TablePagination
         component="div"
         count={results.count}
-        onChangeRowsPerPage={changeResultsPerPage}
         onPageChange={changePage}
+        onRowsPerPageChange={changeResultsPerPage}
         page={page - 1}
         rowsPerPage={resultsPerPage}
         rowsPerPageOptions={[5, 10, 25]}

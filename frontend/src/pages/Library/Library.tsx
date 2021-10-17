@@ -16,8 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Snackbar, Typography } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Alert, Snackbar, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { CartSearchResults } from 'api/models/Search';
 import { cartSearch } from 'api/requests/Search';

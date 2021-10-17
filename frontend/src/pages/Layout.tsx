@@ -16,9 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import {
-  createStyles, CssBaseline, makeStyles, Theme,
-} from '@material-ui/core';
+import { CssBaseline } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Theme } from '@mui/material/styles';
 import PreviewPlayer from 'components/audio/PreviewPlayer';
 import React from 'react';
 import Menu from '../components/common/Menu';
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 export default function Layout() : React.ReactElement {
   const classes = useStyles();
-
   return (
     <div>
       <CssBaseline />

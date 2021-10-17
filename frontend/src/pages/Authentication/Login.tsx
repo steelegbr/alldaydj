@@ -17,6 +17,7 @@
 */
 
 import {
+  Alert,
   Card,
   CardContent,
   FormControl,
@@ -27,9 +28,10 @@ import {
   CardActions,
   FormHelperText,
   Snackbar,
-} from '@material-ui/core';
-import { Email, Lock } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Email, Lock } from '@mui/icons-material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { userLogin } from 'api/requests/Authentication';
@@ -49,9 +51,16 @@ interface LoginStatus {
   password: string;
 }
 
+const useStyles = makeStyles(() => createStyles({
+  loginButton: {
+    marginRight: 10,
+  },
+}));
+
 export default function Login(): React.ReactElement {
   const log = getLogger();
   const history = useHistory();
+  const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
   const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
     progress: 'Idle',
@@ -175,7 +184,7 @@ export default function Login(): React.ReactElement {
 
   function emailInput() {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="email">
           Username (e-mail):
         </InputLabel>
@@ -183,6 +192,7 @@ export default function Login(): React.ReactElement {
           data-test="input-email"
           error={loginStatus.errorEmail !== undefined}
           id="email"
+          margin="none"
           onChange={doSetEmail}
           startAdornment={(
             <InputAdornment position="start">
@@ -203,7 +213,7 @@ export default function Login(): React.ReactElement {
 
   function passwordInput() {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="password">
           Password:
         </InputLabel>
@@ -211,6 +221,7 @@ export default function Login(): React.ReactElement {
           data-test="input-password"
           error={loginStatus.errorPassword !== undefined}
           id="password"
+          margin="none"
           onChange={doSetPassword}
           startAdornment={(
             <InputAdornment position="start">
@@ -244,7 +255,7 @@ export default function Login(): React.ReactElement {
           {passwordInput()}
         </CardContent>
         <CardActions>
-          <LoadingButton arial-label="Login" color="primary" loading={disableButtons} type="submit" variant="contained">
+          <LoadingButton arial-label="Login" className={classes.loginButton} color="primary" loading={disableButtons} type="submit" variant="contained">
             Login
           </LoadingButton>
           <Button

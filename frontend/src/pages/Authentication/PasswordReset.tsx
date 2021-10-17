@@ -27,8 +27,8 @@ import {
   InputAdornment,
   InputLabel,
   LinearProgress,
-} from '@material-ui/core';
-import { Lock } from '@material-ui/icons';
+} from '@mui/material';
+import { Lock } from '@mui/icons-material';
 import { passwordReset, testPasswordResetToken } from 'api/requests/Authentication';
 import LoadingButton from 'components/common/LoadingButton';
 import React from 'react';

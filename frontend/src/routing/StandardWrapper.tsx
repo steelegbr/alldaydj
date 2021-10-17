@@ -17,17 +17,17 @@
 */
 
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles(() => createStyles({
   content: {
-    [theme.breakpoints.up('sm')]: {
-      left: drawerWidth,
-      width: `calc(100vw - ${drawerWidth}px)`,
-      position: 'relative',
-    },
+    left: drawerWidth,
+    width: `calc(100vw - ${drawerWidth}px)`,
+    position: 'relative',
     padding: 10,
   },
 }));

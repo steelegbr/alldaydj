@@ -20,9 +20,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import MenuContents from 'components/common/MenuContents';
 import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const mockPush = jest.fn();
 const mockSetAuthStatus = jest.fn();
+const theme = createTheme();
 
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({
@@ -40,7 +42,9 @@ describe('menu contents', () => {
     };
     return mount(
       <AuthenticationContext.Provider value={contextValue}>
-        <MenuContents />
+        <ThemeProvider theme={theme}>
+          <MenuContents />
+        </ThemeProvider>
       </AuthenticationContext.Provider>,
     );
   };

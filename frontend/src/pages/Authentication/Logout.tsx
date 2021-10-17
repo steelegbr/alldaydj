@@ -18,7 +18,7 @@
 
 import {
   Button, Card, CardActions, CardContent, Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';

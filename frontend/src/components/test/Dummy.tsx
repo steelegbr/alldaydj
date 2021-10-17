@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import React from 'react';
 
 const Dummy = (): React.ReactElement => (

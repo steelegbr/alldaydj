@@ -17,11 +17,13 @@
 */
 
 import {
-  Button, Collapse, IconButton, TableCell, TableRow, makeStyles, createStyles, Box,
-} from '@material-ui/core';
+  Button, Collapse, IconButton, TableCell, TableRow, Box,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
   GetApp, KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import React from 'react';
 import { CartSearchResult } from 'api/models/Search';
 import { PreviewContext } from 'components/context/PreviewContext';

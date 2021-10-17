@@ -21,6 +21,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Layout from 'pages/Layout';
 import AuthenticationProvider from 'components/context/AuthenticationContext';
 import { ThemeProvider } from 'components/context/ThemeContext';
+import { PreviewProvider } from 'components/context/PreviewContext';
 
 function appWithBrowser() {
   return (
@@ -34,7 +35,9 @@ function App(): React.ReactElement {
   return (
     <ThemeProvider>
       <AuthenticationProvider>
-        {appWithBrowser()}
+        <PreviewProvider>
+          {appWithBrowser()}
+        </PreviewProvider>
       </AuthenticationProvider>
     </ThemeProvider>
   );

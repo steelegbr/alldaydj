@@ -16,19 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export interface Cart {
-    title: string;
-    display_artist: string,
-    cue_audio_start: number,
-    cue_audio_end: number,
-    cue_intro_start: number,
-    cue_intro_end: number,
-    cue_segue: number
-}
+/* eslint-disable import/prefer-default-export */
 
-export interface CartAudio {
-    audio: string;
-    compressed: string;
-    hash_audio: string;
-    hash_compressed: string;
-}
+import { Duration } from 'luxon';
+
+export const millisecondToMinutesSecond = (milliseconds: number) => {
+  const msObj = Duration.fromObject({ milliseconds });
+  return msObj.shiftTo('minutes', 'seconds').toFormat('m:ss');
+};

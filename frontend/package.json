@@ -82,5 +82,6 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
-  }
+  },
+  "license": "GPL-3.0"
 }

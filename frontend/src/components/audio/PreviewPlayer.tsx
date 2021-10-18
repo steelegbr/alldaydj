@@ -82,6 +82,7 @@ const PreviewPlayer = () : React.ReactElement => {
     setPlayerState('Playing');
   };
 
+  // skipcq: JS-0323
   const scrubAction = (event: any, position: number | number [], thumb: number) => {
     getLogger().debug(`Scrubbing thumb number: ${thumb}`);
     setScrubbing(true);

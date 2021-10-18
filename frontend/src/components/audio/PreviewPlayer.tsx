@@ -150,7 +150,12 @@ const PreviewPlayer = () : React.ReactElement => {
       getLogger().info(`Loading cart audio information for ${requestedCartId} to preview.`);
       getCartAudio(requestedCartId, requestToken).then(
         (response: AxiosResponse<CartAudio>) => {
-          setCartAudio(response.data);
+          if (response.status === 200) {
+            setCartAudio(response.data);
+          } else {
+            getLogger().error(`Error encountered unexpected status of ${response.status} loading the cart audio info for preview.`);
+            setPlayerState('Error');
+          }
         },
         (error) => {
           getLogger().error(`Error encountered loading the cart audio info for preview: ${error}`);
@@ -182,9 +187,14 @@ const PreviewPlayer = () : React.ReactElement => {
         getLogger().info(`Loading cart ${cartId} for preview.`);
         getCartDetails(cartId, token).then(
           (response: AxiosResponse<Cart>) => {
-            setCart(response.data);
-            setLoadedCartId(cartId);
-            loadCartAudioInfo(cartId, token);
+            if (response.status === 200) {
+              setCart(response.data);
+              setLoadedCartId(cartId);
+              loadCartAudioInfo(cartId, token);
+            } else {
+              getLogger().error(`Encountered unexpected status code of ${response.status} loading the cart for preview.`);
+              setPlayerState('Error');
+            }
           },
           (error) => {
             getLogger().error(`Error encountered loading the cart for preview: ${error}`);
@@ -236,7 +246,7 @@ const PreviewPlayer = () : React.ReactElement => {
       </Grid>
       <Grid item />
       <Grid item>
-        <Button onClick={closeClick} startIcon={<Close />}>Close</Button>
+        <Button data-test="button-close" onClick={closeClick} startIcon={<Close />}>Close</Button>
       </Grid>
     </Grid>
   );
@@ -291,7 +301,7 @@ const PreviewPlayer = () : React.ReactElement => {
     return <></>;
   };
 
-  const errorMessage = () => <Alert severity="error" variant="outlined">Something went wrong trying to preview cart audio. Please try again later.</Alert>;
+  const errorMessage = () => <Alert data-test="preview-error" severity="error" variant="outlined">Something went wrong trying to preview cart audio. Please try again later.</Alert>;
 
   if (showDrawer) {
     return (

@@ -23,7 +23,7 @@ export type PreviewCartId = string | undefined;
 export interface PreviewContextType {
     cartId: PreviewCartId;
     setCartId: React.Dispatch<React.SetStateAction<PreviewCartId>>;
-    clearCart: Function;
+    clearCart: () => void;
 }
 
 const noOp = () => {

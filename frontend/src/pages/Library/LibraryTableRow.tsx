@@ -22,11 +22,12 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
 import {
-  GetApp, KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
+  KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@mui/icons-material';
 import React from 'react';
 import { CartSearchResult } from 'api/models/Search';
 import { PreviewContext } from 'components/context/PreviewContext';
+import AudioDownloadButton from 'components/audio/AudioDownloadButton';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -76,16 +77,8 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
                 {' '}
                 Preview Cart
               </Button>
-              <Button aria-controls="download compressed audio">
-                <GetApp />
-                {' '}
-                Compressed (OGG)
-              </Button>
-              <Button aria-controls="download linear audio">
-                <GetApp />
-                {' '}
-                Linear (WAV)
-              </Button>
+              <AudioDownloadButton cartId={result.id} downloadType="Compressed" label={result.label} />
+              <AudioDownloadButton cartId={result.id} downloadType="Linear" label={result.label} />
             </Box>
           </Collapse>
         </TableCell>

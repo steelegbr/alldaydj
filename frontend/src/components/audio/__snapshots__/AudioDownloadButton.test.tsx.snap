@@ -1,0 +1,993 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`audio download button rendering render compressed 1`] = `
+<AudioDownloadButton
+  cartId="UUID123"
+  downloadType="Compressed"
+  label="CART123"
+>
+  <ForwardRef(Button)
+    aria-controls="download compressed audio"
+    data-test="button-download-compressed"
+    onClick={[Function]}
+  >
+    <MuiButtonRoot
+      aria-controls="download compressed audio"
+      classes={
+        Object {
+          "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+          "label": "MuiButton-label",
+          "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+          "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+        }
+      }
+      component="button"
+      data-test="button-download-compressed"
+      disabled={false}
+      focusRipple={true}
+      focusVisibleClassName=""
+      onClick={[Function]}
+      ownerState={
+        Object {
+          "aria-controls": "download compressed audio",
+          "children": Array [
+            <Memo />,
+            " ",
+            "Compressed (OGG)",
+          ],
+          "color": "primary",
+          "component": "button",
+          "data-test": "button-download-compressed",
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "disabled": false,
+          "fullWidth": false,
+          "onClick": [Function],
+          "size": "medium",
+          "type": undefined,
+          "variant": "text",
+        }
+      }
+    >
+      <ForwardRef(ButtonBase)
+        aria-controls="download compressed audio"
+        className="css-w60cv3-MuiButton-root"
+        classes={
+          Object {
+            "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+            "label": "MuiButton-label",
+            "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+            "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+          }
+        }
+        component="button"
+        data-test="button-download-compressed"
+        disabled={false}
+        focusRipple={true}
+        focusVisibleClassName=""
+        onClick={[Function]}
+      >
+        <MuiButtonBaseRoot
+          aria-controls="download compressed audio"
+          as="button"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          classes={
+            Object {
+              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+              "label": "MuiButton-label",
+              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+            }
+          }
+          data-test="button-download-compressed"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          ownerState={
+            Object {
+              "aria-controls": "download compressed audio",
+              "centerRipple": false,
+              "children": Array [
+                undefined,
+                Array [
+                  <Memo />,
+                  " ",
+                  "Compressed (OGG)",
+                ],
+                undefined,
+              ],
+              "className": "css-w60cv3-MuiButton-root",
+              "classes": Object {
+                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                "label": "MuiButton-label",
+                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+              },
+              "component": "button",
+              "data-test": "button-download-compressed",
+              "disableRipple": false,
+              "disableTouchRipple": false,
+              "disabled": false,
+              "focusRipple": true,
+              "focusVisible": false,
+              "focusVisibleClassName": "",
+              "onClick": [Function],
+              "tabIndex": 0,
+              "type": undefined,
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <button
+            aria-controls="download compressed audio"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            data-test="button-download-compressed"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <ForwardRef(GetAppIcon)>
+              <ForwardRef(SvgIcon)
+                data-testid="GetAppIcon"
+              >
+                <MuiSvgIconRoot
+                  aria-hidden={true}
+                  as="svg"
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                  data-testid="GetAppIcon"
+                  focusable="false"
+                  ownerState={
+                    Object {
+                      "children": <path
+                        d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      />,
+                      "color": "inherit",
+                      "component": "svg",
+                      "data-testid": "GetAppIcon",
+                      "fontSize": "medium",
+                      "viewBox": "0 0 24 24",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="GetAppIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                    />
+                  </svg>
+                </MuiSvgIconRoot>
+              </ForwardRef(SvgIcon)>
+            </ForwardRef(GetAppIcon)>
+             
+            Compressed (OGG)
+            <ForwardRef(TouchRipple)
+              center={false}
+            >
+              <MuiTouchRippleRoot
+                className="MuiTouchRipple-root"
+              >
+                <span
+                  className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                >
+                  <TransitionGroup
+                    childFactory={[Function]}
+                    component={null}
+                    exit={true}
+                  />
+                </span>
+              </MuiTouchRippleRoot>
+            </ForwardRef(TouchRipple)>
+          </button>
+        </MuiButtonBaseRoot>
+      </ForwardRef(ButtonBase)>
+    </MuiButtonRoot>
+  </ForwardRef(Button)>
+</AudioDownloadButton>
+`;
+
+exports[`audio download button rendering render compressed 2`] = `
+<AudioDownloadButton
+  cartId="UUID123"
+  downloadType="Linear"
+  label="CART123"
+>
+  <ForwardRef(Button)
+    aria-controls="download linear audio"
+    data-test="button-download-linear"
+    onClick={[Function]}
+  >
+    <MuiButtonRoot
+      aria-controls="download linear audio"
+      classes={
+        Object {
+          "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+          "label": "MuiButton-label",
+          "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+          "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+        }
+      }
+      component="button"
+      data-test="button-download-linear"
+      disabled={false}
+      focusRipple={true}
+      focusVisibleClassName=""
+      onClick={[Function]}
+      ownerState={
+        Object {
+          "aria-controls": "download linear audio",
+          "children": Array [
+            <Memo />,
+            " ",
+            "Linear (WAV)",
+          ],
+          "color": "primary",
+          "component": "button",
+          "data-test": "button-download-linear",
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "disabled": false,
+          "fullWidth": false,
+          "onClick": [Function],
+          "size": "medium",
+          "type": undefined,
+          "variant": "text",
+        }
+      }
+    >
+      <ForwardRef(ButtonBase)
+        aria-controls="download linear audio"
+        className="css-w60cv3-MuiButton-root"
+        classes={
+          Object {
+            "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+            "label": "MuiButton-label",
+            "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+            "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+          }
+        }
+        component="button"
+        data-test="button-download-linear"
+        disabled={false}
+        focusRipple={true}
+        focusVisibleClassName=""
+        onClick={[Function]}
+      >
+        <MuiButtonBaseRoot
+          aria-controls="download linear audio"
+          as="button"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          classes={
+            Object {
+              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+              "label": "MuiButton-label",
+              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+            }
+          }
+          data-test="button-download-linear"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          ownerState={
+            Object {
+              "aria-controls": "download linear audio",
+              "centerRipple": false,
+              "children": Array [
+                undefined,
+                Array [
+                  <Memo />,
+                  " ",
+                  "Linear (WAV)",
+                ],
+                undefined,
+              ],
+              "className": "css-w60cv3-MuiButton-root",
+              "classes": Object {
+                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                "label": "MuiButton-label",
+                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+              },
+              "component": "button",
+              "data-test": "button-download-linear",
+              "disableRipple": false,
+              "disableTouchRipple": false,
+              "disabled": false,
+              "focusRipple": true,
+              "focusVisible": false,
+              "focusVisibleClassName": "",
+              "onClick": [Function],
+              "tabIndex": 0,
+              "type": undefined,
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <button
+            aria-controls="download linear audio"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            data-test="button-download-linear"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <ForwardRef(GetAppIcon)>
+              <ForwardRef(SvgIcon)
+                data-testid="GetAppIcon"
+              >
+                <MuiSvgIconRoot
+                  aria-hidden={true}
+                  as="svg"
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                  data-testid="GetAppIcon"
+                  focusable="false"
+                  ownerState={
+                    Object {
+                      "children": <path
+                        d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      />,
+                      "color": "inherit",
+                      "component": "svg",
+                      "data-testid": "GetAppIcon",
+                      "fontSize": "medium",
+                      "viewBox": "0 0 24 24",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="GetAppIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                    />
+                  </svg>
+                </MuiSvgIconRoot>
+              </ForwardRef(SvgIcon)>
+            </ForwardRef(GetAppIcon)>
+             
+            Linear (WAV)
+            <ForwardRef(TouchRipple)
+              center={false}
+            >
+              <MuiTouchRippleRoot
+                className="MuiTouchRipple-root"
+              >
+                <span
+                  className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                >
+                  <TransitionGroup
+                    childFactory={[Function]}
+                    component={null}
+                    exit={true}
+                  />
+                </span>
+              </MuiTouchRippleRoot>
+            </ForwardRef(TouchRipple)>
+          </button>
+        </MuiButtonBaseRoot>
+      </ForwardRef(ButtonBase)>
+    </MuiButtonRoot>
+  </ForwardRef(Button)>
+</AudioDownloadButton>
+`;
+
+exports[`audio download download unhappy path 1`] = `
+<AudioDownloadButton
+  cartId="UUID123"
+  downloadType="Compressed"
+  label="CART123"
+>
+  <ForwardRef(Snackbar)
+    autoHideDuration={6000}
+    data-test="download-error"
+    onClose={[Function]}
+    open={true}
+  >
+    <ClickAwayListener
+      onClickAway={[Function]}
+    >
+      <MuiSnackbarRoot
+        className="MuiSnackbar-root MuiSnackbar-anchorOriginBottomLeft"
+        data-test="download-error"
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onTouchEnd={[Function]}
+        ownerState={
+          Object {
+            "anchorOrigin": Object {
+              "horizontal": "left",
+              "vertical": "bottom",
+            },
+            "autoHideDuration": 6000,
+            "children": <ForwardRef(Alert)
+              severity="error"
+            >
+              Failed to download the cart audio.
+            </ForwardRef(Alert)>,
+            "data-test": "download-error",
+            "isRtl": false,
+            "onClose": [Function],
+            "open": true,
+          }
+        }
+      >
+        <div
+          className="MuiSnackbar-root MuiSnackbar-anchorOriginBottomLeft css-cpgvjg-MuiSnackbar-root"
+          data-test="download-error"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchEnd={[Function]}
+        >
+          <ForwardRef(Grow)
+            appear={true}
+            direction="up"
+            in={true}
+            onEnter={[Function]}
+            onExited={[Function]}
+            timeout={
+              Object {
+                "enter": 225,
+                "exit": 195,
+              }
+            }
+          >
+            <Transition
+              addEndListener={[Function]}
+              appear={true}
+              direction="up"
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              nodeRef={
+                Object {
+                  "current": <div
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAlert-root MuiAlert-standardError MuiAlert-standard css-145dpyk-MuiPaper-root-MuiAlert-root"
+                    direction="up"
+                    role="alert"
+                    style="opacity: 1; transform: none; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                  >
+                    <div
+                      class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                        data-testid="ErrorOutlineIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="MuiAlert-message css-acap47-MuiAlert-message"
+                    >
+                      Failed to download the cart audio.
+                    </div>
+                  </div>,
+                }
+              }
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={
+                Object {
+                  "enter": 225,
+                  "exit": 195,
+                }
+              }
+              unmountOnExit={false}
+            >
+              <ForwardRef(Alert)
+                direction="up"
+                severity="error"
+                style={
+                  Object {
+                    "opacity": 1,
+                    "transform": "none",
+                    "visibility": undefined,
+                  }
+                }
+              >
+                <MuiAlertRoot
+                  className="MuiAlert-root MuiAlert-standardError MuiAlert-standard"
+                  direction="up"
+                  elevation={0}
+                  ownerState={
+                    Object {
+                      "children": "Failed to download the cart audio.",
+                      "color": undefined,
+                      "direction": "up",
+                      "severity": "error",
+                      "style": Object {
+                        "opacity": 1,
+                        "transform": "none",
+                        "visibility": undefined,
+                      },
+                      "variant": "standard",
+                    }
+                  }
+                  role="alert"
+                  square={true}
+                  style={
+                    Object {
+                      "opacity": 1,
+                      "transform": "none",
+                      "visibility": undefined,
+                    }
+                  }
+                >
+                  <ForwardRef(Paper)
+                    className="MuiAlert-root MuiAlert-standardError MuiAlert-standard css-1v6usml-MuiAlert-root"
+                    direction="up"
+                    elevation={0}
+                    role="alert"
+                    square={true}
+                    style={
+                      Object {
+                        "opacity": 1,
+                        "transform": "none",
+                        "visibility": undefined,
+                      }
+                    }
+                  >
+                    <MuiPaperRoot
+                      as="div"
+                      className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAlert-root MuiAlert-standardError MuiAlert-standard css-1v6usml-MuiAlert-root"
+                      direction="up"
+                      ownerState={
+                        Object {
+                          "children": Array [
+                            <MuiAlertIcon
+                              className="MuiAlert-icon"
+                              ownerState={
+                                Object {
+                                  "children": "Failed to download the cart audio.",
+                                  "color": undefined,
+                                  "direction": "up",
+                                  "severity": "error",
+                                  "style": Object {
+                                    "opacity": 1,
+                                    "transform": "none",
+                                    "visibility": undefined,
+                                  },
+                                  "variant": "standard",
+                                }
+                              }
+                            >
+                              <Memo
+                                fontSize="inherit"
+                              />
+                            </MuiAlertIcon>,
+                            <MuiAlertMessage
+                              className="MuiAlert-message"
+                              ownerState={
+                                Object {
+                                  "children": "Failed to download the cart audio.",
+                                  "color": undefined,
+                                  "direction": "up",
+                                  "severity": "error",
+                                  "style": Object {
+                                    "opacity": 1,
+                                    "transform": "none",
+                                    "visibility": undefined,
+                                  },
+                                  "variant": "standard",
+                                }
+                              }
+                            >
+                              Failed to download the cart audio.
+                            </MuiAlertMessage>,
+                            null,
+                            null,
+                          ],
+                          "className": "MuiAlert-root MuiAlert-standardError MuiAlert-standard css-1v6usml-MuiAlert-root",
+                          "component": "div",
+                          "direction": "up",
+                          "elevation": 0,
+                          "role": "alert",
+                          "square": true,
+                          "style": Object {
+                            "opacity": 1,
+                            "transform": "none",
+                            "visibility": undefined,
+                          },
+                          "variant": "elevation",
+                        }
+                      }
+                      role="alert"
+                      style={
+                        Object {
+                          "opacity": 1,
+                          "transform": "none",
+                          "visibility": undefined,
+                        }
+                      }
+                    >
+                      <div
+                        className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAlert-root MuiAlert-standardError MuiAlert-standard css-145dpyk-MuiPaper-root-MuiAlert-root"
+                        direction="up"
+                        role="alert"
+                        style={
+                          Object {
+                            "opacity": 1,
+                            "transform": "none",
+                            "visibility": undefined,
+                          }
+                        }
+                      >
+                        <MuiAlertIcon
+                          className="MuiAlert-icon"
+                          ownerState={
+                            Object {
+                              "children": "Failed to download the cart audio.",
+                              "color": undefined,
+                              "direction": "up",
+                              "severity": "error",
+                              "style": Object {
+                                "opacity": 1,
+                                "transform": "none",
+                                "visibility": undefined,
+                              },
+                              "variant": "standard",
+                            }
+                          }
+                        >
+                          <div
+                            className="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+                          >
+                            <ForwardRef(ErrorOutlineIcon)
+                              fontSize="inherit"
+                            >
+                              <ForwardRef(SvgIcon)
+                                data-testid="ErrorOutlineIcon"
+                                fontSize="inherit"
+                              >
+                                <MuiSvgIconRoot
+                                  aria-hidden={true}
+                                  as="svg"
+                                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                                  data-testid="ErrorOutlineIcon"
+                                  focusable="false"
+                                  ownerState={
+                                    Object {
+                                      "children": <path
+                                        d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                                      />,
+                                      "color": "inherit",
+                                      "component": "svg",
+                                      "data-testid": "ErrorOutlineIcon",
+                                      "fontSize": "inherit",
+                                      "viewBox": "0 0 24 24",
+                                    }
+                                  }
+                                  viewBox="0 0 24 24"
+                                >
+                                  <svg
+                                    aria-hidden={true}
+                                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                                    data-testid="ErrorOutlineIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                                    />
+                                  </svg>
+                                </MuiSvgIconRoot>
+                              </ForwardRef(SvgIcon)>
+                            </ForwardRef(ErrorOutlineIcon)>
+                          </div>
+                        </MuiAlertIcon>
+                        <MuiAlertMessage
+                          className="MuiAlert-message"
+                          ownerState={
+                            Object {
+                              "children": "Failed to download the cart audio.",
+                              "color": undefined,
+                              "direction": "up",
+                              "severity": "error",
+                              "style": Object {
+                                "opacity": 1,
+                                "transform": "none",
+                                "visibility": undefined,
+                              },
+                              "variant": "standard",
+                            }
+                          }
+                        >
+                          <div
+                            className="MuiAlert-message css-acap47-MuiAlert-message"
+                          >
+                            Failed to download the cart audio.
+                          </div>
+                        </MuiAlertMessage>
+                      </div>
+                    </MuiPaperRoot>
+                  </ForwardRef(Paper)>
+                </MuiAlertRoot>
+              </ForwardRef(Alert)>
+            </Transition>
+          </ForwardRef(Grow)>
+        </div>
+      </MuiSnackbarRoot>
+    </ClickAwayListener>
+  </ForwardRef(Snackbar)>
+  <ForwardRef(Button)
+    aria-controls="download compressed audio"
+    data-test="button-download-compressed"
+    onClick={[Function]}
+  >
+    <MuiButtonRoot
+      aria-controls="download compressed audio"
+      classes={
+        Object {
+          "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+          "label": "MuiButton-label",
+          "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+          "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+        }
+      }
+      component="button"
+      data-test="button-download-compressed"
+      disabled={false}
+      focusRipple={true}
+      focusVisibleClassName=""
+      onClick={[Function]}
+      ownerState={
+        Object {
+          "aria-controls": "download compressed audio",
+          "children": Array [
+            <Memo />,
+            " ",
+            "Compressed (OGG)",
+          ],
+          "color": "primary",
+          "component": "button",
+          "data-test": "button-download-compressed",
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "disabled": false,
+          "fullWidth": false,
+          "onClick": [Function],
+          "size": "medium",
+          "type": undefined,
+          "variant": "text",
+        }
+      }
+    >
+      <ForwardRef(ButtonBase)
+        aria-controls="download compressed audio"
+        className="css-w60cv3-MuiButton-root"
+        classes={
+          Object {
+            "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+            "label": "MuiButton-label",
+            "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+            "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+          }
+        }
+        component="button"
+        data-test="button-download-compressed"
+        disabled={false}
+        focusRipple={true}
+        focusVisibleClassName=""
+        onClick={[Function]}
+      >
+        <MuiButtonBaseRoot
+          aria-controls="download compressed audio"
+          as="button"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          classes={
+            Object {
+              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+              "label": "MuiButton-label",
+              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+            }
+          }
+          data-test="button-download-compressed"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          ownerState={
+            Object {
+              "aria-controls": "download compressed audio",
+              "centerRipple": false,
+              "children": Array [
+                undefined,
+                Array [
+                  <Memo />,
+                  " ",
+                  "Compressed (OGG)",
+                ],
+                undefined,
+              ],
+              "className": "css-w60cv3-MuiButton-root",
+              "classes": Object {
+                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                "label": "MuiButton-label",
+                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+              },
+              "component": "button",
+              "data-test": "button-download-compressed",
+              "disableRipple": false,
+              "disableTouchRipple": false,
+              "disabled": false,
+              "focusRipple": true,
+              "focusVisible": false,
+              "focusVisibleClassName": "",
+              "onClick": [Function],
+              "tabIndex": 0,
+              "type": undefined,
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <button
+            aria-controls="download compressed audio"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            data-test="button-download-compressed"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <ForwardRef(GetAppIcon)>
+              <ForwardRef(SvgIcon)
+                data-testid="GetAppIcon"
+              >
+                <MuiSvgIconRoot
+                  aria-hidden={true}
+                  as="svg"
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                  data-testid="GetAppIcon"
+                  focusable="false"
+                  ownerState={
+                    Object {
+                      "children": <path
+                        d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      />,
+                      "color": "inherit",
+                      "component": "svg",
+                      "data-testid": "GetAppIcon",
+                      "fontSize": "medium",
+                      "viewBox": "0 0 24 24",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <svg
+                    aria-hidden={true}
+                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="GetAppIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                    />
+                  </svg>
+                </MuiSvgIconRoot>
+              </ForwardRef(SvgIcon)>
+            </ForwardRef(GetAppIcon)>
+             
+            Compressed (OGG)
+            <ForwardRef(TouchRipple)
+              center={false}
+            >
+              <MuiTouchRippleRoot
+                className="MuiTouchRipple-root"
+              >
+                <span
+                  className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                >
+                  <TransitionGroup
+                    childFactory={[Function]}
+                    component={null}
+                    exit={true}
+                  />
+                </span>
+              </MuiTouchRippleRoot>
+            </ForwardRef(TouchRipple)>
+          </button>
+        </MuiButtonBaseRoot>
+      </ForwardRef(ButtonBase)>
+    </MuiButtonRoot>
+  </ForwardRef(Button)>
+</AudioDownloadButton>
+`;

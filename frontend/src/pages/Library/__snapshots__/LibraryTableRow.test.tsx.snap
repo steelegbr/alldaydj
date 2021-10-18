@@ -949,7 +949,7 @@ exports[`library table row renders single result expanded 1`] = `
                               <button
                                 aria-controls="download compressed audio"
                                 class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                data-test="button-download"
+                                data-test="button-download-compressed"
                                 tabindex="0"
                                 type="button"
                               >
@@ -973,7 +973,7 @@ exports[`library table row renders single result expanded 1`] = `
                               <button
                                 aria-controls="download linear audio"
                                 class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                data-test="button-download"
+                                data-test="button-download-linear"
                                 tabindex="0"
                                 type="button"
                               >
@@ -1637,7 +1637,7 @@ exports[`library table row renders single result expanded 1`] = `
                                     >
                                       <ForwardRef(Button)
                                         aria-controls="download compressed audio"
-                                        data-test="button-download"
+                                        data-test="button-download-compressed"
                                         onClick={[Function]}
                                       >
                                         <MuiButtonRoot
@@ -1651,7 +1651,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             }
                                           }
                                           component="button"
-                                          data-test="button-download"
+                                          data-test="button-download-compressed"
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1666,7 +1666,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               ],
                                               "color": "primary",
                                               "component": "button",
-                                              "data-test": "button-download",
+                                              "data-test": "button-download-compressed",
                                               "disableElevation": false,
                                               "disableFocusRipple": false,
                                               "disabled": false,
@@ -1690,7 +1690,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               }
                                             }
                                             component="button"
-                                            data-test="button-download"
+                                            data-test="button-download-compressed"
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -1708,7 +1708,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                   "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                 }
                                               }
-                                              data-test="button-download"
+                                              data-test="button-download-compressed"
                                               disabled={false}
                                               onBlur={[Function]}
                                               onClick={[Function]}
@@ -1744,7 +1744,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                     "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                   },
                                                   "component": "button",
-                                                  "data-test": "button-download",
+                                                  "data-test": "button-download-compressed",
                                                   "disableRipple": false,
                                                   "disableTouchRipple": false,
                                                   "disabled": false,
@@ -1762,7 +1762,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               <button
                                                 aria-controls="download compressed audio"
                                                 className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                                data-test="button-download"
+                                                data-test="button-download-compressed"
                                                 disabled={false}
                                                 onBlur={[Function]}
                                                 onClick={[Function]}
@@ -1850,7 +1850,7 @@ exports[`library table row renders single result expanded 1`] = `
                                     >
                                       <ForwardRef(Button)
                                         aria-controls="download linear audio"
-                                        data-test="button-download"
+                                        data-test="button-download-linear"
                                         onClick={[Function]}
                                       >
                                         <MuiButtonRoot
@@ -1864,7 +1864,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             }
                                           }
                                           component="button"
-                                          data-test="button-download"
+                                          data-test="button-download-linear"
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1879,7 +1879,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               ],
                                               "color": "primary",
                                               "component": "button",
-                                              "data-test": "button-download",
+                                              "data-test": "button-download-linear",
                                               "disableElevation": false,
                                               "disableFocusRipple": false,
                                               "disabled": false,
@@ -1903,7 +1903,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               }
                                             }
                                             component="button"
-                                            data-test="button-download"
+                                            data-test="button-download-linear"
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -1921,7 +1921,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                   "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                 }
                                               }
-                                              data-test="button-download"
+                                              data-test="button-download-linear"
                                               disabled={false}
                                               onBlur={[Function]}
                                               onClick={[Function]}
@@ -1957,7 +1957,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                     "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                   },
                                                   "component": "button",
-                                                  "data-test": "button-download",
+                                                  "data-test": "button-download-linear",
                                                   "disableRipple": false,
                                                   "disableTouchRipple": false,
                                                   "disabled": false,
@@ -1975,7 +1975,7 @@ exports[`library table row renders single result expanded 1`] = `
                                               <button
                                                 aria-controls="download linear audio"
                                                 className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                                data-test="button-download"
+                                                data-test="button-download-linear"
                                                 disabled={false}
                                                 onBlur={[Function]}
                                                 onClick={[Function]}

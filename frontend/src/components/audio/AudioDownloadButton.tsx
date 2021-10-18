@@ -54,6 +54,7 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
         downloadLink.download = fileName;
         downloadLink.target = '_blank';
         downloadLink.click();
+        getLogger().info(`Triggered download from ${url} for ${fileName}`);
       } else {
         getLogger().error(`Failed to obtain download URL for cart ${label}`);
         setError(true);
@@ -71,6 +72,10 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
             if (response.status === 200) {
               getLogger().info('Successfully obtained cart audio info.');
               triggerDownload(response.data);
+            } else {
+              getLogger().error(response);
+              getLogger().error(`Got a strange HTTP response (${response.status}) getting cart audio info.`);
+              setError(true);
             }
           },
           (errorResponse) => {
@@ -84,7 +89,7 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
   );
 
   const generateError = () => (
-    <Snackbar autoHideDuration={6000} onClose={clearError} open={error}>
+    <Snackbar autoHideDuration={6000} data-test="download-error" onClose={clearError} open={error}>
       <Alert severity="error">Failed to download the cart audio.</Alert>
     </Snackbar>
   );
@@ -93,7 +98,7 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
     return (
       <>
         {error && generateError()}
-        <Button aria-controls="download compressed audio" onClick={getAudioInfo}>
+        <Button aria-controls="download compressed audio" data-test="button-download-compressed" onClick={getAudioInfo}>
           <GetApp />
           {' '}
           Compressed (OGG)
@@ -105,7 +110,7 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
   return (
     <>
       {error && generateError()}
-      <Button aria-controls="download linear audio" onClick={getAudioInfo}>
+      <Button aria-controls="download linear audio" data-test="button-download-linear" onClick={getAudioInfo}>
         <GetApp />
         {' '}
         Linear (WAV)

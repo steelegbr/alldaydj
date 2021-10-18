@@ -23,9 +23,9 @@ import {
   Button,
   ButtonGroup,
   CircularProgress,
+  Drawer,
   Grid,
   Slider,
-  SwipeableDrawer,
   Typography,
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
@@ -69,7 +69,6 @@ const PreviewPlayer = () : React.ReactElement => {
   const token = authenticationContext?.authenticationStatus.accessToken;
   const showDrawer = !!(cartId);
   const enablePlayPauseButton = playerState === 'Playing' || playerState === 'Paused';
-  const noOp = () => {};
 
   const scrubTo = (position: number) => {
     audioRef.current.currentTime = position / 1000;
@@ -296,14 +295,14 @@ const PreviewPlayer = () : React.ReactElement => {
 
   if (showDrawer) {
     return (
-      <SwipeableDrawer anchor="bottom" onClose={noOp} onOpen={noOp} open={showDrawer} variant="permanent">
+      <Drawer anchor="bottom" open={showDrawer} variant="permanent">
         <div className={classes.player}>
           {buttonBar()}
           {playerState === 'Loading' && loadingPlaceholder()}
           {playerState === 'Error' && errorMessage()}
           {(playerState === 'Playing' || playerState === 'Paused') && playerDetails()}
         </div>
-      </SwipeableDrawer>
+      </Drawer>
     );
   }
 

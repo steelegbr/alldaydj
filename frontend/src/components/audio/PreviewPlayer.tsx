@@ -54,7 +54,6 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 const PreviewPlayer = () : React.ReactElement => {
-  const log = getLogger();
   const classes = useStyles();
   const previewContext = React.useContext(PreviewContext);
   const authenticationContext = React.useContext(AuthenticationContext);
@@ -74,16 +73,18 @@ const PreviewPlayer = () : React.ReactElement => {
 
   const scrubTo = (position: number) => {
     audioRef.current.currentTime = position / 1000;
+    getLogger().debug(`Scrubbing to ${position} ms.`);
     setProgress(position);
   };
 
   const playAudio = () => {
+    getLogger().info('Audio play triggered.');
     audioRef.current.play();
     setPlayerState('Playing');
   };
 
   const scrubAction = (event: any, position: number | number [], thumb: number) => {
-    log.info(`Thumb number: ${thumb}`);
+    getLogger().debug(`Scrubbing thumb number: ${thumb}`);
     setScrubbing(true);
     if (Array.isArray(position)) {
       scrubTo(position[0]);
@@ -93,14 +94,17 @@ const PreviewPlayer = () : React.ReactElement => {
   };
 
   const scrubEnd = () => {
+    getLogger().debug('Scrub stopped.');
     setScrubbing(false);
   };
 
   const stopAudio = React.useCallback(
     (returnToStart: boolean) => {
+      getLogger().info('Audio stop triggered.');
       audioRef.current.pause();
       setPlayerState('Paused');
       if (returnToStart && cart) {
+        getLogger().info('Resetting to start of audio.');
         scrubTo(cart.cue_audio_start);
       }
     },
@@ -110,8 +114,10 @@ const PreviewPlayer = () : React.ReactElement => {
   const playPauseClick = React.useCallback(
     () => {
       if (playerState === 'Playing') {
+        getLogger().info('Pause click.');
         stopAudio(false);
       } else {
+        getLogger().info('Play click.');
         playAudio();
       }
     },
@@ -120,45 +126,46 @@ const PreviewPlayer = () : React.ReactElement => {
 
   const clearPlayingCart = React.useCallback(
     () => {
-      if (cart) {
-        log.info('Unloading audio from player');
-        stopAudio(true);
-        audioRef.current.src = '';
-        setPlayerState('Idle');
-      }
+      getLogger().info('Unloading audio from player.');
+      stopAudio(true);
+      audioRef.current.src = '';
+      setPlayerState('Idle');
+      setCartAudio(undefined);
     },
-    [cart, log, stopAudio],
+    [stopAudio],
   );
 
   const stopClick = () => {
-    log.info('Stopping audio playback');
+    getLogger().info('Stop click.');
     stopAudio(true);
   };
 
   const closeClick = () => {
+    getLogger().info('Close click.');
     clearPlayingCart();
     clearCart();
   };
 
   const loadCartAudioInfo = React.useCallback(
     (requestedCartId: string, requestToken: string) => {
-      log.info(`Loading cart audio information for ${requestedCartId} to preview.`);
+      getLogger().info(`Loading cart audio information for ${requestedCartId} to preview.`);
       getCartAudio(requestedCartId, requestToken).then(
         (response: AxiosResponse<CartAudio>) => {
           setCartAudio(response.data);
         },
         (error) => {
-          log.error(`Error encountered loading the cart audio info for preview: ${error}`);
+          getLogger().error(`Error encountered loading the cart audio info for preview: ${error}`);
           setPlayerState('Error');
         },
       );
     },
-    [log],
+    [],
   );
 
   React.useEffect(
     () => {
       if (cart && cartAudio) {
+        getLogger().info(`Setting audio component SRC to ${cartAudio.compressed}`);
         audioRef.current = new Audio(cartAudio.compressed);
         scrubTo(cart.cue_audio_start);
         playAudio();
@@ -173,7 +180,7 @@ const PreviewPlayer = () : React.ReactElement => {
         clearPlayingCart();
         setPlayerState('Loading');
         setLoadedCartId(cartId);
-        log.info(`Loading cart ${cartId} for preview.`);
+        getLogger().info(`Loading cart ${cartId} for preview.`);
         getCartDetails(cartId, token).then(
           (response: AxiosResponse<Cart>) => {
             setCart(response.data);
@@ -181,7 +188,7 @@ const PreviewPlayer = () : React.ReactElement => {
             loadCartAudioInfo(cartId, token);
           },
           (error) => {
-            log.error(`Error encountered loading the cart for preview: ${error}`);
+            getLogger().error(`Error encountered loading the cart for preview: ${error}`);
             setPlayerState('Error');
           },
         );
@@ -190,7 +197,6 @@ const PreviewPlayer = () : React.ReactElement => {
     [
       cartId,
       setPlayerState,
-      log,
       token,
       loadedCartId,
       setLoadedCartId,

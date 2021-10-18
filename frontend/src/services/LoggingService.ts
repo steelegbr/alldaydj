@@ -20,8 +20,9 @@
 
 import log, { Logger } from 'loglevel';
 
+const DEFAULT_LOGGER_NAME = 'AllDayDJ';
+
 export const getLogger = (): Logger => {
-  const logger = log.getLogger('alldaydj');
-  logger.enableAll();
+  const logger = log.getLogger(DEFAULT_LOGGER_NAME);
   return logger;
 };

@@ -33,7 +33,6 @@ import { getLogger } from 'services/LoggingService';
 type RequestState = 'Idle' | 'InFlight' | 'Complete' | 'Error'
 
 const ForgottenPassword = (): React.ReactElement => {
-  const log = getLogger();
   const [requestState, setRequestState] = React.useState<RequestState>('Idle');
   const [email, setEmail] = React.useState<string>('');
   const [errorEmail, setErrorEmail] = React.useState<string|undefined>();
@@ -53,22 +52,22 @@ const ForgottenPassword = (): React.ReactElement => {
     setRequestState('InFlight');
     setErrorEmail('');
 
-    log.info('Starting password reset validation');
+    getLogger().info('Starting password reset validation');
 
     if (!email) {
       setErrorEmail('You must supply an e-mail address');
       setRequestState('Idle');
-      log.error('Password reset validation failed.');
+      getLogger().error('Password reset validation failed.');
       return;
     }
 
     forgottenPassword({ email }).then(
       () => {
-        log.info('Password reset request success.');
+        getLogger().info('Password reset request success.');
         setRequestState('Complete');
       },
       (error) => {
-        log.warn(`Password reset request failed - ${error}`);
+        getLogger().warn(`Password reset request failed - ${error}`);
         setRequestState('Error');
       },
     );

@@ -58,7 +58,6 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 export default function Login(): React.ReactElement {
-  const log = getLogger();
   const history = useHistory();
   const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
@@ -100,9 +99,9 @@ export default function Login(): React.ReactElement {
         errorEmail: undefined,
         errorPassword: undefined,
       });
-      log.info('Cleared the login form');
+      getLogger().info('Cleared the login form');
     },
-    [setLoginStatus, log],
+    [setLoginStatus],
   );
 
   const doSetEmail = useCallback(
@@ -129,7 +128,7 @@ export default function Login(): React.ReactElement {
         password: loginStatus.password,
       };
 
-      log.info('Starting login validation.');
+      getLogger().info('Starting login validation.');
 
       let errors = false;
 
@@ -146,11 +145,11 @@ export default function Login(): React.ReactElement {
       if (errors) {
         newLoginStatus.progress = 'Idle';
         setLoginStatus(newLoginStatus);
-        log.error('Login validation failed!');
+        getLogger().error('Login validation failed!');
         return;
       }
 
-      log.info('Login validation complete.');
+      getLogger().info('Login validation complete.');
       setLoginStatus(newLoginStatus);
 
       userLogin({
@@ -158,13 +157,13 @@ export default function Login(): React.ReactElement {
         password: newLoginStatus.password,
       }).then(
         (result) => {
-          log.info('User login success!');
+          getLogger().info('User login success!');
           const user = loginUser(result.data.refresh, result.data.access);
           authenticationContext?.setAuthenticationStatus(user);
           history.push(Paths.base);
         },
         (error) => {
-          log.warn(`User login failed - ${error}`);
+          getLogger().warn(`User login failed - ${error}`);
           setLoginStatus({
             ...newLoginStatus,
             progress: 'Error',
@@ -172,7 +171,7 @@ export default function Login(): React.ReactElement {
         },
       );
     },
-    [authenticationContext, history, log, loginStatus],
+    [authenticationContext, history, loginStatus],
   );
 
   const forgottenPassword = useCallback(

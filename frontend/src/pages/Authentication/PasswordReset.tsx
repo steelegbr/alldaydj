@@ -44,7 +44,6 @@ type PasswordResetParams = {
 type ResetState = 'Idle' | 'CheckingToken' | 'TokenNotValid' | 'AwaitingNewPassword' | 'ChangingPassword' | 'Complete' | 'Error'
 
 const PasswordReset = (): React.ReactElement => {
-  const log = getLogger();
   const history = useHistory();
   const { token } = useParams<PasswordResetParams>();
   const [resetRequestState, setResetRequestState] = React.useState<ResetState>('Idle');
@@ -64,7 +63,7 @@ const PasswordReset = (): React.ReactElement => {
 
   const attemptReset = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    log.info('Attempting to reset password');
+    getLogger().info('Attempting to reset password');
     setResetRequestState('ChangingPassword');
 
     passwordReset({
@@ -72,11 +71,11 @@ const PasswordReset = (): React.ReactElement => {
       password,
     }).then(
       () => {
-        log.info('Password reset successful');
+        getLogger().info('Password reset successful');
         setResetRequestState('Complete');
       },
       (error) => {
-        log.warn(`Password reset failed - ${error}`);
+        getLogger().warn(`Password reset failed - ${error}`);
         setResetRequestState('Error');
       },
     );
@@ -91,14 +90,14 @@ const PasswordReset = (): React.ReactElement => {
   };
 
   if (resetRequestState === 'Idle') {
-    log.info('Checking password reset token validity');
+    getLogger().info('Checking password reset token validity');
     setResetRequestState('CheckingToken');
     testPasswordResetToken({ token }).then(
       () => {
         setResetRequestState('AwaitingNewPassword');
       },
       (error) => {
-        log.warn(`Password reset token check failed - ${error}`);
+        getLogger().warn(`Password reset token check failed - ${error}`);
         setResetRequestState('TokenNotValid');
       },
     );

@@ -19,6 +19,7 @@
 import React from 'react';
 import { PreviewContext } from 'components/context/PreviewContext';
 import {
+  Alert,
   Button,
   ButtonGroup,
   CircularProgress,
@@ -62,13 +63,82 @@ const PreviewPlayer = () : React.ReactElement => {
   const [cart, setCart] = React.useState<Cart>();
   const [cartAudio, setCartAudio] = React.useState<CartAudio>();
   const [progress, setProgress] = React.useState<number>(0);
+  const [scrubbing, setScrubbing] = React.useState<boolean>(false);
   const audioRef = React.useRef(new Audio());
 
-  const { cartId } = previewContext;
+  const { cartId, clearCart } = previewContext;
   const token = authenticationContext?.authenticationStatus.accessToken;
   const showDrawer = !!(cartId);
   const enablePlayPauseButton = playerState === 'Playing' || playerState === 'Paused';
   const noOp = () => {};
+
+  const scrubTo = (position: number) => {
+    audioRef.current.currentTime = position / 1000;
+    setProgress(position);
+  };
+
+  const playAudio = () => {
+    audioRef.current.play();
+    setPlayerState('Playing');
+  };
+
+  const scrubAction = (event: any, position: number | number [], thumb: number) => {
+    log.info(`Thumb number: ${thumb}`);
+    setScrubbing(true);
+    if (Array.isArray(position)) {
+      scrubTo(position[0]);
+    } else {
+      scrubTo(position);
+    }
+  };
+
+  const scrubEnd = () => {
+    setScrubbing(false);
+  };
+
+  const stopAudio = React.useCallback(
+    (returnToStart: boolean) => {
+      audioRef.current.pause();
+      setPlayerState('Paused');
+      if (returnToStart && cart) {
+        scrubTo(cart.cue_audio_start);
+      }
+    },
+    [cart],
+  );
+
+  const playPauseClick = React.useCallback(
+    () => {
+      if (playerState === 'Playing') {
+        stopAudio(false);
+      } else {
+        playAudio();
+      }
+    },
+    [playerState, stopAudio],
+  );
+
+  const clearPlayingCart = React.useCallback(
+    () => {
+      if (cart) {
+        log.info('Unloading audio from player');
+        stopAudio(true);
+        audioRef.current.src = '';
+        setPlayerState('Idle');
+      }
+    },
+    [cart, log, stopAudio],
+  );
+
+  const stopClick = () => {
+    log.info('Stopping audio playback');
+    stopAudio(true);
+  };
+
+  const closeClick = () => {
+    clearPlayingCart();
+    clearCart();
+  };
 
   const loadCartAudioInfo = React.useCallback(
     (requestedCartId: string, requestToken: string) => {
@@ -90,9 +160,8 @@ const PreviewPlayer = () : React.ReactElement => {
     () => {
       if (cart && cartAudio) {
         audioRef.current = new Audio(cartAudio.compressed);
-        audioRef.current.currentTime = cart.cue_audio_start / 1000;
-        audioRef.current.play();
-        setPlayerState('Playing');
+        scrubTo(cart.cue_audio_start);
+        playAudio();
       }
     },
     [cart, cartAudio],
@@ -101,6 +170,7 @@ const PreviewPlayer = () : React.ReactElement => {
   React.useEffect(
     () => {
       if (cartId && cartId !== loadedCartId && token) {
+        clearPlayingCart();
         setPlayerState('Loading');
         setLoadedCartId(cartId);
         log.info(`Loading cart ${cartId} for preview.`);
@@ -117,17 +187,32 @@ const PreviewPlayer = () : React.ReactElement => {
         );
       }
     },
-    [cartId, setPlayerState, log, token, loadedCartId, setLoadedCartId, loadCartAudioInfo],
+    [
+      cartId,
+      setPlayerState,
+      log,
+      token,
+      loadedCartId,
+      setLoadedCartId,
+      loadCartAudioInfo,
+      clearPlayingCart,
+    ],
   );
 
   useInterval(
     () => {
-      setProgress(audioRef.current.currentTime * 1000);
+      const currentPosition = audioRef.current.currentTime * 1000;
+      setProgress(currentPosition);
+
       if (audioRef.current.error) {
         setPlayerState('Error');
       }
+
+      if (cart && (audioRef.current.ended || currentPosition >= cart.cue_audio_end)) {
+        stopAudio(true);
+      }
     },
-    playerState === 'Playing' || playerState === 'Paused' ? 500 : null,
+    (playerState === 'Playing' || playerState === 'Paused') && !scrubbing ? 500 : null,
   );
 
   const buttonBar = () => (
@@ -136,16 +221,17 @@ const PreviewPlayer = () : React.ReactElement => {
         <ButtonGroup aria-label="preview cart" variant="contained">
           <Button
             disabled={!enablePlayPauseButton}
+            onClick={playPauseClick}
             startIcon={playerState === 'Playing' ? <Pause /> : <PlayArrow />}
           >
             {playerState === 'Playing' ? 'Pause' : 'Play'}
           </Button>
-          <Button startIcon={<Stop />}>Stop</Button>
+          <Button disabled={playerState === 'Error'} onClick={stopClick} startIcon={<Stop />}>Stop</Button>
         </ButtonGroup>
       </Grid>
       <Grid item />
       <Grid item>
-        <Button startIcon={<Close />}>Close</Button>
+        <Button onClick={closeClick} startIcon={<Close />}>Close</Button>
       </Grid>
     </Grid>
   );
@@ -182,6 +268,9 @@ const PreviewPlayer = () : React.ReactElement => {
                 aria-label="audio preview time indicator"
                 max={audioLength}
                 min={0}
+                onChange={scrubAction}
+                onKeyUp={scrubEnd}
+                onMouseUp={scrubEnd}
                 step={1}
                 value={currentPosition}
               />
@@ -197,13 +286,7 @@ const PreviewPlayer = () : React.ReactElement => {
     return <></>;
   };
 
-  const errorMessage = () => {
-    <Grid alignItems="center" container justifyContent="space-between">
-      <Grid item>
-        <span>Something went wrong trying to preview cart audio. Please try again later.</span>
-      </Grid>
-    </Grid>;
-  };
+  const errorMessage = () => <Alert severity="error" variant="outlined">Something went wrong trying to preview cart audio. Please try again later.</Alert>;
 
   if (showDrawer) {
     return (

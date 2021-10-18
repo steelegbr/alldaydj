@@ -20,15 +20,18 @@ import React from 'react';
 
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   content: {
-    left: drawerWidth,
-    width: `calc(100vw - ${drawerWidth}px)`,
-    position: 'relative',
-    padding: 10,
+    [theme.breakpoints.up('sm')]: {
+      left: drawerWidth,
+      width: `calc(100vw - ${drawerWidth}px)`,
+      position: 'relative',
+      padding: 10,
+    },
   },
 }));
 

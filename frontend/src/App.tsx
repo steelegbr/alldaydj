@@ -27,6 +27,7 @@ import { StyledEngineProvider, Theme } from '@mui/material/styles';
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   // eslint-disable-next-line no-unused-vars
+  // skipcq: JS-0322
   interface DefaultTheme extends Theme {}
 }
 

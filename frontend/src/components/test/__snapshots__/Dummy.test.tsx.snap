@@ -2,99 +2,101 @@
 
 exports[`dummy component snapshot 1`] = `
 <Dummy>
-  <WithStyles(ForwardRef(Typography))
+  <ForwardRef(Typography)
     variant="h1"
   >
-    <ForwardRef(Typography)
-      classes={
+    <MuiTypographyRoot
+      as="h1"
+      className="MuiTypography-root MuiTypography-h1"
+      ownerState={
         Object {
-          "alignCenter": "MuiTypography-alignCenter",
-          "alignJustify": "MuiTypography-alignJustify",
-          "alignLeft": "MuiTypography-alignLeft",
-          "alignRight": "MuiTypography-alignRight",
-          "body1": "MuiTypography-body1",
-          "body2": "MuiTypography-body2",
-          "button": "MuiTypography-button",
-          "caption": "MuiTypography-caption",
-          "colorError": "MuiTypography-colorError",
-          "colorInherit": "MuiTypography-colorInherit",
-          "colorPrimary": "MuiTypography-colorPrimary",
-          "colorSecondary": "MuiTypography-colorSecondary",
-          "colorTextPrimary": "MuiTypography-colorTextPrimary",
-          "colorTextSecondary": "MuiTypography-colorTextSecondary",
-          "displayBlock": "MuiTypography-displayBlock",
-          "displayInline": "MuiTypography-displayInline",
-          "gutterBottom": "MuiTypography-gutterBottom",
-          "h1": "MuiTypography-h1",
-          "h2": "MuiTypography-h2",
-          "h3": "MuiTypography-h3",
-          "h4": "MuiTypography-h4",
-          "h5": "MuiTypography-h5",
-          "h6": "MuiTypography-h6",
-          "noWrap": "MuiTypography-noWrap",
-          "overline": "MuiTypography-overline",
-          "paragraph": "MuiTypography-paragraph",
-          "root": "MuiTypography-root",
-          "srOnly": "MuiTypography-srOnly",
-          "subtitle1": "MuiTypography-subtitle1",
-          "subtitle2": "MuiTypography-subtitle2",
+          "align": "inherit",
+          "children": "Hello from AllDay DJ",
+          "className": undefined,
+          "color": undefined,
+          "component": undefined,
+          "gutterBottom": false,
+          "noWrap": false,
+          "paragraph": false,
+          "sx": Object {
+            "color": undefined,
+          },
+          "variant": "h1",
+          "variantMapping": Object {
+            "body1": "p",
+            "body2": "p",
+            "h1": "h1",
+            "h2": "h2",
+            "h3": "h3",
+            "h4": "h4",
+            "h5": "h5",
+            "h6": "h6",
+            "inherit": "p",
+            "subtitle1": "h6",
+            "subtitle2": "h6",
+          },
         }
       }
-      variant="h1"
+      sx={
+        Object {
+          "color": undefined,
+        }
+      }
     >
       <h1
-        className="MuiTypography-root MuiTypography-h1"
+        className="MuiTypography-root MuiTypography-h1 css-o2w69a-MuiTypography-root"
       >
         Hello from AllDay DJ
       </h1>
-    </ForwardRef(Typography)>
-  </WithStyles(ForwardRef(Typography))>
-  <WithStyles(ForwardRef(Typography))
+    </MuiTypographyRoot>
+  </ForwardRef(Typography)>
+  <ForwardRef(Typography)
     paragraph={true}
   >
-    <ForwardRef(Typography)
-      classes={
+    <MuiTypographyRoot
+      as="p"
+      className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph"
+      ownerState={
         Object {
-          "alignCenter": "MuiTypography-alignCenter",
-          "alignJustify": "MuiTypography-alignJustify",
-          "alignLeft": "MuiTypography-alignLeft",
-          "alignRight": "MuiTypography-alignRight",
-          "body1": "MuiTypography-body1",
-          "body2": "MuiTypography-body2",
-          "button": "MuiTypography-button",
-          "caption": "MuiTypography-caption",
-          "colorError": "MuiTypography-colorError",
-          "colorInherit": "MuiTypography-colorInherit",
-          "colorPrimary": "MuiTypography-colorPrimary",
-          "colorSecondary": "MuiTypography-colorSecondary",
-          "colorTextPrimary": "MuiTypography-colorTextPrimary",
-          "colorTextSecondary": "MuiTypography-colorTextSecondary",
-          "displayBlock": "MuiTypography-displayBlock",
-          "displayInline": "MuiTypography-displayInline",
-          "gutterBottom": "MuiTypography-gutterBottom",
-          "h1": "MuiTypography-h1",
-          "h2": "MuiTypography-h2",
-          "h3": "MuiTypography-h3",
-          "h4": "MuiTypography-h4",
-          "h5": "MuiTypography-h5",
-          "h6": "MuiTypography-h6",
-          "noWrap": "MuiTypography-noWrap",
-          "overline": "MuiTypography-overline",
-          "paragraph": "MuiTypography-paragraph",
-          "root": "MuiTypography-root",
-          "srOnly": "MuiTypography-srOnly",
-          "subtitle1": "MuiTypography-subtitle1",
-          "subtitle2": "MuiTypography-subtitle2",
+          "align": "inherit",
+          "children": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas eros arcu, eu placerat arcu lacinia ut. Sed laoreet imperdiet risus, quis vulputate sapien maximus ut. In facilisis vitae sapien eu sagittis. Donec volutpat massa eget mi accumsan, sit amet placerat turpis sagittis. Donec egestas arcu vel euismod eleifend. Quisque et nulla quis nisi ullamcorper bibendum quis nec eros. Cras tincidunt justo quis rhoncus luctus. Vivamus et eleifend lacus. Sed malesuada consequat mauris, ac pretium odio. Vestibulum sed ipsum eget nisi vehicula vehicula vitae sed erat. Fusce imperdiet quam quis orci pretium, at dignissim enim posuere. Nunc sed ex volutpat, suscipit ipsum vel, viverra est. Vivamus massa erat, tempus a eleifend nec, placerat et dui. Suspendisse auctor velit nulla, quis consectetur lorem interdum eget.",
+          "className": undefined,
+          "color": undefined,
+          "component": undefined,
+          "gutterBottom": false,
+          "noWrap": false,
+          "paragraph": true,
+          "sx": Object {
+            "color": undefined,
+          },
+          "variant": "body1",
+          "variantMapping": Object {
+            "body1": "p",
+            "body2": "p",
+            "h1": "h1",
+            "h2": "h2",
+            "h3": "h3",
+            "h4": "h4",
+            "h5": "h5",
+            "h6": "h6",
+            "inherit": "p",
+            "subtitle1": "h6",
+            "subtitle2": "h6",
+          },
         }
       }
-      paragraph={true}
+      sx={
+        Object {
+          "color": undefined,
+        }
+      }
     >
       <p
-        className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph"
+        className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph css-z2eky3-MuiTypography-root"
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas eros arcu, eu placerat arcu lacinia ut. Sed laoreet imperdiet risus, quis vulputate sapien maximus ut. In facilisis vitae sapien eu sagittis. Donec volutpat massa eget mi accumsan, sit amet placerat turpis sagittis. Donec egestas arcu vel euismod eleifend. Quisque et nulla quis nisi ullamcorper bibendum quis nec eros. Cras tincidunt justo quis rhoncus luctus. Vivamus et eleifend lacus. Sed malesuada consequat mauris, ac pretium odio. Vestibulum sed ipsum eget nisi vehicula vehicula vitae sed erat. Fusce imperdiet quam quis orci pretium, at dignissim enim posuere. Nunc sed ex volutpat, suscipit ipsum vel, viverra est. Vivamus massa erat, tempus a eleifend nec, placerat et dui. Suspendisse auctor velit nulla, quis consectetur lorem interdum eget.
       </p>
-    </ForwardRef(Typography)>
-  </WithStyles(ForwardRef(Typography))>
+    </MuiTypographyRoot>
+  </ForwardRef(Typography)>
 </Dummy>
 `;

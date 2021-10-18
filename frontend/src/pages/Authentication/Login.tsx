@@ -17,6 +17,7 @@
 */
 
 import {
+  Alert,
   Card,
   CardContent,
   FormControl,
@@ -27,9 +28,10 @@ import {
   CardActions,
   FormHelperText,
   Snackbar,
-} from '@material-ui/core';
-import { Email, Lock } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Email, Lock } from '@mui/icons-material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { userLogin } from 'api/requests/Authentication';
@@ -49,9 +51,15 @@ interface LoginStatus {
   password: string;
 }
 
+const useStyles = makeStyles(() => createStyles({
+  loginButton: {
+    marginRight: 10,
+  },
+}));
+
 export default function Login(): React.ReactElement {
-  const log = getLogger();
   const history = useHistory();
+  const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
   const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
     progress: 'Idle',
@@ -91,9 +99,9 @@ export default function Login(): React.ReactElement {
         errorEmail: undefined,
         errorPassword: undefined,
       });
-      log.info('Cleared the login form');
+      getLogger().info('Cleared the login form');
     },
-    [setLoginStatus, log],
+    [setLoginStatus],
   );
 
   const doSetEmail = useCallback(
@@ -120,7 +128,7 @@ export default function Login(): React.ReactElement {
         password: loginStatus.password,
       };
 
-      log.info('Starting login validation.');
+      getLogger().info('Starting login validation.');
 
       let errors = false;
 
@@ -137,11 +145,11 @@ export default function Login(): React.ReactElement {
       if (errors) {
         newLoginStatus.progress = 'Idle';
         setLoginStatus(newLoginStatus);
-        log.error('Login validation failed!');
+        getLogger().error('Login validation failed!');
         return;
       }
 
-      log.info('Login validation complete.');
+      getLogger().info('Login validation complete.');
       setLoginStatus(newLoginStatus);
 
       userLogin({
@@ -149,13 +157,13 @@ export default function Login(): React.ReactElement {
         password: newLoginStatus.password,
       }).then(
         (result) => {
-          log.info('User login success!');
+          getLogger().info('User login success!');
           const user = loginUser(result.data.refresh, result.data.access);
           authenticationContext?.setAuthenticationStatus(user);
           history.push(Paths.base);
         },
         (error) => {
-          log.warn(`User login failed - ${error}`);
+          getLogger().warn(`User login failed - ${error}`);
           setLoginStatus({
             ...newLoginStatus,
             progress: 'Error',
@@ -163,7 +171,7 @@ export default function Login(): React.ReactElement {
         },
       );
     },
-    [authenticationContext, history, log, loginStatus],
+    [authenticationContext, history, loginStatus],
   );
 
   const forgottenPassword = useCallback(
@@ -175,7 +183,7 @@ export default function Login(): React.ReactElement {
 
   function emailInput() {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="email">
           Username (e-mail):
         </InputLabel>
@@ -183,6 +191,7 @@ export default function Login(): React.ReactElement {
           data-test="input-email"
           error={loginStatus.errorEmail !== undefined}
           id="email"
+          margin="none"
           onChange={doSetEmail}
           startAdornment={(
             <InputAdornment position="start">
@@ -203,7 +212,7 @@ export default function Login(): React.ReactElement {
 
   function passwordInput() {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="password">
           Password:
         </InputLabel>
@@ -211,6 +220,7 @@ export default function Login(): React.ReactElement {
           data-test="input-password"
           error={loginStatus.errorPassword !== undefined}
           id="password"
+          margin="none"
           onChange={doSetPassword}
           startAdornment={(
             <InputAdornment position="start">
@@ -244,7 +254,7 @@ export default function Login(): React.ReactElement {
           {passwordInput()}
         </CardContent>
         <CardActions>
-          <LoadingButton arial-label="Login" color="primary" loading={disableButtons} type="submit" variant="contained">
+          <LoadingButton arial-label="Login" className={classes.loginButton} color="primary" loading={disableButtons} type="submit" variant="contained">
             Login
           </LoadingButton>
           <Button
@@ -259,8 +269,10 @@ export default function Login(): React.ReactElement {
           </Button>
           <Button
             aria-label="Request a password reset"
+            color="secondary"
             data-test="button-reset"
             onClick={forgottenPassword}
+            variant="contained"
           >
             Forgotten Password?
           </Button>

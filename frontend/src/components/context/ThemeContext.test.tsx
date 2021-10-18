@@ -18,11 +18,13 @@
 
 import { mount } from 'enzyme';
 import React from 'react';
-import { ThemeProvider } from 'components/context/ThemeContext';
+import { AppThemeProvider } from 'components/context/ThemeContext';
 
 describe('theme context', () => {
   it('snapshot', () => {
-    const component = mount(<ThemeProvider><h1>Hello</h1></ThemeProvider>);
+    const component = mount(
+      <AppThemeProvider><h1>Hello</h1></AppThemeProvider>,
+    );
     expect(component).toMatchSnapshot();
   });
 });

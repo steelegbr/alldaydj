@@ -18,11 +18,9 @@
 
 /* eslint-disable import/prefer-default-export */
 
-import log, { Logger } from 'loglevel';
+import { Duration } from 'luxon';
 
-const DEFAULT_LOGGER_NAME = 'AllDayDJ';
-
-export const getLogger = (): Logger => {
-  const logger = log.getLogger(DEFAULT_LOGGER_NAME);
-  return logger;
+export const millisecondToMinutesSecond = (milliseconds: number) => {
+  const msObj = Duration.fromObject({ milliseconds });
+  return msObj.shiftTo('minutes', 'seconds').toFormat('m:ss');
 };

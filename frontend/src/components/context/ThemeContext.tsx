@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { getLogger } from 'services/LoggingService';
 
@@ -35,7 +35,7 @@ interface ThemeProviderProps {
   children: React.ReactElement;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps): React.ReactElement {
+export function AppThemeProvider({ children }: ThemeProviderProps): React.ReactElement {
   const logger = getLogger();
   const darkMode = localStorage.getItem('darkMode') === 'true';
   logger.info(`Dark mode setting from local storage: ${darkMode}.`);
@@ -44,9 +44,9 @@ export function ThemeProvider({ children }: ThemeProviderProps): React.ReactElem
     darkMode,
   });
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
-      type: themeSettings.darkMode ? 'dark' : 'light',
+      mode: themeSettings.darkMode ? 'dark' : 'light',
       primary: {
         light: '#e1ffb1',
         main: '#aed581',
@@ -67,9 +67,9 @@ export function ThemeProvider({ children }: ThemeProviderProps): React.ReactElem
 
   return (
     <ThemeContext.Provider value={{ themeSettings, setThemeSettings }}>
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         {children}
-      </MuiThemeProvider>
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 }

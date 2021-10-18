@@ -12,102 +12,159 @@ exports[`library table row renders single result 1`] = `
     }
   }
 >
-  <WithStyles(ForwardRef(TableRow))>
-    <ForwardRef(TableRow)
-      classes={
+  <ForwardRef(TableRow)>
+    <MuiTableRowRoot
+      as="tr"
+      className="MuiTableRow-root"
+      ownerState={
         Object {
-          "footer": "MuiTableRow-footer",
-          "head": "MuiTableRow-head",
-          "hover": "MuiTableRow-hover",
-          "root": "MuiTableRow-root",
-          "selected": "Mui-selected",
-        }
-      }
-    >
-      <tr
-        className="MuiTableRow-root"
-        role={null}
-      >
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
-              Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
-              }
-            }
-          >
-            <td
-              aria-sort={null}
-              className="MuiTableCell-root"
-            >
-              <WithStyles(ForwardRef(IconButton))
+          "children": Array [
+            <ForwardRef(TableCell)>
+              <ForwardRef(IconButton)
                 aria-label="expand search result"
                 data-test="result-expand"
                 onClick={[Function]}
                 size="small"
               >
-                <ForwardRef(IconButton)
+                <Memo />
+              </ForwardRef(IconButton)>
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              abc123
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              Artist Name
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              Cart Title
+            </ForwardRef(TableCell)>,
+          ],
+          "component": "tr",
+          "footer": undefined,
+          "head": undefined,
+          "hover": false,
+          "selected": false,
+        }
+      }
+      role={null}
+    >
+      <tr
+        className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+        role={null}
+      >
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
+              Object {
+                "align": "inherit",
+                "children": <ForwardRef(IconButton)
                   aria-label="expand search result"
-                  classes={
-                    Object {
-                      "colorInherit": "MuiIconButton-colorInherit",
-                      "colorPrimary": "MuiIconButton-colorPrimary",
-                      "colorSecondary": "MuiIconButton-colorSecondary",
-                      "disabled": "Mui-disabled",
-                      "edgeEnd": "MuiIconButton-edgeEnd",
-                      "edgeStart": "MuiIconButton-edgeStart",
-                      "label": "MuiIconButton-label",
-                      "root": "MuiIconButton-root",
-                      "sizeSmall": "MuiIconButton-sizeSmall",
-                    }
-                  }
                   data-test="result-expand"
                   onClick={[Function]}
                   size="small"
                 >
-                  <WithStyles(ForwardRef(ButtonBase))
+                  <Memo />
+                </ForwardRef(IconButton)>,
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+            >
+              <ForwardRef(IconButton)
+                aria-label="expand search result"
+                data-test="result-expand"
+                onClick={[Function]}
+                size="small"
+              >
+                <MuiIconButtonRoot
+                  aria-label="expand search result"
+                  centerRipple={true}
+                  className="MuiIconButton-root MuiIconButton-sizeSmall"
+                  data-test="result-expand"
+                  disabled={false}
+                  focusRipple={true}
+                  onClick={[Function]}
+                  ownerState={
+                    Object {
+                      "aria-label": "expand search result",
+                      "children": <Memo />,
+                      "color": "default",
+                      "data-test": "result-expand",
+                      "disableFocusRipple": false,
+                      "disabled": false,
+                      "edge": false,
+                      "onClick": [Function],
+                      "size": "small",
+                    }
+                  }
+                >
+                  <ForwardRef(ButtonBase)
                     aria-label="expand search result"
                     centerRipple={true}
-                    className="MuiIconButton-root MuiIconButton-sizeSmall"
+                    className="MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root"
                     data-test="result-expand"
                     disabled={false}
                     focusRipple={true}
                     onClick={[Function]}
                   >
-                    <ForwardRef(ButtonBase)
+                    <MuiButtonBaseRoot
                       aria-label="expand search result"
-                      centerRipple={true}
-                      className="MuiIconButton-root MuiIconButton-sizeSmall"
-                      classes={
-                        Object {
-                          "disabled": "Mui-disabled",
-                          "focusVisible": "Mui-focusVisible",
-                          "root": "MuiButtonBase-root",
-                        }
-                      }
+                      as="button"
+                      className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root"
                       data-test="result-expand"
                       disabled={false}
-                      focusRipple={true}
+                      onBlur={[Function]}
                       onClick={[Function]}
+                      onContextMenu={[Function]}
+                      onDragLeave={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      onMouseDown={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseUp={[Function]}
+                      onTouchEnd={[Function]}
+                      onTouchMove={[Function]}
+                      onTouchStart={[Function]}
+                      ownerState={
+                        Object {
+                          "aria-label": "expand search result",
+                          "centerRipple": true,
+                          "children": <Memo />,
+                          "className": "MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root",
+                          "component": "button",
+                          "data-test": "result-expand",
+                          "disableRipple": false,
+                          "disableTouchRipple": false,
+                          "disabled": false,
+                          "focusRipple": true,
+                          "focusVisible": false,
+                          "onClick": [Function],
+                          "tabIndex": 0,
+                        }
+                      }
+                      tabIndex={0}
+                      type="button"
                     >
                       <button
                         aria-label="expand search result"
-                        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
+                        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-test="result-expand"
                         disabled={false}
                         onBlur={[Function]}
                         onClick={[Function]}
+                        onContextMenu={[Function]}
                         onDragLeave={[Function]}
                         onFocus={[Function]}
                         onKeyDown={[Function]}
@@ -121,59 +178,52 @@ exports[`library table row renders single result 1`] = `
                         tabIndex={0}
                         type="button"
                       >
-                        <span
-                          className="MuiIconButton-label"
-                        >
-                          <ForwardRef(KeyboardArrowDownIcon)>
-                            <WithStyles(ForwardRef(SvgIcon))>
-                              <ForwardRef(SvgIcon)
-                                classes={
-                                  Object {
-                                    "colorAction": "MuiSvgIcon-colorAction",
-                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                    "colorError": "MuiSvgIcon-colorError",
-                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                    "root": "MuiSvgIcon-root",
-                                  }
+                        <ForwardRef(KeyboardArrowDownIcon)>
+                          <ForwardRef(SvgIcon)
+                            data-testid="KeyboardArrowDownIcon"
+                          >
+                            <MuiSvgIconRoot
+                              aria-hidden={true}
+                              as="svg"
+                              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                              data-testid="KeyboardArrowDownIcon"
+                              focusable="false"
+                              ownerState={
+                                Object {
+                                  "children": <path
+                                    d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                                  />,
+                                  "color": "inherit",
+                                  "component": "svg",
+                                  "data-testid": "KeyboardArrowDownIcon",
+                                  "fontSize": "medium",
+                                  "viewBox": "0 0 24 24",
                                 }
+                              }
+                              viewBox="0 0 24 24"
+                            >
+                              <svg
+                                aria-hidden={true}
+                                className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="KeyboardArrowDownIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden={true}
-                                  className="MuiSvgIcon-root"
-                                  focusable="false"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
-                                  />
-                                </svg>
-                              </ForwardRef(SvgIcon)>
-                            </WithStyles(ForwardRef(SvgIcon))>
-                          </ForwardRef(KeyboardArrowDownIcon)>
-                        </span>
-                        <WithStyles(memo)
+                                <path
+                                  d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                                />
+                              </svg>
+                            </MuiSvgIconRoot>
+                          </ForwardRef(SvgIcon)>
+                        </ForwardRef(KeyboardArrowDownIcon)>
+                        <ForwardRef(TouchRipple)
                           center={true}
                         >
-                          <ForwardRef(TouchRipple)
-                            center={true}
-                            classes={
-                              Object {
-                                "child": "MuiTouchRipple-child",
-                                "childLeaving": "MuiTouchRipple-childLeaving",
-                                "childPulsate": "MuiTouchRipple-childPulsate",
-                                "ripple": "MuiTouchRipple-ripple",
-                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
-                                "rippleVisible": "MuiTouchRipple-rippleVisible",
-                                "root": "MuiTouchRipple-root",
-                              }
-                            }
+                          <MuiTouchRippleRoot
+                            className="MuiTouchRipple-root"
                           >
                             <span
-                              className="MuiTouchRipple-root"
+                              className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                             >
                               <TransitionGroup
                                 childFactory={[Function]}
@@ -181,188 +231,238 @@ exports[`library table row renders single result 1`] = `
                                 exit={true}
                               />
                             </span>
-                          </ForwardRef(TouchRipple)>
-                        </WithStyles(memo)>
+                          </MuiTouchRippleRoot>
+                        </ForwardRef(TouchRipple)>
                       </button>
-                    </ForwardRef(ButtonBase)>
-                  </WithStyles(ForwardRef(ButtonBase))>
-                </ForwardRef(IconButton)>
-              </WithStyles(ForwardRef(IconButton))>
+                    </MuiButtonBaseRoot>
+                  </ForwardRef(ButtonBase)>
+                </MuiIconButtonRoot>
+              </ForwardRef(IconButton)>
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "abc123",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               abc123
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "Artist Name",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               Artist Name
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "Cart Title",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               Cart Title
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
       </tr>
-    </ForwardRef(TableRow)>
-  </WithStyles(ForwardRef(TableRow))>
-  <WithStyles(ForwardRef(TableRow))>
-    <ForwardRef(TableRow)
-      classes={
+    </MuiTableRowRoot>
+  </ForwardRef(TableRow)>
+  <ForwardRef(TableRow)>
+    <MuiTableRowRoot
+      as="tr"
+      className="MuiTableRow-root"
+      ownerState={
         Object {
-          "footer": "MuiTableRow-footer",
-          "head": "MuiTableRow-head",
-          "hover": "MuiTableRow-hover",
-          "root": "MuiTableRow-root",
-          "selected": "Mui-selected",
+          "children": <ForwardRef(TableCell)
+            className="makeStyles-collapsedRow-1"
+            colSpan={4}
+          >
+            <ForwardRef(Collapse)
+              in={false}
+              timeout="auto"
+              unmountOnExit={true}
+            >
+              <ForwardRef(Box)
+                className="makeStyles-collapsedBox-2"
+              >
+                <ForwardRef(Button)
+                  aria-controls="preview audio"
+                  onClick={[Function]}
+                >
+                  <Memo />
+                   
+                  Preview Cart
+                </ForwardRef(Button)>
+                <AudioDownloadButton
+                  cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                  downloadType="Compressed"
+                  label="abc123"
+                />
+                <AudioDownloadButton
+                  cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                  downloadType="Linear"
+                  label="abc123"
+                />
+              </ForwardRef(Box)>
+            </ForwardRef(Collapse)>
+          </ForwardRef(TableCell)>,
+          "component": "tr",
+          "footer": undefined,
+          "head": undefined,
+          "hover": false,
+          "selected": false,
         }
       }
+      role={null}
     >
       <tr
-        className="MuiTableRow-root"
+        className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
         role={null}
       >
-        <WithStyles(ForwardRef(TableCell))
+        <ForwardRef(TableCell)
           className="makeStyles-collapsedRow-1"
           colSpan={4}
         >
-          <ForwardRef(TableCell)
-            className="makeStyles-collapsedRow-1"
-            classes={
-              Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
-              }
-            }
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium makeStyles-collapsedRow-1"
             colSpan={4}
-          >
-            <td
-              aria-sort={null}
-              className="MuiTableCell-root makeStyles-collapsedRow-1"
-              colSpan={4}
-            >
-              <WithStyles(ForwardRef(Collapse))
-                in={false}
-                timeout="auto"
-                unmountOnExit={true}
-              >
-                <ForwardRef(Collapse)
-                  classes={
-                    Object {
-                      "entered": "MuiCollapse-entered",
-                      "hidden": "MuiCollapse-hidden",
-                      "root": "MuiCollapse-root",
-                      "wrapper": "MuiCollapse-wrapper",
-                      "wrapperInner": "MuiCollapse-wrapperInner",
-                    }
-                  }
+            ownerState={
+              Object {
+                "align": "inherit",
+                "children": <ForwardRef(Collapse)
                   in={false}
                   timeout="auto"
                   unmountOnExit={true}
                 >
-                  <Transition
-                    addEndListener={[Function]}
-                    appear={false}
-                    enter={true}
-                    exit={true}
-                    in={false}
-                    mountOnEnter={false}
-                    onEnter={[Function]}
-                    onEntered={[Function]}
-                    onEntering={[Function]}
-                    onExit={[Function]}
-                    onExited={[Function]}
-                    onExiting={[Function]}
-                    timeout={null}
-                    unmountOnExit={true}
-                  />
-                </ForwardRef(Collapse)>
-              </WithStyles(ForwardRef(Collapse))>
+                  <ForwardRef(Box)
+                    className="makeStyles-collapsedBox-2"
+                  >
+                    <ForwardRef(Button)
+                      aria-controls="preview audio"
+                      onClick={[Function]}
+                    >
+                      <Memo />
+                       
+                      Preview Cart
+                    </ForwardRef(Button)>
+                    <AudioDownloadButton
+                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                      downloadType="Compressed"
+                      label="abc123"
+                    />
+                    <AudioDownloadButton
+                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                      downloadType="Linear"
+                      label="abc123"
+                    />
+                  </ForwardRef(Box)>
+                </ForwardRef(Collapse)>,
+                "className": "makeStyles-collapsedRow-1",
+                "colSpan": 4,
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-sizeMedium makeStyles-collapsedRow-1 css-bsph2u-MuiTableCell-root"
+              colSpan={4}
+            >
+              <ForwardRef(Collapse)
+                in={false}
+                timeout="auto"
+                unmountOnExit={true}
+              >
+                <Transition
+                  addEndListener={[Function]}
+                  appear={false}
+                  enter={true}
+                  exit={true}
+                  in={false}
+                  mountOnEnter={false}
+                  nodeRef={
+                    Object {
+                      "current": null,
+                    }
+                  }
+                  onEnter={[Function]}
+                  onEntered={[Function]}
+                  onEntering={[Function]}
+                  onExit={[Function]}
+                  onExited={[Function]}
+                  onExiting={[Function]}
+                  timeout={null}
+                  unmountOnExit={true}
+                />
+              </ForwardRef(Collapse)>
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
       </tr>
-    </ForwardRef(TableRow)>
-  </WithStyles(ForwardRef(TableRow))>
+    </MuiTableRowRoot>
+  </ForwardRef(TableRow)>
 </LibraryTableRow>
 `;
 
@@ -378,102 +478,159 @@ exports[`library table row renders single result expanded 1`] = `
     }
   }
 >
-  <WithStyles(ForwardRef(TableRow))>
-    <ForwardRef(TableRow)
-      classes={
+  <ForwardRef(TableRow)>
+    <MuiTableRowRoot
+      as="tr"
+      className="MuiTableRow-root"
+      ownerState={
         Object {
-          "footer": "MuiTableRow-footer",
-          "head": "MuiTableRow-head",
-          "hover": "MuiTableRow-hover",
-          "root": "MuiTableRow-root",
-          "selected": "Mui-selected",
-        }
-      }
-    >
-      <tr
-        className="MuiTableRow-root"
-        role={null}
-      >
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
-              Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
-              }
-            }
-          >
-            <td
-              aria-sort={null}
-              className="MuiTableCell-root"
-            >
-              <WithStyles(ForwardRef(IconButton))
+          "children": Array [
+            <ForwardRef(TableCell)>
+              <ForwardRef(IconButton)
                 aria-label="expand search result"
                 data-test="result-expand"
                 onClick={[Function]}
                 size="small"
               >
-                <ForwardRef(IconButton)
+                <Memo />
+              </ForwardRef(IconButton)>
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              abc123
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              Artist Name
+            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell)>
+              Cart Title
+            </ForwardRef(TableCell)>,
+          ],
+          "component": "tr",
+          "footer": undefined,
+          "head": undefined,
+          "hover": false,
+          "selected": false,
+        }
+      }
+      role={null}
+    >
+      <tr
+        className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+        role={null}
+      >
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
+              Object {
+                "align": "inherit",
+                "children": <ForwardRef(IconButton)
                   aria-label="expand search result"
-                  classes={
-                    Object {
-                      "colorInherit": "MuiIconButton-colorInherit",
-                      "colorPrimary": "MuiIconButton-colorPrimary",
-                      "colorSecondary": "MuiIconButton-colorSecondary",
-                      "disabled": "Mui-disabled",
-                      "edgeEnd": "MuiIconButton-edgeEnd",
-                      "edgeStart": "MuiIconButton-edgeStart",
-                      "label": "MuiIconButton-label",
-                      "root": "MuiIconButton-root",
-                      "sizeSmall": "MuiIconButton-sizeSmall",
-                    }
-                  }
                   data-test="result-expand"
                   onClick={[Function]}
                   size="small"
                 >
-                  <WithStyles(ForwardRef(ButtonBase))
+                  <Memo />
+                </ForwardRef(IconButton)>,
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+            >
+              <ForwardRef(IconButton)
+                aria-label="expand search result"
+                data-test="result-expand"
+                onClick={[Function]}
+                size="small"
+              >
+                <MuiIconButtonRoot
+                  aria-label="expand search result"
+                  centerRipple={true}
+                  className="MuiIconButton-root MuiIconButton-sizeSmall"
+                  data-test="result-expand"
+                  disabled={false}
+                  focusRipple={true}
+                  onClick={[Function]}
+                  ownerState={
+                    Object {
+                      "aria-label": "expand search result",
+                      "children": <Memo />,
+                      "color": "default",
+                      "data-test": "result-expand",
+                      "disableFocusRipple": false,
+                      "disabled": false,
+                      "edge": false,
+                      "onClick": [Function],
+                      "size": "small",
+                    }
+                  }
+                >
+                  <ForwardRef(ButtonBase)
                     aria-label="expand search result"
                     centerRipple={true}
-                    className="MuiIconButton-root MuiIconButton-sizeSmall"
+                    className="MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root"
                     data-test="result-expand"
                     disabled={false}
                     focusRipple={true}
                     onClick={[Function]}
                   >
-                    <ForwardRef(ButtonBase)
+                    <MuiButtonBaseRoot
                       aria-label="expand search result"
-                      centerRipple={true}
-                      className="MuiIconButton-root MuiIconButton-sizeSmall"
-                      classes={
-                        Object {
-                          "disabled": "Mui-disabled",
-                          "focusVisible": "Mui-focusVisible",
-                          "root": "MuiButtonBase-root",
-                        }
-                      }
+                      as="button"
+                      className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root"
                       data-test="result-expand"
                       disabled={false}
-                      focusRipple={true}
+                      onBlur={[Function]}
                       onClick={[Function]}
+                      onContextMenu={[Function]}
+                      onDragLeave={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      onMouseDown={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseUp={[Function]}
+                      onTouchEnd={[Function]}
+                      onTouchMove={[Function]}
+                      onTouchStart={[Function]}
+                      ownerState={
+                        Object {
+                          "aria-label": "expand search result",
+                          "centerRipple": true,
+                          "children": <Memo />,
+                          "className": "MuiIconButton-root MuiIconButton-sizeSmall css-1oewe7w-MuiIconButton-root",
+                          "component": "button",
+                          "data-test": "result-expand",
+                          "disableRipple": false,
+                          "disableTouchRipple": false,
+                          "disabled": false,
+                          "focusRipple": true,
+                          "focusVisible": false,
+                          "onClick": [Function],
+                          "tabIndex": 0,
+                        }
+                      }
+                      tabIndex={0}
+                      type="button"
                     >
                       <button
                         aria-label="expand search result"
-                        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
+                        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-test="result-expand"
                         disabled={false}
                         onBlur={[Function]}
                         onClick={[Function]}
+                        onContextMenu={[Function]}
                         onDragLeave={[Function]}
                         onFocus={[Function]}
                         onKeyDown={[Function]}
@@ -487,59 +644,52 @@ exports[`library table row renders single result expanded 1`] = `
                         tabIndex={0}
                         type="button"
                       >
-                        <span
-                          className="MuiIconButton-label"
-                        >
-                          <ForwardRef(KeyboardArrowUpIcon)>
-                            <WithStyles(ForwardRef(SvgIcon))>
-                              <ForwardRef(SvgIcon)
-                                classes={
-                                  Object {
-                                    "colorAction": "MuiSvgIcon-colorAction",
-                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                    "colorError": "MuiSvgIcon-colorError",
-                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                    "root": "MuiSvgIcon-root",
-                                  }
+                        <ForwardRef(KeyboardArrowUpIcon)>
+                          <ForwardRef(SvgIcon)
+                            data-testid="KeyboardArrowUpIcon"
+                          >
+                            <MuiSvgIconRoot
+                              aria-hidden={true}
+                              as="svg"
+                              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                              data-testid="KeyboardArrowUpIcon"
+                              focusable="false"
+                              ownerState={
+                                Object {
+                                  "children": <path
+                                    d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"
+                                  />,
+                                  "color": "inherit",
+                                  "component": "svg",
+                                  "data-testid": "KeyboardArrowUpIcon",
+                                  "fontSize": "medium",
+                                  "viewBox": "0 0 24 24",
                                 }
+                              }
+                              viewBox="0 0 24 24"
+                            >
+                              <svg
+                                aria-hidden={true}
+                                className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="KeyboardArrowUpIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
                               >
-                                <svg
-                                  aria-hidden={true}
-                                  className="MuiSvgIcon-root"
-                                  focusable="false"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"
-                                  />
-                                </svg>
-                              </ForwardRef(SvgIcon)>
-                            </WithStyles(ForwardRef(SvgIcon))>
-                          </ForwardRef(KeyboardArrowUpIcon)>
-                        </span>
-                        <WithStyles(memo)
+                                <path
+                                  d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"
+                                />
+                              </svg>
+                            </MuiSvgIconRoot>
+                          </ForwardRef(SvgIcon)>
+                        </ForwardRef(KeyboardArrowUpIcon)>
+                        <ForwardRef(TouchRipple)
                           center={true}
                         >
-                          <ForwardRef(TouchRipple)
-                            center={true}
-                            classes={
-                              Object {
-                                "child": "MuiTouchRipple-child",
-                                "childLeaving": "MuiTouchRipple-childLeaving",
-                                "childPulsate": "MuiTouchRipple-childPulsate",
-                                "ripple": "MuiTouchRipple-ripple",
-                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
-                                "rippleVisible": "MuiTouchRipple-rippleVisible",
-                                "root": "MuiTouchRipple-root",
-                              }
-                            }
+                          <MuiTouchRippleRoot
+                            className="MuiTouchRipple-root"
                           >
                             <span
-                              className="MuiTouchRipple-root"
+                              className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                             >
                               <TransitionGroup
                                 childFactory={[Function]}
@@ -547,666 +697,1381 @@ exports[`library table row renders single result expanded 1`] = `
                                 exit={true}
                               />
                             </span>
-                          </ForwardRef(TouchRipple)>
-                        </WithStyles(memo)>
+                          </MuiTouchRippleRoot>
+                        </ForwardRef(TouchRipple)>
                       </button>
-                    </ForwardRef(ButtonBase)>
-                  </WithStyles(ForwardRef(ButtonBase))>
-                </ForwardRef(IconButton)>
-              </WithStyles(ForwardRef(IconButton))>
+                    </MuiButtonBaseRoot>
+                  </ForwardRef(ButtonBase)>
+                </MuiIconButtonRoot>
+              </ForwardRef(IconButton)>
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "abc123",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               abc123
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "Artist Name",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               Artist Name
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
-        <WithStyles(ForwardRef(TableCell))>
-          <ForwardRef(TableCell)
-            classes={
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
+        <ForwardRef(TableCell)>
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium"
+            ownerState={
               Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
+                "align": "inherit",
+                "children": "Cart Title",
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
               }
             }
           >
             <td
               aria-sort={null}
-              className="MuiTableCell-root"
+              className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
             >
               Cart Title
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
       </tr>
-    </ForwardRef(TableRow)>
-  </WithStyles(ForwardRef(TableRow))>
-  <WithStyles(ForwardRef(TableRow))>
-    <ForwardRef(TableRow)
-      classes={
+    </MuiTableRowRoot>
+  </ForwardRef(TableRow)>
+  <ForwardRef(TableRow)>
+    <MuiTableRowRoot
+      as="tr"
+      className="MuiTableRow-root"
+      ownerState={
         Object {
-          "footer": "MuiTableRow-footer",
-          "head": "MuiTableRow-head",
-          "hover": "MuiTableRow-hover",
-          "root": "MuiTableRow-root",
-          "selected": "Mui-selected",
+          "children": <ForwardRef(TableCell)
+            className="makeStyles-collapsedRow-1"
+            colSpan={4}
+          >
+            <ForwardRef(Collapse)
+              in={true}
+              timeout="auto"
+              unmountOnExit={true}
+            >
+              <ForwardRef(Box)
+                className="makeStyles-collapsedBox-2"
+              >
+                <ForwardRef(Button)
+                  aria-controls="preview audio"
+                  onClick={[Function]}
+                >
+                  <Memo />
+                   
+                  Preview Cart
+                </ForwardRef(Button)>
+                <AudioDownloadButton
+                  cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                  downloadType="Compressed"
+                  label="abc123"
+                />
+                <AudioDownloadButton
+                  cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                  downloadType="Linear"
+                  label="abc123"
+                />
+              </ForwardRef(Box)>
+            </ForwardRef(Collapse)>
+          </ForwardRef(TableCell)>,
+          "component": "tr",
+          "footer": undefined,
+          "head": undefined,
+          "hover": false,
+          "selected": false,
         }
       }
+      role={null}
     >
       <tr
-        className="MuiTableRow-root"
+        className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
         role={null}
       >
-        <WithStyles(ForwardRef(TableCell))
+        <ForwardRef(TableCell)
           className="makeStyles-collapsedRow-1"
           colSpan={4}
         >
-          <ForwardRef(TableCell)
-            className="makeStyles-collapsedRow-1"
-            classes={
-              Object {
-                "alignCenter": "MuiTableCell-alignCenter",
-                "alignJustify": "MuiTableCell-alignJustify",
-                "alignLeft": "MuiTableCell-alignLeft",
-                "alignRight": "MuiTableCell-alignRight",
-                "body": "MuiTableCell-body",
-                "footer": "MuiTableCell-footer",
-                "head": "MuiTableCell-head",
-                "paddingCheckbox": "MuiTableCell-paddingCheckbox",
-                "paddingNone": "MuiTableCell-paddingNone",
-                "root": "MuiTableCell-root",
-                "sizeSmall": "MuiTableCell-sizeSmall",
-                "stickyHeader": "MuiTableCell-stickyHeader",
-              }
-            }
+          <MuiTableCellRoot
+            aria-sort={null}
+            as="td"
+            className="MuiTableCell-root MuiTableCell-sizeMedium makeStyles-collapsedRow-1"
             colSpan={4}
-          >
-            <td
-              aria-sort={null}
-              className="MuiTableCell-root makeStyles-collapsedRow-1"
-              colSpan={4}
-            >
-              <WithStyles(ForwardRef(Collapse))
-                in={true}
-                timeout="auto"
-                unmountOnExit={true}
-              >
-                <ForwardRef(Collapse)
-                  classes={
-                    Object {
-                      "entered": "MuiCollapse-entered",
-                      "hidden": "MuiCollapse-hidden",
-                      "root": "MuiCollapse-root",
-                      "wrapper": "MuiCollapse-wrapper",
-                      "wrapperInner": "MuiCollapse-wrapperInner",
-                    }
-                  }
+            ownerState={
+              Object {
+                "align": "inherit",
+                "children": <ForwardRef(Collapse)
                   in={true}
                   timeout="auto"
                   unmountOnExit={true}
                 >
-                  <Transition
-                    addEndListener={[Function]}
-                    appear={false}
-                    enter={true}
-                    exit={true}
-                    in={true}
-                    mountOnEnter={false}
-                    onEnter={[Function]}
-                    onEntered={[Function]}
-                    onEntering={[Function]}
-                    onExit={[Function]}
-                    onExited={[Function]}
-                    onExiting={[Function]}
-                    timeout={null}
-                    unmountOnExit={true}
+                  <ForwardRef(Box)
+                    className="makeStyles-collapsedBox-2"
+                  >
+                    <ForwardRef(Button)
+                      aria-controls="preview audio"
+                      onClick={[Function]}
+                    >
+                      <Memo />
+                       
+                      Preview Cart
+                    </ForwardRef(Button)>
+                    <AudioDownloadButton
+                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                      downloadType="Compressed"
+                      label="abc123"
+                    />
+                    <AudioDownloadButton
+                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                      downloadType="Linear"
+                      label="abc123"
+                    />
+                  </ForwardRef(Box)>
+                </ForwardRef(Collapse)>,
+                "className": "makeStyles-collapsedRow-1",
+                "colSpan": 4,
+                "component": "td",
+                "padding": "normal",
+                "size": "medium",
+                "sortDirection": undefined,
+                "stickyHeader": false,
+                "variant": undefined,
+              }
+            }
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-sizeMedium makeStyles-collapsedRow-1 css-bsph2u-MuiTableCell-root"
+              colSpan={4}
+            >
+              <ForwardRef(Collapse)
+                in={true}
+                timeout="auto"
+                unmountOnExit={true}
+              >
+                <Transition
+                  addEndListener={[Function]}
+                  appear={false}
+                  enter={true}
+                  exit={true}
+                  in={true}
+                  mountOnEnter={false}
+                  nodeRef={
+                    Object {
+                      "current": <div
+                        class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
+                        style="min-height: 0px; height: 0px; transition-duration: 0ms;"
+                      >
+                        <div
+                          class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                        >
+                          <div
+                            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                          >
+                            <div
+                              class="makeStyles-collapsedBox-2 MuiBox-root css-0"
+                            >
+                              <button
+                                aria-controls="preview audio"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="PlayArrowIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M8 5v14l11-7z"
+                                  />
+                                </svg>
+                                 
+                                Preview Cart
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-controls="download compressed audio"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                data-test="button-download-compressed"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="GetAppIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                  />
+                                </svg>
+                                 
+                                Compressed (OGG)
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-controls="download linear audio"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                data-test="button-download-linear"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="GetAppIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                  />
+                                </svg>
+                                 
+                                Linear (WAV)
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>,
+                    }
+                  }
+                  onEnter={[Function]}
+                  onEntered={[Function]}
+                  onEntering={[Function]}
+                  onExit={[Function]}
+                  onExited={[Function]}
+                  onExiting={[Function]}
+                  timeout={null}
+                  unmountOnExit={true}
+                >
+                  <MuiCollapseRoot
+                    className="MuiCollapse-root MuiCollapse-vertical"
+                    ownerState={
+                      Object {
+                        "children": <ForwardRef(Box)
+                          className="makeStyles-collapsedBox-2"
+                        >
+                          <ForwardRef(Button)
+                            aria-controls="preview audio"
+                            onClick={[Function]}
+                          >
+                            <Memo />
+                             
+                            Preview Cart
+                          </ForwardRef(Button)>
+                          <AudioDownloadButton
+                            cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                            downloadType="Compressed"
+                            label="abc123"
+                          />
+                          <AudioDownloadButton
+                            cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                            downloadType="Linear"
+                            label="abc123"
+                          />
+                        </ForwardRef(Box)>,
+                        "collapsedSize": "0px",
+                        "in": true,
+                        "orientation": "vertical",
+                        "state": "entering",
+                        "timeout": "auto",
+                        "unmountOnExit": true,
+                      }
+                    }
+                    style={
+                      Object {
+                        "minHeight": "0px",
+                      }
+                    }
                   >
                     <div
-                      className="MuiCollapse-root"
+                      className="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
                       style={
                         Object {
                           "minHeight": "0px",
                         }
                       }
                     >
-                      <div
-                        className="MuiCollapse-wrapper"
+                      <MuiCollapseWrapper
+                        className="MuiCollapse-wrapper MuiCollapse-vertical"
+                        ownerState={
+                          Object {
+                            "children": <ForwardRef(Box)
+                              className="makeStyles-collapsedBox-2"
+                            >
+                              <ForwardRef(Button)
+                                aria-controls="preview audio"
+                                onClick={[Function]}
+                              >
+                                <Memo />
+                                 
+                                Preview Cart
+                              </ForwardRef(Button)>
+                              <AudioDownloadButton
+                                cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                downloadType="Compressed"
+                                label="abc123"
+                              />
+                              <AudioDownloadButton
+                                cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                downloadType="Linear"
+                                label="abc123"
+                              />
+                            </ForwardRef(Box)>,
+                            "collapsedSize": "0px",
+                            "in": true,
+                            "orientation": "vertical",
+                            "state": "entering",
+                            "timeout": "auto",
+                            "unmountOnExit": true,
+                          }
+                        }
                       >
                         <div
-                          className="MuiCollapse-wrapperInner"
+                          className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
                         >
-                          <Styled(MuiBox)
-                            className="makeStyles-collapsedBox-2"
+                          <MuiCollapseWrapperInner
+                            className="MuiCollapse-wrapperInner MuiCollapse-vertical"
+                            ownerState={
+                              Object {
+                                "children": <ForwardRef(Box)
+                                  className="makeStyles-collapsedBox-2"
+                                >
+                                  <ForwardRef(Button)
+                                    aria-controls="preview audio"
+                                    onClick={[Function]}
+                                  >
+                                    <Memo />
+                                     
+                                    Preview Cart
+                                  </ForwardRef(Button)>
+                                  <AudioDownloadButton
+                                    cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                    downloadType="Compressed"
+                                    label="abc123"
+                                  />
+                                  <AudioDownloadButton
+                                    cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                    downloadType="Linear"
+                                    label="abc123"
+                                  />
+                                </ForwardRef(Box)>,
+                                "collapsedSize": "0px",
+                                "in": true,
+                                "orientation": "vertical",
+                                "state": "entering",
+                                "timeout": "auto",
+                                "unmountOnExit": true,
+                              }
+                            }
                           >
                             <div
-                              className="MuiBox-root MuiBox-root-3 makeStyles-collapsedBox-2"
+                              className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                             >
-                              <WithStyles(ForwardRef(Button))
-                                aria-controls="preview audio"
+                              <ForwardRef(Box)
+                                className="makeStyles-collapsedBox-2"
                               >
-                                <ForwardRef(Button)
-                                  aria-controls="preview audio"
-                                  classes={
+                                <Styled(div)
+                                  as="div"
+                                  className="makeStyles-collapsedBox-2 MuiBox-root"
+                                  sx={Object {}}
+                                  theme={
                                     Object {
-                                      "colorInherit": "MuiButton-colorInherit",
-                                      "contained": "MuiButton-contained",
-                                      "containedPrimary": "MuiButton-containedPrimary",
-                                      "containedSecondary": "MuiButton-containedSecondary",
-                                      "containedSizeLarge": "MuiButton-containedSizeLarge",
-                                      "containedSizeSmall": "MuiButton-containedSizeSmall",
-                                      "disableElevation": "MuiButton-disableElevation",
-                                      "disabled": "Mui-disabled",
-                                      "endIcon": "MuiButton-endIcon",
-                                      "focusVisible": "Mui-focusVisible",
-                                      "fullWidth": "MuiButton-fullWidth",
-                                      "iconSizeLarge": "MuiButton-iconSizeLarge",
-                                      "iconSizeMedium": "MuiButton-iconSizeMedium",
-                                      "iconSizeSmall": "MuiButton-iconSizeSmall",
-                                      "label": "MuiButton-label",
-                                      "outlined": "MuiButton-outlined",
-                                      "outlinedPrimary": "MuiButton-outlinedPrimary",
-                                      "outlinedSecondary": "MuiButton-outlinedSecondary",
-                                      "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
-                                      "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
-                                      "root": "MuiButton-root",
-                                      "sizeLarge": "MuiButton-sizeLarge",
-                                      "sizeSmall": "MuiButton-sizeSmall",
-                                      "startIcon": "MuiButton-startIcon",
-                                      "text": "MuiButton-text",
-                                      "textPrimary": "MuiButton-textPrimary",
-                                      "textSecondary": "MuiButton-textSecondary",
-                                      "textSizeLarge": "MuiButton-textSizeLarge",
-                                      "textSizeSmall": "MuiButton-textSizeSmall",
+                                      "breakpoints": Object {
+                                        "between": [Function],
+                                        "down": [Function],
+                                        "keys": Array [
+                                          "xs",
+                                          "sm",
+                                          "md",
+                                          "lg",
+                                          "xl",
+                                        ],
+                                        "only": [Function],
+                                        "unit": "px",
+                                        "up": [Function],
+                                        "values": Object {
+                                          "lg": 1200,
+                                          "md": 900,
+                                          "sm": 600,
+                                          "xl": 1536,
+                                          "xs": 0,
+                                        },
+                                      },
+                                      "components": Object {},
+                                      "direction": "ltr",
+                                      "mixins": Object {
+                                        "toolbar": Object {
+                                          "@media (min-width:0px) and (orientation: landscape)": Object {
+                                            "minHeight": 48,
+                                          },
+                                          "@media (min-width:600px)": Object {
+                                            "minHeight": 64,
+                                          },
+                                          "minHeight": 56,
+                                        },
+                                      },
+                                      "palette": Object {
+                                        "action": Object {
+                                          "activatedOpacity": 0.12,
+                                          "active": "rgba(0, 0, 0, 0.54)",
+                                          "disabled": "rgba(0, 0, 0, 0.26)",
+                                          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+                                          "disabledOpacity": 0.38,
+                                          "focus": "rgba(0, 0, 0, 0.12)",
+                                          "focusOpacity": 0.12,
+                                          "hover": "rgba(0, 0, 0, 0.04)",
+                                          "hoverOpacity": 0.04,
+                                          "selected": "rgba(0, 0, 0, 0.08)",
+                                          "selectedOpacity": 0.08,
+                                        },
+                                        "augmentColor": [Function],
+                                        "background": Object {
+                                          "default": "#fff",
+                                          "paper": "#fff",
+                                        },
+                                        "common": Object {
+                                          "black": "#000",
+                                          "white": "#fff",
+                                        },
+                                        "contrastThreshold": 3,
+                                        "divider": "rgba(0, 0, 0, 0.12)",
+                                        "error": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#c62828",
+                                          "light": "#ef5350",
+                                          "main": "#d32f2f",
+                                        },
+                                        "getContrastText": [Function],
+                                        "grey": Object {
+                                          "100": "#f5f5f5",
+                                          "200": "#eeeeee",
+                                          "300": "#e0e0e0",
+                                          "400": "#bdbdbd",
+                                          "50": "#fafafa",
+                                          "500": "#9e9e9e",
+                                          "600": "#757575",
+                                          "700": "#616161",
+                                          "800": "#424242",
+                                          "900": "#212121",
+                                          "A100": "#f5f5f5",
+                                          "A200": "#eeeeee",
+                                          "A400": "#bdbdbd",
+                                          "A700": "#616161",
+                                        },
+                                        "info": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#01579b",
+                                          "light": "#03a9f4",
+                                          "main": "#0288d1",
+                                        },
+                                        "mode": "light",
+                                        "primary": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#1565c0",
+                                          "light": "#42a5f5",
+                                          "main": "#1976d2",
+                                        },
+                                        "secondary": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#7b1fa2",
+                                          "light": "#ba68c8",
+                                          "main": "#9c27b0",
+                                        },
+                                        "success": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#1b5e20",
+                                          "light": "#4caf50",
+                                          "main": "#2e7d32",
+                                        },
+                                        "text": Object {
+                                          "disabled": "rgba(0, 0, 0, 0.38)",
+                                          "primary": "rgba(0, 0, 0, 0.87)",
+                                          "secondary": "rgba(0, 0, 0, 0.6)",
+                                        },
+                                        "tonalOffset": 0.2,
+                                        "warning": Object {
+                                          "contrastText": "#fff",
+                                          "dark": "#e65100",
+                                          "light": "#ff9800",
+                                          "main": "#ED6C02",
+                                        },
+                                      },
+                                      "shadows": Array [
+                                        "none",
+                                        "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+                                        "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                                        "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+                                        "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+                                        "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+                                        "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+                                        "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+                                        "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+                                        "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+                                        "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+                                        "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+                                        "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+                                        "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+                                        "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+                                        "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+                                        "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+                                        "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+                                        "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+                                        "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+                                        "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+                                        "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+                                        "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+                                        "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+                                        "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+                                      ],
+                                      "shape": Object {
+                                        "borderRadius": 4,
+                                      },
+                                      "spacing": [Function],
+                                      "transitions": Object {
+                                        "create": [Function],
+                                        "duration": Object {
+                                          "complex": 375,
+                                          "enteringScreen": 225,
+                                          "leavingScreen": 195,
+                                          "short": 250,
+                                          "shorter": 200,
+                                          "shortest": 150,
+                                          "standard": 300,
+                                        },
+                                        "easing": Object {
+                                          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+                                          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+                                          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+                                          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)",
+                                        },
+                                        "getAutoHeightDuration": [Function],
+                                      },
+                                      "typography": Object {
+                                        "body1": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "1rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.00938em",
+                                          "lineHeight": 1.5,
+                                        },
+                                        "body2": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "0.875rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.01071em",
+                                          "lineHeight": 1.43,
+                                        },
+                                        "button": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "0.875rem",
+                                          "fontWeight": 500,
+                                          "letterSpacing": "0.02857em",
+                                          "lineHeight": 1.75,
+                                          "textTransform": "uppercase",
+                                        },
+                                        "caption": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "0.75rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.03333em",
+                                          "lineHeight": 1.66,
+                                        },
+                                        "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                        "fontSize": 14,
+                                        "fontWeightBold": 700,
+                                        "fontWeightLight": 300,
+                                        "fontWeightMedium": 500,
+                                        "fontWeightRegular": 400,
+                                        "h1": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "6rem",
+                                          "fontWeight": 300,
+                                          "letterSpacing": "-0.01562em",
+                                          "lineHeight": 1.167,
+                                        },
+                                        "h2": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "3.75rem",
+                                          "fontWeight": 300,
+                                          "letterSpacing": "-0.00833em",
+                                          "lineHeight": 1.2,
+                                        },
+                                        "h3": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "3rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0em",
+                                          "lineHeight": 1.167,
+                                        },
+                                        "h4": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "2.125rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.00735em",
+                                          "lineHeight": 1.235,
+                                        },
+                                        "h5": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "1.5rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0em",
+                                          "lineHeight": 1.334,
+                                        },
+                                        "h6": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "1.25rem",
+                                          "fontWeight": 500,
+                                          "letterSpacing": "0.0075em",
+                                          "lineHeight": 1.6,
+                                        },
+                                        "htmlFontSize": 16,
+                                        "overline": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "0.75rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.08333em",
+                                          "lineHeight": 2.66,
+                                          "textTransform": "uppercase",
+                                        },
+                                        "pxToRem": [Function],
+                                        "subtitle1": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "1rem",
+                                          "fontWeight": 400,
+                                          "letterSpacing": "0.00938em",
+                                          "lineHeight": 1.75,
+                                        },
+                                        "subtitle2": Object {
+                                          "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
+                                          "fontSize": "0.875rem",
+                                          "fontWeight": 500,
+                                          "letterSpacing": "0.00714em",
+                                          "lineHeight": 1.57,
+                                        },
+                                      },
+                                      "zIndex": Object {
+                                        "appBar": 1100,
+                                        "drawer": 1200,
+                                        "mobileStepper": 1000,
+                                        "modal": 1300,
+                                        "snackbar": 1400,
+                                        "speedDial": 1050,
+                                        "tooltip": 1500,
+                                      },
                                     }
                                   }
                                 >
-                                  <WithStyles(ForwardRef(ButtonBase))
-                                    aria-controls="preview audio"
-                                    className="MuiButton-root MuiButton-text"
-                                    component="button"
-                                    disabled={false}
-                                    focusRipple={true}
-                                    focusVisibleClassName="Mui-focusVisible"
-                                    type="button"
+                                  <div
+                                    className="makeStyles-collapsedBox-2 MuiBox-root css-0"
                                   >
-                                    <ForwardRef(ButtonBase)
+                                    <ForwardRef(Button)
                                       aria-controls="preview audio"
-                                      className="MuiButton-root MuiButton-text"
-                                      classes={
-                                        Object {
-                                          "disabled": "Mui-disabled",
-                                          "focusVisible": "Mui-focusVisible",
-                                          "root": "MuiButtonBase-root",
-                                        }
-                                      }
-                                      component="button"
-                                      disabled={false}
-                                      focusRipple={true}
-                                      focusVisibleClassName="Mui-focusVisible"
-                                      type="button"
+                                      onClick={[Function]}
                                     >
-                                      <button
+                                      <MuiButtonRoot
                                         aria-controls="preview audio"
-                                        className="MuiButtonBase-root MuiButton-root MuiButton-text"
+                                        classes={
+                                          Object {
+                                            "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                            "label": "MuiButton-label",
+                                            "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                            "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                          }
+                                        }
+                                        component="button"
                                         disabled={false}
-                                        onBlur={[Function]}
-                                        onDragLeave={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        onKeyUp={[Function]}
-                                        onMouseDown={[Function]}
-                                        onMouseLeave={[Function]}
-                                        onMouseUp={[Function]}
-                                        onTouchEnd={[Function]}
-                                        onTouchMove={[Function]}
-                                        onTouchStart={[Function]}
-                                        tabIndex={0}
-                                        type="button"
+                                        focusRipple={true}
+                                        focusVisibleClassName=""
+                                        onClick={[Function]}
+                                        ownerState={
+                                          Object {
+                                            "aria-controls": "preview audio",
+                                            "children": Array [
+                                              <Memo />,
+                                              " ",
+                                              "Preview Cart",
+                                            ],
+                                            "color": "primary",
+                                            "component": "button",
+                                            "disableElevation": false,
+                                            "disableFocusRipple": false,
+                                            "disabled": false,
+                                            "fullWidth": false,
+                                            "onClick": [Function],
+                                            "size": "medium",
+                                            "type": undefined,
+                                            "variant": "text",
+                                          }
+                                        }
                                       >
-                                        <span
-                                          className="MuiButton-label"
+                                        <ForwardRef(ButtonBase)
+                                          aria-controls="preview audio"
+                                          className="css-w60cv3-MuiButton-root"
+                                          classes={
+                                            Object {
+                                              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                              "label": "MuiButton-label",
+                                              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                            }
+                                          }
+                                          component="button"
+                                          disabled={false}
+                                          focusRipple={true}
+                                          focusVisibleClassName=""
+                                          onClick={[Function]}
                                         >
-                                          <ForwardRef(PlayArrowIcon)>
-                                            <WithStyles(ForwardRef(SvgIcon))>
-                                              <ForwardRef(SvgIcon)
-                                                classes={
-                                                  Object {
-                                                    "colorAction": "MuiSvgIcon-colorAction",
-                                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                                    "colorError": "MuiSvgIcon-colorError",
-                                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                                    "root": "MuiSvgIcon-root",
-                                                  }
-                                                }
-                                              >
-                                                <svg
-                                                  aria-hidden={true}
-                                                  className="MuiSvgIcon-root"
-                                                  focusable="false"
-                                                  viewBox="0 0 24 24"
-                                                >
-                                                  <path
-                                                    d="M8 5v14l11-7z"
-                                                  />
-                                                </svg>
-                                              </ForwardRef(SvgIcon)>
-                                            </WithStyles(ForwardRef(SvgIcon))>
-                                          </ForwardRef(PlayArrowIcon)>
-                                           
-                                          Preview Cart
-                                        </span>
-                                        <WithStyles(memo)
-                                          center={false}
-                                        >
-                                          <ForwardRef(TouchRipple)
-                                            center={false}
+                                          <MuiButtonBaseRoot
+                                            aria-controls="preview audio"
+                                            as="button"
+                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
-                                                "child": "MuiTouchRipple-child",
-                                                "childLeaving": "MuiTouchRipple-childLeaving",
-                                                "childPulsate": "MuiTouchRipple-childPulsate",
-                                                "ripple": "MuiTouchRipple-ripple",
-                                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
-                                                "rippleVisible": "MuiTouchRipple-rippleVisible",
-                                                "root": "MuiTouchRipple-root",
+                                                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                "label": "MuiButton-label",
+                                                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                               }
                                             }
+                                            disabled={false}
+                                            onBlur={[Function]}
+                                            onClick={[Function]}
+                                            onContextMenu={[Function]}
+                                            onDragLeave={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onKeyUp={[Function]}
+                                            onMouseDown={[Function]}
+                                            onMouseLeave={[Function]}
+                                            onMouseUp={[Function]}
+                                            onTouchEnd={[Function]}
+                                            onTouchMove={[Function]}
+                                            onTouchStart={[Function]}
+                                            ownerState={
+                                              Object {
+                                                "aria-controls": "preview audio",
+                                                "centerRipple": false,
+                                                "children": Array [
+                                                  undefined,
+                                                  Array [
+                                                    <Memo />,
+                                                    " ",
+                                                    "Preview Cart",
+                                                  ],
+                                                  undefined,
+                                                ],
+                                                "className": "css-w60cv3-MuiButton-root",
+                                                "classes": Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                },
+                                                "component": "button",
+                                                "disableRipple": false,
+                                                "disableTouchRipple": false,
+                                                "disabled": false,
+                                                "focusRipple": true,
+                                                "focusVisible": false,
+                                                "focusVisibleClassName": "",
+                                                "onClick": [Function],
+                                                "tabIndex": 0,
+                                                "type": undefined,
+                                              }
+                                            }
+                                            tabIndex={0}
+                                            type="button"
                                           >
-                                            <span
-                                              className="MuiTouchRipple-root"
+                                            <button
+                                              aria-controls="preview audio"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              disabled={false}
+                                              onBlur={[Function]}
+                                              onClick={[Function]}
+                                              onContextMenu={[Function]}
+                                              onDragLeave={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              onTouchEnd={[Function]}
+                                              onTouchMove={[Function]}
+                                              onTouchStart={[Function]}
+                                              tabIndex={0}
+                                              type="button"
                                             >
-                                              <TransitionGroup
-                                                childFactory={[Function]}
-                                                component={null}
-                                                exit={true}
-                                              />
-                                            </span>
-                                          </ForwardRef(TouchRipple)>
-                                        </WithStyles(memo)>
-                                      </button>
-                                    </ForwardRef(ButtonBase)>
-                                  </WithStyles(ForwardRef(ButtonBase))>
-                                </ForwardRef(Button)>
-                              </WithStyles(ForwardRef(Button))>
-                              <WithStyles(ForwardRef(Button))
-                                aria-controls="download compressed audio"
-                              >
-                                <ForwardRef(Button)
-                                  aria-controls="download compressed audio"
-                                  classes={
-                                    Object {
-                                      "colorInherit": "MuiButton-colorInherit",
-                                      "contained": "MuiButton-contained",
-                                      "containedPrimary": "MuiButton-containedPrimary",
-                                      "containedSecondary": "MuiButton-containedSecondary",
-                                      "containedSizeLarge": "MuiButton-containedSizeLarge",
-                                      "containedSizeSmall": "MuiButton-containedSizeSmall",
-                                      "disableElevation": "MuiButton-disableElevation",
-                                      "disabled": "Mui-disabled",
-                                      "endIcon": "MuiButton-endIcon",
-                                      "focusVisible": "Mui-focusVisible",
-                                      "fullWidth": "MuiButton-fullWidth",
-                                      "iconSizeLarge": "MuiButton-iconSizeLarge",
-                                      "iconSizeMedium": "MuiButton-iconSizeMedium",
-                                      "iconSizeSmall": "MuiButton-iconSizeSmall",
-                                      "label": "MuiButton-label",
-                                      "outlined": "MuiButton-outlined",
-                                      "outlinedPrimary": "MuiButton-outlinedPrimary",
-                                      "outlinedSecondary": "MuiButton-outlinedSecondary",
-                                      "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
-                                      "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
-                                      "root": "MuiButton-root",
-                                      "sizeLarge": "MuiButton-sizeLarge",
-                                      "sizeSmall": "MuiButton-sizeSmall",
-                                      "startIcon": "MuiButton-startIcon",
-                                      "text": "MuiButton-text",
-                                      "textPrimary": "MuiButton-textPrimary",
-                                      "textSecondary": "MuiButton-textSecondary",
-                                      "textSizeLarge": "MuiButton-textSizeLarge",
-                                      "textSizeSmall": "MuiButton-textSizeSmall",
-                                    }
-                                  }
-                                >
-                                  <WithStyles(ForwardRef(ButtonBase))
-                                    aria-controls="download compressed audio"
-                                    className="MuiButton-root MuiButton-text"
-                                    component="button"
-                                    disabled={false}
-                                    focusRipple={true}
-                                    focusVisibleClassName="Mui-focusVisible"
-                                    type="button"
-                                  >
-                                    <ForwardRef(ButtonBase)
-                                      aria-controls="download compressed audio"
-                                      className="MuiButton-root MuiButton-text"
-                                      classes={
-                                        Object {
-                                          "disabled": "Mui-disabled",
-                                          "focusVisible": "Mui-focusVisible",
-                                          "root": "MuiButtonBase-root",
-                                        }
-                                      }
-                                      component="button"
-                                      disabled={false}
-                                      focusRipple={true}
-                                      focusVisibleClassName="Mui-focusVisible"
-                                      type="button"
+                                              <ForwardRef(PlayArrowIcon)>
+                                                <ForwardRef(SvgIcon)
+                                                  data-testid="PlayArrowIcon"
+                                                >
+                                                  <MuiSvgIconRoot
+                                                    aria-hidden={true}
+                                                    as="svg"
+                                                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                                                    data-testid="PlayArrowIcon"
+                                                    focusable="false"
+                                                    ownerState={
+                                                      Object {
+                                                        "children": <path
+                                                          d="M8 5v14l11-7z"
+                                                        />,
+                                                        "color": "inherit",
+                                                        "component": "svg",
+                                                        "data-testid": "PlayArrowIcon",
+                                                        "fontSize": "medium",
+                                                        "viewBox": "0 0 24 24",
+                                                      }
+                                                    }
+                                                    viewBox="0 0 24 24"
+                                                  >
+                                                    <svg
+                                                      aria-hidden={true}
+                                                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                                      data-testid="PlayArrowIcon"
+                                                      focusable="false"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path
+                                                        d="M8 5v14l11-7z"
+                                                      />
+                                                    </svg>
+                                                  </MuiSvgIconRoot>
+                                                </ForwardRef(SvgIcon)>
+                                              </ForwardRef(PlayArrowIcon)>
+                                               
+                                              Preview Cart
+                                              <ForwardRef(TouchRipple)
+                                                center={false}
+                                              >
+                                                <MuiTouchRippleRoot
+                                                  className="MuiTouchRipple-root"
+                                                >
+                                                  <span
+                                                    className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                  >
+                                                    <TransitionGroup
+                                                      childFactory={[Function]}
+                                                      component={null}
+                                                      exit={true}
+                                                    />
+                                                  </span>
+                                                </MuiTouchRippleRoot>
+                                              </ForwardRef(TouchRipple)>
+                                            </button>
+                                          </MuiButtonBaseRoot>
+                                        </ForwardRef(ButtonBase)>
+                                      </MuiButtonRoot>
+                                    </ForwardRef(Button)>
+                                    <AudioDownloadButton
+                                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                      downloadType="Compressed"
+                                      label="abc123"
                                     >
-                                      <button
+                                      <ForwardRef(Button)
                                         aria-controls="download compressed audio"
-                                        className="MuiButtonBase-root MuiButton-root MuiButton-text"
-                                        disabled={false}
-                                        onBlur={[Function]}
-                                        onDragLeave={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        onKeyUp={[Function]}
-                                        onMouseDown={[Function]}
-                                        onMouseLeave={[Function]}
-                                        onMouseUp={[Function]}
-                                        onTouchEnd={[Function]}
-                                        onTouchMove={[Function]}
-                                        onTouchStart={[Function]}
-                                        tabIndex={0}
-                                        type="button"
+                                        data-test="button-download-compressed"
+                                        onClick={[Function]}
                                       >
-                                        <span
-                                          className="MuiButton-label"
+                                        <MuiButtonRoot
+                                          aria-controls="download compressed audio"
+                                          classes={
+                                            Object {
+                                              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                              "label": "MuiButton-label",
+                                              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                            }
+                                          }
+                                          component="button"
+                                          data-test="button-download-compressed"
+                                          disabled={false}
+                                          focusRipple={true}
+                                          focusVisibleClassName=""
+                                          onClick={[Function]}
+                                          ownerState={
+                                            Object {
+                                              "aria-controls": "download compressed audio",
+                                              "children": Array [
+                                                <Memo />,
+                                                " ",
+                                                "Compressed (OGG)",
+                                              ],
+                                              "color": "primary",
+                                              "component": "button",
+                                              "data-test": "button-download-compressed",
+                                              "disableElevation": false,
+                                              "disableFocusRipple": false,
+                                              "disabled": false,
+                                              "fullWidth": false,
+                                              "onClick": [Function],
+                                              "size": "medium",
+                                              "type": undefined,
+                                              "variant": "text",
+                                            }
+                                          }
                                         >
-                                          <ForwardRef(GetAppIcon)>
-                                            <WithStyles(ForwardRef(SvgIcon))>
-                                              <ForwardRef(SvgIcon)
-                                                classes={
-                                                  Object {
-                                                    "colorAction": "MuiSvgIcon-colorAction",
-                                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                                    "colorError": "MuiSvgIcon-colorError",
-                                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                                    "root": "MuiSvgIcon-root",
-                                                  }
-                                                }
-                                              >
-                                                <svg
-                                                  aria-hidden={true}
-                                                  className="MuiSvgIcon-root"
-                                                  focusable="false"
-                                                  viewBox="0 0 24 24"
-                                                >
-                                                  <path
-                                                    d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                                                  />
-                                                </svg>
-                                              </ForwardRef(SvgIcon)>
-                                            </WithStyles(ForwardRef(SvgIcon))>
-                                          </ForwardRef(GetAppIcon)>
-                                           
-                                          Compressed (OGG)
-                                        </span>
-                                        <WithStyles(memo)
-                                          center={false}
-                                        >
-                                          <ForwardRef(TouchRipple)
-                                            center={false}
+                                          <ForwardRef(ButtonBase)
+                                            aria-controls="download compressed audio"
+                                            className="css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
-                                                "child": "MuiTouchRipple-child",
-                                                "childLeaving": "MuiTouchRipple-childLeaving",
-                                                "childPulsate": "MuiTouchRipple-childPulsate",
-                                                "ripple": "MuiTouchRipple-ripple",
-                                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
-                                                "rippleVisible": "MuiTouchRipple-rippleVisible",
-                                                "root": "MuiTouchRipple-root",
+                                                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                "label": "MuiButton-label",
+                                                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                               }
                                             }
+                                            component="button"
+                                            data-test="button-download-compressed"
+                                            disabled={false}
+                                            focusRipple={true}
+                                            focusVisibleClassName=""
+                                            onClick={[Function]}
                                           >
-                                            <span
-                                              className="MuiTouchRipple-root"
+                                            <MuiButtonBaseRoot
+                                              aria-controls="download compressed audio"
+                                              as="button"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                              classes={
+                                                Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                }
+                                              }
+                                              data-test="button-download-compressed"
+                                              disabled={false}
+                                              onBlur={[Function]}
+                                              onClick={[Function]}
+                                              onContextMenu={[Function]}
+                                              onDragLeave={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              onTouchEnd={[Function]}
+                                              onTouchMove={[Function]}
+                                              onTouchStart={[Function]}
+                                              ownerState={
+                                                Object {
+                                                  "aria-controls": "download compressed audio",
+                                                  "centerRipple": false,
+                                                  "children": Array [
+                                                    undefined,
+                                                    Array [
+                                                      <Memo />,
+                                                      " ",
+                                                      "Compressed (OGG)",
+                                                    ],
+                                                    undefined,
+                                                  ],
+                                                  "className": "css-w60cv3-MuiButton-root",
+                                                  "classes": Object {
+                                                    "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                    "label": "MuiButton-label",
+                                                    "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                    "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                  },
+                                                  "component": "button",
+                                                  "data-test": "button-download-compressed",
+                                                  "disableRipple": false,
+                                                  "disableTouchRipple": false,
+                                                  "disabled": false,
+                                                  "focusRipple": true,
+                                                  "focusVisible": false,
+                                                  "focusVisibleClassName": "",
+                                                  "onClick": [Function],
+                                                  "tabIndex": 0,
+                                                  "type": undefined,
+                                                }
+                                              }
+                                              tabIndex={0}
+                                              type="button"
                                             >
-                                              <TransitionGroup
-                                                childFactory={[Function]}
-                                                component={null}
-                                                exit={true}
-                                              />
-                                            </span>
-                                          </ForwardRef(TouchRipple)>
-                                        </WithStyles(memo)>
-                                      </button>
-                                    </ForwardRef(ButtonBase)>
-                                  </WithStyles(ForwardRef(ButtonBase))>
-                                </ForwardRef(Button)>
-                              </WithStyles(ForwardRef(Button))>
-                              <WithStyles(ForwardRef(Button))
-                                aria-controls="download linear audio"
-                              >
-                                <ForwardRef(Button)
-                                  aria-controls="download linear audio"
-                                  classes={
-                                    Object {
-                                      "colorInherit": "MuiButton-colorInherit",
-                                      "contained": "MuiButton-contained",
-                                      "containedPrimary": "MuiButton-containedPrimary",
-                                      "containedSecondary": "MuiButton-containedSecondary",
-                                      "containedSizeLarge": "MuiButton-containedSizeLarge",
-                                      "containedSizeSmall": "MuiButton-containedSizeSmall",
-                                      "disableElevation": "MuiButton-disableElevation",
-                                      "disabled": "Mui-disabled",
-                                      "endIcon": "MuiButton-endIcon",
-                                      "focusVisible": "Mui-focusVisible",
-                                      "fullWidth": "MuiButton-fullWidth",
-                                      "iconSizeLarge": "MuiButton-iconSizeLarge",
-                                      "iconSizeMedium": "MuiButton-iconSizeMedium",
-                                      "iconSizeSmall": "MuiButton-iconSizeSmall",
-                                      "label": "MuiButton-label",
-                                      "outlined": "MuiButton-outlined",
-                                      "outlinedPrimary": "MuiButton-outlinedPrimary",
-                                      "outlinedSecondary": "MuiButton-outlinedSecondary",
-                                      "outlinedSizeLarge": "MuiButton-outlinedSizeLarge",
-                                      "outlinedSizeSmall": "MuiButton-outlinedSizeSmall",
-                                      "root": "MuiButton-root",
-                                      "sizeLarge": "MuiButton-sizeLarge",
-                                      "sizeSmall": "MuiButton-sizeSmall",
-                                      "startIcon": "MuiButton-startIcon",
-                                      "text": "MuiButton-text",
-                                      "textPrimary": "MuiButton-textPrimary",
-                                      "textSecondary": "MuiButton-textSecondary",
-                                      "textSizeLarge": "MuiButton-textSizeLarge",
-                                      "textSizeSmall": "MuiButton-textSizeSmall",
-                                    }
-                                  }
-                                >
-                                  <WithStyles(ForwardRef(ButtonBase))
-                                    aria-controls="download linear audio"
-                                    className="MuiButton-root MuiButton-text"
-                                    component="button"
-                                    disabled={false}
-                                    focusRipple={true}
-                                    focusVisibleClassName="Mui-focusVisible"
-                                    type="button"
-                                  >
-                                    <ForwardRef(ButtonBase)
-                                      aria-controls="download linear audio"
-                                      className="MuiButton-root MuiButton-text"
-                                      classes={
-                                        Object {
-                                          "disabled": "Mui-disabled",
-                                          "focusVisible": "Mui-focusVisible",
-                                          "root": "MuiButtonBase-root",
-                                        }
-                                      }
-                                      component="button"
-                                      disabled={false}
-                                      focusRipple={true}
-                                      focusVisibleClassName="Mui-focusVisible"
-                                      type="button"
+                                              <button
+                                                aria-controls="download compressed audio"
+                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                                data-test="button-download-compressed"
+                                                disabled={false}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onContextMenu={[Function]}
+                                                onDragLeave={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onKeyUp={[Function]}
+                                                onMouseDown={[Function]}
+                                                onMouseLeave={[Function]}
+                                                onMouseUp={[Function]}
+                                                onTouchEnd={[Function]}
+                                                onTouchMove={[Function]}
+                                                onTouchStart={[Function]}
+                                                tabIndex={0}
+                                                type="button"
+                                              >
+                                                <ForwardRef(GetAppIcon)>
+                                                  <ForwardRef(SvgIcon)
+                                                    data-testid="GetAppIcon"
+                                                  >
+                                                    <MuiSvgIconRoot
+                                                      aria-hidden={true}
+                                                      as="svg"
+                                                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                                                      data-testid="GetAppIcon"
+                                                      focusable="false"
+                                                      ownerState={
+                                                        Object {
+                                                          "children": <path
+                                                            d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                                          />,
+                                                          "color": "inherit",
+                                                          "component": "svg",
+                                                          "data-testid": "GetAppIcon",
+                                                          "fontSize": "medium",
+                                                          "viewBox": "0 0 24 24",
+                                                        }
+                                                      }
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <svg
+                                                        aria-hidden={true}
+                                                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                                        data-testid="GetAppIcon"
+                                                        focusable="false"
+                                                        viewBox="0 0 24 24"
+                                                      >
+                                                        <path
+                                                          d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                                        />
+                                                      </svg>
+                                                    </MuiSvgIconRoot>
+                                                  </ForwardRef(SvgIcon)>
+                                                </ForwardRef(GetAppIcon)>
+                                                 
+                                                Compressed (OGG)
+                                                <ForwardRef(TouchRipple)
+                                                  center={false}
+                                                >
+                                                  <MuiTouchRippleRoot
+                                                    className="MuiTouchRipple-root"
+                                                  >
+                                                    <span
+                                                      className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                    >
+                                                      <TransitionGroup
+                                                        childFactory={[Function]}
+                                                        component={null}
+                                                        exit={true}
+                                                      />
+                                                    </span>
+                                                  </MuiTouchRippleRoot>
+                                                </ForwardRef(TouchRipple)>
+                                              </button>
+                                            </MuiButtonBaseRoot>
+                                          </ForwardRef(ButtonBase)>
+                                        </MuiButtonRoot>
+                                      </ForwardRef(Button)>
+                                    </AudioDownloadButton>
+                                    <AudioDownloadButton
+                                      cartId="957dbe30-007d-442e-975e-42e096e60fa2"
+                                      downloadType="Linear"
+                                      label="abc123"
                                     >
-                                      <button
+                                      <ForwardRef(Button)
                                         aria-controls="download linear audio"
-                                        className="MuiButtonBase-root MuiButton-root MuiButton-text"
-                                        disabled={false}
-                                        onBlur={[Function]}
-                                        onDragLeave={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        onKeyUp={[Function]}
-                                        onMouseDown={[Function]}
-                                        onMouseLeave={[Function]}
-                                        onMouseUp={[Function]}
-                                        onTouchEnd={[Function]}
-                                        onTouchMove={[Function]}
-                                        onTouchStart={[Function]}
-                                        tabIndex={0}
-                                        type="button"
+                                        data-test="button-download-linear"
+                                        onClick={[Function]}
                                       >
-                                        <span
-                                          className="MuiButton-label"
+                                        <MuiButtonRoot
+                                          aria-controls="download linear audio"
+                                          classes={
+                                            Object {
+                                              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                              "label": "MuiButton-label",
+                                              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                            }
+                                          }
+                                          component="button"
+                                          data-test="button-download-linear"
+                                          disabled={false}
+                                          focusRipple={true}
+                                          focusVisibleClassName=""
+                                          onClick={[Function]}
+                                          ownerState={
+                                            Object {
+                                              "aria-controls": "download linear audio",
+                                              "children": Array [
+                                                <Memo />,
+                                                " ",
+                                                "Linear (WAV)",
+                                              ],
+                                              "color": "primary",
+                                              "component": "button",
+                                              "data-test": "button-download-linear",
+                                              "disableElevation": false,
+                                              "disableFocusRipple": false,
+                                              "disabled": false,
+                                              "fullWidth": false,
+                                              "onClick": [Function],
+                                              "size": "medium",
+                                              "type": undefined,
+                                              "variant": "text",
+                                            }
+                                          }
                                         >
-                                          <ForwardRef(GetAppIcon)>
-                                            <WithStyles(ForwardRef(SvgIcon))>
-                                              <ForwardRef(SvgIcon)
-                                                classes={
-                                                  Object {
-                                                    "colorAction": "MuiSvgIcon-colorAction",
-                                                    "colorDisabled": "MuiSvgIcon-colorDisabled",
-                                                    "colorError": "MuiSvgIcon-colorError",
-                                                    "colorPrimary": "MuiSvgIcon-colorPrimary",
-                                                    "colorSecondary": "MuiSvgIcon-colorSecondary",
-                                                    "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
-                                                    "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
-                                                    "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
-                                                    "root": "MuiSvgIcon-root",
-                                                  }
-                                                }
-                                              >
-                                                <svg
-                                                  aria-hidden={true}
-                                                  className="MuiSvgIcon-root"
-                                                  focusable="false"
-                                                  viewBox="0 0 24 24"
-                                                >
-                                                  <path
-                                                    d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                                                  />
-                                                </svg>
-                                              </ForwardRef(SvgIcon)>
-                                            </WithStyles(ForwardRef(SvgIcon))>
-                                          </ForwardRef(GetAppIcon)>
-                                           
-                                          Linear (WAV)
-                                        </span>
-                                        <WithStyles(memo)
-                                          center={false}
-                                        >
-                                          <ForwardRef(TouchRipple)
-                                            center={false}
+                                          <ForwardRef(ButtonBase)
+                                            aria-controls="download linear audio"
+                                            className="css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
-                                                "child": "MuiTouchRipple-child",
-                                                "childLeaving": "MuiTouchRipple-childLeaving",
-                                                "childPulsate": "MuiTouchRipple-childPulsate",
-                                                "ripple": "MuiTouchRipple-ripple",
-                                                "ripplePulsate": "MuiTouchRipple-ripplePulsate",
-                                                "rippleVisible": "MuiTouchRipple-rippleVisible",
-                                                "root": "MuiTouchRipple-root",
+                                                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                "label": "MuiButton-label",
+                                                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                               }
                                             }
+                                            component="button"
+                                            data-test="button-download-linear"
+                                            disabled={false}
+                                            focusRipple={true}
+                                            focusVisibleClassName=""
+                                            onClick={[Function]}
                                           >
-                                            <span
-                                              className="MuiTouchRipple-root"
+                                            <MuiButtonBaseRoot
+                                              aria-controls="download linear audio"
+                                              as="button"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                              classes={
+                                                Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                }
+                                              }
+                                              data-test="button-download-linear"
+                                              disabled={false}
+                                              onBlur={[Function]}
+                                              onClick={[Function]}
+                                              onContextMenu={[Function]}
+                                              onDragLeave={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              onTouchEnd={[Function]}
+                                              onTouchMove={[Function]}
+                                              onTouchStart={[Function]}
+                                              ownerState={
+                                                Object {
+                                                  "aria-controls": "download linear audio",
+                                                  "centerRipple": false,
+                                                  "children": Array [
+                                                    undefined,
+                                                    Array [
+                                                      <Memo />,
+                                                      " ",
+                                                      "Linear (WAV)",
+                                                    ],
+                                                    undefined,
+                                                  ],
+                                                  "className": "css-w60cv3-MuiButton-root",
+                                                  "classes": Object {
+                                                    "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                    "label": "MuiButton-label",
+                                                    "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                    "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                  },
+                                                  "component": "button",
+                                                  "data-test": "button-download-linear",
+                                                  "disableRipple": false,
+                                                  "disableTouchRipple": false,
+                                                  "disabled": false,
+                                                  "focusRipple": true,
+                                                  "focusVisible": false,
+                                                  "focusVisibleClassName": "",
+                                                  "onClick": [Function],
+                                                  "tabIndex": 0,
+                                                  "type": undefined,
+                                                }
+                                              }
+                                              tabIndex={0}
+                                              type="button"
                                             >
-                                              <TransitionGroup
-                                                childFactory={[Function]}
-                                                component={null}
-                                                exit={true}
-                                              />
-                                            </span>
-                                          </ForwardRef(TouchRipple)>
-                                        </WithStyles(memo)>
-                                      </button>
-                                    </ForwardRef(ButtonBase)>
-                                  </WithStyles(ForwardRef(ButtonBase))>
-                                </ForwardRef(Button)>
-                              </WithStyles(ForwardRef(Button))>
+                                              <button
+                                                aria-controls="download linear audio"
+                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                                data-test="button-download-linear"
+                                                disabled={false}
+                                                onBlur={[Function]}
+                                                onClick={[Function]}
+                                                onContextMenu={[Function]}
+                                                onDragLeave={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onKeyUp={[Function]}
+                                                onMouseDown={[Function]}
+                                                onMouseLeave={[Function]}
+                                                onMouseUp={[Function]}
+                                                onTouchEnd={[Function]}
+                                                onTouchMove={[Function]}
+                                                onTouchStart={[Function]}
+                                                tabIndex={0}
+                                                type="button"
+                                              >
+                                                <ForwardRef(GetAppIcon)>
+                                                  <ForwardRef(SvgIcon)
+                                                    data-testid="GetAppIcon"
+                                                  >
+                                                    <MuiSvgIconRoot
+                                                      aria-hidden={true}
+                                                      as="svg"
+                                                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                                                      data-testid="GetAppIcon"
+                                                      focusable="false"
+                                                      ownerState={
+                                                        Object {
+                                                          "children": <path
+                                                            d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                                          />,
+                                                          "color": "inherit",
+                                                          "component": "svg",
+                                                          "data-testid": "GetAppIcon",
+                                                          "fontSize": "medium",
+                                                          "viewBox": "0 0 24 24",
+                                                        }
+                                                      }
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <svg
+                                                        aria-hidden={true}
+                                                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                                        data-testid="GetAppIcon"
+                                                        focusable="false"
+                                                        viewBox="0 0 24 24"
+                                                      >
+                                                        <path
+                                                          d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                                        />
+                                                      </svg>
+                                                    </MuiSvgIconRoot>
+                                                  </ForwardRef(SvgIcon)>
+                                                </ForwardRef(GetAppIcon)>
+                                                 
+                                                Linear (WAV)
+                                                <ForwardRef(TouchRipple)
+                                                  center={false}
+                                                >
+                                                  <MuiTouchRippleRoot
+                                                    className="MuiTouchRipple-root"
+                                                  >
+                                                    <span
+                                                      className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                    >
+                                                      <TransitionGroup
+                                                        childFactory={[Function]}
+                                                        component={null}
+                                                        exit={true}
+                                                      />
+                                                    </span>
+                                                  </MuiTouchRippleRoot>
+                                                </ForwardRef(TouchRipple)>
+                                              </button>
+                                            </MuiButtonBaseRoot>
+                                          </ForwardRef(ButtonBase)>
+                                        </MuiButtonRoot>
+                                      </ForwardRef(Button)>
+                                    </AudioDownloadButton>
+                                  </div>
+                                </Styled(div)>
+                              </ForwardRef(Box)>
                             </div>
-                          </Styled(MuiBox)>
+                          </MuiCollapseWrapperInner>
                         </div>
-                      </div>
+                      </MuiCollapseWrapper>
                     </div>
-                  </Transition>
-                </ForwardRef(Collapse)>
-              </WithStyles(ForwardRef(Collapse))>
+                  </MuiCollapseRoot>
+                </Transition>
+              </ForwardRef(Collapse)>
             </td>
-          </ForwardRef(TableCell)>
-        </WithStyles(ForwardRef(TableCell))>
+          </MuiTableCellRoot>
+        </ForwardRef(TableCell)>
       </tr>
-    </ForwardRef(TableRow)>
-  </WithStyles(ForwardRef(TableRow))>
+    </MuiTableRowRoot>
+  </ForwardRef(TableRow)>
 </LibraryTableRow>
 `;

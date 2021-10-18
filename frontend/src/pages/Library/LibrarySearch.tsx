@@ -17,10 +17,9 @@
 */
 
 import {
-  createStyles,
-  FormControl, Input, InputAdornment, InputLabel, makeStyles, Theme,
-} from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+  FormControl, Input, InputAdornment, InputLabel,
+} from '@mui/material';
+import { Search } from '@mui/icons-material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartSearchConditions } from 'api/models/Search';
@@ -28,18 +27,9 @@ import LoadingButton from 'components/common/LoadingButton';
 import CartSearchContext, { CartSearchStatus } from 'components/context/CartSearchContext';
 import Paths from 'routing/Paths';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  formLayout: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
-
 const LibrarySearch = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const history = useHistory();
-  const classes = useStyles();
 
   const updateConditions = (newConditions: CartSearchConditions, status: CartSearchStatus) => {
     setSearch({
@@ -81,8 +71,8 @@ const LibrarySearch = (): React.ReactElement => {
   };
 
   return (
-    <form className={classes.formLayout} data-test="form-library-search" onSubmit={performSearch}>
-      <FormControl>
+    <form data-test="form-library-search" onSubmit={performSearch}>
+      <FormControl variant="standard">
         <InputLabel htmlFor="search">
           Search:
         </InputLabel>

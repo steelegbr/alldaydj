@@ -16,9 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import {
-  makeStyles, Theme, createStyles, Box, Grid,
-} from '@material-ui/core';
+import { Box, Grid } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Theme } from '@mui/material/styles';
 import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -49,7 +50,7 @@ AuthenticationWrapper({ children }: React.PropsWithChildren<Props>): React.React
   return (
     <Box className={classes.bgImage}>
       <Box className={classes.toolbar} />
-      <Grid className={classes.loginBox} container justify="center">
+      <Grid className={classes.loginBox} container justifyContent="center">
         <Grid item md={4} xs={12}>
           <div role="main">
             {children}

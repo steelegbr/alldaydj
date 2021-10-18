@@ -17,13 +17,17 @@
 */
 
 import {
-  Button, Collapse, IconButton, TableCell, TableRow, makeStyles, createStyles, Box,
-} from '@material-ui/core';
+  Button, Collapse, IconButton, TableCell, TableRow, Box,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import {
-  GetApp, KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
-} from '@material-ui/icons';
-import React from 'react';
+  KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
+} from '@mui/icons-material';
+import React, { Fragment } from 'react';
 import { CartSearchResult } from 'api/models/Search';
+import { PreviewContext } from 'components/context/PreviewContext';
+import AudioDownloadButton from 'components/audio/AudioDownloadButton';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -42,6 +46,15 @@ interface TableRowProps {
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const { setCartId } = React.useContext(PreviewContext);
+  const cartId = result.id;
+
+  const previewCart = React.useCallback(
+    () => {
+      setCartId(cartId);
+    },
+    [cartId, setCartId],
+  );
 
   return (
     <>
@@ -59,21 +72,13 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
         <TableCell className={classes.collapsedRow} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box className={classes.collapsedBox}>
-              <Button aria-controls="preview audio">
+              <Button aria-controls="preview audio" onClick={previewCart}>
                 <PlayArrow />
                 {' '}
                 Preview Cart
               </Button>
-              <Button aria-controls="download compressed audio">
-                <GetApp />
-                {' '}
-                Compressed (OGG)
-              </Button>
-              <Button aria-controls="download linear audio">
-                <GetApp />
-                {' '}
-                Linear (WAV)
-              </Button>
+              <AudioDownloadButton cartId={result.id} downloadType="Compressed" label={result.label} />
+              <AudioDownloadButton cartId={result.id} downloadType="Linear" label={result.label} />
             </Box>
           </Collapse>
         </TableCell>

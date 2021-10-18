@@ -16,13 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/* eslint-disable import/prefer-default-export */
+export interface Cart {
+    title: string;
+    display_artist: string,
+    cue_audio_start: number,
+    cue_audio_end: number,
+    cue_intro_start: number,
+    cue_intro_end: number,
+    cue_segue: number
+}
 
-import log, { Logger } from 'loglevel';
-
-const DEFAULT_LOGGER_NAME = 'AllDayDJ';
-
-export const getLogger = (): Logger => {
-  const logger = log.getLogger(DEFAULT_LOGGER_NAME);
-  return logger;
-};
+export interface CartAudio {
+    audio: string;
+    compressed: string;
+    hash_audio: string;
+    hash_compressed: string;
+}

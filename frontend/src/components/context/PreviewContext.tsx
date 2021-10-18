@@ -18,33 +18,37 @@
 
 import React from 'react';
 
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
-import { Theme } from '@mui/material';
+export type PreviewCartId = string | undefined;
 
-const drawerWidth = 240;
+export interface PreviewContextType {
+    cartId: PreviewCartId;
+    setCartId: React.Dispatch<React.SetStateAction<PreviewCartId>>;
+    clearCart: () => void;
+}
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  content: {
-    [theme.breakpoints.up('sm')]: {
-      left: drawerWidth,
-      width: `calc(100vw - ${drawerWidth}px)`,
-      position: 'relative',
-      padding: 10,
-    },
-  },
-}));
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
-
-const StandardWrapper = ({ children }: React.PropsWithChildren<Props>) : React.ReactElement => {
-  const classes = useStyles();
-  return (
-    <div className={classes.content}>
-      {children}
-    </div>
-  );
+const noOp = () => {
+  // Do nothing
 };
 
-export default StandardWrapper;
+export const PreviewContext = React.createContext<PreviewContextType>({
+  cartId: undefined,
+  setCartId: noOp,
+  clearCart: noOp,
+});
+
+export interface PreviewProviderProps {
+    children: React.ReactElement;
+}
+
+export const PreviewProvider = ({ children }: PreviewProviderProps): React.ReactElement => {
+  const [cartId, setCartId] = React.useState<PreviewCartId>();
+  const clearCart = () => {
+    setCartId(undefined);
+  };
+
+  return (
+    <PreviewContext.Provider value={{ cartId, setCartId, clearCart }}>
+      {children}
+    </PreviewContext.Provider>
+  );
+};

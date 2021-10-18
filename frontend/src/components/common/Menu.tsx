@@ -25,13 +25,13 @@ import {
   Drawer,
   useTheme,
   Grid,
-  makeStyles,
-  createStyles,
-  Theme,
   Button,
-} from '@material-ui/core';
-import { Brightness4, Brightness7 } from '@material-ui/icons';
-import MenuIcon from '@material-ui/icons/Menu';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Theme } from '@mui/material/styles';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 import React, { useCallback } from 'react';
 import { isAuthenticated } from 'services/AuthenticationService';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
@@ -60,10 +60,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       display: 'none',
     },
   },
-  toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
   },
+  toolbar: theme.mixins.toolbar,
 }));
 
 const Menu = (): React.ReactElement => {
@@ -108,6 +108,7 @@ const Menu = (): React.ReactElement => {
             data-test="button-menu-toggle"
             edge="start"
             onClick={handleMenuToggle}
+            size="large"
           >
             <MenuIcon />
           </IconButton>
@@ -176,7 +177,7 @@ const Menu = (): React.ReactElement => {
 
   function drawerMobile() {
     return (
-      <Hidden implementation="css" xsDown>
+      <Hidden implementation="css" smDown>
         <Drawer
           classes={{
             paper: classes.drawerPaper,

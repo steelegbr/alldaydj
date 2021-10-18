@@ -34,9 +34,8 @@ const calculateExpiry = (token: JwtToken) => new Date(token.exp * 1000);
 export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus => {
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = localStorage.getItem('accessToken');
-  const log = getLogger();
 
-  log.info('Attempting to get authentication status from local storage.');
+  getLogger().info('Attempting to get authentication status from local storage.');
 
   const authenticationStatus: AuthenticationStatus = {
     stage: 'Unauthenticated',
@@ -46,7 +45,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
     const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
     const expiry = calculateExpiry(decodedRefreshToken);
     if (expiry > new Date()) {
-      log.info(`Valid refresh token expires ${expiry}`);
+      getLogger().info(`Valid refresh token expires ${expiry}`);
       authenticationStatus.stage = 'AccessTokenRefreshNeeded';
       authenticationStatus.refreshToken = refreshToken;
       authenticationStatus.refreshTokenExpiry = expiry;
@@ -56,7 +55,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
       const decodedAccessToken = jwtDecode<JwtToken>(accessToken);
       const accessExpiry = calculateExpiry(decodedAccessToken);
       if (accessExpiry > new Date()) {
-        log.info(`Valid access token expires ${accessExpiry}`);
+        getLogger().info(`Valid access token expires ${accessExpiry}`);
         authenticationStatus.stage = 'Authenticated';
         authenticationStatus.accessToken = accessToken;
         authenticationStatus.accessTokenExpiry = accessExpiry;
@@ -64,7 +63,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
     }
   }
 
-  log.info(`Current authentication stage is ${authenticationStatus.stage}.`);
+  getLogger().info(`Current authentication stage is ${authenticationStatus.stage}.`);
   return authenticationStatus;
 };
 
@@ -111,15 +110,14 @@ export const refreshAccessToken = (
   refreshToken: string,
   setAuthenticationStatus: React.Dispatch<React.SetStateAction<AuthenticationStatus>>,
 ): void => {
-  const log = getLogger();
   postRefreshToken({ refresh: refreshToken }).then(
     (response) => {
-      log.info('Access token refreshed.');
+      getLogger().info('Access token refreshed.');
       localStorage.setItem('accessToken', response.data.access);
       setAuthenticationStatus(loginUser(refreshToken, response.data.access));
     },
     (error) => {
-      log.error(`Access token refresh failed: ${error}`);
+      getLogger().error(`Access token refresh failed: ${error}`);
       setAuthenticationStatus({
         stage: 'Unauthenticated',
       });

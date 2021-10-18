@@ -19,8 +19,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import {
-  Box, Button, ButtonProps, CircularProgress, createStyles, makeStyles,
-} from '@material-ui/core';
+  Box, Button, ButtonProps, CircularProgress,
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 const useStyles = makeStyles(() => createStyles({

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`preview context snapshot 1`] = `
+<PreviewProvider>
+  <h1>
+    Hello
+  </h1>
+</PreviewProvider>
+`;

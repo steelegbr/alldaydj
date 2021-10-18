@@ -57,12 +57,11 @@ const AuthenticationProvider = ({ children }: AuthenticationProviderProps): Reac
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const log = getLogger();
-      log.debug('Checking current authentication status.');
+      getLogger().debug('Checking current authentication status.');
 
       const newAuthStatus = getAuthenticationStatusFromLocalStorage();
       if (newAuthStatus.stage !== authenticationStatus.stage) {
-        log.info(`Change of authentication stage to ${newAuthStatus.stage}.`);
+        getLogger().info(`Change of authentication stage to ${newAuthStatus.stage}.`);
         setAuthenticationStatus(newAuthStatus);
       }
     }, Number(process.env.REACT_APP_AUTH_INTERVAL || '5000'));

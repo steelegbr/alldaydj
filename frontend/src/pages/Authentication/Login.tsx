@@ -269,8 +269,10 @@ export default function Login(): React.ReactElement {
           </Button>
           <Button
             aria-label="Request a password reset"
+            color="secondary"
             data-test="button-reset"
             onClick={forgottenPassword}
+            variant="contained"
           >
             Forgotten Password?
           </Button>

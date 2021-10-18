@@ -24,6 +24,7 @@ import mockAxios from 'jest-mock-axios';
 import { getLogger } from 'services/LoggingService';
 import { Logger } from 'loglevel';
 
+const mockSetAuthenticationStatus = jest.fn();
 const mockLogger = getLogger as jest.Mock<Logger>;
 const mockInfo = jest.fn();
 const mockError = jest.fn();
@@ -42,7 +43,7 @@ const renderButton = (downloadType: DownloadType) => {
       stage: 'Authenticated',
       accessToken: 'TOKEN123',
     },
-    setAuthenticationStatus: () => {},
+    setAuthenticationStatus: mockSetAuthenticationStatus,
   };
   return mount(
     <AuthenticationContext.Provider value={contextValue}>

@@ -35,6 +35,7 @@ import { act } from '@testing-library/react';
 const CART_ID = 'CART123';
 const mockSetCartId = jest.fn();
 const mockClearCart = jest.fn();
+const mockSetAuthenticationStatus = jest.fn();
 
 const loadPlayer = () => {
   const previewContextConfig: PreviewContextType = {
@@ -47,7 +48,7 @@ const loadPlayer = () => {
       stage: 'Authenticated',
       accessToken: 'TOKEN123',
     },
-    setAuthenticationStatus: () => {},
+    setAuthenticationStatus: mockSetAuthenticationStatus,
   };
   return mount(
     <AuthenticationContext.Provider value={authContextConfig}>

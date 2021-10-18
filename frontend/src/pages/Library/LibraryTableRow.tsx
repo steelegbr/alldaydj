@@ -24,7 +24,7 @@ import createStyles from '@mui/styles/createStyles';
 import {
   KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@mui/icons-material';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { CartSearchResult } from 'api/models/Search';
 import { PreviewContext } from 'components/context/PreviewContext';
 import AudioDownloadButton from 'components/audio/AudioDownloadButton';

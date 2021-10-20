@@ -22,9 +22,7 @@ Some of these are absolute beasts (i.e. not a simple feature). Nice to have some
 ## virtualenv
 
 For the virtual environment, run the following:
-
-    pip3.9 install virtualenv
-    python3.9 -m virtualenv addjvenv
+    python3.9 -m venv addjvenv
 
 Once activated, remember to:
 

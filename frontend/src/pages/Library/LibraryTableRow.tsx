@@ -22,12 +22,15 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
 import {
+  Edit,
   KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@mui/icons-material';
 import React, { Fragment } from 'react';
 import { CartSearchResult } from 'api/models/Search';
 import { PreviewContext } from 'components/context/PreviewContext';
 import AudioDownloadButton from 'components/audio/AudioDownloadButton';
+import { useHistory } from 'react-router-dom';
+import Paths from 'routing/Paths';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -45,6 +48,7 @@ interface TableRowProps {
 
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
   const classes = useStyles();
+  const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const { setCartId } = React.useContext(PreviewContext);
   const cartId = result.id;
@@ -54,6 +58,13 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
       setCartId(cartId);
     },
     [cartId, setCartId],
+  );
+
+  const editCart = React.useCallback(
+    () => {
+      history.push(`${Paths.cart}${cartId}`);
+    },
+    [history, cartId],
   );
 
   return (
@@ -79,6 +90,10 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
               </Button>
               <AudioDownloadButton cartId={result.id} downloadType="Compressed" label={result.label} />
               <AudioDownloadButton cartId={result.id} downloadType="Linear" label={result.label} />
+              <Button aria-controls="edit cart" data-test="button-download-linear" onClick={editCart}>
+                <Edit />
+                Edit
+              </Button>
             </Box>
           </Collapse>
         </TableCell>

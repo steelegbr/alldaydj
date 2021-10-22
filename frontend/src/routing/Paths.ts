@@ -27,6 +27,7 @@ const Paths = {
   library: {
     search: '/library/',
   },
+  cart: '/cart/',
 };
 
 export default Paths;

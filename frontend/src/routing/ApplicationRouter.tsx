@@ -29,6 +29,7 @@ import Logout from 'pages/Authentication/Logout';
 import { CartSearchProvider } from 'components/context/CartSearchContext';
 import ForgottenPassword from 'pages/Authentication/ForgottenPassword';
 import PasswordReset from 'pages/Authentication/PasswordReset';
+import CartEditor from 'pages/Cart/CartEditor';
 
 export default function ApplicationRouter() : React.ReactElement {
   return (
@@ -58,6 +59,11 @@ export default function ApplicationRouter() : React.ReactElement {
           <CartSearchProvider>
             <Library />
           </CartSearchProvider>
+        </StandardWrapper>
+      </PrivateRoute>
+      <PrivateRoute path={`${Paths.cart}:cartId`}>
+        <StandardWrapper>
+          <CartEditor />
         </StandardWrapper>
       </PrivateRoute>
       <PrivateRoute path={Paths.base}>

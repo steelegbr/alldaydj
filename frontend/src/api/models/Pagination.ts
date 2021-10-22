@@ -16,38 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export interface Cart {
-    id: string;
-    label: string;
-    title: string;
-    display_artist: string,
-    cue_audio_start: number,
-    cue_audio_end: number,
-    cue_intro_start: number,
-    cue_intro_end: number,
-    cue_segue: number
-    artists: string[],
-    sweeper: boolean,
-    year: number,
-    isrc: string,
-    composer: string,
-    publisher: string,
-    record_label: string,
-    tags: string[],
-    type: string,
-    fade: boolean
-}
-
-export interface CartAudio {
-    audio: string;
-    compressed: string;
-    hash_audio: string;
-    hash_compressed: string;
-}
-
-export interface CartType {
-    id: string,
-    name: string,
-    colour: string,
-    now_playing: boolean
+export interface Paginated<Type> {
+    count: number,
+    next: string,
+    previous: string,
+    results: Type[]
 }

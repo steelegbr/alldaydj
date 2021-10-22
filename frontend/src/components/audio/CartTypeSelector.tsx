@@ -61,6 +61,7 @@ const CartTypeSelector = (
         );
       }
     },
+    [token],
   );
 
   const updateTypeSelection = React.useCallback(

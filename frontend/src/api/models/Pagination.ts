@@ -18,7 +18,7 @@
 
 export interface Paginated<Type> {
     count: number,
-    next: string,
-    previous: string,
+    next?: string,
+    previous?: string,
     results: Type[]
 }

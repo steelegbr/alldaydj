@@ -16,6 +16,7 @@ import { Cart } from 'api/models/Cart';
 import { getCartDetails } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
+import TagChips from 'components/audio/TagChips';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -205,6 +206,19 @@ const CartEditor = (): React.ReactElement => {
     [cart],
   );
 
+  const updateTags = React.useCallback(
+    (tags: string[]) => {
+      if (cart) {
+        const updatedCart: Cart = {
+          ...cart,
+          tags,
+        };
+        setCart(updatedCart);
+      }
+    },
+    [cart],
+  );
+
   if (editorState === 'Loading') {
     return (
       <Grid alignItems="center" container justifyContent="space-between">
@@ -321,6 +335,7 @@ const CartEditor = (): React.ReactElement => {
         variant="standard"
       />
       <CartTypeSelector selectedType={cart.type} setSelectedType={updateType} />
+      <TagChips selectedTags={cart.tags} setSelectedTags={updateTags} />
       <TextField
         InputProps={{
           startAdornment: (

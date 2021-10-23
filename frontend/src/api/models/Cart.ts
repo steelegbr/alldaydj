@@ -51,3 +51,8 @@ export interface CartType {
     colour: string,
     now_playing: boolean
 }
+
+export interface Tag {
+    id: string,
+    tag: string
+}

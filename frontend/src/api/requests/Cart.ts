@@ -21,7 +21,9 @@
 import axios from 'axios';
 import getUrl from 'services/UrlService';
 import { generateRequestConfig } from 'api/requests/Helpers';
-import { Cart, CartAudio, CartType } from 'api/models/Cart';
+import {
+  Cart, CartAudio, CartType, Tag,
+} from 'api/models/Cart';
 import getAllPages from 'api/requests/Pagination';
 
 export const getCartDetails = (cartId: string, token: string) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig(token));
@@ -29,3 +31,5 @@ export const getCartDetails = (cartId: string, token: string) => axios.get<Cart>
 export const getCartAudio = (cartId: string, token: string) => axios.get<CartAudio>(getUrl(`/api/audio/${cartId}/`), generateRequestConfig(token));
 
 export const getCartTypes = (token: string) => getAllPages<CartType>(getUrl('/api/type/'), token);
+
+export const getTags = (token: string) => getAllPages<Tag>(getUrl('/api/tag/'), token);

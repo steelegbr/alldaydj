@@ -360,7 +360,7 @@ exports[`library table row renders single result 1`] = `
                 />
                 <ForwardRef(Button)
                   aria-controls="edit cart"
-                  data-test="button-download-linear"
+                  data-test="button-edit"
                   onClick={[Function]}
                 >
                   <Memo />
@@ -422,7 +422,7 @@ exports[`library table row renders single result 1`] = `
                     />
                     <ForwardRef(Button)
                       aria-controls="edit cart"
-                      data-test="button-download-linear"
+                      data-test="button-edit"
                       onClick={[Function]}
                     >
                       <Memo />
@@ -842,7 +842,7 @@ exports[`library table row renders single result expanded 1`] = `
                 />
                 <ForwardRef(Button)
                   aria-controls="edit cart"
-                  data-test="button-download-linear"
+                  data-test="button-edit"
                   onClick={[Function]}
                 >
                   <Memo />
@@ -904,7 +904,7 @@ exports[`library table row renders single result expanded 1`] = `
                     />
                     <ForwardRef(Button)
                       aria-controls="edit cart"
-                      data-test="button-download-linear"
+                      data-test="button-edit"
                       onClick={[Function]}
                     >
                       <Memo />
@@ -1029,7 +1029,7 @@ exports[`library table row renders single result expanded 1`] = `
                               <button
                                 aria-controls="edit cart"
                                 class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                data-test="button-download-linear"
+                                data-test="button-edit"
                                 tabindex="0"
                                 type="button"
                               >
@@ -1091,7 +1091,7 @@ exports[`library table row renders single result expanded 1`] = `
                           />
                           <ForwardRef(Button)
                             aria-controls="edit cart"
-                            data-test="button-download-linear"
+                            data-test="button-edit"
                             onClick={[Function]}
                           >
                             <Memo />
@@ -1147,7 +1147,7 @@ exports[`library table row renders single result expanded 1`] = `
                               />
                               <ForwardRef(Button)
                                 aria-controls="edit cart"
-                                data-test="button-download-linear"
+                                data-test="button-edit"
                                 onClick={[Function]}
                               >
                                 <Memo />
@@ -1193,7 +1193,7 @@ exports[`library table row renders single result expanded 1`] = `
                                   />
                                   <ForwardRef(Button)
                                     aria-controls="edit cart"
-                                    data-test="button-download-linear"
+                                    data-test="button-edit"
                                     onClick={[Function]}
                                   >
                                     <Memo />
@@ -2137,7 +2137,7 @@ exports[`library table row renders single result expanded 1`] = `
                                     </AudioDownloadButton>
                                     <ForwardRef(Button)
                                       aria-controls="edit cart"
-                                      data-test="button-download-linear"
+                                      data-test="button-edit"
                                       onClick={[Function]}
                                     >
                                       <MuiButtonRoot
@@ -2151,7 +2151,7 @@ exports[`library table row renders single result expanded 1`] = `
                                           }
                                         }
                                         component="button"
-                                        data-test="button-download-linear"
+                                        data-test="button-edit"
                                         disabled={false}
                                         focusRipple={true}
                                         focusVisibleClassName=""
@@ -2165,7 +2165,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             ],
                                             "color": "primary",
                                             "component": "button",
-                                            "data-test": "button-download-linear",
+                                            "data-test": "button-edit",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
                                             "disabled": false,
@@ -2189,7 +2189,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             }
                                           }
                                           component="button"
-                                          data-test="button-download-linear"
+                                          data-test="button-edit"
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -2207,7 +2207,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                 "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                               }
                                             }
-                                            data-test="button-download-linear"
+                                            data-test="button-edit"
                                             disabled={false}
                                             onBlur={[Function]}
                                             onClick={[Function]}
@@ -2242,7 +2242,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                   "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                 },
                                                 "component": "button",
-                                                "data-test": "button-download-linear",
+                                                "data-test": "button-edit",
                                                 "disableRipple": false,
                                                 "disableTouchRipple": false,
                                                 "disabled": false,
@@ -2260,7 +2260,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             <button
                                               aria-controls="edit cart"
                                               className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-                                              data-test="button-download-linear"
+                                              data-test="button-edit"
                                               disabled={false}
                                               onBlur={[Function]}
                                               onClick={[Function]}

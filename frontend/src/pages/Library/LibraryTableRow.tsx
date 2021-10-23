@@ -90,7 +90,7 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
               </Button>
               <AudioDownloadButton cartId={result.id} downloadType="Compressed" label={result.label} />
               <AudioDownloadButton cartId={result.id} downloadType="Linear" label={result.label} />
-              <Button aria-controls="edit cart" data-test="button-download-linear" onClick={editCart}>
+              <Button aria-controls="edit cart" data-test="button-edit" onClick={editCart}>
                 <Edit />
                 Edit
               </Button>

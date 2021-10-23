@@ -68,7 +68,7 @@ const CartTypeSelector = (
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel htmlFor="cart-type">Type:</InputLabel>
-      <Select id="cart-type" labelId="cart-type" onChange={updateTypeSelection} value={selectedType}>
+      <Select data-test="select-type" id="cart-type" labelId="cart-type" onChange={updateTypeSelection} value={selectedType}>
         {cartTypes.map((cartType) => (
           <MenuItem value={cartType.name}>
             <ListItemIcon>

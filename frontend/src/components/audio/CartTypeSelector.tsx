@@ -21,9 +21,7 @@ import {
   FormControl, InputLabel, ListItemIcon, MenuItem, Select, SelectChangeEvent,
 } from '@mui/material';
 import { CartType } from 'api/models/Cart';
-import { Paginated } from 'api/models/Pagination';
 import { getCartTypes } from 'api/requests/Cart';
-import { AxiosResponse } from 'axios';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import React from 'react';
 import { getLogger } from 'services/LoggingService';
@@ -45,14 +43,8 @@ const CartTypeSelector = (
       if (token) {
         getLogger().info('Downloading cart types.');
         getCartTypes(token).then(
-          (response: AxiosResponse<Paginated<CartType>>) => {
-            if (response.status === 200) {
-              getLogger().info('Successfully updated the cart types.');
-              setCartTypes(response.data.results);
-            } else {
-              getLogger().error(`Got HTTP response code ${response.status} updating cart types.`);
-              setCartTypes([]);
-            }
+          (loadedCartTypes: CartType[]) => {
+            setCartTypes(loadedCartTypes);
           },
           (error) => {
             getLogger().error(`Something went wrong updating the cart types: ${error}`);

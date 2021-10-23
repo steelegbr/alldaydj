@@ -22,10 +22,10 @@ import axios from 'axios';
 import getUrl from 'services/UrlService';
 import { generateRequestConfig } from 'api/requests/Helpers';
 import { Cart, CartAudio, CartType } from 'api/models/Cart';
-import { Paginated } from 'api/models/Pagination';
+import getAllPages from 'api/requests/Pagination';
 
 export const getCartDetails = (cartId: string, token: string) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig(token));
 
 export const getCartAudio = (cartId: string, token: string) => axios.get<CartAudio>(getUrl(`/api/audio/${cartId}/`), generateRequestConfig(token));
 
-export const getCartTypes = (token: string) => axios.get<Paginated<CartType>>(getUrl('/api/type/'), generateRequestConfig(token));
+export const getCartTypes = (token: string) => getAllPages<CartType>(getUrl('/api/type/'), token);

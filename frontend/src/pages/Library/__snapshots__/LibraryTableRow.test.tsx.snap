@@ -358,6 +358,14 @@ exports[`library table row renders single result 1`] = `
                   downloadType="Linear"
                   label="abc123"
                 />
+                <ForwardRef(Button)
+                  aria-controls="edit cart"
+                  data-test="button-download-linear"
+                  onClick={[Function]}
+                >
+                  <Memo />
+                  Edit
+                </ForwardRef(Button)>
               </ForwardRef(Box)>
             </ForwardRef(Collapse)>
           </ForwardRef(TableCell)>,
@@ -412,6 +420,14 @@ exports[`library table row renders single result 1`] = `
                       downloadType="Linear"
                       label="abc123"
                     />
+                    <ForwardRef(Button)
+                      aria-controls="edit cart"
+                      data-test="button-download-linear"
+                      onClick={[Function]}
+                    >
+                      <Memo />
+                      Edit
+                    </ForwardRef(Button)>
                   </ForwardRef(Box)>
                 </ForwardRef(Collapse)>,
                 "className": "makeStyles-collapsedRow-1",
@@ -824,6 +840,14 @@ exports[`library table row renders single result expanded 1`] = `
                   downloadType="Linear"
                   label="abc123"
                 />
+                <ForwardRef(Button)
+                  aria-controls="edit cart"
+                  data-test="button-download-linear"
+                  onClick={[Function]}
+                >
+                  <Memo />
+                  Edit
+                </ForwardRef(Button)>
               </ForwardRef(Box)>
             </ForwardRef(Collapse)>
           </ForwardRef(TableCell)>,
@@ -878,6 +902,14 @@ exports[`library table row renders single result expanded 1`] = `
                       downloadType="Linear"
                       label="abc123"
                     />
+                    <ForwardRef(Button)
+                      aria-controls="edit cart"
+                      data-test="button-download-linear"
+                      onClick={[Function]}
+                    >
+                      <Memo />
+                      Edit
+                    </ForwardRef(Button)>
                   </ForwardRef(Box)>
                 </ForwardRef(Collapse)>,
                 "className": "makeStyles-collapsedRow-1",
@@ -994,6 +1026,29 @@ exports[`library table row renders single result expanded 1`] = `
                                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                                 />
                               </button>
+                              <button
+                                aria-controls="edit cart"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                data-test="button-download-linear"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="EditIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                  />
+                                </svg>
+                                Edit
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1034,6 +1089,14 @@ exports[`library table row renders single result expanded 1`] = `
                             downloadType="Linear"
                             label="abc123"
                           />
+                          <ForwardRef(Button)
+                            aria-controls="edit cart"
+                            data-test="button-download-linear"
+                            onClick={[Function]}
+                          >
+                            <Memo />
+                            Edit
+                          </ForwardRef(Button)>
                         </ForwardRef(Box)>,
                         "collapsedSize": "0px",
                         "in": true,
@@ -1082,6 +1145,14 @@ exports[`library table row renders single result expanded 1`] = `
                                 downloadType="Linear"
                                 label="abc123"
                               />
+                              <ForwardRef(Button)
+                                aria-controls="edit cart"
+                                data-test="button-download-linear"
+                                onClick={[Function]}
+                              >
+                                <Memo />
+                                Edit
+                              </ForwardRef(Button)>
                             </ForwardRef(Box)>,
                             "collapsedSize": "0px",
                             "in": true,
@@ -1120,6 +1191,14 @@ exports[`library table row renders single result expanded 1`] = `
                                     downloadType="Linear"
                                     label="abc123"
                                   />
+                                  <ForwardRef(Button)
+                                    aria-controls="edit cart"
+                                    data-test="button-download-linear"
+                                    onClick={[Function]}
+                                  >
+                                    <Memo />
+                                    Edit
+                                  </ForwardRef(Button)>
                                 </ForwardRef(Box)>,
                                 "collapsedSize": "0px",
                                 "in": true,
@@ -2056,6 +2135,210 @@ exports[`library table row renders single result expanded 1`] = `
                                         </MuiButtonRoot>
                                       </ForwardRef(Button)>
                                     </AudioDownloadButton>
+                                    <ForwardRef(Button)
+                                      aria-controls="edit cart"
+                                      data-test="button-download-linear"
+                                      onClick={[Function]}
+                                    >
+                                      <MuiButtonRoot
+                                        aria-controls="edit cart"
+                                        classes={
+                                          Object {
+                                            "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                            "label": "MuiButton-label",
+                                            "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                            "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                          }
+                                        }
+                                        component="button"
+                                        data-test="button-download-linear"
+                                        disabled={false}
+                                        focusRipple={true}
+                                        focusVisibleClassName=""
+                                        onClick={[Function]}
+                                        ownerState={
+                                          Object {
+                                            "aria-controls": "edit cart",
+                                            "children": Array [
+                                              <Memo />,
+                                              "Edit",
+                                            ],
+                                            "color": "primary",
+                                            "component": "button",
+                                            "data-test": "button-download-linear",
+                                            "disableElevation": false,
+                                            "disableFocusRipple": false,
+                                            "disabled": false,
+                                            "fullWidth": false,
+                                            "onClick": [Function],
+                                            "size": "medium",
+                                            "type": undefined,
+                                            "variant": "text",
+                                          }
+                                        }
+                                      >
+                                        <ForwardRef(ButtonBase)
+                                          aria-controls="edit cart"
+                                          className="css-w60cv3-MuiButton-root"
+                                          classes={
+                                            Object {
+                                              "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                              "label": "MuiButton-label",
+                                              "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                              "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                            }
+                                          }
+                                          component="button"
+                                          data-test="button-download-linear"
+                                          disabled={false}
+                                          focusRipple={true}
+                                          focusVisibleClassName=""
+                                          onClick={[Function]}
+                                        >
+                                          <MuiButtonBaseRoot
+                                            aria-controls="edit cart"
+                                            as="button"
+                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                            classes={
+                                              Object {
+                                                "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                "label": "MuiButton-label",
+                                                "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                              }
+                                            }
+                                            data-test="button-download-linear"
+                                            disabled={false}
+                                            onBlur={[Function]}
+                                            onClick={[Function]}
+                                            onContextMenu={[Function]}
+                                            onDragLeave={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onKeyUp={[Function]}
+                                            onMouseDown={[Function]}
+                                            onMouseLeave={[Function]}
+                                            onMouseUp={[Function]}
+                                            onTouchEnd={[Function]}
+                                            onTouchMove={[Function]}
+                                            onTouchStart={[Function]}
+                                            ownerState={
+                                              Object {
+                                                "aria-controls": "edit cart",
+                                                "centerRipple": false,
+                                                "children": Array [
+                                                  undefined,
+                                                  Array [
+                                                    <Memo />,
+                                                    "Edit",
+                                                  ],
+                                                  undefined,
+                                                ],
+                                                "className": "css-w60cv3-MuiButton-root",
+                                                "classes": Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                },
+                                                "component": "button",
+                                                "data-test": "button-download-linear",
+                                                "disableRipple": false,
+                                                "disableTouchRipple": false,
+                                                "disabled": false,
+                                                "focusRipple": true,
+                                                "focusVisible": false,
+                                                "focusVisibleClassName": "",
+                                                "onClick": [Function],
+                                                "tabIndex": 0,
+                                                "type": undefined,
+                                              }
+                                            }
+                                            tabIndex={0}
+                                            type="button"
+                                          >
+                                            <button
+                                              aria-controls="edit cart"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              data-test="button-download-linear"
+                                              disabled={false}
+                                              onBlur={[Function]}
+                                              onClick={[Function]}
+                                              onContextMenu={[Function]}
+                                              onDragLeave={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              onTouchEnd={[Function]}
+                                              onTouchMove={[Function]}
+                                              onTouchStart={[Function]}
+                                              tabIndex={0}
+                                              type="button"
+                                            >
+                                              <ForwardRef(EditIcon)>
+                                                <ForwardRef(SvgIcon)
+                                                  data-testid="EditIcon"
+                                                >
+                                                  <MuiSvgIconRoot
+                                                    aria-hidden={true}
+                                                    as="svg"
+                                                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                                                    data-testid="EditIcon"
+                                                    focusable="false"
+                                                    ownerState={
+                                                      Object {
+                                                        "children": <path
+                                                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                                        />,
+                                                        "color": "inherit",
+                                                        "component": "svg",
+                                                        "data-testid": "EditIcon",
+                                                        "fontSize": "medium",
+                                                        "viewBox": "0 0 24 24",
+                                                      }
+                                                    }
+                                                    viewBox="0 0 24 24"
+                                                  >
+                                                    <svg
+                                                      aria-hidden={true}
+                                                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                                      data-testid="EditIcon"
+                                                      focusable="false"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path
+                                                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                                                      />
+                                                    </svg>
+                                                  </MuiSvgIconRoot>
+                                                </ForwardRef(SvgIcon)>
+                                              </ForwardRef(EditIcon)>
+                                              Edit
+                                              <ForwardRef(TouchRipple)
+                                                center={false}
+                                              >
+                                                <MuiTouchRippleRoot
+                                                  className="MuiTouchRipple-root"
+                                                >
+                                                  <span
+                                                    className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                  >
+                                                    <TransitionGroup
+                                                      childFactory={[Function]}
+                                                      component={null}
+                                                      exit={true}
+                                                    />
+                                                  </span>
+                                                </MuiTouchRippleRoot>
+                                              </ForwardRef(TouchRipple)>
+                                            </button>
+                                          </MuiButtonBaseRoot>
+                                        </ForwardRef(ButtonBase)>
+                                      </MuiButtonRoot>
+                                    </ForwardRef(Button)>
                                   </div>
                                 </Styled(div)>
                               </ForwardRef(Box)>

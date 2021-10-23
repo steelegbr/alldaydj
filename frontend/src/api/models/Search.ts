@@ -24,13 +24,6 @@ export interface CartSearchResult {
     year: number
 }
 
-export interface CartSearchResults {
-    count: number,
-    next?: string,
-    previous?: string,
-    results: CartSearchResult[]
-}
-
 export type CartSearchConditionFields = 'search' | 'page' | 'resultsPerPage';
 
 export type CartSearchConditions = Record<CartSearchConditionFields, string>;

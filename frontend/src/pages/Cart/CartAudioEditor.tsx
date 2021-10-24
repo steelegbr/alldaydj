@@ -23,10 +23,11 @@ import {
 import {
   Button, Grid, LinearProgress, Slider,
 } from '@mui/material';
-import { Cart, CartAudio } from 'api/models/Cart';
+import { CartAudio } from 'api/models/Cart';
 import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import { CartEditorContext } from 'components/context/CartEditorContext';
 import React, { ChangeEvent } from 'react';
 import { getLogger } from 'services/LoggingService';
 import WaveSurfer from 'wavesurfer.js';
@@ -34,18 +35,13 @@ import MarkersPlugin from 'wavesurfer.js/src/plugin/markers';
 
 type AudioEditorState = 'Idle' | 'InfoLoading' | 'AudioLoading' | 'Loaded' | 'Error' | 'NoAudio' | 'StartLocalLoading' | 'LocalLoading';
 
-interface CartAudioEditorProps {
-  cart: Cart
-}
-
-const CartAudioEditor = (
-  { cart }: CartAudioEditorProps,
-): React.ReactElement => {
+const CartAudioEditor = (): React.ReactElement => {
   const [editorState, setEditorState] = React.useState<AudioEditorState>('Idle');
   const [audioLoadProgress, setAudioLoadProgress] = React.useState<number>(0);
   const [zoomLevel, setZoomLevel] = React.useState<number>(1);
   const [audioPlaying, setAudioPlaying] = React.useState<boolean>(false);
   const [localFile, setLocalFile] = React.useState<File>();
+  const { cart } = React.useContext(CartEditorContext);
   const authenticatonContext = React.useContext(AuthenticationContext);
   const token = authenticatonContext?.authenticationStatus.accessToken;
   const cartId = cart?.id;

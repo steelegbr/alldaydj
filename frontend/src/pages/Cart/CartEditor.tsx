@@ -18,6 +18,7 @@ import { AxiosResponse } from 'axios';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import TagChips from 'components/audio/TagChips';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import { CartEditorContext } from 'components/context/CartEditorContext';
 import CartAudioEditor from 'pages/Cart/CartAudioEditor';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -31,7 +32,7 @@ type CartEditorParams = {
 
 const CartEditor = (): React.ReactElement => {
   const { cartId } = useParams<CartEditorParams>();
-  const [cart, setCart] = React.useState<Cart>();
+  const { cart, setCart } = React.useContext(CartEditorContext);
   const [editorState, setEditorState] = React.useState<EditorState>('Loading');
   const authenticatonContext = React.useContext(AuthenticationContext);
   const token = authenticatonContext?.authenticationStatus.accessToken;
@@ -59,7 +60,7 @@ const CartEditor = (): React.ReactElement => {
         );
       }
     },
-    [cartId, token],
+    [cartId, token, setCart],
   );
 
   const updateLabel = React.useCallback(
@@ -72,7 +73,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateDisplayArtist = React.useCallback(
@@ -87,7 +88,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateTitle = React.useCallback(
@@ -100,7 +101,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateYear = React.useCallback(
@@ -113,7 +114,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateISRC = React.useCallback(
@@ -126,7 +127,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateRecordLabel = React.useCallback(
@@ -139,7 +140,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateComposer = React.useCallback(
@@ -152,7 +153,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updatePublisher = React.useCallback(
@@ -165,7 +166,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const toggleSweeper = React.useCallback(
@@ -178,7 +179,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const toggleFade = React.useCallback(
@@ -191,7 +192,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateType = React.useCallback(
@@ -204,7 +205,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   const updateTags = React.useCallback(
@@ -217,7 +218,7 @@ const CartEditor = (): React.ReactElement => {
         setCart(updatedCart);
       }
     },
-    [cart],
+    [cart, setCart],
   );
 
   if (editorState === 'Loading') {
@@ -298,7 +299,7 @@ const CartEditor = (): React.ReactElement => {
         value={cart.title}
         variant="standard"
       />
-      <CartAudioEditor cart={cart} />
+      <CartAudioEditor />
       <FormControl fullWidth variant="standard">
         <FormGroup>
           <FormControlLabel

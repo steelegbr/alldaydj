@@ -28,6 +28,7 @@ import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import { CartEditorContext } from 'components/context/CartEditorContext';
+import CuePointEditor, { CuePoint } from 'pages/Cart/CuePointEditor';
 import React, { ChangeEvent } from 'react';
 import { getLogger } from 'services/LoggingService';
 import WaveSurfer from 'wavesurfer.js';
@@ -119,6 +120,10 @@ const CartAudioEditor = (): React.ReactElement => {
 
         newWavesurfer.on('play', () => {
           setAudioPlaying(true);
+        });
+
+        newWavesurfer.on('error', () => {
+          setEditorState('Error');
         });
 
         return newWavesurfer;
@@ -262,6 +267,12 @@ const CartAudioEditor = (): React.ReactElement => {
         <Grid item xs={1}>
           <ZoomIn />
         </Grid>
+      </Grid>
+      <Grid container direction="row" justifyContent="space-between">
+        <CuePointEditor cuePoint={CuePoint.Start} />
+        <CuePointEditor cuePoint={CuePoint.IntroEnd} />
+        <CuePointEditor cuePoint={CuePoint.Segue} />
+        <CuePointEditor cuePoint={CuePoint.End} />
       </Grid>
     </Grid>
   );

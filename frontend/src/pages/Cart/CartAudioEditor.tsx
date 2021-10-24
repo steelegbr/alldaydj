@@ -18,7 +18,7 @@
 
 import {
   Delete,
-  Pause, PlayArrow, ZoomIn, ZoomOut,
+  Pause, PlayArrow, UploadFile, ZoomIn, ZoomOut,
 } from '@mui/icons-material';
 import {
   Button, Grid, LinearProgress, Slider,
@@ -27,13 +27,10 @@ import { Cart, CartAudio } from 'api/models/Cart';
 import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
-import React from 'react';
-import { FileUploader } from 'react-drag-drop-files';
+import React, { ChangeEvent } from 'react';
 import { getLogger } from 'services/LoggingService';
 import WaveSurfer from 'wavesurfer.js';
 import MarkersPlugin from 'wavesurfer.js/src/plugin/markers';
-
-// const SUPPORTED_FILE_TYPES = ['wav', 'mp3', 'ogg'];
 
 type AudioEditorState = 'Idle' | 'InfoLoading' | 'AudioLoading' | 'Loaded' | 'Error' | 'NoAudio' | 'StartLocalLoading' | 'LocalLoading';
 
@@ -143,6 +140,7 @@ const CartAudioEditor = (
     (url: string) => {
       const newWavesurfer = generateWavesurfer();
       if (newWavesurfer) {
+        setLocalFile(undefined);
         newWavesurfer.load(url);
         wavesurfer.current = newWavesurfer;
       } else {
@@ -208,10 +206,14 @@ const CartAudioEditor = (
     [generateWavesurfer, localFile],
   );
 
-  const handleFileSelection = (file: File) => {
-    getLogger().log(`Changing file from ${localFile} to ${file.name}`);
-    setLocalFile(file);
-    setEditorState('StartLocalLoading');
+  const handleFileSelection = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      const file = files[0];
+      getLogger().log(`Changing file from ${localFile?.name} to ${file.name}`);
+      setLocalFile(file);
+      setEditorState('StartLocalLoading');
+    }
   };
 
   React.useEffect(
@@ -278,10 +280,11 @@ const CartAudioEditor = (
 
   if (editorState === 'Idle' || editorState === 'NoAudio') {
     return (
-      <FileUploader
-        handleChange={handleFileSelection}
-        onTypeError={(error) => getLogger().error(error)}
-      />
+      <Button component="label" variant="contained">
+        <UploadFile />
+        Upload File
+        <input accept=".wav,.mp3,.ogg" hidden onChange={handleFileSelection} type="file" />
+      </Button>
     );
   }
 

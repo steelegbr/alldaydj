@@ -22,10 +22,13 @@ import React from 'react';
 export interface CartEditorContextType {
     cart?: Cart,
     file?: File,
+    seekCallback?: (position: number) => void;
     setCart: React.Dispatch<React.SetStateAction<Cart | undefined>>;
     setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+    setSeekCallback: React.Dispatch<React.SetStateAction<(position: number) => void>>;
     clearCart: () => void;
     clearFile: () => void;
+    clearSeekCallback: () => void;
 }
 
 const noOp = () => {
@@ -34,11 +37,13 @@ const noOp = () => {
 
 export const CartEditorContext = React.createContext<CartEditorContextType>(
   {
-    cart: undefined,
+    seekCallback: noOp,
     setCart: noOp,
     setFile: noOp,
+    setSeekCallback: noOp,
     clearCart: noOp,
     clearFile: noOp,
+    clearSeekCallback: noOp,
   },
 );
 
@@ -49,6 +54,7 @@ export interface CartEditorProviderProps {
 export const CartEditorProvider = ({ children }: CartEditorProviderProps): React.ReactElement => {
   const [cart, setCart] = React.useState<Cart>();
   const [file, setFile] = React.useState<File>();
+  const [seekCallback, setSeekCallback] = React.useState<(position: number) => void>(noOp);
 
   const clearCart = () => {
     setCart(undefined);
@@ -58,9 +64,21 @@ export const CartEditorProvider = ({ children }: CartEditorProviderProps): React
     setFile(undefined);
   };
 
+  const clearSeekCallback = () => {
+    setSeekCallback(noOp);
+  };
+
   return (
     <CartEditorContext.Provider value={{
-      cart, setCart, clearCart, file, setFile, clearFile,
+      cart,
+      setCart,
+      clearCart,
+      file,
+      setFile,
+      clearFile,
+      seekCallback,
+      setSeekCallback,
+      clearSeekCallback,
     }}
     >
       {children}

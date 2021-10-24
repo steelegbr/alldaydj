@@ -60,10 +60,6 @@ const CartAudioEditor = (): React.ReactElement => {
           position: 'top',
         });
         wavesurfer.current.addMarker({
-          time: cart.cue_intro_start / 1000,
-          color: '#00FF00',
-        });
-        wavesurfer.current.addMarker({
           time: cart.cue_intro_end / 1000,
           color: '#00FF00',
         });

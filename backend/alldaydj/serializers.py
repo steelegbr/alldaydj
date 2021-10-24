@@ -76,7 +76,6 @@ class CartSerializer(serializers.ModelSerializer):
             "artists",
             "cue_audio_start",
             "cue_audio_end",
-            "cue_intro_start",
             "cue_intro_end",
             "cue_segue",
             "sweeper",

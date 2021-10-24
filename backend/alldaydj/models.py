@@ -79,7 +79,6 @@ class Cart(models.Model):
     artists = models.ManyToManyField(Artist)
     cue_audio_start = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_audio_end = models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    cue_intro_start = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_intro_end = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_segue = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     sweeper = models.BooleanField(default=False, blank=False, null=False)

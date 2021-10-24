@@ -122,7 +122,6 @@ class CartTests(APITestCase):
             display_artist=display_artist,
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=sweeper,
@@ -155,7 +154,6 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["artists"], artists)
         self.assertEqual(json_response["cue_audio_start"], 0)
         self.assertEqual(json_response["cue_audio_end"], 233040)
-        self.assertEqual(json_response["cue_intro_start"], 0)
         self.assertEqual(json_response["cue_intro_end"], 29350)
         self.assertEqual(json_response["cue_segue"], 22606)
         self.assertEqual(json_response["sweeper"], sweeper)
@@ -226,7 +224,6 @@ class CartTests(APITestCase):
             display_artist=display_artist,
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=sweeper,
@@ -259,7 +256,6 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["artists"], artists)
         self.assertEqual(json_response["cue_audio_start"], 0)
         self.assertEqual(json_response["cue_audio_end"], 233040)
-        self.assertEqual(json_response["cue_intro_start"], 0)
         self.assertEqual(json_response["cue_intro_end"], 29350)
         self.assertEqual(json_response["cue_segue"], 22606)
         self.assertEqual(json_response["sweeper"], sweeper)
@@ -331,7 +327,6 @@ class CartTests(APITestCase):
             "artists": artists,
             "cue_audio_start": 0,
             "cue_audio_end": 233040,
-            "cue_intro_start": 0,
             "cue_intro_end": 29350,
             "cue_segue": 22606,
             "sweeper": sweeper,
@@ -368,7 +363,6 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["artists"], artists)
         self.assertEqual(json_response["cue_audio_start"], 0)
         self.assertEqual(json_response["cue_audio_end"], 233040)
-        self.assertEqual(json_response["cue_intro_start"], 0)
         self.assertEqual(json_response["cue_intro_end"], 29350)
         self.assertEqual(json_response["cue_segue"], 22606)
         self.assertEqual(json_response["sweeper"], sweeper)
@@ -393,7 +387,6 @@ class CartTests(APITestCase):
             display_artist="Artist 1",
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=False,
@@ -415,7 +408,6 @@ class CartTests(APITestCase):
             "artists": ["Artist 1"],
             "cue_audio_start": 0,
             "cue_audio_end": 233040,
-            "cue_intro_start": 0,
             "cue_intro_end": 29350,
             "cue_segue": 22606,
             "sweeper": True,
@@ -447,7 +439,6 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["artists"], ["Artist 1"])
         self.assertEqual(json_response["cue_audio_start"], 0)
         self.assertEqual(json_response["cue_audio_end"], 233040)
-        self.assertEqual(json_response["cue_intro_start"], 0)
         self.assertEqual(json_response["cue_intro_end"], 29350)
         self.assertEqual(json_response["cue_segue"], 22606)
         self.assertEqual(json_response["sweeper"], True)
@@ -472,7 +463,6 @@ class CartTests(APITestCase):
             display_artist="Artist 1",
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=False,
@@ -509,7 +499,6 @@ class CartTests(APITestCase):
             display_artist="Artist 1",
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=False,
@@ -530,7 +519,6 @@ class CartTests(APITestCase):
             display_artist="Artist 1",
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=False,
@@ -552,7 +540,6 @@ class CartTests(APITestCase):
             "artists": ["Artist 1"],
             "cue_audio_start": 0,
             "cue_audio_end": 233040,
-            "cue_intro_start": 0,
             "cue_intro_end": 29350,
             "cue_segue": 22606,
             "sweeper": True,
@@ -591,7 +578,6 @@ class CartTests(APITestCase):
             display_artist="Artist 1",
             cue_audio_start=0,
             cue_audio_end=233040,
-            cue_intro_start=0,
             cue_intro_end=29350,
             cue_segue=22606,
             sweeper=False,
@@ -613,7 +599,6 @@ class CartTests(APITestCase):
             "artists": ["Artist 1"],
             "cue_audio_start": 0,
             "cue_audio_end": 233040,
-            "cue_intro_start": 0,
             "cue_intro_end": 29350,
             "cue_segue": 22606,
             "sweeper": True,

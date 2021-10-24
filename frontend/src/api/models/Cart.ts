@@ -23,7 +23,6 @@ export interface Cart {
     display_artist: string,
     cue_audio_start: number,
     cue_audio_end: number,
-    cue_intro_start: number,
     cue_intro_end: number,
     cue_segue: number
     artists: string[],

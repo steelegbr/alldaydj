@@ -84,7 +84,7 @@ const CuePointEditor = ({ cuePoint }: CuePointEditorProps): React.ReactElement =
   return (
     <Grid container direction="column" justifyContent="center" xs={3}>
       <Grid item>
-        <Button fullWidth style={{ color: colour, backgroundColor: backgroundColour }}>
+        <Button style={{ color: colour, backgroundColor: backgroundColour }}>
           {`Set ${label}`}
         </Button>
       </Grid>
@@ -92,7 +92,7 @@ const CuePointEditor = ({ cuePoint }: CuePointEditorProps): React.ReactElement =
         {valueToDisplay(value)}
       </Grid>
       <Grid item>
-        <Button fullWidth style={{ color: colour, backgroundColor: backgroundColour }}>
+        <Button style={{ color: colour, backgroundColor: backgroundColour }}>
           {`Cue ${label}`}
         </Button>
       </Grid>

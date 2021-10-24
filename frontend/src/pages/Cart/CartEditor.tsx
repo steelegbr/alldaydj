@@ -18,6 +18,7 @@ import { AxiosResponse } from 'axios';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import TagChips from 'components/audio/TagChips';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import CartAudioEditor from 'pages/Cart/CartAudioEditor';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { getLogger } from 'services/LoggingService';
@@ -297,6 +298,7 @@ const CartEditor = (): React.ReactElement => {
         value={cart.title}
         variant="standard"
       />
+      <CartAudioEditor cart={cart} />
       <FormControl fullWidth variant="standard">
         <FormGroup>
           <FormControlLabel

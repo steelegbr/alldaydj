@@ -23,7 +23,7 @@ import {
 import {
   Button, Grid, LinearProgress, Slider,
 } from '@mui/material';
-import { CartAudio } from 'api/models/Cart';
+import { Cart, CartAudio } from 'api/models/Cart';
 import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import { CartEditorContext } from 'components/context/CartEditorContext';
@@ -33,7 +33,14 @@ import { getLogger } from 'services/LoggingService';
 import WaveSurfer from 'wavesurfer.js';
 import MarkersPlugin from 'wavesurfer.js/src/plugin/markers';
 
+enum CueSetAction {
+  LessThan,
+  GreaterThan,
+  Equal
+}
+
 type AudioEditorState = 'Idle' | 'InfoLoading' | 'AudioLoading' | 'Loaded' | 'Error' | 'NoAudio' | 'StartLocalLoading' | 'LocalLoading';
+const CUE_POINT_ORDER = [CuePoint.Start, CuePoint.IntroEnd, CuePoint.Segue, CuePoint.End];
 
 const CartAudioEditor = (): React.ReactElement => {
   const [editorState, setEditorState] = React.useState<AudioEditorState>('Idle');
@@ -41,7 +48,7 @@ const CartAudioEditor = (): React.ReactElement => {
   const [zoomLevel, setZoomLevel] = React.useState<number>(1);
   const [audioPlaying, setAudioPlaying] = React.useState<boolean>(false);
   const [localFile, setLocalFile] = React.useState<File>();
-  const { cart } = React.useContext(CartEditorContext);
+  const { cart, setCart } = React.useContext(CartEditorContext);
   const cartId = cart?.id;
 
   const waveform = React.useRef<HTMLDivElement>(null);
@@ -88,6 +95,81 @@ const CartAudioEditor = (): React.ReactElement => {
       }
     },
     [wavesurfer],
+  );
+
+  const calculateCueValue = React.useCallback(
+    (currentPosition: number, newPosition: number, action: CueSetAction) => {
+      switch (action) {
+        case CueSetAction.LessThan:
+          return (currentPosition >= newPosition) ? newPosition : currentPosition;
+        case CueSetAction.GreaterThan:
+          return (currentPosition <= newPosition) ? newPosition : currentPosition;
+        default:
+          return newPosition;
+      }
+    },
+    [],
+  );
+
+  const setCuePoint = React.useCallback(
+    (selectedCuePoint: CuePoint, position: number, action: CueSetAction): Partial<Cart> => {
+      if (cart) {
+        switch (selectedCuePoint) {
+          case CuePoint.Start:
+            return { cue_audio_start: calculateCueValue(cart.cue_audio_start, position, action) };
+          case CuePoint.IntroEnd:
+            return { cue_intro_end: calculateCueValue(cart.cue_intro_end, position, action) };
+          case CuePoint.Segue:
+            return { cue_segue: calculateCueValue(cart.cue_segue, position, action) };
+          default:
+            return { cue_audio_end: calculateCueValue(cart.cue_audio_end, position, action) };
+        }
+      }
+      return {};
+    },
+    [cart, calculateCueValue],
+  );
+
+  const setCuePointCallback = React.useCallback(
+    (selectedCuePoint: CuePoint) => {
+      if (wavesurfer.current && cart) {
+        const currentPosition = wavesurfer.current.getCurrentTime() * 1000;
+        getLogger().info(`Settings marker ${selectedCuePoint} to ${currentPosition} ms.`);
+
+        let foundCurrent = false;
+        let cuePoints: Partial<Cart> = {};
+
+        for (let i = 0; i < CUE_POINT_ORDER.length; i += 1) {
+          if (CUE_POINT_ORDER[i] === selectedCuePoint) {
+            foundCurrent = true;
+            cuePoints = {
+              ...cuePoints,
+              ...setCuePoint(CUE_POINT_ORDER[i], currentPosition, CueSetAction.Equal),
+            };
+          } else if (foundCurrent) {
+            cuePoints = {
+              ...cuePoints,
+              ...setCuePoint(CUE_POINT_ORDER[i], currentPosition, CueSetAction.GreaterThan),
+            };
+          } else {
+            cuePoints = {
+              ...cuePoints,
+              ...setCuePoint(CUE_POINT_ORDER[i], currentPosition, CueSetAction.LessThan),
+            };
+          }
+        }
+
+        const updatedCart = {
+          ...cart,
+          ...cuePoints,
+        };
+
+        setCart(updatedCart);
+
+        loadMarkers();
+      }
+    },
+    [wavesurfer, cart, setCart, setCuePoint, loadMarkers],
   );
 
   const generateWavesurfer = React.useCallback(
@@ -278,10 +360,26 @@ const CartAudioEditor = (): React.ReactElement => {
         </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="space-between">
-        <CuePointEditor cuePoint={CuePoint.Start} seekCallback={seekCallback} />
-        <CuePointEditor cuePoint={CuePoint.IntroEnd} seekCallback={seekCallback} />
-        <CuePointEditor cuePoint={CuePoint.Segue} seekCallback={seekCallback} />
-        <CuePointEditor cuePoint={CuePoint.End} seekCallback={seekCallback} />
+        <CuePointEditor
+          cuePoint={CuePoint.Start}
+          seekCallback={seekCallback}
+          setCallback={setCuePointCallback}
+        />
+        <CuePointEditor
+          cuePoint={CuePoint.IntroEnd}
+          seekCallback={seekCallback}
+          setCallback={setCuePointCallback}
+        />
+        <CuePointEditor
+          cuePoint={CuePoint.Segue}
+          seekCallback={seekCallback}
+          setCallback={setCuePointCallback}
+        />
+        <CuePointEditor
+          cuePoint={CuePoint.End}
+          seekCallback={seekCallback}
+          setCallback={setCuePointCallback}
+        />
       </Grid>
     </Grid>
   );

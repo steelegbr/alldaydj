@@ -81,6 +81,18 @@ const CartAudioEditor = (): React.ReactElement => {
     [cart],
   );
 
+  const seekCallback = React.useCallback(
+    (position: number) => {
+      if (wavesurfer.current) {
+        const audioLength = wavesurfer.current.getDuration() * 1000;
+        const seekFraction = position / audioLength;
+        wavesurfer.current.seekTo(seekFraction);
+        getLogger().info(`Seeking to {audioLength} ms (${seekFraction} of the clip)`);
+      }
+    },
+    [wavesurfer],
+  );
+
   const generateWavesurfer = React.useCallback(
     () => {
       if (waveform.current) {
@@ -269,10 +281,10 @@ const CartAudioEditor = (): React.ReactElement => {
         </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="space-between">
-        <CuePointEditor cuePoint={CuePoint.Start} />
-        <CuePointEditor cuePoint={CuePoint.IntroEnd} />
-        <CuePointEditor cuePoint={CuePoint.Segue} />
-        <CuePointEditor cuePoint={CuePoint.End} />
+        <CuePointEditor cuePoint={CuePoint.Start} seekCallback={seekCallback} />
+        <CuePointEditor cuePoint={CuePoint.IntroEnd} seekCallback={seekCallback} />
+        <CuePointEditor cuePoint={CuePoint.Segue} seekCallback={seekCallback} />
+        <CuePointEditor cuePoint={CuePoint.End} seekCallback={seekCallback} />
       </Grid>
     </Grid>
   );

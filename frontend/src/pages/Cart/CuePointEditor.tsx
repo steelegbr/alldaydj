@@ -30,7 +30,8 @@ export enum CuePoint {
 }
 
 interface CuePointEditorProps {
-    cuePoint: CuePoint
+    cuePoint: CuePoint;
+    seekCallback: (position: number) => void
 }
 
 const backgroundColourMap = new Map<CuePoint, string>([
@@ -67,16 +68,17 @@ const getCuePointValue = (cart: Cart | undefined, cuePoint: CuePoint) => {
   }
 };
 
-const valueToDisplay = (value: number | undefined) => {
-  if (value !== undefined) {
-    return millisecondToMinutesSecondMilliseconds(value);
+const getSafeValue = (value: number | undefined) => {
+  if (value === undefined) {
+    return 0;
   }
-  return '0:00.0';
+  return value;
 };
 
-const CuePointEditor = ({ cuePoint }: CuePointEditorProps): React.ReactElement => {
+const CuePointEditor = ({ cuePoint, seekCallback }: CuePointEditorProps): React.ReactElement => {
   const { cart } = React.useContext(CartEditorContext);
   const value = getCuePointValue(cart, cuePoint);
+  const safeValue = getSafeValue(value);
   const colour = colourMap.get(cuePoint);
   const backgroundColour = backgroundColourMap.get(cuePoint);
   const label = labelMap.get(cuePoint);
@@ -89,10 +91,17 @@ const CuePointEditor = ({ cuePoint }: CuePointEditorProps): React.ReactElement =
         </Button>
       </Grid>
       <Grid item>
-        {valueToDisplay(value)}
+        {millisecondToMinutesSecondMilliseconds(safeValue)}
       </Grid>
       <Grid item>
-        <Button style={{ color: colour, backgroundColor: backgroundColour }}>
+        <Button
+          onClick={() => {
+            if (seekCallback) {
+              seekCallback(safeValue);
+            }
+          }}
+          style={{ color: colour, backgroundColor: backgroundColour }}
+        >
           {`Cue ${label}`}
         </Button>
       </Grid>

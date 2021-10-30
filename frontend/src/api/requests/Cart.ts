@@ -26,10 +26,10 @@ import {
 } from 'api/models/Cart';
 import getAllPages from 'api/requests/Pagination';
 
-export const getCartDetails = (cartId: string, token: string) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig(token));
+export const getCartDetails = (cartId: String) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig());
 
-export const getCartAudio = (cartId: string, token: string) => axios.get<CartAudio>(getUrl(`/api/audio/${cartId}/`), generateRequestConfig(token));
+export const getCartAudio = (cartId: string) => axios.get<CartAudio>(getUrl(`/api/audio/${cartId}/`), generateRequestConfig());
 
-export const getCartTypes = (token: string) => getAllPages<CartType>(getUrl('/api/type/'), token);
+export const getCartTypes = () => getAllPages<CartType>(getUrl('/api/type/'));
 
-export const getTags = (token: string) => getAllPages<Tag>(getUrl('/api/tag/'), token);
+export const getTags = () => getAllPages<Tag>(getUrl('/api/tag/'));

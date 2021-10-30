@@ -20,6 +20,10 @@ import { Paginated } from 'api/models/Pagination';
 import getAllPages from 'api/requests/Pagination';
 import { AxiosResponse } from 'axios';
 import mockAxios from 'jest-mock-axios';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
+
+const mockToken = getTokenFromLocalStorage as jest.Mock;
+jest.mock('services/AuthenticationService');
 
 describe('pagination', () => {
   beforeEach(() => {
@@ -52,7 +56,9 @@ describe('pagination', () => {
       .mockResolvedValueOnce(responses[0])
       .mockResolvedValueOnce(responses[1]);
 
-    const actualResults = await getAllPages('http://example.org/', 'TOKEN123');
+    mockToken.mockReturnValue('TOKEN123');
+
+    const actualResults = await getAllPages('http://example.org/');
     expect(actualResults).toEqual(expectedResults);
     expect(mockAxios.get).toBeCalledTimes(2);
     expect(mockAxios.get).toBeCalledWith('http://example.org/', expectedToken);
@@ -80,7 +86,9 @@ describe('pagination', () => {
       .mockResolvedValueOnce(responses[0])
       .mockResolvedValueOnce(responses[1]);
 
-    await getAllPages('http://example.org/', 'TOKEN123').catch((error) => expect(error).toBeTruthy());
+    mockToken.mockReturnValue('TOKEN123');
+
+    await getAllPages('http://example.org/').catch((error) => expect(error).toBeTruthy());
 
     expect(mockAxios.get).toBeCalledTimes(2);
     expect(mockAxios.get).toBeCalledWith('http://example.org/', expectedToken);

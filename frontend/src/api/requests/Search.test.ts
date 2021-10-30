@@ -1,5 +1,9 @@
 import mockAxios from 'jest-mock-axios';
 import { cartSearch } from 'api/requests/Search';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
+
+const mockToken = getTokenFromLocalStorage as jest.Mock;
+jest.mock('services/AuthenticationService');
 
 describe('cart search', () => {
   beforeEach(() => {
@@ -7,30 +11,14 @@ describe('cart search', () => {
   });
 
   it('basic search', async () => {
+    mockToken.mockReturnValue('TOKEN123');
+
     cartSearch({
-      advanced: 'false',
-      artist: '',
       page: '1',
       resultsPerPage: '10',
       search: 'test',
-      title: '',
-    },
-    'token123');
+    });
 
-    expect(mockAxios.get).toBeCalledWith('/api/cart/search/', { headers: { Authorization: 'Bearer token123' }, params: expect.any(URLSearchParams) });
-  });
-
-  it('advanced search', async () => {
-    cartSearch({
-      advanced: 'true',
-      artist: 'artist',
-      page: '1',
-      resultsPerPage: '10',
-      search: 'test',
-      title: 'title',
-    },
-    'token123');
-
-    expect(mockAxios.get).toBeCalledWith('/api/cart/search/', { headers: { Authorization: 'Bearer token123' }, params: expect.any(URLSearchParams) });
+    expect(mockAxios.get).toBeCalledWith('/api/cart/search/', { headers: { Authorization: 'Bearer TOKEN123' }, params: expect.any(URLSearchParams) });
   });
 });

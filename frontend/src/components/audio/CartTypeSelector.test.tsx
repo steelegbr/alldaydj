@@ -23,25 +23,17 @@ import { AxiosResponse } from 'axios';
 import { Paginated } from 'api/models/Pagination';
 import { mount } from 'enzyme';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
-import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
 
 const selectedChangedCallback = jest.fn();
 const setAuthStatusCallback = jest.fn();
 
-const getSelector = (selectedType: string) => {
-  const contextValue : AuthenticationStatusProps = {
-    authenticationStatus: {
-      stage: 'Authenticated',
-      accessToken: 'TOKEN123',
-    },
-    setAuthenticationStatus: setAuthStatusCallback,
-  };
-  return mount(
-    <AuthenticationContext.Provider value={contextValue}>
-      <CartTypeSelector selectedType={selectedType} setSelectedType={selectedChangedCallback} />
-    </AuthenticationContext.Provider>,
-  );
-};
+const mockToken = getTokenFromLocalStorage as jest.Mock;
+jest.mock('services/AuthenticationService');
+
+const getSelector = (selectedType: string) => mount(
+  <CartTypeSelector selectedType={selectedType} setSelectedType={selectedChangedCallback} />,
+);
 
 describe('cart type dropdown', () => {
   beforeEach(() => {
@@ -85,6 +77,8 @@ describe('cart type dropdown', () => {
       .mockResolvedValueOnce(responses[0])
       .mockResolvedValueOnce(responses[1]);
 
+    mockToken.mockReturnValue('TOKEN123');
+
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     const component = getSelector('Type 2');
@@ -119,6 +113,8 @@ describe('cart type dropdown', () => {
     ];
 
     mockAxios.get.mockResolvedValueOnce(responses[0]);
+
+    mockToken.mockReturnValue('TOKEN123');
 
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 

@@ -29,13 +29,15 @@ import { PreviewContext, PreviewContextType } from 'components/context/PreviewCo
 import { mount } from 'enzyme';
 import React from 'react';
 import mockAxios from 'jest-mock-axios';
-import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 import { act } from '@testing-library/react';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
 
 const CART_ID = 'CART123';
 const mockSetCartId = jest.fn();
 const mockClearCart = jest.fn();
-const mockSetAuthenticationStatus = jest.fn();
+const mockToken = getTokenFromLocalStorage as jest.Mock;
+
+jest.mock('services/AuthenticationService');
 
 const loadPlayer = () => {
   const previewContextConfig: PreviewContextType = {
@@ -43,19 +45,10 @@ const loadPlayer = () => {
     setCartId: mockSetCartId,
     clearCart: mockClearCart,
   };
-  const authContextConfig : AuthenticationStatusProps = {
-    authenticationStatus: {
-      stage: 'Authenticated',
-      accessToken: 'TOKEN123',
-    },
-    setAuthenticationStatus: mockSetAuthenticationStatus,
-  };
   return mount(
-    <AuthenticationContext.Provider value={authContextConfig}>
-      <PreviewContext.Provider value={previewContextConfig}>
-        <PreviewPlayer />
-      </PreviewContext.Provider>
-    </AuthenticationContext.Provider>,
+    <PreviewContext.Provider value={previewContextConfig}>
+      <PreviewPlayer />
+    </PreviewContext.Provider>,
   );
 };
 
@@ -89,6 +82,8 @@ describe('happy path', () => {
     mockAxios.get.mockResolvedValueOnce(responseGetCartDetails)
       .mockResolvedValueOnce(responseGetCartAudio);
 
+    mockToken.mockReturnValue('TOKEN123');
+
     const component = loadPlayer();
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
@@ -115,6 +110,8 @@ describe('unhappy path', () => {
     });
 
     mockAxios.get.mockResolvedValueOnce(responseGetCartDetails);
+
+    mockToken.mockReturnValue('TOKEN123');
 
     const component = loadPlayer();
     await act(async () => {
@@ -151,6 +148,8 @@ describe('unhappy path', () => {
 
     mockAxios.get.mockResolvedValueOnce(responseGetCartDetails)
       .mockResolvedValueOnce(responseGetCartAudio);
+
+    mockToken.mockReturnValue('TOKEN123');
 
     const component = loadPlayer();
     await act(async () => {

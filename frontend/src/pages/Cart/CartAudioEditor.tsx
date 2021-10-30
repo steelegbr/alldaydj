@@ -26,7 +26,6 @@ import {
 import { CartAudio } from 'api/models/Cart';
 import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import { CartEditorContext } from 'components/context/CartEditorContext';
 import CuePointEditor, { CuePoint } from 'pages/Cart/CuePointEditor';
 import React, { ChangeEvent } from 'react';
@@ -43,8 +42,6 @@ const CartAudioEditor = (): React.ReactElement => {
   const [audioPlaying, setAudioPlaying] = React.useState<boolean>(false);
   const [localFile, setLocalFile] = React.useState<File>();
   const { cart } = React.useContext(CartEditorContext);
-  const authenticatonContext = React.useContext(AuthenticationContext);
-  const token = authenticatonContext?.authenticationStatus.accessToken;
   const cartId = cart?.id;
 
   const waveform = React.useRef<HTMLDivElement>(null);
@@ -227,10 +224,10 @@ const CartAudioEditor = (): React.ReactElement => {
 
   React.useEffect(
     () => {
-      if (cartId && token && editorState === 'Idle') {
+      if (cartId && editorState === 'Idle') {
         getLogger().info(`Downloading cart audio info for cart ${cartId}`);
         setEditorState('InfoLoading');
-        getCartAudio(cartId, token).then(
+        getCartAudio(cartId).then(
           (response: AxiosResponse<CartAudio>) => {
             if (response.status === 200) {
               getLogger().info('Found audio information.');
@@ -250,7 +247,7 @@ const CartAudioEditor = (): React.ReactElement => {
         loadLocalAudio();
       }
     },
-    [cartId, editorState, token, loadLocalAudio, loadRemoteAudio],
+    [cartId, editorState, loadLocalAudio, loadRemoteAudio],
   );
 
   const audioControls = () => (

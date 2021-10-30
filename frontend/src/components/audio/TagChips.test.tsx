@@ -20,28 +20,20 @@ import React from 'react';
 import { AxiosResponse } from 'axios';
 import mockAxios from 'jest-mock-axios';
 import TagChips from 'components/audio/TagChips';
-import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 import { mount } from 'enzyme';
 import { Paginated } from 'api/models/Pagination';
 import { Tag } from 'api/models/Cart';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
 
 const chipsChangedCallback = jest.fn();
 const setAuthStatusCallback = jest.fn();
 
-const getChips = (selectedTags: string[]) => {
-  const contextValue : AuthenticationStatusProps = {
-    authenticationStatus: {
-      stage: 'Authenticated',
-      accessToken: 'TOKEN123',
-    },
-    setAuthenticationStatus: setAuthStatusCallback,
-  };
-  return mount(
-    <AuthenticationContext.Provider value={contextValue}>
-      <TagChips selectedTags={selectedTags} setSelectedTags={chipsChangedCallback} />
-    </AuthenticationContext.Provider>,
-  );
-};
+const mockToken = getTokenFromLocalStorage as jest.Mock;
+jest.mock('services/AuthenticationService');
+
+const getChips = (selectedTags: string[]) => mount(
+  <TagChips selectedTags={selectedTags} setSelectedTags={chipsChangedCallback} />,
+);
 
 describe('tag chips', () => {
   beforeEach(() => {
@@ -83,6 +75,8 @@ describe('tag chips', () => {
       .mockResolvedValueOnce(responses[0])
       .mockResolvedValueOnce(responses[1]);
 
+    mockToken.mockReturnValue('TOKEN123');
+
     const component = getChips(['Tag 1']);
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
@@ -114,6 +108,8 @@ describe('tag chips', () => {
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     mockAxios.get.mockResolvedValueOnce(responses[0]);
+
+    mockToken.mockReturnValue('TOKEN123');
 
     const component = getChips(['Tag 1']);
     await new Promise((r) => setTimeout(r, 2000));

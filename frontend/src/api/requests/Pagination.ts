@@ -20,14 +20,14 @@ import { Paginated } from 'api/models/Pagination';
 import { generateRequestConfig } from 'api/requests/Helpers';
 import axios, { AxiosResponse } from 'axios';
 
-export async function getAllPages<Type>(url: string, token: string): Promise<Type[]> {
+export async function getAllPages<Type>(url: string): Promise<Type[]> {
   let objects: Type[] = [];
   let nextUrl: string | undefined = url;
 
   /* eslint-disable no-await-in-loop */
   while (nextUrl) {
     const response: AxiosResponse<Paginated<Type>> = await axios.get<Paginated<Type>>(
-      nextUrl, generateRequestConfig(token),
+      nextUrl, generateRequestConfig(),
     );
     if (response.status === 200) {
       objects = [...objects, ...response.data.results];

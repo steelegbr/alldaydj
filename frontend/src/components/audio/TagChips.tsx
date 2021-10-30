@@ -21,7 +21,6 @@ import {
 } from '@mui/material';
 import { Tag } from 'api/models/Cart';
 import { getTags } from 'api/requests/Cart';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import React, { SyntheticEvent } from 'react';
 import { getLogger } from 'services/LoggingService';
 
@@ -34,25 +33,21 @@ const TagChips = (
   { selectedTags, setSelectedTags }: TagChipsProps,
 ): React.ReactElement => {
   const [availableTags, setAvailableTags] = React.useState<string[]>([]);
-  const authenticatonContext = React.useContext(AuthenticationContext);
-  const token = authenticatonContext?.authenticationStatus.accessToken;
 
   React.useEffect(
     () => {
-      if (token) {
-        getLogger().info('Obtaining possible tags.');
-        getTags(token).then(
-          (tags: Tag[]) => {
-            const mappedTags = tags.map((tag) => tag.tag);
-            setAvailableTags(mappedTags);
-          },
-          (error) => {
-            getLogger().error(`Failed to get tags: ${error}`);
-          },
-        );
-      }
+      getLogger().info('Obtaining possible tags.');
+      getTags().then(
+        (tags: Tag[]) => {
+          const mappedTags = tags.map((tag) => tag.tag);
+          setAvailableTags(mappedTags);
+        },
+        (error) => {
+          getLogger().error(`Failed to get tags: ${error}`);
+        },
+      );
     },
-    [token],
+    [],
   );
 
   //   const deleteTag = React.useCallback(

@@ -22,7 +22,6 @@ import {
 } from '@mui/material';
 import { CartType } from 'api/models/Cart';
 import { getCartTypes } from 'api/requests/Cart';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import React from 'react';
 import { getLogger } from 'services/LoggingService';
 
@@ -35,25 +34,21 @@ const CartTypeSelector = (
   { selectedType, setSelectedType }: CartTypeSelectorProps,
 ): React.ReactElement => {
   const [cartTypes, setCartTypes] = React.useState<CartType[]>([]);
-  const authenticatonContext = React.useContext(AuthenticationContext);
-  const token = authenticatonContext?.authenticationStatus.accessToken;
 
   React.useEffect(
     () => {
-      if (token) {
-        getLogger().info('Downloading cart types.');
-        getCartTypes(token).then(
-          (loadedCartTypes: CartType[]) => {
-            setCartTypes(loadedCartTypes);
-          },
-          (error) => {
-            getLogger().error(`Something went wrong updating the cart types: ${error}`);
-            setCartTypes([]);
-          },
-        );
-      }
+      getLogger().info('Downloading cart types.');
+      getCartTypes().then(
+        (loadedCartTypes: CartType[]) => {
+          setCartTypes(loadedCartTypes);
+        },
+        (error) => {
+          getLogger().error(`Something went wrong updating the cart types: ${error}`);
+          setCartTypes([]);
+        },
+      );
     },
-    [token],
+    [],
   );
 
   const updateTypeSelection = React.useCallback(

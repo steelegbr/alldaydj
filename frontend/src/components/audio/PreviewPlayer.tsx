@@ -36,7 +36,6 @@ import {
 } from '@mui/icons-material';
 import { getCartAudio, getCartDetails } from 'api/requests/Cart';
 import { Cart, CartAudio } from 'api/models/Cart';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import { AxiosResponse } from 'axios';
 import { millisecondToMinutesSecond } from 'services/TimeService';
 import { useInterval } from 'usehooks-ts';
@@ -56,7 +55,6 @@ const useStyles = makeStyles(() => createStyles({
 const PreviewPlayer = () : React.ReactElement => {
   const classes = useStyles();
   const previewContext = React.useContext(PreviewContext);
-  const authenticationContext = React.useContext(AuthenticationContext);
   const [loadedCartId, setLoadedCartId] = React.useState<string>();
   const [playerState, setPlayerState] = React.useState<PreviewPlayerState>('Idle');
   const [cart, setCart] = React.useState<Cart>();
@@ -66,7 +64,6 @@ const PreviewPlayer = () : React.ReactElement => {
   const audioRef = React.useRef(new Audio());
 
   const { cartId, clearCart } = previewContext;
-  const token = authenticationContext?.authenticationStatus.accessToken;
   const showDrawer = !!(cartId);
   const enablePlayPauseButton = playerState === 'Playing' || playerState === 'Paused';
 
@@ -147,9 +144,9 @@ const PreviewPlayer = () : React.ReactElement => {
   };
 
   const loadCartAudioInfo = React.useCallback(
-    (requestedCartId: string, requestToken: string) => {
+    (requestedCartId: string) => {
       getLogger().info(`Loading cart audio information for ${requestedCartId} to preview.`);
-      getCartAudio(requestedCartId, requestToken).then(
+      getCartAudio(requestedCartId).then(
         (response: AxiosResponse<CartAudio>) => {
           if (response.status === 200) {
             setCartAudio(response.data);
@@ -181,17 +178,17 @@ const PreviewPlayer = () : React.ReactElement => {
 
   React.useEffect(
     () => {
-      if (cartId && cartId !== loadedCartId && token) {
+      if (cartId && cartId !== loadedCartId) {
         clearPlayingCart();
         setPlayerState('Loading');
         setLoadedCartId(cartId);
         getLogger().info(`Loading cart ${cartId} for preview.`);
-        getCartDetails(cartId, token).then(
+        getCartDetails(cartId).then(
           (response: AxiosResponse<Cart>) => {
             if (response.status === 200) {
               setCart(response.data);
               setLoadedCartId(cartId);
-              loadCartAudioInfo(cartId, token);
+              loadCartAudioInfo(cartId);
             } else {
               getLogger().error(`Encountered unexpected status code of ${response.status} loading the cart for preview.`);
               setPlayerState('Error');
@@ -207,7 +204,6 @@ const PreviewPlayer = () : React.ReactElement => {
     [
       cartId,
       setPlayerState,
-      token,
       loadedCartId,
       setLoadedCartId,
       loadCartAudioInfo,

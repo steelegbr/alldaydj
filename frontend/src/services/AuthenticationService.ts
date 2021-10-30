@@ -124,3 +124,11 @@ export const refreshAccessToken = (
     },
   );
 };
+
+export const getTokenFromLocalStorage = (): string => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    return token;
+  }
+  return '';
+};

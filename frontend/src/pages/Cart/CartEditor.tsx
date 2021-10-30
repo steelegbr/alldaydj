@@ -17,7 +17,6 @@ import { getCartDetails } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import TagChips from 'components/audio/TagChips';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import { CartEditorContext } from 'components/context/CartEditorContext';
 import CartAudioEditor from 'pages/Cart/CartAudioEditor';
 import React from 'react';
@@ -34,16 +33,14 @@ const CartEditor = (): React.ReactElement => {
   const { cartId } = useParams<CartEditorParams>();
   const { cart, setCart } = React.useContext(CartEditorContext);
   const [editorState, setEditorState] = React.useState<EditorState>('Loading');
-  const authenticatonContext = React.useContext(AuthenticationContext);
-  const token = authenticatonContext?.authenticationStatus.accessToken;
   const validationErrors = validateCart(cart);
 
   React.useEffect(
     () => {
-      if (cartId && token) {
+      if (cartId) {
         getLogger().info(`Downloading cart ${cartId} information for editing.`);
         setEditorState('Loading');
-        getCartDetails(cartId, token).then(
+        getCartDetails(cartId).then(
           (response: AxiosResponse<Cart>) => {
             if (response.status === 200) {
               setCart(response.data);
@@ -60,7 +57,7 @@ const CartEditor = (): React.ReactElement => {
         );
       }
     },
-    [cartId, token, setCart],
+    [cartId, setCart],
   );
 
   const updateLabel = React.useCallback(

@@ -191,8 +191,11 @@ const CartSynchroniser = (): React.ReactElement => {
             {state < SyncState.UploadingAudio && (
               renderToDo()
             )}
-            {state === SyncState.UploadingAudio && (
+            {state === SyncState.UploadingAudio && uploadProgress < 100 && (
               <CircularProgress className={classes.spinner} value={uploadProgress} variant="determinate" />
+            )}
+            {state === SyncState.UploadingAudio && uploadProgress === 100 && (
+              renderProgress()
             )}
             {state === SyncState.ErrorUploadingAudio && (
               renderError()

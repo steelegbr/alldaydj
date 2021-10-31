@@ -18,6 +18,7 @@
 
 import {
   ArrowBack,
+  ArrowForward,
   CheckBox, CheckBoxOutlineBlank, Error,
 } from '@mui/icons-material';
 import {
@@ -27,12 +28,16 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { AudioUploadJob, Cart } from 'api/models/Cart';
-import { createCart, updateCart, uploadAudio } from 'api/requests/Cart';
+import { AudioJobStatus, AudioUploadJob, Cart } from 'api/models/Cart';
+import {
+  createCart, getUploadJobProgress, updateCart, uploadAudio,
+} from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import Paths from 'routing/Paths';
 import { getLogger } from 'services/LoggingService';
+import { useInterval } from 'usehooks-ts';
 
 const ERROR_UPLOAD_AUDIO = 'Something went wrong uploading the audio. Please try again later.';
 const ERROR_UPDATE_CART = 'Something went wrong updating the cart. Please try again later.';
@@ -66,6 +71,17 @@ const useStyles = makeStyles(() => createStyles({
   },
 }));
 
+const MAP_JOB_STATUS_SYNC_STATE = new Map<AudioJobStatus, SyncState>([
+  ['QUEUED', SyncState.Queued],
+  ['ERROR', SyncState.ErrorProcessing],
+  ['VALIDATING', SyncState.Validating],
+  ['DECOMPRESSING', SyncState.Decompressing],
+  ['METADATA', SyncState.Decompressing],
+  ['COMPRESSING', SyncState.Compress],
+  ['HASHING', SyncState.Hashses],
+  ['DONE', SyncState.Complete],
+]);
+
 const CartSynchroniser = (): React.ReactElement => {
   const history = useHistory();
   const classes = useStyles();
@@ -75,11 +91,17 @@ const CartSynchroniser = (): React.ReactElement => {
   const [errorText, setErrorText] = React.useState<string>();
   const [updatedCart, setUpdatedCart] = React.useState<Cart>(cart);
   const [uploadProgress, setUploadProgress] = React.useState<number>(0);
+  const [audioUploadJob, setAudioUploadJob] = React.useState<AudioUploadJob>();
 
   const renderToDo = () => (<CheckBoxOutlineBlank />);
   const renderError = () => (<Error color="error" />);
   const renderSuccess = () => (<CheckBox color="success" />);
-  const renderProgress = () => (<CircularProgress className={classes.spinner} />);
+  const renderProgress = (progress?: number) => {
+    if (progress && progress < 100) {
+      return (<CircularProgress className={classes.spinner} value={uploadProgress} variant="determinate" />);
+    }
+    return (<CircularProgress className={classes.spinner} />);
+  };
 
   const progressCallback = React.useCallback(
     (event: ProgressEvent) => {
@@ -93,6 +115,7 @@ const CartSynchroniser = (): React.ReactElement => {
     (response: AxiosResponse<AudioUploadJob>) => {
       if (response.status === 200) {
         setState(SyncState.Queued);
+        setAudioUploadJob(response.data);
       } else {
         getLogger().error(`Werid response code of ${response.status} uploading the audio.`);
         setErrorText(ERROR_UPLOAD_AUDIO);
@@ -149,6 +172,13 @@ const CartSynchroniser = (): React.ReactElement => {
     [history],
   );
 
+  const goForward = React.useCallback(
+    () => {
+      history.push(`${Paths.cart}${updatedCart.id}`);
+    },
+    [history, updatedCart.id],
+  );
+
   React.useEffect(
     () => {
       setState(SyncState.UpdatingCart);
@@ -159,6 +189,29 @@ const CartSynchroniser = (): React.ReactElement => {
       }
     },
     [cart, updateCartSuccess, updateCartError],
+  );
+
+  useInterval(
+    () => {
+      if (audioUploadJob) {
+        getLogger().info('Refreshing job state.');
+        getUploadJobProgress(audioUploadJob.id).then(
+          (response: AxiosResponse<AudioUploadJob>) => {
+            if (response.status === 200) {
+              setState(
+                MAP_JOB_STATUS_SYNC_STATE.get(response.data.status) || SyncState.ErrorProcessing,
+              );
+            } else {
+              getLogger().error(`Got status code ${response.status} getting the job status.`);
+            }
+          },
+          (error: Error) => {
+            getLogger().error(`Ran into an error getting the job status: ${error}`);
+          },
+        );
+      }
+    },
+    state >= SyncState.Queued && state < SyncState.Complete ? 1000 : null,
   );
 
   return (
@@ -191,35 +244,90 @@ const CartSynchroniser = (): React.ReactElement => {
             {state < SyncState.UploadingAudio && (
               renderToDo()
             )}
-            {state === SyncState.UploadingAudio && uploadProgress < 100 && (
-              <CircularProgress className={classes.spinner} value={uploadProgress} variant="determinate" />
-            )}
-            {state === SyncState.UploadingAudio && uploadProgress === 100 && (
-              renderProgress()
+            {state === SyncState.UploadingAudio && (
+              renderProgress(uploadProgress)
             )}
             {state === SyncState.ErrorUploadingAudio && (
               renderError()
             )}
-            {state > SyncState.Queued && (
+            {state > SyncState.ErrorUploadingAudio && (
               renderSuccess()
             )}
             Upload audio
           </ListItem>
           <ListItem>
-            {renderToDo()}
+            {state < SyncState.Queued && (
+              renderToDo()
+            )}
+            {(state === SyncState.Queued || state === SyncState.Validating) && (
+              renderProgress(uploadProgress)
+            )}
+            {state === SyncState.ErrorProcessing && (
+              renderError()
+            )}
+            {state > SyncState.Validating && (
+              renderSuccess()
+            )}
             Validate audio file
           </ListItem>
           <ListItem>
-            <CheckBoxOutlineBlank />
+            {state < SyncState.Decompressing && (
+              renderToDo()
+            )}
+            {state === SyncState.Decompressing && (
+              renderProgress(uploadProgress)
+            )}
+            {state === SyncState.ErrorProcessing && (
+              renderError()
+            )}
+            {state > SyncState.Decompressing && (
+              renderSuccess()
+            )}
             Decompress audio file
           </ListItem>
           <ListItem>
+            {state < SyncState.Metadata && (
+              renderToDo()
+            )}
+            {state === SyncState.Metadata && (
+              renderProgress(uploadProgress)
+            )}
+            {state === SyncState.ErrorProcessing && (
+              renderError()
+            )}
+            {state > SyncState.Metadata && (
+              renderSuccess()
+            )}
             Extract metadata
           </ListItem>
           <ListItem>
+            {state < SyncState.Compress && (
+              renderToDo()
+            )}
+            {state === SyncState.Compress && (
+              renderProgress(uploadProgress)
+            )}
+            {state === SyncState.ErrorProcessing && (
+              renderError()
+            )}
+            {state > SyncState.Compress && (
+              renderSuccess()
+            )}
             Compress audio
           </ListItem>
           <ListItem>
+            {state < SyncState.Hashses && (
+              renderToDo()
+            )}
+            {state === SyncState.Hashses && (
+              renderProgress(uploadProgress)
+            )}
+            {state === SyncState.ErrorProcessing && (
+              renderError()
+            )}
+            {state > SyncState.Hashses && (
+              renderSuccess()
+            )}
             Generate hashes
           </ListItem>
           <ListItem>
@@ -238,6 +346,15 @@ const CartSynchroniser = (): React.ReactElement => {
         >
           <ArrowBack />
           Back
+        </Button>
+      )}
+      {state === SyncState.Complete && (
+        <Button
+          onClick={goForward}
+          variant="contained"
+        >
+          <ArrowForward />
+          Edit Cart
         </Button>
       )}
     </>

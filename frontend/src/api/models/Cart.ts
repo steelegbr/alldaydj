@@ -56,7 +56,7 @@ export interface Tag {
     tag: string
 }
 
-type AudioJobStatus = 'QUEUED' | 'ERROR' | 'VALIDATING' | 'DECOMPRESSING' | 'METADATA' | 'COMPRESSING' | 'HASHING' | 'DONE';
+export type AudioJobStatus = 'QUEUED' | 'ERROR' | 'VALIDATING' | 'DECOMPRESSING' | 'METADATA' | 'COMPRESSING' | 'HASHING' | 'DONE';
 export interface AudioUploadJob {
     id: string,
     status: AudioJobStatus

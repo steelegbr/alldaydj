@@ -41,6 +41,8 @@ export const updateCart = (cart: Cart) => axios.put<Cart>(getUrl(`/api/cart/${ca
 
 export const updatePartialCart = (cart: Partial<Cart>) => axios.patch<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
 
+export const getUploadJobProgress = (jobId: string) => axios.get<AudioUploadJob>(getUrl(`/api/job/${jobId}/`), generateRequestConfig());
+
 export const uploadAudio = (
   cart: Cart, file: File, progressCallback: (event: ProgressEvent) => void,
 ) => {

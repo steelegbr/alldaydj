@@ -54,7 +54,7 @@ const CartAudioEditor = (): React.ReactElement => {
   const waveform = React.useRef<HTMLDivElement>(null);
   const wavesurfer = React.useRef<WaveSurfer | null>(null);
 
-  const loadMarkers = React.useCallback(
+  React.useEffect(
     () => {
       getLogger().info('Call to update markers.');
       if (cart && wavesurfer.current) {
@@ -165,11 +165,9 @@ const CartAudioEditor = (): React.ReactElement => {
         };
 
         setCart(updatedCart);
-
-        loadMarkers();
       }
     },
-    [wavesurfer, cart, setCart, setCuePoint, loadMarkers],
+    [wavesurfer, cart, setCart, setCuePoint],
   );
 
   const generateWavesurfer = React.useCallback(
@@ -188,13 +186,11 @@ const CartAudioEditor = (): React.ReactElement => {
         newWavesurfer.on('ready', () => {
           setEditorState('Loaded');
           newWavesurfer.zoom(zoomLevel);
-          loadMarkers();
         });
 
         newWavesurfer.on('waveform-ready', () => {
           setEditorState('Loaded');
           newWavesurfer.zoom(zoomLevel);
-          loadMarkers();
         });
 
         newWavesurfer.on('loading', (progress: number) => {
@@ -221,7 +217,7 @@ const CartAudioEditor = (): React.ReactElement => {
       }
       return null;
     },
-    [loadMarkers, zoomLevel],
+    [zoomLevel],
   );
 
   const loadRemoteAudio = React.useCallback(

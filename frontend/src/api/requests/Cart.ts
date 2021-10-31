@@ -42,7 +42,7 @@ export const updateCart = (cart: Cart) => axios.put<Cart>(getUrl(`/api/cart/${ca
 export const updatePartialCart = (cart: Partial<Cart>) => axios.patch<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
 
 export const uploadAudio = (
-  cart: Cart, file: string, progressCallback: (event: ProgressEvent) => void,
+  cart: Cart, file: File, progressCallback: (event: ProgressEvent) => void,
 ) => {
   const baseConfig = generateRequestConfig();
   const config: AxiosRequestConfig = {

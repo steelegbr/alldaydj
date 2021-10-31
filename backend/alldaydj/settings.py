@@ -239,3 +239,7 @@ EMAIL_HOST_USER = environ.get("ADDJ_SMTP_USERNAME", "")
 EMAIL_HOST_PASSWORD = environ.get("ADDJ_SMTP_PASSWORD", "")
 EMAIL_USE_TLS = strtobool(environ.get("ADDJ_SMTP_TLS", "False"))
 EMAIL_USE_SSL = strtobool(environ.get("ADDJ_SMTP_SSL", "False"))
+
+# File Upload
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1000000000

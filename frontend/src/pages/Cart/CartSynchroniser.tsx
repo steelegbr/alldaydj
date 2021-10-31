@@ -46,8 +46,6 @@ enum SyncState {
     Idle,
     UpdatingCart,
     ErrorUpdatingCart,
-    ReadingFile,
-    ErrorReadingFile,
     UploadingAudio,
     ErrorUploadingAudio,
     ErrorProcessing,
@@ -113,33 +111,13 @@ const CartSynchroniser = (): React.ReactElement => {
     [],
   );
 
-  const readFileError = React.useCallback(
-    () => {
-      getLogger().error(`Failed to read file ${file?.name}`);
-      setErrorText(ERROR_UPLOAD_AUDIO);
-      setState(SyncState.ErrorUploadingAudio);
-    },
-    [file],
-  );
-
   const updateCartSuccess = React.useCallback(
     (response: AxiosResponse<Cart>) => {
       if (response.status === 200) {
         setUpdatedCart(response.data);
         if (file) {
-          setState(SyncState.ReadingFile);
-          const fileReader = new FileReader();
-          fileReader.onerror = readFileError;
-          fileReader.onload = () => {
-            const fileString = fileReader.result as string;
-            if (fileString) {
-              setState(SyncState.UploadingAudio);
-              uploadAudio(
-                cart, fileString, progressCallback,
-              ).then(uploadAudioSuccess, uploadAudioError);
-            }
-          };
-          fileReader.readAsBinaryString(file);
+          setState(SyncState.UploadingAudio);
+          uploadAudio(cart, file, progressCallback).then(uploadAudioSuccess, uploadAudioError);
         } else {
           setState(SyncState.Complete);
         }
@@ -152,7 +130,7 @@ const CartSynchroniser = (): React.ReactElement => {
         setState(SyncState.ErrorUpdatingCart);
       }
     },
-    [cart, file, readFileError, progressCallback, uploadAudioError, uploadAudioSuccess],
+    [cart, file, progressCallback, uploadAudioError, uploadAudioSuccess],
   );
 
   const updateCartError = React.useCallback(
@@ -209,21 +187,6 @@ const CartSynchroniser = (): React.ReactElement => {
         </ListItem>
         {file && (
         <>
-          <ListItem>
-            {state < SyncState.ReadingFile && (
-              renderToDo()
-            )}
-            {state === SyncState.ReadingFile && (
-              renderProgress()
-            )}
-            {state === SyncState.ErrorReadingFile && (
-              renderError()
-            )}
-            {state > SyncState.ErrorReadingFile && (
-              renderSuccess()
-            )}
-            Upload audio
-          </ListItem>
           <ListItem>
             {state < SyncState.UploadingAudio && (
               renderToDo()

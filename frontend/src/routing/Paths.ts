@@ -28,6 +28,7 @@ const Paths = {
     search: '/library/',
   },
   cart: '/cart/',
+  cartSync: '/cart-sync/',
 };
 
 export default Paths;

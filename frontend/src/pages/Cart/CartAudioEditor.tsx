@@ -47,8 +47,9 @@ const CartAudioEditor = (): React.ReactElement => {
   const [audioLoadProgress, setAudioLoadProgress] = React.useState<number>(0);
   const [zoomLevel, setZoomLevel] = React.useState<number>(1);
   const [audioPlaying, setAudioPlaying] = React.useState<boolean>(false);
-  const [localFile, setLocalFile] = React.useState<File>();
-  const { cart, setCart } = React.useContext(CartEditorContext);
+  const {
+    cart, setCart, file, setFile,
+  } = React.useContext(CartEditorContext);
   const cartId = cart?.id;
 
   const waveform = React.useRef<HTMLDivElement>(null);
@@ -87,8 +88,8 @@ const CartAudioEditor = (): React.ReactElement => {
 
   const setLocalCuePoints = React.useCallback(
     () => {
-      if (localFile && wavesurfer.current && cart) {
-        const duration = wavesurfer.current.getDuration() * 1000;
+      if (file && wavesurfer.current && cart) {
+        const duration = Math.floor(wavesurfer.current.getDuration() * 1000);
         const updatedCart: Cart = {
           ...cart,
           cue_audio_start: 0,
@@ -100,7 +101,7 @@ const CartAudioEditor = (): React.ReactElement => {
         getLogger().info('Reset cue points for the local file');
       }
     },
-    [localFile, cart, setCart],
+    [file, cart, setCart],
   );
 
   const seekCallback = React.useCallback(
@@ -151,7 +152,7 @@ const CartAudioEditor = (): React.ReactElement => {
   const setCuePointCallback = React.useCallback(
     (selectedCuePoint: CuePoint) => {
       if (wavesurfer.current && cart) {
-        const currentPosition = wavesurfer.current.getCurrentTime() * 1000;
+        const currentPosition = Math.floor(wavesurfer.current.getCurrentTime() * 1000);
         getLogger().info(`Settings marker ${selectedCuePoint} to ${currentPosition} ms.`);
 
         let foundCurrent = false;
@@ -244,7 +245,7 @@ const CartAudioEditor = (): React.ReactElement => {
     (url: string) => {
       const newWavesurfer = generateWavesurfer();
       if (newWavesurfer) {
-        setLocalFile(undefined);
+        setFile(undefined);
         newWavesurfer.load(url);
         wavesurfer.current = newWavesurfer;
       } else {
@@ -252,7 +253,7 @@ const CartAudioEditor = (): React.ReactElement => {
         getLogger().error('Waveform does not have a live reference.');
       }
     },
-    [generateWavesurfer],
+    [generateWavesurfer, setFile],
   );
 
   const handleZoomLevelEvent = (event: any, level: number | number [], thumb: number) => {
@@ -297,25 +298,25 @@ const CartAudioEditor = (): React.ReactElement => {
   const loadLocalAudio = React.useCallback(
     () => {
       const newWavesurfer = generateWavesurfer();
-      if (newWavesurfer && localFile) {
-        newWavesurfer.loadBlob(localFile);
+      if (newWavesurfer && file) {
+        newWavesurfer.loadBlob(file);
         wavesurfer.current = newWavesurfer;
         setEditorState('LocalLoading');
-        getLogger().info(`Loaded the local file ${localFile.name}.`);
+        getLogger().info(`Loaded the local file ${file.name}.`);
       } else {
         setEditorState('Error');
         getLogger().error('Waveform does not have a live reference, we do not have a local file or are in the wrong state.');
       }
     },
-    [generateWavesurfer, localFile],
+    [generateWavesurfer, file],
   );
 
   const handleFileSelection = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files) {
-      const file = files[0];
-      getLogger().log(`Changing file from ${localFile?.name} to ${file.name}`);
-      setLocalFile(file);
+      const selectedFile = files[0];
+      getLogger().log(`Changing file from ${file?.name} to ${selectedFile.name}`);
+      setFile(selectedFile);
       setEditorState('StartLocalLoading');
     }
   };

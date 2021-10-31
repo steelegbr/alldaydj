@@ -18,10 +18,11 @@
 
 /* eslint-disable import/prefer-default-export */
 
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import getUrl from 'services/UrlService';
 import { generateRequestConfig } from 'api/requests/Helpers';
 import {
+  AudioUploadJob,
   Cart, CartAudio, CartType, Tag,
 } from 'api/models/Cart';
 import getAllPages from 'api/requests/Pagination';
@@ -33,3 +34,32 @@ export const getCartAudio = (cartId: string) => axios.get<CartAudio>(getUrl(`/ap
 export const getCartTypes = () => getAllPages<CartType>(getUrl('/api/type/'));
 
 export const getTags = () => getAllPages<Tag>(getUrl('/api/tag/'));
+
+export const createCart = (cart: Cart) => axios.post<Cart>(getUrl('/api/cart/'), cart, generateRequestConfig());
+
+export const updateCart = (cart: Cart) => axios.put<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
+
+export const updatePartialCart = (cart: Partial<Cart>) => axios.patch<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
+
+export const uploadAudio = (
+  cart: Cart, file: string, progressCallback: (event: ProgressEvent) => void,
+) => {
+  const baseConfig = generateRequestConfig();
+  const config: AxiosRequestConfig = {
+    ...baseConfig,
+    onUploadProgress: progressCallback,
+    headers: {
+      ...baseConfig.headers,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const data = new FormData();
+  data.append('file', file);
+
+  return axios.post<AudioUploadJob>(
+    getUrl(`/api/audio/${cart.id}/`),
+    data,
+    config,
+  );
+};

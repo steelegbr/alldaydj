@@ -85,6 +85,24 @@ const CartAudioEditor = (): React.ReactElement => {
     [cart],
   );
 
+  const setLocalCuePoints = React.useCallback(
+    () => {
+      if (localFile && wavesurfer.current && cart) {
+        const duration = wavesurfer.current.getDuration() * 1000;
+        const updatedCart: Cart = {
+          ...cart,
+          cue_audio_start: 0,
+          cue_intro_end: 0,
+          cue_segue: duration,
+          cue_audio_end: duration,
+        };
+        setCart(updatedCart);
+        getLogger().info('Reset cue points for the local file');
+      }
+    },
+    [localFile, cart, setCart],
+  );
+
   const seekCallback = React.useCallback(
     (position: number) => {
       if (wavesurfer.current) {
@@ -185,11 +203,13 @@ const CartAudioEditor = (): React.ReactElement => {
 
         newWavesurfer.on('ready', () => {
           setEditorState('Loaded');
+          setLocalCuePoints();
           newWavesurfer.zoom(zoomLevel);
         });
 
         newWavesurfer.on('waveform-ready', () => {
           setEditorState('Loaded');
+          setLocalCuePoints();
           newWavesurfer.zoom(zoomLevel);
         });
 
@@ -217,7 +237,7 @@ const CartAudioEditor = (): React.ReactElement => {
       }
       return null;
     },
-    [zoomLevel],
+    [zoomLevel, setLocalCuePoints],
   );
 
   const loadRemoteAudio = React.useCallback(

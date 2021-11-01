@@ -144,11 +144,15 @@ const CartSynchroniser = (): React.ReactElement => {
 
   const updateCartSuccess = React.useCallback(
     (response: AxiosResponse<Cart>) => {
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         setUpdatedCart(response.data);
         if (file) {
           setState(SyncState.UploadingAudio);
-          uploadAudio(cart, file, progressCallback).then(uploadAudioSuccess, uploadAudioError);
+          uploadAudio(
+            response.data, file, progressCallback,
+          ).then(
+            uploadAudioSuccess, uploadAudioError,
+          );
         } else {
           setState(SyncState.Complete);
         }

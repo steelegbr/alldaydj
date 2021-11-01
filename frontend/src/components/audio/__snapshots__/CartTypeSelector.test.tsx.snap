@@ -56,6 +56,7 @@ exports[`cart type dropdown happy path 1`] = `
                 Type 2
               </ForwardRef(MenuItem)>
             </ForwardRef(Select)>,
+            undefined,
           ],
           "color": "primary",
           "component": "div",
@@ -2906,6 +2907,7 @@ exports[`cart type dropdown unhappy path 1`] = `
               onChange={[Function]}
               value="Type 2"
             />,
+            undefined,
           ],
           "color": "primary",
           "component": "div",

@@ -27,6 +27,7 @@ export enum CartFields {
     Label = 'label',
     Year = 'year',
     Title = 'title',
+    Type = 'type'
 }
 
 export const validateLabel = (label: string) => label && REGEX_LABEL.test(label);
@@ -48,6 +49,10 @@ export const validateCart = (cart: Cart | undefined): CartFields[] => {
 
     if (!validateNotBlank(cart.title)) {
       errors.push(CartFields.Title);
+    }
+
+    if (!validateNotBlank(cart.type)) {
+      errors.push(CartFields.Type);
     }
   }
 

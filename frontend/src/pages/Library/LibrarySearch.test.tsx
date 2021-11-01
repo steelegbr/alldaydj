@@ -53,12 +53,9 @@ describe('cart library search', () => {
   it('basic search', () => {
     const component = getComponent(
       {
-        advanced: 'false',
-        artist: '',
         page: '1',
         resultsPerPage: '10',
         search: '',
-        title: '',
       },
       'NotStarted',
     );
@@ -73,41 +70,32 @@ describe('cart library search', () => {
     expect(mockSetSearch).toBeCalledTimes(2);
     expect(mockSetSearch).toBeCalledWith({
       conditions: {
-        advanced: 'false',
-        artist: '',
         page: '1',
         resultsPerPage: '10',
         search: 'Test',
-        title: '',
       },
       status: 'NotStarted',
     });
     expect(mockSetSearch).toBeCalledWith({
       conditions: {
-        advanced: 'false',
-        artist: '',
         page: '1',
         resultsPerPage: '10',
         search: '',
-        title: '',
       },
       status: 'ReadyToSearch',
     });
     expect(mockPush).toBeCalledWith({
       pathname: '/library/',
-      search: '?advanced=false&artist=&page=1&resultsPerPage=10&search=&title=',
+      search: '?page=1&resultsPerPage=10&search=',
     });
   });
 
   it('search does not trigger when in loading state', () => {
     const component = getComponent(
       {
-        advanced: 'false',
-        artist: '',
         page: '1',
         resultsPerPage: '10',
         search: 'Test',
-        title: '',
       },
       'Searching',
     );

@@ -70,6 +70,13 @@ export default function ApplicationRouter() : React.ReactElement {
           </CartEditorProvider>
         </StandardWrapper>
       </PrivateRoute>
+      <PrivateRoute path={Paths.cart}>
+        <StandardWrapper>
+          <CartEditorProvider>
+            <CartEditor />
+          </CartEditorProvider>
+        </StandardWrapper>
+      </PrivateRoute>
       <PrivateRoute path={Paths.cartSync}>
         <StandardWrapper>
           <CartSynchroniser />

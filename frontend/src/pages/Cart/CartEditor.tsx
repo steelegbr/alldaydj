@@ -81,6 +81,26 @@ const CartEditor = (): React.ReactElement => {
             setEditorState('Error');
           },
         );
+      } else {
+        getLogger().info('Creating a new cart.');
+        const newCart: Cart = {
+          id: '',
+          label: '',
+          title: '',
+          display_artist: '',
+          cue_audio_start: 0,
+          cue_audio_end: 0,
+          cue_intro_end: 0,
+          cue_segue: 0,
+          artists: [],
+          sweeper: false,
+          year: (new Date()).getFullYear(),
+          tags: [],
+          type: '',
+          fade: false,
+        };
+        setCart(newCart);
+        setEditorState('Loaded');
       }
     },
     [cartId, setCart],
@@ -409,7 +429,11 @@ const CartEditor = (): React.ReactElement => {
           value={cart.year}
           variant="standard"
         />
-        <CartTypeSelector selectedType={cart.type} setSelectedType={updateType} />
+        <CartTypeSelector
+          selectedType={cart.type}
+          selectionError={validationErrors.includes(CartFields.Type)}
+          setSelectedType={updateType}
+        />
         <TagChips selectedTags={cart.tags} setSelectedTags={updateTags} />
         <TextField
           InputProps={{

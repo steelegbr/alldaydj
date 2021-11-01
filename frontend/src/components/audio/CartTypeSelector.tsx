@@ -18,7 +18,7 @@
 
 import { Stop } from '@mui/icons-material';
 import {
-  FormControl, InputLabel, ListItemIcon, MenuItem, Select, SelectChangeEvent,
+  FormControl, FormHelperText, InputLabel, ListItemIcon, MenuItem, Select, SelectChangeEvent,
 } from '@mui/material';
 import { CartType } from 'api/models/Cart';
 import { getCartTypes } from 'api/requests/Cart';
@@ -27,11 +27,12 @@ import { getLogger } from 'services/LoggingService';
 
 interface CartTypeSelectorProps {
     selectedType: string,
-    setSelectedType: (newType: string) => void
+    setSelectedType: (newType: string) => void,
+    selectionError: boolean
 }
 
 const CartTypeSelector = (
-  { selectedType, setSelectedType }: CartTypeSelectorProps,
+  { selectedType, setSelectedType, selectionError }: CartTypeSelectorProps,
 ): React.ReactElement => {
   const [cartTypes, setCartTypes] = React.useState<CartType[]>([]);
 
@@ -73,6 +74,9 @@ const CartTypeSelector = (
           </MenuItem>
         ))}
       </Select>
+      {selectionError && (
+        <FormHelperText error>You must select a cart type.</FormHelperText>
+      )}
     </FormControl>
   );
 };

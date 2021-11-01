@@ -30,7 +30,7 @@ import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { AudioJobStatus, AudioUploadJob, Cart } from 'api/models/Cart';
 import {
-  createCart, getUploadJobProgress, updateCart, uploadAudio,
+  createCart, getUploadJobProgress, updateCart, updatePartialCart, uploadAudio,
 } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import React from 'react';
@@ -41,6 +41,7 @@ import { useInterval } from 'usehooks-ts';
 
 const ERROR_UPLOAD_AUDIO = 'Something went wrong uploading the audio. Please try again later.';
 const ERROR_UPDATE_CART = 'Something went wrong updating the cart. Please try again later.';
+const ERROR_UPDATE_CUE_POINTS = 'Something went wrong updating the cue points. Please try again later.';
 
 export interface CartSynchroniserState {
     cart: Cart,
@@ -80,7 +81,7 @@ const MAP_JOB_STATUS_SYNC_STATE = new Map<AudioJobStatus, SyncState>([
   ['METADATA', SyncState.Decompressing],
   ['COMPRESSING', SyncState.Compress],
   ['HASHING', SyncState.Hashses],
-  ['DONE', SyncState.Complete],
+  ['DONE', SyncState.SettingCuePoints],
 ]);
 
 const CartSynchroniser = (): React.ReactElement => {
@@ -186,6 +187,27 @@ const CartSynchroniser = (): React.ReactElement => {
     [history, updatedCart.id],
   );
 
+  const updateCuePointsSuccess = React.useCallback(
+    (response: AxiosResponse<Cart>) => {
+      if (response.status === 200) {
+        setState(SyncState.Complete);
+      } else {
+        getLogger().warn(`Got response code ${response.status} setting the cue points.`);
+        setState(SyncState.ErrorSettingCuePoints);
+      }
+    },
+    [],
+  );
+
+  const updateCuePointsError = React.useCallback(
+    (error: Error) => {
+      getLogger().error(`Got an error setting the cue points: ${error}`);
+      setErrorText(ERROR_UPDATE_CUE_POINTS);
+      setState(SyncState.ErrorSettingCuePoints);
+    },
+    [],
+  );
+
   React.useEffect(
     () => {
       setState(SyncState.UpdatingCart);
@@ -205,9 +227,20 @@ const CartSynchroniser = (): React.ReactElement => {
         getUploadJobProgress(audioUploadJob.id).then(
           (response: AxiosResponse<AudioUploadJob>) => {
             if (response.status === 200) {
-              setState(
-                MAP_JOB_STATUS_SYNC_STATE.get(response.data.status) || SyncState.ErrorProcessing,
-              );
+              const newState = MAP_JOB_STATUS_SYNC_STATE.get(
+                response.data.status,
+              ) || SyncState.ErrorProcessing;
+              setState(newState);
+              if (newState === SyncState.SettingCuePoints) {
+                const cuePoints: Partial<Cart> = {
+                  id: updatedCart.id,
+                  cue_audio_start: updatedCart.cue_audio_start,
+                  cue_intro_end: updatedCart.cue_intro_end,
+                  cue_segue: updatedCart.cue_segue,
+                  cue_audio_end: updatedCart.cue_audio_end,
+                };
+                updatePartialCart(cuePoints).then(updateCuePointsSuccess, updateCuePointsError);
+              }
             } else {
               getLogger().error(`Got status code ${response.status} getting the job status.`);
             }
@@ -218,7 +251,7 @@ const CartSynchroniser = (): React.ReactElement => {
         );
       }
     },
-    state >= SyncState.Queued && state < SyncState.Complete ? 1000 : null,
+    state >= SyncState.Queued && state < SyncState.SettingCuePoints ? 1000 : null,
   );
 
   return (

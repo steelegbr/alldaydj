@@ -115,9 +115,7 @@ def _move_audio_file(src: str, dst: str):
     # Copy the contents
 
     with default_storage.open(src, "rb") as src_file:
-        contents = src_file.read()
-
-    default_storage.save(dst, contents)
+        default_storage.save(dst, src_file)
 
     # Delete the source file
 

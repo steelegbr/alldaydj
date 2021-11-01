@@ -54,6 +54,7 @@ enum SyncState {
     UploadingAudio,
     ErrorUploadingAudio,
     ErrorProcessing,
+    ErrorSettingCuePoints,
     Queued,
     Validating,
     Decompressing,
@@ -93,14 +94,20 @@ const CartSynchroniser = (): React.ReactElement => {
   const [uploadProgress, setUploadProgress] = React.useState<number>(0);
   const [audioUploadJob, setAudioUploadJob] = React.useState<AudioUploadJob>();
 
-  const renderToDo = () => (<CheckBoxOutlineBlank />);
-  const renderError = () => (<Error color="error" />);
-  const renderSuccess = () => (<CheckBox color="success" />);
-  const renderProgress = (progress?: number) => {
-    if (progress && progress < 100) {
-      return (<CircularProgress className={classes.spinner} value={uploadProgress} variant="determinate" />);
+  const renderProgressIcon = (level: SyncState, errorLevel: SyncState, progress?: number) => {
+    if (state < level) {
+      return <CheckBoxOutlineBlank />;
     }
-    return (<CircularProgress className={classes.spinner} />);
+
+    if (state === errorLevel) {
+      return <Error color="error" />;
+    }
+
+    if (state > level) {
+      return <CheckBox color="success" />;
+    }
+
+    return progress && progress < 100 ? <CircularProgress className={classes.spinner} value={uploadProgress} variant="determinate" /> : <CircularProgress className={classes.spinner} />;
   };
 
   const progressCallback = React.useCallback(
@@ -224,116 +231,42 @@ const CartSynchroniser = (): React.ReactElement => {
       )}
       <List>
         <ListItem>
-          {state === SyncState.Idle && (
-            renderToDo()
-          )}
-          {state === SyncState.UpdatingCart && (
-            renderProgress()
-          )}
-          {state === SyncState.ErrorUpdatingCart && (
-            renderError()
-          )}
-          {state > SyncState.ErrorUpdatingCart && (
-            renderSuccess()
-          )}
+          {renderProgressIcon(SyncState.UpdatingCart, SyncState.ErrorUpdatingCart)}
           {cart.id ? 'Update Cart' : 'Upload New Cart'}
         </ListItem>
         {file && (
         <>
           <ListItem>
-            {state < SyncState.UploadingAudio && (
-              renderToDo()
-            )}
-            {state === SyncState.UploadingAudio && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorUploadingAudio && (
-              renderError()
-            )}
-            {state > SyncState.ErrorUploadingAudio && (
-              renderSuccess()
+            {renderProgressIcon(
+              SyncState.UploadingAudio,
+              SyncState.ErrorUploadingAudio,
+              uploadProgress,
             )}
             Upload audio
           </ListItem>
           <ListItem>
-            {state < SyncState.Queued && (
-              renderToDo()
-            )}
-            {(state === SyncState.Queued || state === SyncState.Validating) && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorProcessing && (
-              renderError()
-            )}
-            {state > SyncState.Validating && (
-              renderSuccess()
-            )}
+            {renderProgressIcon(SyncState.Validating, SyncState.ErrorProcessing)}
             Validate audio file
           </ListItem>
           <ListItem>
-            {state < SyncState.Decompressing && (
-              renderToDo()
-            )}
-            {state === SyncState.Decompressing && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorProcessing && (
-              renderError()
-            )}
-            {state > SyncState.Decompressing && (
-              renderSuccess()
-            )}
+            {renderProgressIcon(SyncState.Decompressing, SyncState.ErrorProcessing)}
             Decompress audio file
           </ListItem>
           <ListItem>
-            {state < SyncState.Metadata && (
-              renderToDo()
-            )}
-            {state === SyncState.Metadata && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorProcessing && (
-              renderError()
-            )}
-            {state > SyncState.Metadata && (
-              renderSuccess()
-            )}
+            {renderProgressIcon(SyncState.Metadata, SyncState.ErrorProcessing)}
             Extract metadata
           </ListItem>
           <ListItem>
-            {state < SyncState.Compress && (
-              renderToDo()
-            )}
-            {state === SyncState.Compress && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorProcessing && (
-              renderError()
-            )}
-            {state > SyncState.Compress && (
-              renderSuccess()
-            )}
+            {renderProgressIcon(SyncState.Compress, SyncState.ErrorProcessing)}
             Compress audio
           </ListItem>
           <ListItem>
-            {state < SyncState.Hashses && (
-              renderToDo()
-            )}
-            {state === SyncState.Hashses && (
-              renderProgress(uploadProgress)
-            )}
-            {state === SyncState.ErrorProcessing && (
-              renderError()
-            )}
-            {state > SyncState.Hashses && (
-              renderSuccess()
-            )}
+            {renderProgressIcon(SyncState.Hashses, SyncState.ErrorProcessing)}
             Generate hashes
           </ListItem>
           <ListItem>
-            Set cue points (
-            {updatedCart.id}
-            )
+            {renderProgressIcon(SyncState.SettingCuePoints, SyncState.ErrorSettingCuePoints)}
+            Set cue points
           </ListItem>
         </>
         )}

@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.models import Artist, Cart, Tag, Type
+from alldaydj.models import Artist, Cart, CartIdSequencer, Tag, Type
 from django.contrib import admin
 
 
@@ -42,3 +42,9 @@ class TagAdmin(admin.ModelAdmin):
 class TypeAdmin(admin.ModelAdmin):
     search_fields = ["name"]
     list_display = ("name",)
+
+
+@admin.register(CartIdSequencer)
+class CartIdSequencerAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
+    list_display = ("name", "prefix", "min_digits", "suffix")

@@ -184,16 +184,17 @@ class CartIdSequencerViewSet(viewsets.ModelViewSet):
         search_regex = (
             f"{generator.prefix}(\\d{{{generator.min_digits},}}){generator.suffix}"
         )
-        max_existing = (
-            Cart.objects.filter(label__regex=search_regex).order_by("-label").first()
-        )
+        existing = Cart.objects.filter(label__regex=search_regex).order_by("label")
 
-        last_cart = 0
-        if max_existing:
-            last_cart = int(re.findall(search_regex, max_existing.label)[0])
+        next_expected = 1
+        for current in existing:
+            current_number = int(re.findall(search_regex, current.label)[0])
+            if current_number == next_expected:
+                next_expected += 1
+            else:
+                break
 
-        next_cart = str(last_cart + 1).rjust(generator.min_digits, "0")
-
+        next_padded = str(next_expected).rjust(generator.min_digits, "0")
         return JsonResponse(
-            {"next": f"{generator.prefix}{next_cart}{generator.suffix}"}
+            {"next": f"{generator.prefix}{next_padded}{generator.suffix}"}
         )

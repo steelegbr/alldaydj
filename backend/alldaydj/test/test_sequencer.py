@@ -81,7 +81,7 @@ class SequencerTest(APITestCase):
     @parameterized.expand(
         [
             ("Start of Sequence", "START", "", 5, "START00001", "START00002"),
-            ("End of Sequence", "START", "END", 3, "START999END", "START1000END"),
+            ("End of Sequence", "START", "END", 3, "START999END", "START001END"),
         ]
     )
     def test_generate_from_cart(

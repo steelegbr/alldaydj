@@ -36,6 +36,7 @@ import {
 import { Cart } from 'api/models/Cart';
 import { getCartDetails } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
+import CartSequencer from 'components/audio/CartSequencer';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import TagChips from 'components/audio/TagChips';
 import { CartEditorContext } from 'components/context/CartEditorContext';
@@ -274,6 +275,19 @@ const CartEditor = (): React.ReactElement => {
     [hasValidationErrors, cart, file, history],
   );
 
+  const sequencerCallback = React.useCallback(
+    (generated: string) => {
+      if (cart) {
+        const updatedCart: Cart = {
+          ...cart,
+          label: generated,
+        };
+        setCart(updatedCart);
+      }
+    },
+    [cart, setCart],
+  );
+
   if (editorState === 'Loading') {
     return (
       <Grid alignItems="center" container justifyContent="space-between">
@@ -319,6 +333,7 @@ const CartEditor = (): React.ReactElement => {
           value={cart.label}
           variant="standard"
         />
+        <CartSequencer callback={sequencerCallback} />
         <TextField
           InputProps={{
             startAdornment: (

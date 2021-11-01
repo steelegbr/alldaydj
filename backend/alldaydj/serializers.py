@@ -121,5 +121,5 @@ class CartDocumentSerializer(DocumentSerializer):
 
 class CartIdSequencerSerialiser(serializers.ModelSerializer):
     class Meta:
-        model: CartIdSequencer
+        model = CartIdSequencer
         fields = ("id", "name", "prefix", "suffix", "min_digits")

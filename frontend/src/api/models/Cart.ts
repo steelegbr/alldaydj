@@ -61,3 +61,12 @@ export interface AudioUploadJob {
     id: string,
     status: AudioJobStatus
 }
+
+export interface Sequencer {
+    id: string,
+    name: string
+}
+
+export interface SequencerNext {
+    next: string
+}

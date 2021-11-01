@@ -23,7 +23,7 @@ import getUrl from 'services/UrlService';
 import { generateRequestConfig } from 'api/requests/Helpers';
 import {
   AudioUploadJob,
-  Cart, CartAudio, CartType, Tag,
+  Cart, CartAudio, CartType, Sequencer, SequencerNext, Tag,
 } from 'api/models/Cart';
 import getAllPages from 'api/requests/Pagination';
 
@@ -42,6 +42,10 @@ export const updateCart = (cart: Cart) => axios.put<Cart>(getUrl(`/api/cart/${ca
 export const updatePartialCart = (cart: Partial<Cart>) => axios.patch<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
 
 export const getUploadJobProgress = (jobId: string) => axios.get<AudioUploadJob>(getUrl(`/api/job/${jobId}/`), generateRequestConfig());
+
+export const getSequencers = () => getAllPages<Sequencer>(getUrl('/api/sequencer/'));
+
+export const getNextCartId = (sequencer: Sequencer) => axios.get<SequencerNext>(getUrl(`/api/sequencer/${sequencer.id}/generate_next/`), generateRequestConfig());
 
 export const uploadAudio = (
   cart: Cart, file: File, progressCallback: (event: ProgressEvent) => void,

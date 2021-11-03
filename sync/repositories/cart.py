@@ -325,7 +325,6 @@ class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
                 [],
                 db_cart.TrimIn,
                 db_cart.TrimOut,
-                db_cart.TrimIn,
                 db_cart.Intro,
                 db_cart.Extro,
                 db_cart.Oversweep,

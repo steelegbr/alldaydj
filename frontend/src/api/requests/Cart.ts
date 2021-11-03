@@ -26,6 +26,7 @@ import {
   Cart, CartAudio, CartType, Sequencer, SequencerNext, Tag,
 } from 'api/models/Cart';
 import getAllPages from 'api/requests/Pagination';
+import { CartSearchResult } from 'api/models/Search';
 
 export const getCartDetails = (cartId: String) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig());
 
@@ -41,7 +42,7 @@ export const updateCart = (cart: Cart) => axios.put<Cart>(getUrl(`/api/cart/${ca
 
 export const updatePartialCart = (cart: Partial<Cart>) => axios.patch<Cart>(getUrl(`/api/cart/${cart.id}/`), cart, generateRequestConfig());
 
-export const deleteCart = (cart: Cart) => axios.delete<Cart>(getUrl(`/api/cart/${cart.id}/`), generateRequestConfig());
+export const deleteCart = (cart: Cart | CartSearchResult) => axios.delete<Cart>(getUrl(`/api/cart/${cart.id}/`), generateRequestConfig());
 
 export const getUploadJobProgress = (jobId: string) => axios.get<AudioUploadJob>(getUrl(`/api/job/${jobId}/`), generateRequestConfig());
 

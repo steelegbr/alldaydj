@@ -22,6 +22,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
 import {
+  DeleteForever,
   Edit,
   KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@mui/icons-material';
@@ -31,6 +32,8 @@ import { PreviewContext } from 'components/context/PreviewContext';
 import AudioDownloadButton from 'components/audio/AudioDownloadButton';
 import { useHistory } from 'react-router-dom';
 import Paths from 'routing/Paths';
+import CartSearchContext from 'components/context/CartSearchContext';
+import CartDeleteAlert from 'components/audio/CartDeleteAlert';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -47,9 +50,11 @@ interface TableRowProps {
 }
 
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
+  const { search, setSearch } = React.useContext(CartSearchContext);
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [showDelete, setShowDelete] = React.useState<boolean>(false);
   const { setCartId } = React.useContext(PreviewContext);
   const cartId = result.id;
 
@@ -65,6 +70,31 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
       history.push(`${Paths.cart}${cartId}`);
     },
     [history, cartId],
+  );
+
+  const deleteCart = React.useCallback(
+    () => {
+      setShowDelete(true);
+    },
+    [setShowDelete],
+  );
+
+  const onDelete = React.useCallback(
+    () => {
+      setShowDelete(false);
+      setSearch({
+        ...search,
+        status: 'ReadyToSearch',
+      });
+    },
+    [search, setSearch],
+  );
+
+  const onCancel = React.useCallback(
+    () => {
+      setShowDelete(false);
+    },
+    [],
   );
 
   return (
@@ -94,10 +124,17 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
                 <Edit />
                 Edit
               </Button>
+              <Button aria-controls="delete cart" data-test="button-delete" onClick={deleteCart}>
+                <DeleteForever />
+                Delete
+              </Button>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
+      {showDelete && (
+        <CartDeleteAlert cart={result} onCancel={onCancel} onDelete={onDelete} />
+      )}
     </>
   );
 };

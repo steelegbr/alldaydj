@@ -90,7 +90,7 @@ const CartDeleteAlert = (
         <DialogActions>
           <Button
             color="error"
-            data-test="button-delete"
+            data-test="alert-button-delete"
             onClick={handleDelete}
             variant="contained"
           >
@@ -99,7 +99,7 @@ const CartDeleteAlert = (
           </Button>
           <Button
             color="secondary"
-            data-test="button-cancel"
+            data-test="alert-button-cancel"
             onClick={onCancel}
             variant="contained"
           >

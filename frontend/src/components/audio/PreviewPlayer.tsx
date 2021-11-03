@@ -251,7 +251,7 @@ const PreviewPlayer = () : React.ReactElement => {
   const loadingPlaceholder = () => (
     <Grid alignItems="center" container justifyContent="center">
       <Grid item>
-        <CircularProgress className={classes.spinner} />
+        <CircularProgress aria-label="audio loading" className={classes.spinner} />
       </Grid>
       <Grid item>
         Loading...
@@ -278,6 +278,7 @@ const PreviewPlayer = () : React.ReactElement => {
             <Grid item xs={10}>
               <Slider
                 aria-label="audio preview time indicator"
+                data-test="slider-preview"
                 max={audioLength}
                 min={0}
                 onChange={scrubAction}

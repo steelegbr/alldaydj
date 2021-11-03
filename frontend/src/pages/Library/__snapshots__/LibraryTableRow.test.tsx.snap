@@ -342,6 +342,7 @@ exports[`library table row renders single result 1`] = `
               >
                 <ForwardRef(Button)
                   aria-controls="preview audio"
+                  data-test="button-preview"
                   onClick={[Function]}
                 >
                   <Memo />
@@ -412,6 +413,7 @@ exports[`library table row renders single result 1`] = `
                   >
                     <ForwardRef(Button)
                       aria-controls="preview audio"
+                      data-test="button-preview"
                       onClick={[Function]}
                     >
                       <Memo />
@@ -840,6 +842,7 @@ exports[`library table row renders single result expanded 1`] = `
               >
                 <ForwardRef(Button)
                   aria-controls="preview audio"
+                  data-test="button-preview"
                   onClick={[Function]}
                 >
                   <Memo />
@@ -910,6 +913,7 @@ exports[`library table row renders single result expanded 1`] = `
                   >
                     <ForwardRef(Button)
                       aria-controls="preview audio"
+                      data-test="button-preview"
                       onClick={[Function]}
                     >
                       <Memo />
@@ -990,6 +994,7 @@ exports[`library table row renders single result expanded 1`] = `
                               <button
                                 aria-controls="preview audio"
                                 class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                data-test="button-preview"
                                 tabindex="0"
                                 type="button"
                               >
@@ -1128,6 +1133,7 @@ exports[`library table row renders single result expanded 1`] = `
                         >
                           <ForwardRef(Button)
                             aria-controls="preview audio"
+                            data-test="button-preview"
                             onClick={[Function]}
                           >
                             <Memo />
@@ -1192,6 +1198,7 @@ exports[`library table row renders single result expanded 1`] = `
                             >
                               <ForwardRef(Button)
                                 aria-controls="preview audio"
+                                data-test="button-preview"
                                 onClick={[Function]}
                               >
                                 <Memo />
@@ -1246,6 +1253,7 @@ exports[`library table row renders single result expanded 1`] = `
                                 >
                                   <ForwardRef(Button)
                                     aria-controls="preview audio"
+                                    data-test="button-preview"
                                     onClick={[Function]}
                                   >
                                     <Memo />
@@ -1590,6 +1598,7 @@ exports[`library table row renders single result expanded 1`] = `
                                   >
                                     <ForwardRef(Button)
                                       aria-controls="preview audio"
+                                      data-test="button-preview"
                                       onClick={[Function]}
                                     >
                                       <MuiButtonRoot
@@ -1603,6 +1612,7 @@ exports[`library table row renders single result expanded 1`] = `
                                           }
                                         }
                                         component="button"
+                                        data-test="button-preview"
                                         disabled={false}
                                         focusRipple={true}
                                         focusVisibleClassName=""
@@ -1617,6 +1627,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             ],
                                             "color": "primary",
                                             "component": "button",
+                                            "data-test": "button-preview",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
                                             "disabled": false,
@@ -1640,6 +1651,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             }
                                           }
                                           component="button"
+                                          data-test="button-preview"
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1657,6 +1669,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                 "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                               }
                                             }
+                                            data-test="button-preview"
                                             disabled={false}
                                             onBlur={[Function]}
                                             onClick={[Function]}
@@ -1692,6 +1705,7 @@ exports[`library table row renders single result expanded 1`] = `
                                                   "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                 },
                                                 "component": "button",
+                                                "data-test": "button-preview",
                                                 "disableRipple": false,
                                                 "disableTouchRipple": false,
                                                 "disabled": false,
@@ -1709,6 +1723,7 @@ exports[`library table row renders single result expanded 1`] = `
                                             <button
                                               aria-controls="preview audio"
                                               className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              data-test="button-preview"
                                               disabled={false}
                                               onBlur={[Function]}
                                               onClick={[Function]}

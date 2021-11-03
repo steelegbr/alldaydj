@@ -102,7 +102,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
             <ForwardRef(DialogActions)>
               <ForwardRef(Button)
                 color="error"
-                data-test="button-delete"
+                data-test="alert-button-delete"
                 onClick={[Function]}
                 variant="contained"
               >
@@ -111,7 +111,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
               </ForwardRef(Button)>
               <ForwardRef(Button)
                 color="secondary"
-                data-test="button-cancel"
+                data-test="alert-button-cancel"
                 onClick={[MockFunction]}
                 variant="contained"
               >
@@ -317,7 +317,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                         >
                           <button
                             class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
-                            data-test="button-delete"
+                            data-test="alert-button-delete"
                             tabindex="0"
                             type="button"
                           >
@@ -339,7 +339,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                           </button>
                           <button
                             class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
-                            data-test="button-cancel"
+                            data-test="alert-button-cancel"
                             tabindex="0"
                             type="button"
                           >
@@ -437,7 +437,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                               <ForwardRef(DialogActions)>
                                 <ForwardRef(Button)
                                   color="error"
-                                  data-test="button-delete"
+                                  data-test="alert-button-delete"
                                   onClick={[Function]}
                                   variant="contained"
                                 >
@@ -446,7 +446,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                 </ForwardRef(Button)>
                                 <ForwardRef(Button)
                                   color="secondary"
-                                  data-test="button-cancel"
+                                  data-test="alert-button-cancel"
                                   onClick={[MockFunction]}
                                   variant="contained"
                                 >
@@ -505,7 +505,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                 <ForwardRef(DialogActions)>
                                   <ForwardRef(Button)
                                     color="error"
-                                    data-test="button-delete"
+                                    data-test="alert-button-delete"
                                     onClick={[Function]}
                                     variant="contained"
                                   >
@@ -514,7 +514,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                   </ForwardRef(Button)>
                                   <ForwardRef(Button)
                                     color="secondary"
-                                    data-test="button-cancel"
+                                    data-test="alert-button-cancel"
                                     onClick={[MockFunction]}
                                     variant="contained"
                                   >
@@ -555,7 +555,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                             <ForwardRef(DialogActions)>
                               <ForwardRef(Button)
                                 color="error"
-                                data-test="button-delete"
+                                data-test="alert-button-delete"
                                 onClick={[Function]}
                                 variant="contained"
                               >
@@ -564,7 +564,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                               </ForwardRef(Button)>
                               <ForwardRef(Button)
                                 color="secondary"
-                                data-test="button-cancel"
+                                data-test="alert-button-cancel"
                                 onClick={[MockFunction]}
                                 variant="contained"
                               >
@@ -859,7 +859,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                 >
                                   <button
                                     class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
-                                    data-test="button-delete"
+                                    data-test="alert-button-delete"
                                     tabindex="0"
                                     type="button"
                                   >
@@ -881,7 +881,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                   </button>
                                   <button
                                     class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
-                                    data-test="button-cancel"
+                                    data-test="alert-button-cancel"
                                     tabindex="0"
                                     type="button"
                                   >
@@ -936,7 +936,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                 <ForwardRef(DialogActions)>
                                   <ForwardRef(Button)
                                     color="error"
-                                    data-test="button-delete"
+                                    data-test="alert-button-delete"
                                     onClick={[Function]}
                                     variant="contained"
                                   >
@@ -945,7 +945,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                   </ForwardRef(Button)>
                                   <ForwardRef(Button)
                                     color="secondary"
-                                    data-test="button-cancel"
+                                    data-test="alert-button-cancel"
                                     onClick={[MockFunction]}
                                     variant="contained"
                                   >
@@ -1025,7 +1025,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                     <ForwardRef(DialogActions)>
                                       <ForwardRef(Button)
                                         color="error"
-                                        data-test="button-delete"
+                                        data-test="alert-button-delete"
                                         onClick={[Function]}
                                         variant="contained"
                                       >
@@ -1034,7 +1034,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                       </ForwardRef(Button)>
                                       <ForwardRef(Button)
                                         color="secondary"
-                                        data-test="button-cancel"
+                                        data-test="alert-button-cancel"
                                         onClick={[MockFunction]}
                                         variant="contained"
                                       >
@@ -1091,7 +1091,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                         <ForwardRef(DialogActions)>
                                           <ForwardRef(Button)
                                             color="error"
-                                            data-test="button-delete"
+                                            data-test="alert-button-delete"
                                             onClick={[Function]}
                                             variant="contained"
                                           >
@@ -1100,7 +1100,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                           </ForwardRef(Button)>
                                           <ForwardRef(Button)
                                             color="secondary"
-                                            data-test="button-cancel"
+                                            data-test="alert-button-cancel"
                                             onClick={[MockFunction]}
                                             variant="contained"
                                           >
@@ -1312,7 +1312,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                             "children": Array [
                                               <ForwardRef(Button)
                                                 color="error"
-                                                data-test="button-delete"
+                                                data-test="alert-button-delete"
                                                 onClick={[Function]}
                                                 variant="contained"
                                               >
@@ -1321,7 +1321,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                               </ForwardRef(Button)>,
                                               <ForwardRef(Button)
                                                 color="secondary"
-                                                data-test="button-cancel"
+                                                data-test="alert-button-cancel"
                                                 onClick={[MockFunction]}
                                                 variant="contained"
                                               >
@@ -1337,7 +1337,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                         >
                                           <ForwardRef(Button)
                                             color="error"
-                                            data-test="button-delete"
+                                            data-test="alert-button-delete"
                                             onClick={[Function]}
                                             variant="contained"
                                           >
@@ -1351,7 +1351,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                 }
                                               }
                                               component="button"
-                                              data-test="button-delete"
+                                              data-test="alert-button-delete"
                                               disabled={false}
                                               focusRipple={true}
                                               focusVisibleClassName=""
@@ -1364,7 +1364,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                   ],
                                                   "color": "error",
                                                   "component": "button",
-                                                  "data-test": "button-delete",
+                                                  "data-test": "alert-button-delete",
                                                   "disableElevation": false,
                                                   "disableFocusRipple": false,
                                                   "disabled": false,
@@ -1387,7 +1387,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                   }
                                                 }
                                                 component="button"
-                                                data-test="button-delete"
+                                                data-test="alert-button-delete"
                                                 disabled={false}
                                                 focusRipple={true}
                                                 focusVisibleClassName=""
@@ -1404,7 +1404,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                       "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                     }
                                                   }
-                                                  data-test="button-delete"
+                                                  data-test="alert-button-delete"
                                                   disabled={false}
                                                   onBlur={[Function]}
                                                   onClick={[Function]}
@@ -1438,7 +1438,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                         "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                       },
                                                       "component": "button",
-                                                      "data-test": "button-delete",
+                                                      "data-test": "alert-button-delete",
                                                       "disableRipple": false,
                                                       "disableTouchRipple": false,
                                                       "disabled": false,
@@ -1455,7 +1455,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                 >
                                                   <button
                                                     className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
-                                                    data-test="button-delete"
+                                                    data-test="alert-button-delete"
                                                     disabled={false}
                                                     onBlur={[Function]}
                                                     onClick={[Function]}
@@ -1536,7 +1536,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                           </ForwardRef(Button)>
                                           <ForwardRef(Button)
                                             color="secondary"
-                                            data-test="button-cancel"
+                                            data-test="alert-button-cancel"
                                             onClick={[MockFunction]}
                                             variant="contained"
                                           >
@@ -1550,7 +1550,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                 }
                                               }
                                               component="button"
-                                              data-test="button-cancel"
+                                              data-test="alert-button-cancel"
                                               disabled={false}
                                               focusRipple={true}
                                               focusVisibleClassName=""
@@ -1560,7 +1560,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                   "children": "Cancel",
                                                   "color": "secondary",
                                                   "component": "button",
-                                                  "data-test": "button-cancel",
+                                                  "data-test": "alert-button-cancel",
                                                   "disableElevation": false,
                                                   "disableFocusRipple": false,
                                                   "disabled": false,
@@ -1583,7 +1583,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                   }
                                                 }
                                                 component="button"
-                                                data-test="button-cancel"
+                                                data-test="alert-button-cancel"
                                                 disabled={false}
                                                 focusRipple={true}
                                                 focusVisibleClassName=""
@@ -1600,7 +1600,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                       "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                     }
                                                   }
-                                                  data-test="button-cancel"
+                                                  data-test="alert-button-cancel"
                                                   disabled={false}
                                                   onBlur={[Function]}
                                                   onClick={[MockFunction]}
@@ -1631,7 +1631,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                         "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
                                                       },
                                                       "component": "button",
-                                                      "data-test": "button-cancel",
+                                                      "data-test": "alert-button-cancel",
                                                       "disableRipple": false,
                                                       "disableTouchRipple": false,
                                                       "disabled": false,
@@ -1648,7 +1648,7 @@ exports[`delete cart alert box cancel calls the callback 1`] = `
                                                 >
                                                   <button
                                                     className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
-                                                    data-test="button-cancel"
+                                                    data-test="alert-button-cancel"
                                                     disabled={false}
                                                     onBlur={[Function]}
                                                     onClick={[MockFunction]}

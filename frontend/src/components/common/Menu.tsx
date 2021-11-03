@@ -132,6 +132,7 @@ const Menu = (): React.ReactElement => {
       <Grid item>
         <Button
           color="inherit"
+          data-test="toggle-dark-mode"
           onClick={handleDarkModeToggle}
           startIcon={darkMode ? <Brightness4 /> : <Brightness7 />}
         >

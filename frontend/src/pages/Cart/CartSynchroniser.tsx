@@ -311,6 +311,7 @@ const CartSynchroniser = (): React.ReactElement => {
       {errorText && (
         <Button
           color="error"
+          data-test="button-abort"
           onClick={returnToPrevious}
           variant="contained"
         >
@@ -320,6 +321,7 @@ const CartSynchroniser = (): React.ReactElement => {
       )}
       {state === SyncState.Complete && (
         <Button
+          data-test="button-forward"
           onClick={goForward}
           variant="contained"
         >

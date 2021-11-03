@@ -38,18 +38,23 @@ const CartTypeSelector = (
 
   React.useEffect(
     () => {
-      getLogger().info('Downloading cart types.');
-      getCartTypes().then(
-        (loadedCartTypes: CartType[]) => {
-          setCartTypes(loadedCartTypes);
-        },
-        (error) => {
-          getLogger().error(`Something went wrong updating the cart types: ${error}`);
-          setCartTypes([]);
-        },
-      );
+      if (cartTypes.length === 0) {
+        getLogger().info('Downloading cart types.');
+        getCartTypes().then(
+          (loadedCartTypes: CartType[]) => {
+            setCartTypes(loadedCartTypes);
+            if (loadedCartTypes && !selectedType) {
+              setSelectedType(loadedCartTypes[0].name);
+            }
+          },
+          (error) => {
+            getLogger().error(`Something went wrong updating the cart types: ${error}`);
+            setCartTypes([]);
+          },
+        );
+      }
     },
-    [],
+    [cartTypes.length, selectedType, setSelectedType],
   );
 
   const updateTypeSelection = React.useCallback(

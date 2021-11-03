@@ -33,6 +33,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Cart } from 'api/models/Cart';
 import { getCartDetails } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
@@ -54,7 +56,14 @@ type CartEditorParams = {
     cartId: string
 }
 
+const useStyles = makeStyles(() => createStyles({
+  actionButton: {
+    marginRight: 10,
+  },
+}));
+
 const CartEditor = (): React.ReactElement => {
+  const classes = useStyles();
   const { cartId } = useParams<CartEditorParams>();
   const history = useHistory();
   const { cart, setCart, file } = React.useContext(CartEditorContext);
@@ -529,40 +538,36 @@ const CartEditor = (): React.ReactElement => {
           value={cart.publisher}
           variant="standard"
         />
-        <Grid container>
-          <Grid item xs={1}>
-            <Button
-              disabled={hasValidationErrors}
-              onClick={handleSubmit}
-              variant="contained"
-            >
-              <Save />
-              Save
-            </Button>
-          </Grid>
-          <Grid item xs={1}>
-            <Button
-              color="secondary"
-              data-test="button-clear"
-              onClick={handleCancel}
-              variant="contained"
-            >
-              Cancel
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              color="error"
-              data-test="button-clear"
-              disabled={!cart.id}
-              onClick={handleDeleteClick}
-              variant="contained"
-            >
-              <DeleteForever />
-              Delete
-            </Button>
-          </Grid>
-        </Grid>
+        <Button
+          className={classes.actionButton}
+          data-test="button-save"
+          disabled={hasValidationErrors}
+          onClick={handleSubmit}
+          variant="contained"
+        >
+          <Save />
+          Save
+        </Button>
+        <Button
+          className={classes.actionButton}
+          color="secondary"
+          data-test="button-clear"
+          onClick={handleCancel}
+          variant="contained"
+        >
+          Cancel
+        </Button>
+        <Button
+          className={classes.actionButton}
+          color="error"
+          data-test="button-clear"
+          disabled={!cart.id}
+          onClick={handleDeleteClick}
+          variant="contained"
+        >
+          <DeleteForever />
+          Delete
+        </Button>
       </form>
       {showDelete && (
         <CartDeleteAlert cart={cart} onCancel={onCancel} onDelete={onDelete} />

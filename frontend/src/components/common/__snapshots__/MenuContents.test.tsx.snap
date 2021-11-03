@@ -613,8 +613,9 @@ exports[`menu contents snapshot 1`] = `
               className="MuiList-root MuiList-padding"
               ownerState={
                 Object {
-                  "children": <ForwardRef(ListItem)
-                    button={true}
+                  "children": <ForwardRef(ListItemButton)
+                    aria-posinset={1}
+                    aria-setsize={1}
                     data-test="button-library"
                     onClick={[Function]}
                   >
@@ -624,7 +625,7 @@ exports[`menu contents snapshot 1`] = `
                     <ForwardRef(ListItemText)
                       primary="Music Library"
                     />
-                  </ForwardRef(ListItem)>,
+                  </ForwardRef(ListItemButton)>,
                   "component": "ul",
                   "dense": false,
                   "disablePadding": false,
@@ -634,63 +635,30 @@ exports[`menu contents snapshot 1`] = `
               <ul
                 className="MuiList-root MuiList-padding css-h4y409-MuiList-root"
               >
-                <ForwardRef(ListItem)
-                  button={true}
+                <ForwardRef(ListItemButton)
+                  aria-posinset={1}
+                  aria-setsize={1}
                   data-test="button-library"
                   key="Music Library"
                   onClick={[Function]}
                 >
-                  <MuiListItemRoot
-                    as={
+                  <MuiListItemButtonRoot
+                    aria-posinset={1}
+                    aria-setsize={1}
+                    classes={
                       Object {
-                        "$$typeof": Symbol(react.forward_ref),
-                        "propTypes": Object {
-                          "LinkComponent": [Function],
-                          "TouchRippleProps": [Function],
-                          "action": [Function],
-                          "centerRipple": [Function],
-                          "children": [Function],
-                          "className": [Function],
-                          "classes": [Function],
-                          "component": [Function],
-                          "disableRipple": [Function],
-                          "disableTouchRipple": [Function],
-                          "disabled": [Function],
-                          "focusRipple": [Function],
-                          "focusVisibleClassName": [Function],
-                          "href": [Function],
-                          "onBlur": [Function],
-                          "onClick": [Function],
-                          "onContextMenu": [Function],
-                          "onDragLeave": [Function],
-                          "onFocus": [Function],
-                          "onFocusVisible": [Function],
-                          "onKeyDown": [Function],
-                          "onKeyUp": [Function],
-                          "onMouseDown": [Function],
-                          "onMouseLeave": [Function],
-                          "onMouseUp": [Function],
-                          "onTouchEnd": [Function],
-                          "onTouchMove": [Function],
-                          "onTouchStart": [Function],
-                          "sx": [Function],
-                          "tabIndex": [Function],
-                          "type": [Function],
-                        },
-                        "render": [Function],
+                        "root": "MuiListItemButton-root MuiListItemButton-gutters",
                       }
                     }
-                    className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button"
                     component="div"
                     data-test="button-library"
-                    disabled={false}
-                    focusVisibleClassName="Mui-focusVisible"
+                    focusVisibleClassName=""
                     onClick={[Function]}
                     ownerState={
                       Object {
                         "alignItems": "center",
-                        "autoFocus": false,
-                        "button": true,
+                        "aria-posinset": 1,
+                        "aria-setsize": 1,
                         "children": Array [
                           <ForwardRef(ListItemIcon)>
                             <Memo />
@@ -702,26 +670,36 @@ exports[`menu contents snapshot 1`] = `
                         "data-test": "button-library",
                         "dense": false,
                         "disableGutters": false,
-                        "disablePadding": false,
-                        "disabled": false,
                         "divider": false,
-                        "hasSecondaryAction": false,
                         "onClick": [Function],
                         "selected": false,
                       }
                     }
                   >
                     <ForwardRef(ButtonBase)
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root"
+                      aria-posinset={1}
+                      aria-setsize={1}
+                      className="css-1kqdo7n-MuiListItemButton-root"
+                      classes={
+                        Object {
+                          "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                        }
+                      }
                       component="div"
                       data-test="button-library"
-                      disabled={false}
-                      focusVisibleClassName="Mui-focusVisible"
+                      focusVisibleClassName=""
                       onClick={[Function]}
                     >
                       <MuiButtonBaseRoot
+                        aria-posinset={1}
+                        aria-setsize={1}
                         as="div"
-                        className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root"
+                        className="MuiListItemButton-root MuiListItemButton-gutters MuiButtonBase-root css-1kqdo7n-MuiListItemButton-root"
+                        classes={
+                          Object {
+                            "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                          }
+                        }
                         data-test="button-library"
                         onBlur={[Function]}
                         onClick={[Function]}
@@ -738,19 +716,21 @@ exports[`menu contents snapshot 1`] = `
                         onTouchStart={[Function]}
                         ownerState={
                           Object {
+                            "aria-posinset": 1,
+                            "aria-setsize": 1,
                             "centerRipple": false,
                             "children": Array [
-                              Array [
-                                <ForwardRef(ListItemIcon)>
-                                  <Memo />
-                                </ForwardRef(ListItemIcon)>,
-                                <ForwardRef(ListItemText)
-                                  primary="Music Library"
-                                />,
-                              ],
-                              undefined,
+                              <ForwardRef(ListItemIcon)>
+                                <Memo />
+                              </ForwardRef(ListItemIcon)>,
+                              <ForwardRef(ListItemText)
+                                primary="Music Library"
+                              />,
                             ],
-                            "className": "MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root",
+                            "className": "css-1kqdo7n-MuiListItemButton-root",
+                            "classes": Object {
+                              "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                            },
                             "component": "div",
                             "data-test": "button-library",
                             "disableRipple": false,
@@ -758,7 +738,7 @@ exports[`menu contents snapshot 1`] = `
                             "disabled": false,
                             "focusRipple": false,
                             "focusVisible": false,
-                            "focusVisibleClassName": "Mui-focusVisible",
+                            "focusVisibleClassName": "",
                             "onClick": [Function],
                             "tabIndex": 0,
                           }
@@ -767,7 +747,9 @@ exports[`menu contents snapshot 1`] = `
                         tabIndex={0}
                       >
                         <div
-                          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-bshv44-MuiButtonBase-root-MuiListItem-root"
+                          aria-posinset={1}
+                          aria-setsize={1}
+                          className="MuiListItemButton-root MuiListItemButton-gutters MuiButtonBase-root css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root"
                           data-test="button-library"
                           onBlur={[Function]}
                           onClick={[Function]}
@@ -785,9 +767,7 @@ exports[`menu contents snapshot 1`] = `
                           role="button"
                           tabIndex={0}
                         >
-                          <ForwardRef(ListItemIcon)
-                            key=".0"
-                          >
+                          <ForwardRef(ListItemIcon)>
                             <MuiListItemIconRoot
                               className="MuiListItemIcon-root"
                               ownerState={
@@ -842,7 +822,6 @@ exports[`menu contents snapshot 1`] = `
                             </MuiListItemIconRoot>
                           </ForwardRef(ListItemIcon)>
                           <ForwardRef(ListItemText)
-                            key=".1"
                             primary="Music Library"
                           >
                             <MuiListItemTextRoot
@@ -936,8 +915,8 @@ exports[`menu contents snapshot 1`] = `
                         </div>
                       </MuiButtonBaseRoot>
                     </ForwardRef(ButtonBase)>
-                  </MuiListItemRoot>
-                </ForwardRef(ListItem)>
+                  </MuiListItemButtonRoot>
+                </ForwardRef(ListItemButton)>
               </ul>
             </MuiListRoot>
           </ForwardRef(List)>
@@ -969,8 +948,9 @@ exports[`menu contents snapshot 1`] = `
               className="MuiList-root MuiList-padding"
               ownerState={
                 Object {
-                  "children": <ForwardRef(ListItem)
-                    button={true}
+                  "children": <ForwardRef(ListItemButton)
+                    aria-posinset={1}
+                    aria-setsize={1}
                     data-test="button-logout"
                     onClick={[Function]}
                   >
@@ -980,7 +960,7 @@ exports[`menu contents snapshot 1`] = `
                     <ForwardRef(ListItemText)
                       primary="Log Out"
                     />
-                  </ForwardRef(ListItem)>,
+                  </ForwardRef(ListItemButton)>,
                   "component": "ul",
                   "dense": false,
                   "disablePadding": false,
@@ -990,63 +970,30 @@ exports[`menu contents snapshot 1`] = `
               <ul
                 className="MuiList-root MuiList-padding css-h4y409-MuiList-root"
               >
-                <ForwardRef(ListItem)
-                  button={true}
+                <ForwardRef(ListItemButton)
+                  aria-posinset={1}
+                  aria-setsize={1}
                   data-test="button-logout"
                   key="Log Out"
                   onClick={[Function]}
                 >
-                  <MuiListItemRoot
-                    as={
+                  <MuiListItemButtonRoot
+                    aria-posinset={1}
+                    aria-setsize={1}
+                    classes={
                       Object {
-                        "$$typeof": Symbol(react.forward_ref),
-                        "propTypes": Object {
-                          "LinkComponent": [Function],
-                          "TouchRippleProps": [Function],
-                          "action": [Function],
-                          "centerRipple": [Function],
-                          "children": [Function],
-                          "className": [Function],
-                          "classes": [Function],
-                          "component": [Function],
-                          "disableRipple": [Function],
-                          "disableTouchRipple": [Function],
-                          "disabled": [Function],
-                          "focusRipple": [Function],
-                          "focusVisibleClassName": [Function],
-                          "href": [Function],
-                          "onBlur": [Function],
-                          "onClick": [Function],
-                          "onContextMenu": [Function],
-                          "onDragLeave": [Function],
-                          "onFocus": [Function],
-                          "onFocusVisible": [Function],
-                          "onKeyDown": [Function],
-                          "onKeyUp": [Function],
-                          "onMouseDown": [Function],
-                          "onMouseLeave": [Function],
-                          "onMouseUp": [Function],
-                          "onTouchEnd": [Function],
-                          "onTouchMove": [Function],
-                          "onTouchStart": [Function],
-                          "sx": [Function],
-                          "tabIndex": [Function],
-                          "type": [Function],
-                        },
-                        "render": [Function],
+                        "root": "MuiListItemButton-root MuiListItemButton-gutters",
                       }
                     }
-                    className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button"
                     component="div"
                     data-test="button-logout"
-                    disabled={false}
-                    focusVisibleClassName="Mui-focusVisible"
+                    focusVisibleClassName=""
                     onClick={[Function]}
                     ownerState={
                       Object {
                         "alignItems": "center",
-                        "autoFocus": false,
-                        "button": true,
+                        "aria-posinset": 1,
+                        "aria-setsize": 1,
                         "children": Array [
                           <ForwardRef(ListItemIcon)>
                             <Memo />
@@ -1058,26 +1005,36 @@ exports[`menu contents snapshot 1`] = `
                         "data-test": "button-logout",
                         "dense": false,
                         "disableGutters": false,
-                        "disablePadding": false,
-                        "disabled": false,
                         "divider": false,
-                        "hasSecondaryAction": false,
                         "onClick": [Function],
                         "selected": false,
                       }
                     }
                   >
                     <ForwardRef(ButtonBase)
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root"
+                      aria-posinset={1}
+                      aria-setsize={1}
+                      className="css-1kqdo7n-MuiListItemButton-root"
+                      classes={
+                        Object {
+                          "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                        }
+                      }
                       component="div"
                       data-test="button-logout"
-                      disabled={false}
-                      focusVisibleClassName="Mui-focusVisible"
+                      focusVisibleClassName=""
                       onClick={[Function]}
                     >
                       <MuiButtonBaseRoot
+                        aria-posinset={1}
+                        aria-setsize={1}
                         as="div"
-                        className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root"
+                        className="MuiListItemButton-root MuiListItemButton-gutters MuiButtonBase-root css-1kqdo7n-MuiListItemButton-root"
+                        classes={
+                          Object {
+                            "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                          }
+                        }
                         data-test="button-logout"
                         onBlur={[Function]}
                         onClick={[Function]}
@@ -1094,19 +1051,21 @@ exports[`menu contents snapshot 1`] = `
                         onTouchStart={[Function]}
                         ownerState={
                           Object {
+                            "aria-posinset": 1,
+                            "aria-setsize": 1,
                             "centerRipple": false,
                             "children": Array [
-                              Array [
-                                <ForwardRef(ListItemIcon)>
-                                  <Memo />
-                                </ForwardRef(ListItemIcon)>,
-                                <ForwardRef(ListItemText)
-                                  primary="Log Out"
-                                />,
-                              ],
-                              undefined,
+                              <ForwardRef(ListItemIcon)>
+                                <Memo />
+                              </ForwardRef(ListItemIcon)>,
+                              <ForwardRef(ListItemText)
+                                primary="Log Out"
+                              />,
                             ],
-                            "className": "MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-m36a1-MuiListItem-root",
+                            "className": "css-1kqdo7n-MuiListItemButton-root",
+                            "classes": Object {
+                              "root": "MuiListItemButton-root MuiListItemButton-gutters",
+                            },
                             "component": "div",
                             "data-test": "button-logout",
                             "disableRipple": false,
@@ -1114,7 +1073,7 @@ exports[`menu contents snapshot 1`] = `
                             "disabled": false,
                             "focusRipple": false,
                             "focusVisible": false,
-                            "focusVisibleClassName": "Mui-focusVisible",
+                            "focusVisibleClassName": "",
                             "onClick": [Function],
                             "tabIndex": 0,
                           }
@@ -1123,7 +1082,9 @@ exports[`menu contents snapshot 1`] = `
                         tabIndex={0}
                       >
                         <div
-                          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-button css-bshv44-MuiButtonBase-root-MuiListItem-root"
+                          aria-posinset={1}
+                          aria-setsize={1}
+                          className="MuiListItemButton-root MuiListItemButton-gutters MuiButtonBase-root css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root"
                           data-test="button-logout"
                           onBlur={[Function]}
                           onClick={[Function]}
@@ -1141,9 +1102,7 @@ exports[`menu contents snapshot 1`] = `
                           role="button"
                           tabIndex={0}
                         >
-                          <ForwardRef(ListItemIcon)
-                            key=".0"
-                          >
+                          <ForwardRef(ListItemIcon)>
                             <MuiListItemIconRoot
                               className="MuiListItemIcon-root"
                               ownerState={
@@ -1198,7 +1157,6 @@ exports[`menu contents snapshot 1`] = `
                             </MuiListItemIconRoot>
                           </ForwardRef(ListItemIcon)>
                           <ForwardRef(ListItemText)
-                            key=".1"
                             primary="Log Out"
                           >
                             <MuiListItemTextRoot
@@ -1292,8 +1250,8 @@ exports[`menu contents snapshot 1`] = `
                         </div>
                       </MuiButtonBaseRoot>
                     </ForwardRef(ButtonBase)>
-                  </MuiListItemRoot>
-                </ForwardRef(ListItem)>
+                  </MuiListItemButtonRoot>
+                </ForwardRef(ListItemButton)>
               </ul>
             </MuiListRoot>
           </ForwardRef(List)>

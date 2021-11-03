@@ -16,13 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'cypress-file-upload';
-
-Cypress.Commands.add('login', () => {
-    cy.visit('http://localhost:3000/login/');
-
-    cy.get('[data-test="input-email"]').type(Cypress.env('USERNAME'));
-    cy.get('[data-test="input-password"]').type(Cypress.env('PASSWORD')).type('{enter}');
-
-    cy.url().should('eq', 'http://localhost:3000/');
-})
+declare namespace Cypress {
+    interface Chainable {
+        login(): void
+    }
+}

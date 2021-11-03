@@ -402,7 +402,7 @@ const CartAudioEditor = (): React.ReactElement => {
   );
 
   const loadingProgress = () => (
-    <LinearProgress value={audioLoadProgress} variant="determinate" />
+    <LinearProgress aria-label="audio loading" value={audioLoadProgress} variant="determinate" />
   );
 
   if (editorState === 'Idle' || editorState === 'NoAudio') {
@@ -410,14 +410,14 @@ const CartAudioEditor = (): React.ReactElement => {
       <Button component="label" variant="contained">
         <UploadFile />
         Upload File
-        <input accept=".wav,.mp3,.ogg" hidden onChange={handleFileSelection} type="file" />
+        <input accept=".wav,.mp3,.ogg" data-test="input-audio-upload" hidden onChange={handleFileSelection} type="file" />
       </Button>
     );
   }
 
   if (editorState === 'InfoLoading') {
     return (
-      <LinearProgress variant="indeterminate" />
+      <LinearProgress aria-label="audio loading" variant="indeterminate" />
     );
   }
 

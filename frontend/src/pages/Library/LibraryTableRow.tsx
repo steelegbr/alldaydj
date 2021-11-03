@@ -113,7 +113,7 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
         <TableCell className={classes.collapsedRow} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box className={classes.collapsedBox}>
-              <Button aria-controls="preview audio" onClick={previewCart}>
+              <Button aria-controls="preview audio" data-test="button-preview" onClick={previewCart}>
                 <PlayArrow />
                 {' '}
                 Preview Cart

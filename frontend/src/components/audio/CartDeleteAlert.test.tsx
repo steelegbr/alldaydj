@@ -58,7 +58,7 @@ describe('delete cart alert box', () => {
     const component = renderAlert();
     expect(component).toMatchSnapshot();
 
-    const button = component.find("button[data-test='button-cancel']").first();
+    const button = component.find("button[data-test='alert-button-cancel']").first();
     button.simulate('click');
 
     expect(mockOnCancel).toBeCalledTimes(1);
@@ -78,7 +78,7 @@ describe('delete cart alert box', () => {
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     const component = renderAlert();
-    const button = component.find("button[data-test='button-delete']").first();
+    const button = component.find("button[data-test='alert-button-delete']").first();
     button.simulate('click');
     await act(async () => {
       await responseDelete;
@@ -101,7 +101,7 @@ describe('delete cart alert box', () => {
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     const component = renderAlert();
-    const button = component.find("button[data-test='button-delete']").first();
+    const button = component.find("button[data-test='alert-button-delete']").first();
     button.simulate('click');
     await act(async () => {
       await responseDelete;

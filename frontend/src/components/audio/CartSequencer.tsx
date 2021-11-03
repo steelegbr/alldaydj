@@ -67,22 +67,24 @@ const CartSequencer = ({ callback }: CartSequencerProps): React.ReactElement => 
 
   React.useEffect(
     () => {
-      getLogger().info('Dowloading cart sequencer information.');
-      getSequencers().then(
-        (returnedSequencers) => {
-          setSequencers(returnedSequencers);
-          getLogger().info('Successfully downloaded sequencers.');
-          if (returnedSequencers && returnedSequencers.length === 1) {
-            setSequencer(returnedSequencers[0]);
-            getLogger().info(`Set sequencer to default of ${returnedSequencers[0].name}`);
-          }
-        },
-        (error) => {
-          getLogger().error(`Failed to download the sequencers. Error: ${error}`);
-        },
-      );
+      if (sequencers.length === 0) {
+        getLogger().info('Dowloading cart sequencer information.');
+        getSequencers().then(
+          (returnedSequencers) => {
+            setSequencers(returnedSequencers);
+            getLogger().info('Successfully downloaded sequencers.');
+            if (returnedSequencers && !sequencer) {
+              setSequencer(returnedSequencers[0]);
+              getLogger().info(`Set sequencer to default of ${returnedSequencers[0].name}`);
+            }
+          },
+          (error) => {
+            getLogger().error(`Failed to download the sequencers. Error: ${error}`);
+          },
+        );
+      }
     },
-    [callback],
+    [callback, sequencer, sequencers],
   );
 
   return (
@@ -100,6 +102,7 @@ const CartSequencer = ({ callback }: CartSequencerProps): React.ReactElement => 
       </FormControl>
       )}
       <Button
+        data-test="button-generate"
         onClick={handleGenerateClick}
         variant="contained"
       >

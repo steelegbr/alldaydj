@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from unittest.mock import call, patch
 from alldaydj.models import Artist, Cart, Tag, Type
 from alldaydj.test.utils import set_bearer_token
 from django.contrib.auth.models import User
@@ -450,7 +451,9 @@ class CartTests(APITestCase):
         self.assertEqual(json_response["tags"], ["Tag 2"])
         self.assertEqual(json_response["type"], "Type 2")
 
-    def test_delete_cart(self):
+    @patch("django.core.files.storage.default_storage.exists")
+    @patch("django.core.files.storage.default_storage.delete")
+    def test_delete_cart(self, delete_mock, exists_mock):
         """
         Tests we can delete a cart.
         """
@@ -477,6 +480,12 @@ class CartTests(APITestCase):
         cart.tags.set([Tag.objects.get(tag="Tag 1")])
         cart.save()
 
+        exists_mock.side_effect = [True, False]
+        expected_exists_calls = [
+            call(f"audio/{cart.id}"),
+            call(f"compressed/{cart.id}"),
+        ]
+
         url = reverse("cart-detail", kwargs={"pk": cart.id})
         set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
 
@@ -487,6 +496,10 @@ class CartTests(APITestCase):
         # Assert
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(exists_mock.call_count, 2)
+        exists_mock.assert_has_calls(expected_exists_calls)
+        self.assertEqual(delete_mock.call_count, 1)
+        delete_mock.assert_called_with(f"audio/{cart.id}")
 
     def test_fail_rename_collision(self):
         """

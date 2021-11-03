@@ -20,3 +20,9 @@ enabled = true
   dialect = "typescript"
   environment = ["jest"]
   style_guide = "airbnb"
+
+test_patterns = [
+  "*.test.tsx",
+  "*.test.ts",
+  "test_*.py"
+]

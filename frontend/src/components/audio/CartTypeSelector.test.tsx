@@ -82,6 +82,7 @@ describe('cart type dropdown', () => {
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     const component = getSelector('Type 2');
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 
@@ -119,6 +120,7 @@ describe('cart type dropdown', () => {
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
     const component = getSelector('Type 2');
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 

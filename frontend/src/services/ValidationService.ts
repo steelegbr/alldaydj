@@ -30,10 +30,10 @@ export enum CartFields {
     Type = 'type'
 }
 
-export const validateLabel = (label: string) => label && REGEX_LABEL.test(label);
-export const validateYear = (year: number) => Number.isInteger(year)
+export const validateLabel = (label: string): boolean => !!(label && REGEX_LABEL.test(label));
+export const validateYear = (year: number): boolean => Number.isInteger(year)
  && year >= 0 && year <= (MAX_PERMITTED_YEAR);
-export const validateNotBlank = (value: string) => !!(value);
+export const validateNotBlank = (value: string): boolean => !!(value);
 
 export const validateCart = (cart: Cart | undefined): CartFields[] => {
   const errors: CartFields[] = [];

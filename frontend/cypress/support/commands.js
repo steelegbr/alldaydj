@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+// skipcq: JS-0125
+
 import 'cypress-file-upload';
 
 Cypress.Commands.add('login', () => {

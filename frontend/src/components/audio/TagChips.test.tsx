@@ -78,6 +78,7 @@ describe('tag chips', () => {
     mockToken.mockReturnValue('TOKEN123');
 
     const component = getChips(['Tag 1']);
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 
@@ -112,6 +113,7 @@ describe('tag chips', () => {
     mockToken.mockReturnValue('TOKEN123');
 
     const component = getChips(['Tag 1']);
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 

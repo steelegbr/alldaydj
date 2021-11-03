@@ -85,6 +85,7 @@ describe('happy path', () => {
     mockToken.mockReturnValue('TOKEN123');
 
     const component = loadPlayer();
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 

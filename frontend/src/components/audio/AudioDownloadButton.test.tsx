@@ -68,6 +68,7 @@ describe('audio download', () => {
     const button = component.find("button[data-test='button-download-linear']").first();
     button.simulate('click');
 
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
 
     expect(mockAxios.get).toBeCalledWith('/api/audio/UUID123/', { headers: { Authorization: 'Bearer TOKEN123' } });
@@ -86,6 +87,7 @@ describe('audio download', () => {
     const button = component.find("button[data-test='button-download-compressed']").first();
     button.simulate('click');
 
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 

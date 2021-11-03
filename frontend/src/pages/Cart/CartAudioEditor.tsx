@@ -256,6 +256,7 @@ const CartAudioEditor = (): React.ReactElement => {
     [generateWavesurfer, setFile],
   );
 
+  // skipcq:  JS-0323
   const handleZoomLevelEvent = (event: any, level: number | number [], thumb: number) => {
     getLogger().debug(`Zoom thumb ${thumb}`);
 

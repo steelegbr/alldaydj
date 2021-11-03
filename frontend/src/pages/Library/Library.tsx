@@ -52,7 +52,7 @@ const Library = (): React.ReactElement => {
           });
           setSearchResults(response.data);
         },
-        (error) => {
+        (error: Error) => {
           setSearch({
             conditions: {
               ...search.conditions,

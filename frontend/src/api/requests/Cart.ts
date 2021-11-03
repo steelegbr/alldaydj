@@ -28,7 +28,7 @@ import {
 import getAllPages from 'api/requests/Pagination';
 import { CartSearchResult } from 'api/models/Search';
 
-export const getCartDetails = (cartId: String) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig());
+export const getCartDetails = (cartId: string) => axios.get<Cart>(getUrl(`/api/cart/${cartId}/`), generateRequestConfig());
 
 export const getCartAudio = (cartId: string) => axios.get<CartAudio>(getUrl(`/api/audio/${cartId}/`), generateRequestConfig());
 

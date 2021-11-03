@@ -45,7 +45,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
     const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
     const expiry = calculateExpiry(decodedRefreshToken);
     if (expiry > new Date()) {
-      getLogger().info(`Valid refresh token expires ${expiry}`);
+      getLogger().info(`Valid refresh token expires ${expiry.toISOString()}`);
       authenticationStatus.stage = 'AccessTokenRefreshNeeded';
       authenticationStatus.refreshToken = refreshToken;
       authenticationStatus.refreshTokenExpiry = expiry;
@@ -55,7 +55,7 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
       const decodedAccessToken = jwtDecode<JwtToken>(accessToken);
       const accessExpiry = calculateExpiry(decodedAccessToken);
       if (accessExpiry > new Date()) {
-        getLogger().info(`Valid access token expires ${accessExpiry}`);
+        getLogger().info(`Valid access token expires ${accessExpiry.toISOString()}`);
         authenticationStatus.stage = 'Authenticated';
         authenticationStatus.accessToken = accessToken;
         authenticationStatus.accessTokenExpiry = accessExpiry;
@@ -63,7 +63,6 @@ export const getAuthenticationStatusFromLocalStorage = (): AuthenticationStatus 
     }
   }
 
-  getLogger().info(`Current authentication stage is ${authenticationStatus.stage}.`);
   return authenticationStatus;
 };
 
@@ -116,7 +115,7 @@ export const refreshAccessToken = (
       localStorage.setItem('accessToken', response.data.access);
       setAuthenticationStatus(loginUser(refreshToken, response.data.access));
     },
-    (error) => {
+    (error: Error) => {
       getLogger().error(`Access token refresh failed: ${error}`);
       setAuthenticationStatus({
         stage: 'Unauthenticated',

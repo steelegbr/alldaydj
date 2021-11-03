@@ -299,6 +299,11 @@ jobs:
           RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "backend" {print $1}'`
           echo Creating superuser on $RUNNING_CONTAINER
           docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
+      - name: Setup the e2e fixtures
+        run: |
+          RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "backend" {print $1}'`
+          echo Setting up e2e fixtures on $RUNNING_CONTAINER
+          docker exec -d $RUNNING_CONTAINER python manage.py loaddata e2efixture.json
       - name: Install NPM
         uses: actions/setup-node@v2
         with:

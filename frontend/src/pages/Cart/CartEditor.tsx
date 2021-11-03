@@ -36,6 +36,7 @@ import {
 import { Cart } from 'api/models/Cart';
 import { getCartDetails } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
+import CartDeleteAlert from 'components/audio/CartDeleteAlert';
 import CartSequencer from 'components/audio/CartSequencer';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import TagChips from 'components/audio/TagChips';
@@ -58,6 +59,7 @@ const CartEditor = (): React.ReactElement => {
   const history = useHistory();
   const { cart, setCart, file } = React.useContext(CartEditorContext);
   const [editorState, setEditorState] = React.useState<EditorState>('Loading');
+  const [showDelete, setShowDelete] = React.useState<boolean>(false);
   const validationErrors = validateCart(cart);
   const hasValidationErrors = validationErrors.some((error) => !!error);
 
@@ -264,9 +266,12 @@ const CartEditor = (): React.ReactElement => {
     [cart, setCart],
   );
 
-  const handleCancel = () => {
-    history.push(Paths.library.search);
-  };
+  const handleCancel = React.useCallback(
+    () => {
+      history.push(Paths.library.search);
+    },
+    [history],
+  );
 
   const handleSubmit = React.useCallback(
     (event: React.SyntheticEvent) => {
@@ -306,6 +311,27 @@ const CartEditor = (): React.ReactElement => {
       }
     },
     [cart, setCart],
+  );
+
+  const onDelete = React.useCallback(
+    () => {
+      history.push(Paths.library.search);
+    },
+    [history],
+  );
+
+  const onCancel = React.useCallback(
+    () => {
+      setShowDelete(false);
+    },
+    [],
+  );
+
+  const handleDeleteClick = React.useCallback(
+    () => {
+      setShowDelete(true);
+    },
+    [],
   );
 
   if (editorState === 'Loading') {
@@ -528,6 +554,8 @@ const CartEditor = (): React.ReactElement => {
             <Button
               color="error"
               data-test="button-clear"
+              disabled={!cart.id}
+              onClick={handleDeleteClick}
               variant="contained"
             >
               <DeleteForever />
@@ -536,6 +564,9 @@ const CartEditor = (): React.ReactElement => {
           </Grid>
         </Grid>
       </form>
+      {showDelete && (
+        <CartDeleteAlert cart={cart} onCancel={onCancel} onDelete={onDelete} />
+      )}
     </>
   );
 };

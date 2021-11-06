@@ -1,16 +1,18 @@
 /* eslint-disable import/prefer-default-export */
 import axios, { AxiosResponse } from 'axios';
 import getUrl from 'services/UrlService';
-import { CartSearchConditions, CartSearchResult } from 'api/models/Search';
+import { CartSearchConditions } from 'api/models/Search';
 import { generateRequestConfig } from 'api/requests/Helpers';
 import { Paginated } from 'api/models/Pagination';
+import { Cart } from 'api/models/Cart';
 
 export const cartSearch = (
   conditions: CartSearchConditions,
-): Promise<AxiosResponse<Paginated<CartSearchResult>>> => {
+): Promise<AxiosResponse<Paginated<Cart>>> => {
   const params = new URLSearchParams();
   params.append('search', conditions.search);
   params.append('page', conditions.page);
   params.append('page_size', conditions.resultsPerPage);
-  return axios.get<Paginated<CartSearchResult>>(getUrl('/api/cart/search/'), generateRequestConfig(params));
+  params.append('ordering', conditions.order);
+  return axios.get<Paginated<Cart>>(getUrl('/api/cart/'), generateRequestConfig(params));
 };

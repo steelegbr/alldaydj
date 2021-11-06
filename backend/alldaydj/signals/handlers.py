@@ -24,8 +24,6 @@ from django.core.mail import EmailMultiAlternatives, send_mail
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.template.loader import render_to_string
-from django.urls import reverse
-from django_elasticsearch_dsl.registries import registry
 from django_rest_passwordreset.signals import reset_password_token_created
 
 
@@ -46,26 +44,6 @@ def add_to_default_group(sender, instance, created, **kwargs):
         # Add the user to the group
 
         instance.groups.add(group)
-
-
-@receiver(post_save)
-def update_document(sender, **kwargs):
-    app_label = sender._meta.app_label
-    model_name = sender._meta.model_name
-    instance = kwargs["instance"]
-
-    if app_label == "alldaydj" and model_name == "Cart":
-        registry.update(instance)
-
-
-@receiver(post_delete)
-def delete_document(sender, **kwargs):
-    app_label = sender._meta.app_label
-    model_name = sender._meta.model_name
-    instance = kwargs["instance"]
-
-    if app_label == "alldaydj" and model_name == "Cart":
-        registry.delete(instance, raise_on_error=False)
 
 
 @receiver(reset_password_token_created)

@@ -17,8 +17,6 @@
 """
 
 from django.http.response import JsonResponse
-from alldaydj.documents.backends import MatchPhraseFilterBackend
-from alldaydj.documents.cart import CartDocument
 from alldaydj.models import Artist, AudioUploadJob, Cart, CartIdSequencer, Tag, Type
 from alldaydj.serializers import (
     ArtistSerializer,
@@ -26,7 +24,6 @@ from alldaydj.serializers import (
     AudioUploadJobSerializer,
     CartIdSequencerSerialiser,
     CartSerializer,
-    CartDocumentSerializer,
     TagSerializer,
     TypeSerializer,
 )
@@ -35,25 +32,11 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
-from django_elasticsearch_dsl_drf.constants import (
-    LOOKUP_FILTER_RANGE,
-    LOOKUP_QUERY_GT,
-    LOOKUP_QUERY_GTE,
-    LOOKUP_QUERY_LT,
-    LOOKUP_QUERY_LTE,
-)
-from django_elasticsearch_dsl_drf.filter_backends import (
-    FilteringFilterBackend,
-    IdsFilterBackend,
-    OrderingFilterBackend,
-    DefaultOrderingFilterBackend,
-)
-from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
-from django_elasticsearch_dsl_drf.pagination import QueryFriendlyPageNumberPagination
 import re
 from rest_framework.parsers import MultiPartParser
 from rest_framework import views, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 
 
@@ -70,6 +53,9 @@ class AudioUploadJobViewSet(viewsets.ReadOnlyModelViewSet):
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    filter_backends = [OrderingFilter, SearchFilter]
+    search_fields = ["label", "title", "display_artist", "year"]
+    ordering_fields = ["label", "title", "display_artist"]
 
 
 class CartByLabelViewSet(viewsets.ReadOnlyModelViewSet):
@@ -131,47 +117,6 @@ class AudioView(views.APIView):
         cart = get_object_or_404(Cart, id=pk)
         cart_serial = AudioSerlializer(cart)
         return Response(cart_serial.data)
-
-
-class CartDocumentView(BaseDocumentViewSet):
-    document = CartDocument
-    serializer_class = CartDocumentSerializer
-    pagination_class = QueryFriendlyPageNumberPagination
-    lookup_field = "id"
-    filter_backends = [
-        FilteringFilterBackend,
-        IdsFilterBackend,
-        OrderingFilterBackend,
-        DefaultOrderingFilterBackend,
-        MatchPhraseFilterBackend,
-    ]
-    search_fields = ["label", "artist", "title"]
-    filter_fields = {
-        "label": "label.raw",
-        "title": "title.raw",
-        "artist": "artist.raw",
-        "year": {
-            "lookups": [
-                LOOKUP_FILTER_RANGE,
-                LOOKUP_QUERY_GT,
-                LOOKUP_QUERY_GTE,
-                LOOKUP_QUERY_LT,
-                LOOKUP_QUERY_LTE,
-            ]
-        },
-    }
-    ordering_fields = {
-        "_score": "_score",
-        "label": "label.raw",
-        "artist": "artist.raw",
-        "title": "title.raw",
-    }
-    ordering = (
-        "_score",
-        "label",
-        "artist",
-        "title",
-    )
 
 
 class CartIdSequencerViewSet(viewsets.ModelViewSet):

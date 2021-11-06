@@ -32,9 +32,7 @@ exports['library table row renders single result 1'] = `
             <ForwardRef(TableCell)>
               abc123
             </ForwardRef(TableCell)>,
-            <ForwardRef(TableCell)>
-              Artist Name
-            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell) />,
             <ForwardRef(TableCell)>
               Cart Title
             </ForwardRef(TableCell)>,
@@ -275,7 +273,7 @@ exports['library table row renders single result 1'] = `
             ownerState={
               Object {
                 "align": "inherit",
-                "children": "Artist Name",
+                "children": undefined,
                 "component": "td",
                 "padding": "normal",
                 "size": "medium",
@@ -288,9 +286,7 @@ exports['library table row renders single result 1'] = `
             <td
               aria-sort={null}
               className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
-            >
-              Artist Name
-            </td>
+            />
           </MuiTableCellRoot>
         </ForwardRef(TableCell)>
         <ForwardRef(TableCell)>
@@ -532,9 +528,7 @@ exports['library table row renders single result expanded 1'] = `
             <ForwardRef(TableCell)>
               abc123
             </ForwardRef(TableCell)>,
-            <ForwardRef(TableCell)>
-              Artist Name
-            </ForwardRef(TableCell)>,
+            <ForwardRef(TableCell) />,
             <ForwardRef(TableCell)>
               Cart Title
             </ForwardRef(TableCell)>,
@@ -775,7 +769,7 @@ exports['library table row renders single result expanded 1'] = `
             ownerState={
               Object {
                 "align": "inherit",
-                "children": "Artist Name",
+                "children": undefined,
                 "component": "td",
                 "padding": "normal",
                 "size": "medium",
@@ -788,9 +782,7 @@ exports['library table row renders single result expanded 1'] = `
             <td
               aria-sort={null}
               className="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
-            >
-              Artist Name
-            </td>
+            />
           </MuiTableCellRoot>
         </ForwardRef(TableCell)>
         <ForwardRef(TableCell)>

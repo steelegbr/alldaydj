@@ -23,14 +23,13 @@ import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar,
 } from '@mui/material';
 import { Cart } from 'api/models/Cart';
-import { CartSearchResult } from 'api/models/Search';
 import { deleteCart } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import { getLogger } from 'services/LoggingService';
 
 interface CartDeleteAlertProps {
-    cart: Cart | CartSearchResult
+    cart: Cart
     onDelete: () => void,
     onCancel: () => void
 }

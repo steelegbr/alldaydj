@@ -19,6 +19,6 @@ describe('cart search', () => {
       search: 'test',
     });
 
-    expect(mockAxios.get).toBeCalledWith('/api/cart/search/', { headers: { Authorization: 'Bearer TOKEN123' }, params: expect.any(URLSearchParams) });
+    expect(mockAxios.get).toBeCalledWith('/api/cart/', { headers: { Authorization: 'Bearer TOKEN123' }, params: expect.any(URLSearchParams) });
   });
 });

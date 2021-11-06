@@ -6,7 +6,6 @@ Django
 django-celery-results
 django-colorfield
 django-cors-headers
-django-elasticsearch-dsl-drf
 django-nose
 django-rest-passwordreset
 django-storages

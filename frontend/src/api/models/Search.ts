@@ -16,14 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export interface CartSearchResult {
-    label: string,
-    id: string,
-    title: string,
-    artist: string,
-    year: number
-}
-
-export type CartSearchConditionFields = 'search' | 'page' | 'resultsPerPage';
+export type CartSearchConditionFields = 'search' | 'page' | 'resultsPerPage' | 'order';
 
 export type CartSearchConditions = Record<CartSearchConditionFields, string>;
+
+export enum CartSearchOrderBy {
+    Label = 'label',
+    LabelDesc = '-label',
+    Title = 'title',
+    TitleDesc = '-title',
+    Artist = 'display_artist',
+    ArtistDesc = '-display_artist'
+}

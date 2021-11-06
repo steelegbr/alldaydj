@@ -31,30 +31,35 @@ interface CartTypeSelectorProps {
     selectionError: boolean
 }
 
+type TypeSelectorState = 'Idle' | 'Loading' | 'Loaded';
+
 const CartTypeSelector = (
   { selectedType, setSelectedType, selectionError }: CartTypeSelectorProps,
 ): React.ReactElement => {
   const [cartTypes, setCartTypes] = React.useState<CartType[]>([]);
+  const [state, setState] = React.useState<TypeSelectorState>('Idle');
 
   React.useEffect(
     () => {
-      if (cartTypes.length === 0) {
+      if (state === 'Idle') {
+        setState('Loading');
         getLogger().info('Downloading cart types.');
         getCartTypes().then(
           (loadedCartTypes: CartType[]) => {
             setCartTypes(loadedCartTypes);
-            if (loadedCartTypes && !selectedType) {
+            setState('Loaded');
+            if (loadedCartTypes.length > 0 && !selectedType) {
               setSelectedType(loadedCartTypes[0].name);
             }
           },
           (error) => {
             getLogger().error(`Something went wrong updating the cart types: ${error}`);
-            setCartTypes([]);
+            setState('Loaded');
           },
         );
       }
     },
-    [cartTypes.length, selectedType, setSelectedType],
+    [cartTypes.length, selectedType, setSelectedType, state],
   );
 
   const updateTypeSelection = React.useCallback(

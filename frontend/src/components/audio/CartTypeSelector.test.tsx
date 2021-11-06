@@ -24,6 +24,7 @@ import { Paginated } from 'api/models/Pagination';
 import { mount } from 'enzyme';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import { getTokenFromLocalStorage } from 'services/AuthenticationService';
+import { act } from '@testing-library/react';
 
 const selectedChangedCallback = jest.fn();
 const setAuthStatusCallback = jest.fn();
@@ -45,50 +46,50 @@ describe('cart type dropdown', () => {
   });
 
   it('happy path', async () => {
-    const responses: Partial<AxiosResponse<Paginated<CartType>>>[] = [
-      {
-        status: 200,
-        data: {
-          count: 2,
-          next: '/api/type/?page=2',
-          results: [
-            {
-              id: '1',
-              name: 'Type 1',
-              colour: '#FFFFFF',
-              now_playing: false,
-            },
-          ],
-        },
+    const responsePageOne = Promise.resolve({
+      status: 200,
+      data: {
+        count: 2,
+        next: '/api/type/?page=2',
+        results: [
+          {
+            id: '1',
+            name: 'Type 1',
+            colour: '#FFFFFF',
+            now_playing: false,
+          },
+        ],
       },
-      {
-        status: 200,
-        data: {
-          count: 2,
-          results: [
-            {
-              id: '2',
-              name: 'Type 2',
-              colour: '#FFFFFF',
-              now_playing: true,
-            },
-          ],
-        },
+    });
+    const responsePageTwo = Promise.resolve({
+      status: 200,
+      data: {
+        count: 2,
+        results: [
+          {
+            id: '2',
+            name: 'Type 2',
+            colour: '#FFFFFF',
+            now_playing: true,
+          },
+        ],
       },
-    ];
+    });
 
     mockAxios.get
-      .mockResolvedValueOnce(responses[0])
-      .mockResolvedValueOnce(responses[1]);
+      .mockResolvedValueOnce(responsePageOne)
+      .mockResolvedValueOnce(responsePageTwo);
 
     mockToken.mockReturnValue('TOKEN123');
 
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
-    const component = getSelector('Type 2');
-    // skipcq: JS-0330
-    await new Promise((r) => setTimeout(r, 2000));
-    component.update();
+    getSelector('Type 2');
+
+    await act(async () => {
+      await responsePageOne;
+      await responsePageTwo;
+    });
 
     expect(mockAxios.get).toBeCalledTimes(2);
     expect(mockAxios.get).toBeCalledWith('/api/type/', expectedHeaders);
@@ -98,34 +99,33 @@ describe('cart type dropdown', () => {
   });
 
   it('unhappy path', async () => {
-    const responses: Partial<AxiosResponse<Paginated<CartType>>>[] = [
-      {
-        status: 500,
-        data: {
-          count: 2,
-          next: '/api/type/?page=2',
-          results: [
-            {
-              id: '1',
-              name: 'Type 1',
-              colour: '#FFFFFF',
-              now_playing: false,
-            },
-          ],
-        },
+    const response = Promise.resolve({
+      status: 500,
+      data: {
+        count: 2,
+        next: '/api/type/?page=2',
+        results: [
+          {
+            id: '1',
+            name: 'Type 1',
+            colour: '#FFFFFF',
+            now_playing: false,
+          },
+        ],
       },
-    ];
+    });
 
-    mockAxios.get.mockResolvedValueOnce(responses[0]);
+    mockAxios.get.mockResolvedValueOnce(response);
 
     mockToken.mockReturnValue('TOKEN123');
 
     const expectedHeaders = { headers: { Authorization: 'Bearer TOKEN123' } };
 
-    const component = getSelector('Type 2');
-    // skipcq: JS-0330
-    await new Promise((r) => setTimeout(r, 2000));
-    component.update();
+    getSelector('Type 2');
+
+    await act(async () => {
+      await response;
+    });
 
     expect(mockAxios.get).toBeCalledTimes(1);
     expect(mockAxios.get).toBeCalledWith('/api/type/', expectedHeaders);

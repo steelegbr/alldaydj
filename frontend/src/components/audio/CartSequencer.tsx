@@ -30,9 +30,12 @@ interface CartSequencerProps {
     callback: (generated: string) => void
 }
 
+type SequencerState = 'Idle' | 'Loading' | 'Loaded';
+
 const CartSequencer = ({ callback }: CartSequencerProps): React.ReactElement => {
   const [sequencer, setSequencer] = React.useState<Sequencer>();
   const [sequencers, setSequencers] = React.useState<Sequencer[]>([]);
+  const [state, setState] = React.useState<SequencerState>('Idle');
   const displayDropdown = sequencers && sequencers.length > 1;
 
   const handleGenerateClick = React.useCallback(
@@ -67,24 +70,27 @@ const CartSequencer = ({ callback }: CartSequencerProps): React.ReactElement => 
 
   React.useEffect(
     () => {
-      if (sequencers.length === 0) {
+      if (state === 'Idle') {
+        setState('Loading');
         getLogger().info('Dowloading cart sequencer information.');
         getSequencers().then(
           (returnedSequencers) => {
             setSequencers(returnedSequencers);
+            setState('Loaded');
             getLogger().info('Successfully downloaded sequencers.');
-            if (returnedSequencers && !sequencer) {
+            if (returnedSequencers.length > 0 && !sequencer) {
               setSequencer(returnedSequencers[0]);
               getLogger().info(`Set sequencer to default of ${returnedSequencers[0].name}`);
             }
           },
           (error) => {
             getLogger().error(`Failed to download the sequencers. Error: ${error}`);
+            setState('Loaded');
           },
         );
       }
     },
-    [callback, sequencer, sequencers],
+    [callback, sequencer, sequencers, state],
   );
 
   return (

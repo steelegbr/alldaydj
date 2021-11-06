@@ -13,5 +13,6 @@ export const cartSearch = (
   params.append('search', conditions.search);
   params.append('page', conditions.page);
   params.append('page_size', conditions.resultsPerPage);
+  params.append('ordering', conditions.order);
   return axios.get<Paginated<Cart>>(getUrl('/api/cart/'), generateRequestConfig(params));
 };

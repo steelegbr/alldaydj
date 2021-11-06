@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { CartSearchConditions } from 'api/models/Search';
+import { CartSearchConditions, CartSearchOrderBy } from 'api/models/Search';
 import { cartSearchContextFromQueryString } from 'services/SearchService';
 
 export type CartSearchStatus = 'NotStarted' | 'ReadyToSearch' | 'Searching' | 'ResultsReturned' | 'Error';
@@ -43,6 +43,7 @@ const CartSearchContext = React.createContext<CartSearchContextType>({
       page: '1',
       resultsPerPage: '10',
       search: '',
+      order: CartSearchOrderBy.Label,
     },
     status: 'NotStarted',
   },

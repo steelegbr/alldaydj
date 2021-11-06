@@ -25,6 +25,7 @@ describe('cart search service', () => {
       page: '1',
       resultsPerPage: '10',
       search: '',
+      order: 'label',
     });
   });
 
@@ -33,6 +34,7 @@ describe('cart search service', () => {
       page: '5',
       resultsPerPage: '7',
       search: 'something',
+      order: 'label',
     };
     const converted = cartSearchContextFromQueryString(new URLSearchParams(params));
     expect(converted).toStrictEqual(
@@ -41,6 +43,7 @@ describe('cart search service', () => {
           page: '5',
           resultsPerPage: '7',
           search: 'something',
+          order: 'label',
         },
         status: 'ReadyToSearch',
       },

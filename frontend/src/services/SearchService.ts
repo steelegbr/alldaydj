@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { CartSearchConditions } from 'api/models/Search';
+import { CartSearchConditions, CartSearchOrderBy } from 'api/models/Search';
 import { CartSearch } from 'components/context/CartSearchContext';
 
 const parseNumber = (raw: string | null, defaultValue = 1): string => {
@@ -31,6 +31,7 @@ export const paramsToSearchConditions = (query: URLSearchParams) : CartSearchCon
   search: query.get('search') || '',
   page: parseNumber(query.get('page')),
   resultsPerPage: parseNumber(query.get('resultsPerPage'), 10),
+  order: query.get('order') || CartSearchOrderBy.Label,
 });
 
 export const cartSearchContextFromQueryString = (query: URLSearchParams): CartSearch => ({

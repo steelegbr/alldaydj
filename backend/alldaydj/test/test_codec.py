@@ -55,20 +55,19 @@ class TestCodecs(TestCase):
 
         # Arrange
 
-        with open(source_file, "rb") as source:
-            with open(expected_file, "rb") as expected:
-                in_memory = BytesIO(bytes([0] * len(expected.read())))
-                mime = magic.from_buffer(source.read(1024))
+        with open(source_file, "rb") as source, open(expected_file, "rb") as expected:
+            in_memory = BytesIO(bytes([0] * len(expected.read())))
+            mime = magic.from_buffer(source.read(1024))
 
-                # Act
+            # Act
 
-                get_decoder(mime).decode(source, in_memory)
-                in_memory.seek(0)
-                expected.seek(0)
+            get_decoder(mime).decode(source, in_memory)
+            in_memory.seek(0)
+            expected.seek(0)
 
-                # Assert
+            # Assert
 
-                self.assertEqual(len(in_memory.read()), len(expected.read()))
+            self.assertEqual(len(in_memory.read()), len(expected.read()))
 
     @parameterized.expand(
         [

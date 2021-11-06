@@ -21,6 +21,7 @@ from django.contrib.postgres.fields import CITextField
 from django.core.validators import RegexValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from simple_history.models import HistoricalRecords
 import uuid
 
 
@@ -31,6 +32,7 @@ class Artist(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = CITextField(unique=True, blank=False, null=False)
+    history = HistoricalRecords()
 
     def __str__(self) -> str:
         return self.name
@@ -43,6 +45,7 @@ class Tag(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tag = CITextField(unique=True, blank=False, null=False)
+    history = HistoricalRecords()
 
     def __str__(self) -> str:
         return self.tag
@@ -57,6 +60,7 @@ class Type(models.Model):
     name = CITextField(unique=True, blank=False, null=False)
     colour = ColorField(default="#AC1AF7")
     now_playing = models.BooleanField(default=False, blank=False, null=False)
+    history = HistoricalRecords()
 
     def __str__(self) -> str:
         return self.name
@@ -94,6 +98,7 @@ class Cart(models.Model):
     audio = models.TextField(null=True)
     compressed = models.TextField(null=True)
     fade = models.BooleanField(default=False)
+    history = HistoricalRecords()
 
     def __str__(self) -> str:
         return f"[{self.label}] {self.display_artist} - {self.title}"
@@ -122,6 +127,7 @@ class AudioUploadJob(models.Model):
     )
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     error = models.TextField(null=True)
+    history = HistoricalRecords()
 
 
 class CartIdSequencer(models.Model):
@@ -138,3 +144,4 @@ class CartIdSequencer(models.Model):
         blank=True, null=True, validators=[RegexValidator(r"[a-zA-Z0-9]*")]
     )
     min_digits = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    history = HistoricalRecords()

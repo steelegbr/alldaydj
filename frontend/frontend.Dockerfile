@@ -1,4 +1,4 @@
-FROM node:14.16-alpine as build
+FROM node:16 as build
 WORKDIR /opt/alldaydj
 
 COPY ./frontend/ .

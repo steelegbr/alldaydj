@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`loading button idle state 1`] = `
+exports['loading button idle state 1'] = `
 <LoadingButton
   loading={false}
 >
@@ -453,7 +453,7 @@ exports[`loading button idle state 1`] = `
 </LoadingButton>
 `;
 
-exports[`loading button loading state 1`] = `
+exports['loading button loading state 1'] = `
 <LoadingButton
   loading={true}
 >

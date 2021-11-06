@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`delete cart alert box cancel calls the callback 1`] = `
+exports['delete cart alert box cancel calls the callback 1'] = `
 <CartDeleteAlert
   cart={
     Object {

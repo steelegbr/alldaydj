@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/* eslint-disable camelcase */
+
 export interface Cart {
     id: string;
     label: string;

@@ -18,9 +18,6 @@
 
 import React from 'react';
 import mockAxios from 'jest-mock-axios';
-import { CartType } from 'api/models/Cart';
-import { AxiosResponse } from 'axios';
-import { Paginated } from 'api/models/Pagination';
 import { mount } from 'enzyme';
 import CartTypeSelector from 'components/audio/CartTypeSelector';
 import { getTokenFromLocalStorage } from 'services/AuthenticationService';

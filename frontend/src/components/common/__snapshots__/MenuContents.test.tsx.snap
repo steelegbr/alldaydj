@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`menu contents snapshot 1`] = `
+exports['menu contents snapshot 1'] = `
 <ThemeProvider
   theme={
     Object {

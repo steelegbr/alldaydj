@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`happy path loads and unloads 1`] = `
+exports['happy path loads and unloads 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"
@@ -2745,7 +2745,7 @@ exports[`happy path loads and unloads 1`] = `
 </PreviewPlayer>
 `;
 
-exports[`unhappy path fails on first http request 1`] = `
+exports['unhappy path fails on first http request 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"
@@ -4095,7 +4095,7 @@ exports[`unhappy path fails on first http request 1`] = `
 </PreviewPlayer>
 `;
 
-exports[`unhappy path fails on second http request 1`] = `
+exports['unhappy path fails on second http request 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`library table row renders single result 1`] = `
+exports['library table row renders single result 1'] = `
 <LibraryTableRow
   result={
     Object {
@@ -500,7 +500,7 @@ exports[`library table row renders single result 1`] = `
 </LibraryTableRow>
 `;
 
-exports[`library table row renders single result expanded 1`] = `
+exports['library table row renders single result expanded 1'] = `
 <LibraryTableRow
   result={
     Object {

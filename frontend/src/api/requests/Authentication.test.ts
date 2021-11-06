@@ -6,7 +6,7 @@ describe('authentication API calls', () => {
     mockAxios.reset();
   });
 
-  it('user login', async () => {
+  it('user login', () => {
     userLogin({
       username: 'user@example.com',
       password: 'pass',
@@ -19,7 +19,7 @@ describe('authentication API calls', () => {
       );
   });
 
-  it('refresh token', async () => {
+  it('refresh token', () => {
     const refreshData = {
       refresh: 'refresh1',
     };

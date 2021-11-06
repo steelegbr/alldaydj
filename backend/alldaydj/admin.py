@@ -17,34 +17,35 @@
 """
 
 from alldaydj.models import Artist, Cart, CartIdSequencer, Tag, Type
+from simple_history.admin import SimpleHistoryAdmin
 from django.contrib import admin
 
 
 @admin.register(Artist)
-class ArtistAdmin(admin.ModelAdmin):
+class ArtistAdmin(SimpleHistoryAdmin):
     search_fields = ["name"]
     list_display = ("name",)
 
 
 @admin.register(Cart)
-class CartAdmin(admin.ModelAdmin):
+class CartAdmin(SimpleHistoryAdmin):
     search_fields = ["label", "display_artist", "title"]
     list_display = ("label", "display_artist", "title")
 
 
 @admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(SimpleHistoryAdmin):
     search_fields = ["tag"]
     list_display = ("tag",)
 
 
 @admin.register(Type)
-class TypeAdmin(admin.ModelAdmin):
+class TypeAdmin(SimpleHistoryAdmin):
     search_fields = ["name"]
     list_display = ("name",)
 
 
 @admin.register(CartIdSequencer)
-class CartIdSequencerAdmin(admin.ModelAdmin):
+class CartIdSequencerAdmin(SimpleHistoryAdmin):
     search_fields = ["name"]
     list_display = ("name", "prefix", "min_digits", "suffix")

@@ -8,6 +8,7 @@ django-colorfield
 django-cors-headers
 django-nose
 django-rest-passwordreset
+django-simple-history
 django-storages
 djangorestframework
 djangorestframework-simplejwt

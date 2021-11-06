@@ -23,15 +23,15 @@ import CartSearchContext from 'components/context/CartSearchContext';
 import LibrarySearch from 'pages/Library/LibrarySearch';
 import LibraryTable from 'pages/Library/LibraryTable';
 import { Paginated } from 'api/models/Pagination';
-import { CartSearchResult } from 'api/models/Search';
 import { AxiosResponse } from 'axios';
+import { Cart } from 'api/models/Cart';
 
 const Library = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const [
     searchResults,
     setSearchResults,
-  ] = React.useState<Paginated<CartSearchResult> | undefined>(undefined);
+  ] = React.useState<Paginated<Cart> | undefined>(undefined);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Library = (): React.ReactElement => {
         status: 'Searching',
       });
       cartSearch(search.conditions).then(
-        (response: AxiosResponse<Paginated<CartSearchResult>>) => {
+        (response: AxiosResponse<Paginated<Cart>>) => {
           setSearch({
             conditions: {
               ...search.conditions,

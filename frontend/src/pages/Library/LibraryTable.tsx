@@ -32,10 +32,10 @@ import CartSearchContext, { CartSearch } from 'components/context/CartSearchCont
 import Paths from 'routing/Paths';
 import LibraryTableRow from 'pages/Library/LibraryTableRow';
 import { Paginated } from 'api/models/Pagination';
-import { CartSearchResult } from 'api/models/Search';
+import { Cart } from 'api/models/Cart';
 
 interface LibraryTableProps {
-    results: Paginated<CartSearchResult>
+    results: Paginated<Cart>
 }
 
 const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {

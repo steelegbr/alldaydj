@@ -16,14 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export interface CartSearchResult {
-    label: string,
-    id: string,
-    title: string,
-    artist: string,
-    year: number
-}
-
 export type CartSearchConditionFields = 'search' | 'page' | 'resultsPerPage';
 
 export type CartSearchConditions = Record<CartSearchConditionFields, string>;

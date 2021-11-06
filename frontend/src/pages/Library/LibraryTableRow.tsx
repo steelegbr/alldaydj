@@ -27,13 +27,13 @@ import {
   KeyboardArrowDown, KeyboardArrowUp, PlayArrow,
 } from '@mui/icons-material';
 import React, { Fragment } from 'react';
-import { CartSearchResult } from 'api/models/Search';
 import { PreviewContext } from 'components/context/PreviewContext';
 import AudioDownloadButton from 'components/audio/AudioDownloadButton';
 import { useHistory } from 'react-router-dom';
 import Paths from 'routing/Paths';
 import CartSearchContext from 'components/context/CartSearchContext';
 import CartDeleteAlert from 'components/audio/CartDeleteAlert';
+import { Cart } from 'api/models/Cart';
 
 const useStyles = makeStyles(() => createStyles({
   collapsedRow: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 interface TableRowProps {
-    result: CartSearchResult
+    result: Cart
 }
 
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
@@ -106,7 +106,7 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
           </IconButton>
         </TableCell>
         <TableCell>{result.label}</TableCell>
-        <TableCell>{result.artist}</TableCell>
+        <TableCell>{result.display_artist}</TableCell>
         <TableCell>{result.title}</TableCell>
       </TableRow>
       <TableRow>

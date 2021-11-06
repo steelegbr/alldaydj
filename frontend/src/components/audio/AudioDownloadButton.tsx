@@ -21,7 +21,6 @@ import { Alert, Button, Snackbar } from '@mui/material';
 import { CartAudio } from 'api/models/Cart';
 import { getCartAudio } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import React from 'react';
 import { getLogger } from 'services/LoggingService';
 
@@ -35,10 +34,7 @@ interface AudioDownloadButtonProps {
 
 const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElement => {
   const { cartId, downloadType, label } = props;
-  const authenticationContext = React.useContext(AuthenticationContext);
   const [error, setError] = React.useState<boolean>(false);
-
-  const token = authenticationContext?.authenticationStatus.accessToken;
 
   const clearError = () => {
     setError(false);
@@ -65,27 +61,25 @@ const AudioDownloadButton = (props: AudioDownloadButtonProps): React.ReactElemen
 
   const getAudioInfo = React.useCallback(
     () => {
-      if (token) {
-        getLogger().info(`Attempting to get audio info for cart ID ${cartId}`);
-        getCartAudio(cartId, token).then(
-          (response: AxiosResponse<CartAudio>) => {
-            if (response.status === 200) {
-              getLogger().info('Successfully obtained cart audio info.');
-              triggerDownload(response.data);
-            } else {
-              getLogger().error(response);
-              getLogger().error(`Got a strange HTTP response (${response.status}) getting cart audio info.`);
-              setError(true);
-            }
-          },
-          (errorResponse) => {
-            getLogger().error(`Failed to download the cart audio: ${errorResponse}`);
+      getLogger().info(`Attempting to get audio info for cart ID ${cartId}`);
+      getCartAudio(cartId).then(
+        (response: AxiosResponse<CartAudio>) => {
+          if (response.status === 200) {
+            getLogger().info('Successfully obtained cart audio info.');
+            triggerDownload(response.data);
+          } else {
+            getLogger().error(response);
+            getLogger().error(`Got a strange HTTP response (${response.status}) getting cart audio info.`);
             setError(true);
-          },
-        );
-      }
+          }
+        },
+        (errorResponse) => {
+          getLogger().error(`Failed to download the cart audio: ${errorResponse}`);
+          setError(true);
+        },
+      );
     },
-    [cartId, token, triggerDownload],
+    [cartId, triggerDownload],
   );
 
   const generateError = () => (

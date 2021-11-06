@@ -1,0 +1,1718 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports['delete cart alert box cancel calls the callback 1'] = `
+<CartDeleteAlert
+  cart={
+    Object {
+      "artists": Array [],
+      "cue_audio_end": 0,
+      "cue_audio_start": 0,
+      "cue_intro_end": 0,
+      "cue_segue": 0,
+      "display_artist": "",
+      "fade": false,
+      "id": "ID123",
+      "label": "LABEL123",
+      "sweeper": false,
+      "tags": Array [],
+      "title": "",
+      "type": "",
+      "year": 2021,
+    }
+  }
+  onCancel={[MockFunction]}
+  onDelete={[MockFunction]}
+>
+  <ForwardRef(Snackbar)
+    autoHideDuration={6000}
+    onClose={[Function]}
+    open={false}
+  />
+  <ForwardRef(Dialog)
+    aria-describedby="alert-cart-delete-description"
+    aria-labelledby="alert-cart-delete-title"
+    onClose={[MockFunction]}
+    open={true}
+  >
+    <MuiDialogRoot
+      BackdropComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "__emotion_base": Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "propTypes": Object {
+              "children": [Function],
+              "className": [Function],
+              "classes": [Function],
+              "components": [Function],
+              "componentsProps": [Function],
+              "invisible": [Function],
+              "open": [Function],
+              "sx": [Function],
+              "transitionDuration": [Function],
+            },
+            "render": [Function],
+          },
+          "__emotion_forwardProp": [Function],
+          "__emotion_real": [Circular],
+          "__emotion_styles": Array [
+            "label:MuiDialog-backdrop;",
+            Object {
+              "zIndex": -1,
+            },
+            [Function],
+          ],
+          "defaultProps": undefined,
+          "render": [Function],
+          "withComponent": [Function],
+        }
+      }
+      BackdropProps={
+        Object {
+          "as": undefined,
+          "transitionDuration": Object {
+            "enter": 225,
+            "exit": 195,
+          },
+        }
+      }
+      className="MuiDialog-root"
+      closeAfterTransition={true}
+      disableEscapeKeyDown={false}
+      onClick={[Function]}
+      onClose={[MockFunction]}
+      open={true}
+      ownerState={
+        Object {
+          "aria-describedby": "alert-cart-delete-description",
+          "aria-labelledby": "alert-cart-delete-title",
+          "children": Array [
+            <ForwardRef(DialogTitle)
+              id="alert-cart-delete-title"
+            >
+              Delete LABEL123?
+            </ForwardRef(DialogTitle)>,
+            <ForwardRef(DialogContent)>
+              <ForwardRef(DialogContentText)
+                id="alert-cart-delete-description"
+              >
+                Deleting a cart also deletes the audio and an irrevocable action.
+              </ForwardRef(DialogContentText)>
+            </ForwardRef(DialogContent)>,
+            <ForwardRef(DialogActions)>
+              <ForwardRef(Button)
+                color="error"
+                data-test="alert-button-delete"
+                onClick={[Function]}
+                variant="contained"
+              >
+                <Memo />
+                Delete
+              </ForwardRef(Button)>
+              <ForwardRef(Button)
+                color="secondary"
+                data-test="alert-button-cancel"
+                onClick={[MockFunction]}
+                variant="contained"
+              >
+                Cancel
+              </ForwardRef(Button)>
+            </ForwardRef(DialogActions)>,
+          ],
+          "disableEscapeKeyDown": false,
+          "fullScreen": false,
+          "fullWidth": false,
+          "maxWidth": "sm",
+          "onClose": [MockFunction],
+          "open": true,
+          "scroll": "paper",
+        }
+      }
+    >
+      <ForwardRef(Modal)
+        BackdropComponent={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "__emotion_base": Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "propTypes": Object {
+                "children": [Function],
+                "className": [Function],
+                "classes": [Function],
+                "components": [Function],
+                "componentsProps": [Function],
+                "invisible": [Function],
+                "open": [Function],
+                "sx": [Function],
+                "transitionDuration": [Function],
+              },
+              "render": [Function],
+            },
+            "__emotion_forwardProp": [Function],
+            "__emotion_real": [Circular],
+            "__emotion_styles": Array [
+              "label:MuiDialog-backdrop;",
+              Object {
+                "zIndex": -1,
+              },
+              [Function],
+            ],
+            "defaultProps": undefined,
+            "render": [Function],
+            "withComponent": [Function],
+          }
+        }
+        BackdropProps={
+          Object {
+            "as": undefined,
+            "transitionDuration": Object {
+              "enter": 225,
+              "exit": 195,
+            },
+          }
+        }
+        className="MuiDialog-root css-1h8td7x-MuiDialog-root"
+        closeAfterTransition={true}
+        disableEscapeKeyDown={false}
+        onClick={[Function]}
+        onClose={[MockFunction]}
+        open={true}
+      >
+        <ForwardRef(ModalUnstyled)
+          BackdropComponent={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "__emotion_base": Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "propTypes": Object {
+                  "children": [Function],
+                  "className": [Function],
+                  "classes": [Function],
+                  "components": [Function],
+                  "componentsProps": [Function],
+                  "invisible": [Function],
+                  "open": [Function],
+                  "sx": [Function],
+                  "transitionDuration": [Function],
+                },
+                "render": [Function],
+              },
+              "__emotion_forwardProp": [Function],
+              "__emotion_real": [Circular],
+              "__emotion_styles": Array [
+                "label:MuiDialog-backdrop;",
+                Object {
+                  "zIndex": -1,
+                },
+                [Function],
+              ],
+              "defaultProps": undefined,
+              "render": [Function],
+              "withComponent": [Function],
+            }
+          }
+          BackdropProps={
+            Object {
+              "as": undefined,
+              "transitionDuration": Object {
+                "enter": 225,
+                "exit": 195,
+              },
+            }
+          }
+          className="MuiDialog-root css-1h8td7x-MuiDialog-root"
+          closeAfterTransition={true}
+          components={
+            Object {
+              "Root": Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "__emotion_base": "div",
+                "__emotion_forwardProp": [Function],
+                "__emotion_real": [Circular],
+                "__emotion_styles": Array [
+                  "label:MuiModal-root;",
+                  [Function],
+                  [Function],
+                  [Function],
+                  [Function],
+                ],
+                "defaultProps": undefined,
+                "render": [Function],
+                "withComponent": [Function],
+              },
+            }
+          }
+          componentsProps={
+            Object {
+              "root": Object {
+                "ownerState": Object {},
+              },
+            }
+          }
+          disableAutoFocus={false}
+          disableEnforceFocus={false}
+          disableEscapeKeyDown={false}
+          disablePortal={false}
+          disableRestoreFocus={false}
+          disableScrollLock={false}
+          hideBackdrop={false}
+          keepMounted={false}
+          onClick={[Function]}
+          onClose={[MockFunction]}
+          onTransitionEnter={[Function]}
+          onTransitionExited={[Function]}
+          open={true}
+        >
+          <ForwardRef(Portal)
+            disablePortal={false}
+          >
+            <Portal
+              containerInfo={
+                <body
+                  style="padding-right: 1024px; overflow: hidden;"
+                >
+                  <div
+                    class="MuiModal-root MuiDialog-root css-zw3mfo-MuiModal-root-MuiDialog-root"
+                    role="presentation"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="MuiBackdrop-root css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
+                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                    />
+                    <div
+                      data-test="sentinelStart"
+                      tabindex="0"
+                    />
+                    <div
+                      class="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+                      role="presentation"
+                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                      tabindex="-1"
+                    >
+                      <div
+                        aria-describedby="alert-cart-delete-description"
+                        aria-labelledby="alert-cart-delete-title"
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1t1j96h-MuiPaper-root-MuiDialog-paper"
+                        role="dialog"
+                      >
+                        <h2
+                          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+                          id="alert-cart-delete-title"
+                        >
+                          Delete LABEL123?
+                        </h2>
+                        <div
+                          class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+                        >
+                          <p
+                            class="MuiDialogContentText-root MuiTypography-root MuiTypography-body1 css-qfso29-MuiTypography-root-MuiDialogContentText-root"
+                            id="alert-cart-delete-description"
+                          >
+                            Deleting a cart also deletes the audio and an irrevocable action.
+                          </p>
+                        </div>
+                        <div
+                          class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
+                        >
+                          <button
+                            class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                            data-test="alert-button-delete"
+                            tabindex="0"
+                            type="button"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              data-testid="DeleteForeverIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                              />
+                            </svg>
+                            Delete
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                            data-test="alert-button-cancel"
+                            tabindex="0"
+                            type="button"
+                          >
+                            Cancel
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-test="sentinelEnd"
+                      tabindex="0"
+                    />
+                  </div>
+                </body>
+              }
+            >
+              <MuiModalRoot
+                as="div"
+                className="MuiModal-root MuiDialog-root css-1h8td7x-MuiDialog-root"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                ownerState={
+                  Object {
+                    "BackdropComponent": Object {
+                      "$$typeof": Symbol(react.forward_ref),
+                      "__emotion_base": Object {
+                        "$$typeof": Symbol(react.forward_ref),
+                        "propTypes": Object {
+                          "children": [Function],
+                          "className": [Function],
+                          "classes": [Function],
+                          "components": [Function],
+                          "componentsProps": [Function],
+                          "invisible": [Function],
+                          "open": [Function],
+                          "sx": [Function],
+                          "transitionDuration": [Function],
+                        },
+                        "render": [Function],
+                      },
+                      "__emotion_forwardProp": [Function],
+                      "__emotion_real": [Circular],
+                      "__emotion_styles": Array [
+                        "label:MuiDialog-backdrop;",
+                        Object {
+                          "zIndex": -1,
+                        },
+                        [Function],
+                      ],
+                      "defaultProps": undefined,
+                      "render": [Function],
+                      "withComponent": [Function],
+                    },
+                    "BackdropProps": Object {
+                      "as": undefined,
+                      "transitionDuration": Object {
+                        "enter": 225,
+                        "exit": 195,
+                      },
+                    },
+                    "children": <ForwardRef(Fade)
+                      appear={true}
+                      in={true}
+                      role="presentation"
+                      timeout={
+                        Object {
+                          "enter": 225,
+                          "exit": 195,
+                        }
+                      }
+                    >
+                      <MuiDialogContainer
+                        className="MuiDialog-container MuiDialog-scrollPaper"
+                        onMouseDown={[Function]}
+                        ownerState={
+                          Object {
+                            "aria-describedby": "alert-cart-delete-description",
+                            "aria-labelledby": "alert-cart-delete-title",
+                            "children": Array [
+                              <ForwardRef(DialogTitle)
+                                id="alert-cart-delete-title"
+                              >
+                                Delete LABEL123?
+                              </ForwardRef(DialogTitle)>,
+                              <ForwardRef(DialogContent)>
+                                <ForwardRef(DialogContentText)
+                                  id="alert-cart-delete-description"
+                                >
+                                  Deleting a cart also deletes the audio and an irrevocable action.
+                                </ForwardRef(DialogContentText)>
+                              </ForwardRef(DialogContent)>,
+                              <ForwardRef(DialogActions)>
+                                <ForwardRef(Button)
+                                  color="error"
+                                  data-test="alert-button-delete"
+                                  onClick={[Function]}
+                                  variant="contained"
+                                >
+                                  <Memo />
+                                  Delete
+                                </ForwardRef(Button)>
+                                <ForwardRef(Button)
+                                  color="secondary"
+                                  data-test="alert-button-cancel"
+                                  onClick={[MockFunction]}
+                                  variant="contained"
+                                >
+                                  Cancel
+                                </ForwardRef(Button)>
+                              </ForwardRef(DialogActions)>,
+                            ],
+                            "disableEscapeKeyDown": false,
+                            "fullScreen": false,
+                            "fullWidth": false,
+                            "maxWidth": "sm",
+                            "onClose": [MockFunction],
+                            "open": true,
+                            "scroll": "paper",
+                          }
+                        }
+                      >
+                        <MuiDialogPaper
+                          aria-describedby="alert-cart-delete-description"
+                          aria-labelledby="alert-cart-delete-title"
+                          as={
+                            Object {
+                              "$$typeof": Symbol(react.forward_ref),
+                              "propTypes": Object {
+                                "children": [Function],
+                                "className": [Function],
+                                "classes": [Function],
+                                "component": [Function],
+                                "elevation": [Function],
+                                "square": [Function],
+                                "sx": [Function],
+                                "variant": [Function],
+                              },
+                              "render": [Function],
+                            }
+                          }
+                          className="MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm"
+                          elevation={24}
+                          ownerState={
+                            Object {
+                              "aria-describedby": "alert-cart-delete-description",
+                              "aria-labelledby": "alert-cart-delete-title",
+                              "children": Array [
+                                <ForwardRef(DialogTitle)
+                                  id="alert-cart-delete-title"
+                                >
+                                  Delete LABEL123?
+                                </ForwardRef(DialogTitle)>,
+                                <ForwardRef(DialogContent)>
+                                  <ForwardRef(DialogContentText)
+                                    id="alert-cart-delete-description"
+                                  >
+                                    Deleting a cart also deletes the audio and an irrevocable action.
+                                  </ForwardRef(DialogContentText)>
+                                </ForwardRef(DialogContent)>,
+                                <ForwardRef(DialogActions)>
+                                  <ForwardRef(Button)
+                                    color="error"
+                                    data-test="alert-button-delete"
+                                    onClick={[Function]}
+                                    variant="contained"
+                                  >
+                                    <Memo />
+                                    Delete
+                                  </ForwardRef(Button)>
+                                  <ForwardRef(Button)
+                                    color="secondary"
+                                    data-test="alert-button-cancel"
+                                    onClick={[MockFunction]}
+                                    variant="contained"
+                                  >
+                                    Cancel
+                                  </ForwardRef(Button)>
+                                </ForwardRef(DialogActions)>,
+                              ],
+                              "disableEscapeKeyDown": false,
+                              "fullScreen": false,
+                              "fullWidth": false,
+                              "maxWidth": "sm",
+                              "onClose": [MockFunction],
+                              "open": true,
+                              "scroll": "paper",
+                            }
+                          }
+                          role="dialog"
+                        >
+                          <Context.Provider
+                            value={
+                              Object {
+                                "titleId": "alert-cart-delete-title",
+                              }
+                            }
+                          >
+                            <ForwardRef(DialogTitle)
+                              id="alert-cart-delete-title"
+                            >
+                              Delete LABEL123?
+                            </ForwardRef(DialogTitle)>
+                            <ForwardRef(DialogContent)>
+                              <ForwardRef(DialogContentText)
+                                id="alert-cart-delete-description"
+                              >
+                                Deleting a cart also deletes the audio and an irrevocable action.
+                              </ForwardRef(DialogContentText)>
+                            </ForwardRef(DialogContent)>
+                            <ForwardRef(DialogActions)>
+                              <ForwardRef(Button)
+                                color="error"
+                                data-test="alert-button-delete"
+                                onClick={[Function]}
+                                variant="contained"
+                              >
+                                <Memo />
+                                Delete
+                              </ForwardRef(Button)>
+                              <ForwardRef(Button)
+                                color="secondary"
+                                data-test="alert-button-cancel"
+                                onClick={[MockFunction]}
+                                variant="contained"
+                              >
+                                Cancel
+                              </ForwardRef(Button)>
+                            </ForwardRef(DialogActions)>
+                          </Context.Provider>
+                        </MuiDialogPaper>
+                      </MuiDialogContainer>
+                    </ForwardRef(Fade)>,
+                    "className": "MuiDialog-root css-1h8td7x-MuiDialog-root",
+                    "classes": undefined,
+                    "closeAfterTransition": true,
+                    "components": Object {
+                      "Root": Object {
+                        "$$typeof": Symbol(react.forward_ref),
+                        "__emotion_base": "div",
+                        "__emotion_forwardProp": [Function],
+                        "__emotion_real": [Circular],
+                        "__emotion_styles": Array [
+                          "label:MuiModal-root;",
+                          [Function],
+                          [Function],
+                          [Function],
+                          [Function],
+                        ],
+                        "defaultProps": undefined,
+                        "render": [Function],
+                        "withComponent": [Function],
+                      },
+                    },
+                    "componentsProps": Object {
+                      "root": Object {
+                        "ownerState": Object {},
+                      },
+                    },
+                    "disableAutoFocus": false,
+                    "disableEnforceFocus": false,
+                    "disableEscapeKeyDown": false,
+                    "disablePortal": false,
+                    "disableRestoreFocus": false,
+                    "disableScrollLock": false,
+                    "exited": false,
+                    "hideBackdrop": false,
+                    "keepMounted": false,
+                    "onClick": [Function],
+                    "onClose": [MockFunction],
+                    "onTransitionEnter": [Function],
+                    "onTransitionExited": [Function],
+                    "open": true,
+                  }
+                }
+                role="presentation"
+              >
+                <div
+                  className="MuiModal-root MuiDialog-root css-zw3mfo-MuiModal-root-MuiDialog-root"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  role="presentation"
+                >
+                  <MuiDialogBackdrop
+                    onClick={[Function]}
+                    open={true}
+                    transitionDuration={
+                      Object {
+                        "enter": 225,
+                        "exit": 195,
+                      }
+                    }
+                  >
+                    <ForwardRef(Backdrop)
+                      className="css-tkzpuq-MuiDialog-backdrop"
+                      onClick={[Function]}
+                      open={true}
+                      transitionDuration={
+                        Object {
+                          "enter": 225,
+                          "exit": 195,
+                        }
+                      }
+                    >
+                      <ForwardRef(Fade)
+                        in={true}
+                        onClick={[Function]}
+                        timeout={
+                          Object {
+                            "enter": 225,
+                            "exit": 195,
+                          }
+                        }
+                      >
+                        <Transition
+                          addEndListener={[Function]}
+                          appear={true}
+                          enter={true}
+                          exit={true}
+                          in={true}
+                          mountOnEnter={false}
+                          nodeRef={
+                            Object {
+                              "current": <div
+                                aria-hidden="true"
+                                class="MuiBackdrop-root css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
+                                style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                              />,
+                            }
+                          }
+                          onClick={[Function]}
+                          onEnter={[Function]}
+                          onEntered={[Function]}
+                          onEntering={[Function]}
+                          onExit={[Function]}
+                          onExited={[Function]}
+                          onExiting={[Function]}
+                          timeout={
+                            Object {
+                              "enter": 225,
+                              "exit": 195,
+                            }
+                          }
+                          unmountOnExit={false}
+                        >
+                          <ForwardRef(BackdropUnstyled)
+                            className="css-tkzpuq-MuiDialog-backdrop"
+                            components={
+                              Object {
+                                "Root": Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "__emotion_base": "div",
+                                  "__emotion_forwardProp": [Function],
+                                  "__emotion_real": [Circular],
+                                  "__emotion_styles": Array [
+                                    "label:MuiBackdrop-root;",
+                                    [Function],
+                                    [Function],
+                                    [Function],
+                                    [Function],
+                                  ],
+                                  "defaultProps": undefined,
+                                  "render": [Function],
+                                  "withComponent": [Function],
+                                },
+                              }
+                            }
+                            componentsProps={
+                              Object {
+                                "root": Object {
+                                  "ownerState": Object {},
+                                },
+                              }
+                            }
+                            invisible={false}
+                            onClick={[Function]}
+                            style={
+                              Object {
+                                "opacity": 1,
+                                "visibility": undefined,
+                              }
+                            }
+                          >
+                            <MuiBackdropRoot
+                              aria-hidden={true}
+                              as="div"
+                              className="MuiBackdrop-root css-tkzpuq-MuiDialog-backdrop"
+                              onClick={[Function]}
+                              ownerState={
+                                Object {
+                                  "children": undefined,
+                                  "className": "css-tkzpuq-MuiDialog-backdrop",
+                                  "classes": undefined,
+                                  "components": Object {
+                                    "Root": Object {
+                                      "$$typeof": Symbol(react.forward_ref),
+                                      "__emotion_base": "div",
+                                      "__emotion_forwardProp": [Function],
+                                      "__emotion_real": [Circular],
+                                      "__emotion_styles": Array [
+                                        "label:MuiBackdrop-root;",
+                                        [Function],
+                                        [Function],
+                                        [Function],
+                                        [Function],
+                                      ],
+                                      "defaultProps": undefined,
+                                      "render": [Function],
+                                      "withComponent": [Function],
+                                    },
+                                  },
+                                  "componentsProps": Object {
+                                    "root": Object {
+                                      "ownerState": Object {},
+                                    },
+                                  },
+                                  "invisible": false,
+                                  "onClick": [Function],
+                                  "style": Object {
+                                    "opacity": 1,
+                                    "visibility": undefined,
+                                  },
+                                }
+                              }
+                              style={
+                                Object {
+                                  "opacity": 1,
+                                  "visibility": undefined,
+                                }
+                              }
+                            >
+                              <div
+                                aria-hidden={true}
+                                className="MuiBackdrop-root css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                    "visibility": undefined,
+                                  }
+                                }
+                              />
+                            </MuiBackdropRoot>
+                          </ForwardRef(BackdropUnstyled)>
+                        </Transition>
+                      </ForwardRef(Fade)>
+                    </ForwardRef(Backdrop)>
+                  </MuiDialogBackdrop>
+                  <Unstable_TrapFocus
+                    disableAutoFocus={false}
+                    disableEnforceFocus={false}
+                    disableRestoreFocus={false}
+                    isEnabled={[Function]}
+                    open={true}
+                  >
+                    <div
+                      data-test="sentinelStart"
+                      onFocus={[Function]}
+                      tabIndex={0}
+                    />
+                    <ForwardRef(Fade)
+                      appear={true}
+                      in={true}
+                      onEnter={[Function]}
+                      onExited={[Function]}
+                      onFocus={[Function]}
+                      role="presentation"
+                      tabIndex="-1"
+                      timeout={
+                        Object {
+                          "enter": 225,
+                          "exit": 195,
+                        }
+                      }
+                    >
+                      <Transition
+                        addEndListener={[Function]}
+                        appear={true}
+                        enter={true}
+                        exit={true}
+                        in={true}
+                        mountOnEnter={false}
+                        nodeRef={
+                          Object {
+                            "current": <div
+                              class="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+                              role="presentation"
+                              style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                              tabindex="-1"
+                            >
+                              <div
+                                aria-describedby="alert-cart-delete-description"
+                                aria-labelledby="alert-cart-delete-title"
+                                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1t1j96h-MuiPaper-root-MuiDialog-paper"
+                                role="dialog"
+                              >
+                                <h2
+                                  class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+                                  id="alert-cart-delete-title"
+                                >
+                                  Delete LABEL123?
+                                </h2>
+                                <div
+                                  class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+                                >
+                                  <p
+                                    class="MuiDialogContentText-root MuiTypography-root MuiTypography-body1 css-qfso29-MuiTypography-root-MuiDialogContentText-root"
+                                    id="alert-cart-delete-description"
+                                  >
+                                    Deleting a cart also deletes the audio and an irrevocable action.
+                                  </p>
+                                </div>
+                                <div
+                                  class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
+                                >
+                                  <button
+                                    class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                                    data-test="alert-button-delete"
+                                    tabindex="0"
+                                    type="button"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                      data-testid="DeleteForeverIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                                      />
+                                    </svg>
+                                    Delete
+                                    <span
+                                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                    />
+                                  </button>
+                                  <button
+                                    class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                                    data-test="alert-button-cancel"
+                                    tabindex="0"
+                                    type="button"
+                                  >
+                                    Cancel
+                                    <span
+                                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>,
+                          }
+                        }
+                        onEnter={[Function]}
+                        onEntered={[Function]}
+                        onEntering={[Function]}
+                        onExit={[Function]}
+                        onExited={[Function]}
+                        onExiting={[Function]}
+                        onFocus={[Function]}
+                        role="presentation"
+                        tabIndex="-1"
+                        timeout={
+                          Object {
+                            "enter": 225,
+                            "exit": 195,
+                          }
+                        }
+                        unmountOnExit={false}
+                      >
+                        <MuiDialogContainer
+                          className="MuiDialog-container MuiDialog-scrollPaper"
+                          onFocus={[Function]}
+                          onMouseDown={[Function]}
+                          ownerState={
+                            Object {
+                              "aria-describedby": "alert-cart-delete-description",
+                              "aria-labelledby": "alert-cart-delete-title",
+                              "children": Array [
+                                <ForwardRef(DialogTitle)
+                                  id="alert-cart-delete-title"
+                                >
+                                  Delete LABEL123?
+                                </ForwardRef(DialogTitle)>,
+                                <ForwardRef(DialogContent)>
+                                  <ForwardRef(DialogContentText)
+                                    id="alert-cart-delete-description"
+                                  >
+                                    Deleting a cart also deletes the audio and an irrevocable action.
+                                  </ForwardRef(DialogContentText)>
+                                </ForwardRef(DialogContent)>,
+                                <ForwardRef(DialogActions)>
+                                  <ForwardRef(Button)
+                                    color="error"
+                                    data-test="alert-button-delete"
+                                    onClick={[Function]}
+                                    variant="contained"
+                                  >
+                                    <Memo />
+                                    Delete
+                                  </ForwardRef(Button)>
+                                  <ForwardRef(Button)
+                                    color="secondary"
+                                    data-test="alert-button-cancel"
+                                    onClick={[MockFunction]}
+                                    variant="contained"
+                                  >
+                                    Cancel
+                                  </ForwardRef(Button)>
+                                </ForwardRef(DialogActions)>,
+                              ],
+                              "disableEscapeKeyDown": false,
+                              "fullScreen": false,
+                              "fullWidth": false,
+                              "maxWidth": "sm",
+                              "onClose": [MockFunction],
+                              "open": true,
+                              "scroll": "paper",
+                            }
+                          }
+                          role="presentation"
+                          style={
+                            Object {
+                              "opacity": 1,
+                              "visibility": undefined,
+                            }
+                          }
+                          tabIndex="-1"
+                        >
+                          <div
+                            className="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+                            onFocus={[Function]}
+                            onMouseDown={[Function]}
+                            role="presentation"
+                            style={
+                              Object {
+                                "opacity": 1,
+                                "visibility": undefined,
+                              }
+                            }
+                            tabIndex="-1"
+                          >
+                            <MuiDialogPaper
+                              aria-describedby="alert-cart-delete-description"
+                              aria-labelledby="alert-cart-delete-title"
+                              as={
+                                Object {
+                                  "$$typeof": Symbol(react.forward_ref),
+                                  "propTypes": Object {
+                                    "children": [Function],
+                                    "className": [Function],
+                                    "classes": [Function],
+                                    "component": [Function],
+                                    "elevation": [Function],
+                                    "square": [Function],
+                                    "sx": [Function],
+                                    "variant": [Function],
+                                  },
+                                  "render": [Function],
+                                }
+                              }
+                              className="MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm"
+                              elevation={24}
+                              ownerState={
+                                Object {
+                                  "aria-describedby": "alert-cart-delete-description",
+                                  "aria-labelledby": "alert-cart-delete-title",
+                                  "children": Array [
+                                    <ForwardRef(DialogTitle)
+                                      id="alert-cart-delete-title"
+                                    >
+                                      Delete LABEL123?
+                                    </ForwardRef(DialogTitle)>,
+                                    <ForwardRef(DialogContent)>
+                                      <ForwardRef(DialogContentText)
+                                        id="alert-cart-delete-description"
+                                      >
+                                        Deleting a cart also deletes the audio and an irrevocable action.
+                                      </ForwardRef(DialogContentText)>
+                                    </ForwardRef(DialogContent)>,
+                                    <ForwardRef(DialogActions)>
+                                      <ForwardRef(Button)
+                                        color="error"
+                                        data-test="alert-button-delete"
+                                        onClick={[Function]}
+                                        variant="contained"
+                                      >
+                                        <Memo />
+                                        Delete
+                                      </ForwardRef(Button)>
+                                      <ForwardRef(Button)
+                                        color="secondary"
+                                        data-test="alert-button-cancel"
+                                        onClick={[MockFunction]}
+                                        variant="contained"
+                                      >
+                                        Cancel
+                                      </ForwardRef(Button)>
+                                    </ForwardRef(DialogActions)>,
+                                  ],
+                                  "disableEscapeKeyDown": false,
+                                  "fullScreen": false,
+                                  "fullWidth": false,
+                                  "maxWidth": "sm",
+                                  "onClose": [MockFunction],
+                                  "open": true,
+                                  "scroll": "paper",
+                                }
+                              }
+                              role="dialog"
+                            >
+                              <ForwardRef(Paper)
+                                aria-describedby="alert-cart-delete-description"
+                                aria-labelledby="alert-cart-delete-title"
+                                className="MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1wpgjmt-MuiDialog-paper"
+                                elevation={24}
+                                role="dialog"
+                              >
+                                <MuiPaperRoot
+                                  aria-describedby="alert-cart-delete-description"
+                                  aria-labelledby="alert-cart-delete-title"
+                                  as="div"
+                                  className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1wpgjmt-MuiDialog-paper"
+                                  ownerState={
+                                    Object {
+                                      "aria-describedby": "alert-cart-delete-description",
+                                      "aria-labelledby": "alert-cart-delete-title",
+                                      "children": <Context.Provider
+                                        value={
+                                          Object {
+                                            "titleId": "alert-cart-delete-title",
+                                          }
+                                        }
+                                      >
+                                        <ForwardRef(DialogTitle)
+                                          id="alert-cart-delete-title"
+                                        >
+                                          Delete LABEL123?
+                                        </ForwardRef(DialogTitle)>
+                                        <ForwardRef(DialogContent)>
+                                          <ForwardRef(DialogContentText)
+                                            id="alert-cart-delete-description"
+                                          >
+                                            Deleting a cart also deletes the audio and an irrevocable action.
+                                          </ForwardRef(DialogContentText)>
+                                        </ForwardRef(DialogContent)>
+                                        <ForwardRef(DialogActions)>
+                                          <ForwardRef(Button)
+                                            color="error"
+                                            data-test="alert-button-delete"
+                                            onClick={[Function]}
+                                            variant="contained"
+                                          >
+                                            <Memo />
+                                            Delete
+                                          </ForwardRef(Button)>
+                                          <ForwardRef(Button)
+                                            color="secondary"
+                                            data-test="alert-button-cancel"
+                                            onClick={[MockFunction]}
+                                            variant="contained"
+                                          >
+                                            Cancel
+                                          </ForwardRef(Button)>
+                                        </ForwardRef(DialogActions)>
+                                      </Context.Provider>,
+                                      "className": "MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1wpgjmt-MuiDialog-paper",
+                                      "component": "div",
+                                      "elevation": 24,
+                                      "role": "dialog",
+                                      "square": false,
+                                      "variant": "elevation",
+                                    }
+                                  }
+                                  role="dialog"
+                                >
+                                  <div
+                                    aria-describedby="alert-cart-delete-description"
+                                    aria-labelledby="alert-cart-delete-title"
+                                    className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1t1j96h-MuiPaper-root-MuiDialog-paper"
+                                    role="dialog"
+                                  >
+                                    <ForwardRef(DialogTitle)
+                                      id="alert-cart-delete-title"
+                                    >
+                                      <MuiDialogTitleRoot
+                                        className="MuiDialogTitle-root"
+                                        component="h2"
+                                        id="alert-cart-delete-title"
+                                        ownerState={
+                                          Object {
+                                            "children": "Delete LABEL123?",
+                                            "id": "alert-cart-delete-title",
+                                          }
+                                        }
+                                        variant="h6"
+                                      >
+                                        <ForwardRef(Typography)
+                                          className="MuiDialogTitle-root css-zccf6b-MuiDialogTitle-root"
+                                          component="h2"
+                                          id="alert-cart-delete-title"
+                                          variant="h6"
+                                        >
+                                          <MuiTypographyRoot
+                                            as="h2"
+                                            className="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-zccf6b-MuiDialogTitle-root"
+                                            id="alert-cart-delete-title"
+                                            ownerState={
+                                              Object {
+                                                "align": "inherit",
+                                                "children": "Delete LABEL123?",
+                                                "className": "MuiDialogTitle-root css-zccf6b-MuiDialogTitle-root",
+                                                "color": undefined,
+                                                "component": "h2",
+                                                "gutterBottom": false,
+                                                "id": "alert-cart-delete-title",
+                                                "noWrap": false,
+                                                "paragraph": false,
+                                                "sx": Object {
+                                                  "color": undefined,
+                                                },
+                                                "variant": "h6",
+                                                "variantMapping": Object {
+                                                  "body1": "p",
+                                                  "body2": "p",
+                                                  "h1": "h1",
+                                                  "h2": "h2",
+                                                  "h3": "h3",
+                                                  "h4": "h4",
+                                                  "h5": "h5",
+                                                  "h6": "h6",
+                                                  "inherit": "p",
+                                                  "subtitle1": "h6",
+                                                  "subtitle2": "h6",
+                                                },
+                                              }
+                                            }
+                                            sx={
+                                              Object {
+                                                "color": undefined,
+                                              }
+                                            }
+                                          >
+                                            <h2
+                                              className="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+                                              id="alert-cart-delete-title"
+                                            >
+                                              Delete LABEL123?
+                                            </h2>
+                                          </MuiTypographyRoot>
+                                        </ForwardRef(Typography)>
+                                      </MuiDialogTitleRoot>
+                                    </ForwardRef(DialogTitle)>
+                                    <ForwardRef(DialogContent)>
+                                      <MuiDialogContentRoot
+                                        className="MuiDialogContent-root"
+                                        ownerState={
+                                          Object {
+                                            "children": <ForwardRef(DialogContentText)
+                                              id="alert-cart-delete-description"
+                                            >
+                                              Deleting a cart also deletes the audio and an irrevocable action.
+                                            </ForwardRef(DialogContentText)>,
+                                            "dividers": false,
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          className="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+                                        >
+                                          <ForwardRef(DialogContentText)
+                                            id="alert-cart-delete-description"
+                                          >
+                                            <MuiDialogContentTextRoot
+                                              classes={
+                                                Object {
+                                                  "root": "MuiDialogContentText-root",
+                                                }
+                                              }
+                                              color="text.secondary"
+                                              component="p"
+                                              id="alert-cart-delete-description"
+                                              ownerState={
+                                                Object {
+                                                  "id": "alert-cart-delete-description",
+                                                }
+                                              }
+                                              variant="body1"
+                                            >
+                                              <ForwardRef(Typography)
+                                                className="css-b8ad4j-MuiDialogContentText-root"
+                                                classes={
+                                                  Object {
+                                                    "root": "MuiDialogContentText-root",
+                                                  }
+                                                }
+                                                color="text.secondary"
+                                                component="p"
+                                                id="alert-cart-delete-description"
+                                                variant="body1"
+                                              >
+                                                <MuiTypographyRoot
+                                                  as="p"
+                                                  className="MuiDialogContentText-root MuiTypography-root MuiTypography-body1 css-b8ad4j-MuiDialogContentText-root"
+                                                  classes={
+                                                    Object {
+                                                      "root": "MuiDialogContentText-root",
+                                                    }
+                                                  }
+                                                  id="alert-cart-delete-description"
+                                                  ownerState={
+                                                    Object {
+                                                      "align": "inherit",
+                                                      "children": "Deleting a cart also deletes the audio and an irrevocable action.",
+                                                      "className": "css-b8ad4j-MuiDialogContentText-root",
+                                                      "classes": Object {
+                                                        "root": "MuiDialogContentText-root",
+                                                      },
+                                                      "color": "text.secondary",
+                                                      "component": "p",
+                                                      "gutterBottom": false,
+                                                      "id": "alert-cart-delete-description",
+                                                      "noWrap": false,
+                                                      "paragraph": false,
+                                                      "sx": Object {
+                                                        "color": "text.secondary",
+                                                      },
+                                                      "variant": "body1",
+                                                      "variantMapping": Object {
+                                                        "body1": "p",
+                                                        "body2": "p",
+                                                        "h1": "h1",
+                                                        "h2": "h2",
+                                                        "h3": "h3",
+                                                        "h4": "h4",
+                                                        "h5": "h5",
+                                                        "h6": "h6",
+                                                        "inherit": "p",
+                                                        "subtitle1": "h6",
+                                                        "subtitle2": "h6",
+                                                      },
+                                                    }
+                                                  }
+                                                  sx={
+                                                    Object {
+                                                      "color": "text.secondary",
+                                                    }
+                                                  }
+                                                >
+                                                  <p
+                                                    className="MuiDialogContentText-root MuiTypography-root MuiTypography-body1 css-qfso29-MuiTypography-root-MuiDialogContentText-root"
+                                                    id="alert-cart-delete-description"
+                                                  >
+                                                    Deleting a cart also deletes the audio and an irrevocable action.
+                                                  </p>
+                                                </MuiTypographyRoot>
+                                              </ForwardRef(Typography)>
+                                            </MuiDialogContentTextRoot>
+                                          </ForwardRef(DialogContentText)>
+                                        </div>
+                                      </MuiDialogContentRoot>
+                                    </ForwardRef(DialogContent)>
+                                    <ForwardRef(DialogActions)>
+                                      <MuiDialogActionsRoot
+                                        className="MuiDialogActions-root MuiDialogActions-spacing"
+                                        ownerState={
+                                          Object {
+                                            "children": Array [
+                                              <ForwardRef(Button)
+                                                color="error"
+                                                data-test="alert-button-delete"
+                                                onClick={[Function]}
+                                                variant="contained"
+                                              >
+                                                <Memo />
+                                                Delete
+                                              </ForwardRef(Button)>,
+                                              <ForwardRef(Button)
+                                                color="secondary"
+                                                data-test="alert-button-cancel"
+                                                onClick={[MockFunction]}
+                                                variant="contained"
+                                              >
+                                                Cancel
+                                              </ForwardRef(Button)>,
+                                            ],
+                                            "disableSpacing": false,
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          className="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
+                                        >
+                                          <ForwardRef(Button)
+                                            color="error"
+                                            data-test="alert-button-delete"
+                                            onClick={[Function]}
+                                            variant="contained"
+                                          >
+                                            <MuiButtonRoot
+                                              classes={
+                                                Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                }
+                                              }
+                                              component="button"
+                                              data-test="alert-button-delete"
+                                              disabled={false}
+                                              focusRipple={true}
+                                              focusVisibleClassName=""
+                                              onClick={[Function]}
+                                              ownerState={
+                                                Object {
+                                                  "children": Array [
+                                                    <Memo />,
+                                                    "Delete",
+                                                  ],
+                                                  "color": "error",
+                                                  "component": "button",
+                                                  "data-test": "alert-button-delete",
+                                                  "disableElevation": false,
+                                                  "disableFocusRipple": false,
+                                                  "disabled": false,
+                                                  "fullWidth": false,
+                                                  "onClick": [Function],
+                                                  "size": "medium",
+                                                  "type": undefined,
+                                                  "variant": "contained",
+                                                }
+                                              }
+                                            >
+                                              <ForwardRef(ButtonBase)
+                                                className="css-2whykm-MuiButton-root"
+                                                classes={
+                                                  Object {
+                                                    "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                    "label": "MuiButton-label",
+                                                    "root": "MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                    "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                  }
+                                                }
+                                                component="button"
+                                                data-test="alert-button-delete"
+                                                disabled={false}
+                                                focusRipple={true}
+                                                focusVisibleClassName=""
+                                                onClick={[Function]}
+                                              >
+                                                <MuiButtonBaseRoot
+                                                  as="button"
+                                                  className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-2whykm-MuiButton-root"
+                                                  classes={
+                                                    Object {
+                                                      "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                      "label": "MuiButton-label",
+                                                      "root": "MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                      "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                    }
+                                                  }
+                                                  data-test="alert-button-delete"
+                                                  disabled={false}
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onContextMenu={[Function]}
+                                                  onDragLeave={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyUp={[Function]}
+                                                  onMouseDown={[Function]}
+                                                  onMouseLeave={[Function]}
+                                                  onMouseUp={[Function]}
+                                                  onTouchEnd={[Function]}
+                                                  onTouchMove={[Function]}
+                                                  onTouchStart={[Function]}
+                                                  ownerState={
+                                                    Object {
+                                                      "centerRipple": false,
+                                                      "children": Array [
+                                                        undefined,
+                                                        Array [
+                                                          <Memo />,
+                                                          "Delete",
+                                                        ],
+                                                        undefined,
+                                                      ],
+                                                      "className": "css-2whykm-MuiButton-root",
+                                                      "classes": Object {
+                                                        "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                        "label": "MuiButton-label",
+                                                        "root": "MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                        "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                      },
+                                                      "component": "button",
+                                                      "data-test": "alert-button-delete",
+                                                      "disableRipple": false,
+                                                      "disableTouchRipple": false,
+                                                      "disabled": false,
+                                                      "focusRipple": true,
+                                                      "focusVisible": false,
+                                                      "focusVisibleClassName": "",
+                                                      "onClick": [Function],
+                                                      "tabIndex": 0,
+                                                      "type": undefined,
+                                                    }
+                                                  }
+                                                  tabIndex={0}
+                                                  type="button"
+                                                >
+                                                  <button
+                                                    className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                                                    data-test="alert-button-delete"
+                                                    disabled={false}
+                                                    onBlur={[Function]}
+                                                    onClick={[Function]}
+                                                    onContextMenu={[Function]}
+                                                    onDragLeave={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    onMouseDown={[Function]}
+                                                    onMouseLeave={[Function]}
+                                                    onMouseUp={[Function]}
+                                                    onTouchEnd={[Function]}
+                                                    onTouchMove={[Function]}
+                                                    onTouchStart={[Function]}
+                                                    tabIndex={0}
+                                                    type="button"
+                                                  >
+                                                    <ForwardRef(DeleteForeverIcon)>
+                                                      <ForwardRef(SvgIcon)
+                                                        data-testid="DeleteForeverIcon"
+                                                      >
+                                                        <MuiSvgIconRoot
+                                                          aria-hidden={true}
+                                                          as="svg"
+                                                          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+                                                          data-testid="DeleteForeverIcon"
+                                                          focusable="false"
+                                                          ownerState={
+                                                            Object {
+                                                              "children": <path
+                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                                                              />,
+                                                              "color": "inherit",
+                                                              "component": "svg",
+                                                              "data-testid": "DeleteForeverIcon",
+                                                              "fontSize": "medium",
+                                                              "viewBox": "0 0 24 24",
+                                                            }
+                                                          }
+                                                          viewBox="0 0 24 24"
+                                                        >
+                                                          <svg
+                                                            aria-hidden={true}
+                                                            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                                            data-testid="DeleteForeverIcon"
+                                                            focusable="false"
+                                                            viewBox="0 0 24 24"
+                                                          >
+                                                            <path
+                                                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                                                            />
+                                                          </svg>
+                                                        </MuiSvgIconRoot>
+                                                      </ForwardRef(SvgIcon)>
+                                                    </ForwardRef(DeleteForeverIcon)>
+                                                    Delete
+                                                    <ForwardRef(TouchRipple)
+                                                      center={false}
+                                                    >
+                                                      <MuiTouchRippleRoot
+                                                        className="MuiTouchRipple-root"
+                                                      >
+                                                        <span
+                                                          className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                        >
+                                                          <TransitionGroup
+                                                            childFactory={[Function]}
+                                                            component={null}
+                                                            exit={true}
+                                                          />
+                                                        </span>
+                                                      </MuiTouchRippleRoot>
+                                                    </ForwardRef(TouchRipple)>
+                                                  </button>
+                                                </MuiButtonBaseRoot>
+                                              </ForwardRef(ButtonBase)>
+                                            </MuiButtonRoot>
+                                          </ForwardRef(Button)>
+                                          <ForwardRef(Button)
+                                            color="secondary"
+                                            data-test="alert-button-cancel"
+                                            onClick={[MockFunction]}
+                                            variant="contained"
+                                          >
+                                            <MuiButtonRoot
+                                              classes={
+                                                Object {
+                                                  "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                  "label": "MuiButton-label",
+                                                  "root": "MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                  "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                }
+                                              }
+                                              component="button"
+                                              data-test="alert-button-cancel"
+                                              disabled={false}
+                                              focusRipple={true}
+                                              focusVisibleClassName=""
+                                              onClick={[MockFunction]}
+                                              ownerState={
+                                                Object {
+                                                  "children": "Cancel",
+                                                  "color": "secondary",
+                                                  "component": "button",
+                                                  "data-test": "alert-button-cancel",
+                                                  "disableElevation": false,
+                                                  "disableFocusRipple": false,
+                                                  "disabled": false,
+                                                  "fullWidth": false,
+                                                  "onClick": [MockFunction],
+                                                  "size": "medium",
+                                                  "type": undefined,
+                                                  "variant": "contained",
+                                                }
+                                              }
+                                            >
+                                              <ForwardRef(ButtonBase)
+                                                className="css-9w2fx5-MuiButton-root"
+                                                classes={
+                                                  Object {
+                                                    "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                    "label": "MuiButton-label",
+                                                    "root": "MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                    "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                  }
+                                                }
+                                                component="button"
+                                                data-test="alert-button-cancel"
+                                                disabled={false}
+                                                focusRipple={true}
+                                                focusVisibleClassName=""
+                                                onClick={[MockFunction]}
+                                              >
+                                                <MuiButtonBaseRoot
+                                                  as="button"
+                                                  className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-9w2fx5-MuiButton-root"
+                                                  classes={
+                                                    Object {
+                                                      "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                      "label": "MuiButton-label",
+                                                      "root": "MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                      "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                    }
+                                                  }
+                                                  data-test="alert-button-cancel"
+                                                  disabled={false}
+                                                  onBlur={[Function]}
+                                                  onClick={[MockFunction]}
+                                                  onContextMenu={[Function]}
+                                                  onDragLeave={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyUp={[Function]}
+                                                  onMouseDown={[Function]}
+                                                  onMouseLeave={[Function]}
+                                                  onMouseUp={[Function]}
+                                                  onTouchEnd={[Function]}
+                                                  onTouchMove={[Function]}
+                                                  onTouchStart={[Function]}
+                                                  ownerState={
+                                                    Object {
+                                                      "centerRipple": false,
+                                                      "children": Array [
+                                                        undefined,
+                                                        "Cancel",
+                                                        undefined,
+                                                      ],
+                                                      "className": "css-9w2fx5-MuiButton-root",
+                                                      "classes": Object {
+                                                        "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
+                                                        "label": "MuiButton-label",
+                                                        "root": "MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium",
+                                                        "startIcon": "MuiButton-startIcon MuiButton-iconSizeMedium",
+                                                      },
+                                                      "component": "button",
+                                                      "data-test": "alert-button-cancel",
+                                                      "disableRipple": false,
+                                                      "disableTouchRipple": false,
+                                                      "disabled": false,
+                                                      "focusRipple": true,
+                                                      "focusVisible": false,
+                                                      "focusVisibleClassName": "",
+                                                      "onClick": [MockFunction],
+                                                      "tabIndex": 0,
+                                                      "type": undefined,
+                                                    }
+                                                  }
+                                                  tabIndex={0}
+                                                  type="button"
+                                                >
+                                                  <button
+                                                    className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                                                    data-test="alert-button-cancel"
+                                                    disabled={false}
+                                                    onBlur={[Function]}
+                                                    onClick={[MockFunction]}
+                                                    onContextMenu={[Function]}
+                                                    onDragLeave={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    onMouseDown={[Function]}
+                                                    onMouseLeave={[Function]}
+                                                    onMouseUp={[Function]}
+                                                    onTouchEnd={[Function]}
+                                                    onTouchMove={[Function]}
+                                                    onTouchStart={[Function]}
+                                                    tabIndex={0}
+                                                    type="button"
+                                                  >
+                                                    Cancel
+                                                    <ForwardRef(TouchRipple)
+                                                      center={false}
+                                                    >
+                                                      <MuiTouchRippleRoot
+                                                        className="MuiTouchRipple-root"
+                                                      >
+                                                        <span
+                                                          className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                                        >
+                                                          <TransitionGroup
+                                                            childFactory={[Function]}
+                                                            component={null}
+                                                            exit={true}
+                                                          />
+                                                        </span>
+                                                      </MuiTouchRippleRoot>
+                                                    </ForwardRef(TouchRipple)>
+                                                  </button>
+                                                </MuiButtonBaseRoot>
+                                              </ForwardRef(ButtonBase)>
+                                            </MuiButtonRoot>
+                                          </ForwardRef(Button)>
+                                        </div>
+                                      </MuiDialogActionsRoot>
+                                    </ForwardRef(DialogActions)>
+                                  </div>
+                                </MuiPaperRoot>
+                              </ForwardRef(Paper)>
+                            </MuiDialogPaper>
+                          </div>
+                        </MuiDialogContainer>
+                      </Transition>
+                    </ForwardRef(Fade)>
+                    <div
+                      data-test="sentinelEnd"
+                      onFocus={[Function]}
+                      tabIndex={0}
+                    />
+                  </Unstable_TrapFocus>
+                </div>
+              </MuiModalRoot>
+            </Portal>
+          </ForwardRef(Portal)>
+        </ForwardRef(ModalUnstyled)>
+      </ForwardRef(Modal)>
+    </MuiDialogRoot>
+  </ForwardRef(Dialog)>
+</CartDeleteAlert>
+`;

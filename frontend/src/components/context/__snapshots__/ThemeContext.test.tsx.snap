@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`theme context snapshot 1`] = `
+exports['theme context snapshot 1'] = `
 <AppThemeProvider>
   <ThemeProvider
     theme={

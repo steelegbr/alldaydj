@@ -19,12 +19,12 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import AudioDownloadButton, { DownloadType } from 'components/audio/AudioDownloadButton';
-import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 import mockAxios from 'jest-mock-axios';
 import { getLogger } from 'services/LoggingService';
 import { Logger } from 'loglevel';
+import { getTokenFromLocalStorage } from 'services/AuthenticationService';
 
-const mockSetAuthenticationStatus = jest.fn();
+const mockToken = getTokenFromLocalStorage as jest.Mock;
 const mockLogger = getLogger as jest.Mock<Logger>;
 const mockInfo = jest.fn();
 const mockError = jest.fn();
@@ -35,22 +35,12 @@ mockLogger.mockImplementation(() => ({
   debug: mockDebug,
 }));
 
+jest.mock('services/AuthenticationService');
 jest.mock('services/LoggingService');
 
-const renderButton = (downloadType: DownloadType) => {
-  const contextValue : AuthenticationStatusProps = {
-    authenticationStatus: {
-      stage: 'Authenticated',
-      accessToken: 'TOKEN123',
-    },
-    setAuthenticationStatus: mockSetAuthenticationStatus,
-  };
-  return mount(
-    <AuthenticationContext.Provider value={contextValue}>
-      <AudioDownloadButton cartId="UUID123" downloadType={downloadType} label="CART123" />
-    </AuthenticationContext.Provider>,
-  );
-};
+const renderButton = (downloadType: DownloadType) => mount(
+  <AudioDownloadButton cartId="UUID123" downloadType={downloadType} label="CART123" />,
+);
 
 describe('audio download button rendering', () => {
   it('render compressed', () => {
@@ -72,10 +62,13 @@ describe('audio download', () => {
     const mockResponse = Promise.resolve({ status: 200, data: { audio: 'http://example.org/UUID123.wav' } });
     mockAxios.get.mockReturnValue(mockResponse);
 
+    mockToken.mockReturnValue('TOKEN123');
+
     const component = renderButton('Linear');
     const button = component.find("button[data-test='button-download-linear']").first();
     button.simulate('click');
 
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
 
     expect(mockAxios.get).toBeCalledWith('/api/audio/UUID123/', { headers: { Authorization: 'Bearer TOKEN123' } });
@@ -88,10 +81,13 @@ describe('audio download', () => {
     const mockResponse = Promise.resolve({ status: 404 });
     mockAxios.get.mockReturnValue(mockResponse);
 
+    mockToken.mockReturnValue('TOKEN123');
+
     const component = renderButton('Compressed');
     const button = component.find("button[data-test='button-download-compressed']").first();
     button.simulate('click');
 
+    // skipcq: JS-0330
     await new Promise((r) => setTimeout(r, 2000));
     component.update();
 

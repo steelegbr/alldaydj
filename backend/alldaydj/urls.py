@@ -22,6 +22,7 @@ from alldaydj.views import (
     AudioView,
     CartByLabelViewSet,
     CartDocumentView,
+    CartIdSequencerViewSet,
     CartViewSet,
     TagViewSet,
     TypeViewSet,
@@ -43,6 +44,7 @@ router.register("cart", CartViewSet)
 router.register("job", AudioUploadJobViewSet)
 router.register("tag", TagViewSet)
 router.register("type", TypeViewSet)
+router.register("sequencer", CartIdSequencerViewSet)
 
 admin.site.site_header = "AllDay DJ Admin"
 admin.site.site_title = "AllDay DJ Admin Portal"

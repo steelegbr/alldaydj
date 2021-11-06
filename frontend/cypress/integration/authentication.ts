@@ -17,6 +17,11 @@
 */
 
 describe('Login Screen', () => {
+    beforeEach(() => {
+        cy.visit('http://localhost:3000/');
+        cy.get('[data-test="toggle-dark-mode"]').click();
+    });
+
     it('Redirect and accessability', () => {
         cy.visit('http://localhost:3000/');
         cy.url().should('eq', 'http://localhost:3000/login/');
@@ -36,18 +41,14 @@ describe('Login Screen', () => {
     });
 
     it('Good user credentials', () => {
-        cy.visit('http://localhost:3000/login/');
-
-        cy.get('[data-test="input-email"]').type(Cypress.env('USERNAME'));
-        cy.get('[data-test="input-password"]').type(Cypress.env('PASSWORD')).type('{enter}');
-
-        cy.url().should('eq', 'http://localhost:3000/');
+        cy.login();
     });
 });
 
 describe('Log out screen', () => {
     it('Redirect to login and accessability', () => {
         cy.visit('http://localhost:3000/logout/');
+        cy.get('[data-test="toggle-dark-mode"]').click();
         cy.injectAxe();
         cy.checkA11y();
 
@@ -60,6 +61,7 @@ describe('Log out screen', () => {
 describe('Forgotten password', () => {
     it('Any e-mail appears successful', () => {
         cy.visit('http://localhost:3000/login/');
+        cy.get('[data-test="toggle-dark-mode"]').click();
         cy.get('[data-test="button-reset"]').click();
 
         cy.url().should('eq', 'http://localhost:3000/request-password-reset/');

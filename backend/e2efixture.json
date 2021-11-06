@@ -1,0 +1,11 @@
+[
+    {
+        "model": "alldaydj.type",
+        "pk": "9654ca58-1e63-43b9-b95b-affd8b32ca7c",
+        "fields": {
+            "name": "Song",
+            "colour": "#AC1AF7",
+            "now_playing": true
+        }
+    }
+]

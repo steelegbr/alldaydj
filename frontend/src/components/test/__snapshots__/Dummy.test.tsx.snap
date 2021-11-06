@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dummy component snapshot 1`] = `
+exports['dummy component snapshot 1'] = `
 <Dummy>
   <ForwardRef(Typography)
     variant="h1"

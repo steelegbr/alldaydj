@@ -17,7 +17,7 @@
 */
 
 import {
-  Divider, List, ListItem, ListItemIcon, ListItemText,
+  Divider, List, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -36,8 +36,9 @@ const MenuContents = (): React.ReactElement => {
   const history = useHistory();
 
   const menuItemLibrary = () => (
-    <ListItem
-      button
+    <ListItemButton
+      aria-posinset={1}
+      aria-setsize={1}
       data-test="button-library"
       key="Music Library"
       onClick={(event) => {
@@ -49,12 +50,13 @@ const MenuContents = (): React.ReactElement => {
         <LibraryMusic />
       </ListItemIcon>
       <ListItemText primary="Music Library" />
-    </ListItem>
+    </ListItemButton>
   );
 
   const menuItemLogout = () => (
-    <ListItem
-      button
+    <ListItemButton
+      aria-posinset={1}
+      aria-setsize={1}
       data-test="button-logout"
       key="Log Out"
       onClick={(event) => {
@@ -66,7 +68,7 @@ const MenuContents = (): React.ReactElement => {
         <ExitToApp />
       </ListItemIcon>
       <ListItemText primary="Log Out" />
-    </ListItem>
+    </ListItemButton>
   );
 
   return (

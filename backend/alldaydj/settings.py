@@ -174,7 +174,7 @@ AWS_S3_ENDPOINT_URL = environ.get("ADDJ_S3_ENDPOINT")
 AWS_ACCESS_KEY_ID = environ.get("ADDJ_S3_KEY_ID")
 AWS_SECRET_ACCESS_KEY = environ.get("ADDJ_S3_KEY_SECRET")
 AWS_STORAGE_BUCKET_NAME = environ.get("ADDJ_S3_BUCKET")
-AWS_QUERYSTRING_AUTH = False
+AWS_QUERYSTRING_AUTH = True
 
 # AllDay DJ
 
@@ -239,3 +239,7 @@ EMAIL_HOST_USER = environ.get("ADDJ_SMTP_USERNAME", "")
 EMAIL_HOST_PASSWORD = environ.get("ADDJ_SMTP_PASSWORD", "")
 EMAIL_USE_TLS = strtobool(environ.get("ADDJ_SMTP_TLS", "False"))
 EMAIL_USE_SSL = strtobool(environ.get("ADDJ_SMTP_SSL", "False"))
+
+# File Upload
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1000000000

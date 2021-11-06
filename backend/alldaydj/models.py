@@ -79,7 +79,6 @@ class Cart(models.Model):
     artists = models.ManyToManyField(Artist)
     cue_audio_start = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_audio_end = models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    cue_intro_start = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_intro_end = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cue_segue = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     sweeper = models.BooleanField(default=False, blank=False, null=False)
@@ -123,3 +122,19 @@ class AudioUploadJob(models.Model):
     )
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     error = models.TextField(null=True)
+
+
+class CartIdSequencer(models.Model):
+    """
+    Generates a sequence of cart IDs.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.TextField(blank=False, null=False, unique=True)
+    prefix = models.TextField(
+        blank=True, null=True, validators=[RegexValidator(r"[a-zA-Z0-9]*")]
+    )
+    suffix = models.TextField(
+        blank=True, null=True, validators=[RegexValidator(r"[a-zA-Z0-9]*")]
+    )
+    min_digits = models.IntegerField(default=1, validators=[MinValueValidator(1)])

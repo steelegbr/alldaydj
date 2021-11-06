@@ -17,7 +17,7 @@
 """
 
 from alldaydj.documents.cart import CartDocument
-from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
+from alldaydj.models import Artist, AudioUploadJob, Cart, CartIdSequencer, Tag, Type
 from django.core.files.storage import default_storage
 from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
@@ -76,7 +76,6 @@ class CartSerializer(serializers.ModelSerializer):
             "artists",
             "cue_audio_start",
             "cue_audio_end",
-            "cue_intro_start",
             "cue_intro_end",
             "cue_segue",
             "sweeper",
@@ -118,3 +117,9 @@ class CartDocumentSerializer(DocumentSerializer):
             "artist",
             "year",
         )
+
+
+class CartIdSequencerSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = CartIdSequencer
+        fields = ("id", "name", "prefix", "suffix", "min_digits")

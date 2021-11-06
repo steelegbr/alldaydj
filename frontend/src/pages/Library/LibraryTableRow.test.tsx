@@ -29,8 +29,20 @@ const sampleResult : CartSearchResult = {
   year: 1988,
 };
 
+const mockPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    push: mockPush,
+  }),
+}));
+
 describe('library table row', () => {
   const getComponent = (result: CartSearchResult) => mount(<LibraryTableRow result={result} />);
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
   it('renders single result', () => {
     const component = getComponent(sampleResult);
@@ -43,5 +55,16 @@ describe('library table row', () => {
     expandButton.simulate('click');
     component.update();
     expect(component).toMatchSnapshot();
+  });
+
+  it('edit links to the correct page', () => {
+    const component = getComponent(sampleResult);
+    const expandButton = component.find("[data-test='result-expand']").first();
+    expandButton.simulate('click');
+    component.update();
+
+    const editButton = component.find("button[data-test='button-edit']");
+    editButton.simulate('click');
+    expect(mockPush).toBeCalledWith('/cart/957dbe30-007d-442e-975e-42e096e60fa2');
   });
 });

@@ -25,6 +25,8 @@ import {
   FormControl, FormHelperText, Input, InputAdornment, InputLabel, Snackbar,
 } from '@mui/material';
 import { Email } from '@mui/icons-material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { forgottenPassword } from 'api/requests/Authentication';
 import LoadingButton from 'components/common/LoadingButton';
 import React from 'react';
@@ -32,7 +34,15 @@ import { getLogger } from 'services/LoggingService';
 
 type RequestState = 'Idle' | 'InFlight' | 'Complete' | 'Error'
 
+const useStyles = makeStyles(() => createStyles({
+  resetButton: {
+    marginRight: 10,
+  },
+}));
+
 const ForgottenPassword = (): React.ReactElement => {
+  const classes = useStyles();
+
   const [requestState, setRequestState] = React.useState<RequestState>('Idle');
   const [email, setEmail] = React.useState<string>('');
   const [errorEmail, setErrorEmail] = React.useState<string|undefined>();
@@ -115,7 +125,7 @@ const ForgottenPassword = (): React.ReactElement => {
           </FormControl>
         </CardContent>
         <CardActions>
-          <LoadingButton arial-label="Reset" color="primary" loading={requestState === 'InFlight'} type="submit" variant="contained">
+          <LoadingButton arial-label="Reset" className={classes.resetButton} color="primary" loading={requestState === 'InFlight'} type="submit" variant="contained">
             Reset
           </LoadingButton>
           <Button

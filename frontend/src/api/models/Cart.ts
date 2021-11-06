@@ -16,14 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/* eslint-disable camelcase */
+
 export interface Cart {
+    id: string;
+    label: string;
     title: string;
     display_artist: string,
     cue_audio_start: number,
     cue_audio_end: number,
-    cue_intro_start: number,
     cue_intro_end: number,
     cue_segue: number
+    artists: string[],
+    sweeper: boolean,
+    year: number,
+    isrc?: string,
+    composer?: string,
+    publisher?: string,
+    record_label?: string,
+    tags: string[],
+    type: string,
+    fade: boolean
 }
 
 export interface CartAudio {
@@ -31,4 +44,31 @@ export interface CartAudio {
     compressed: string;
     hash_audio: string;
     hash_compressed: string;
+}
+
+export interface CartType {
+    id: string,
+    name: string,
+    colour: string,
+    now_playing: boolean
+}
+
+export interface Tag {
+    id: string,
+    tag: string
+}
+
+export type AudioJobStatus = 'QUEUED' | 'ERROR' | 'VALIDATING' | 'DECOMPRESSING' | 'METADATA' | 'COMPRESSING' | 'HASHING' | 'DONE';
+export interface AudioUploadJob {
+    id: string,
+    status: AudioJobStatus
+}
+
+export interface Sequencer {
+    id: string,
+    name: string
+}
+
+export interface SequencerNext {
+    next: string
 }

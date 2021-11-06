@@ -41,7 +41,6 @@ class Cart:
     __artists: List[str]
     __cue_audio_start: int
     __cue_audio_end: int
-    __cue_intro_start: int
     __cue_intro_end: int
     __cue_segue: int
     __sweeper: bool
@@ -63,7 +62,6 @@ class Cart:
         artists: List[str],
         cue_audio_start: int,
         cue_audio_end: int,
-        cue_intro_start: int,
         cue_intro_end: int,
         cue_segue: int,
         sweeper: bool,
@@ -83,7 +81,6 @@ class Cart:
         self.__artists = artists
         self.__cue_audio_start = cue_audio_start
         self.__cue_audio_end = cue_audio_end
-        self.__cue_intro_start = cue_intro_start
         self.__cue_intro_end = cue_intro_end
         self.__cue_segue = cue_segue
         self.__sweeper = sweeper
@@ -120,10 +117,6 @@ class Cart:
     @property
     def cue_audio_end(self) -> int:
         return self.__cue_audio_end
-
-    @property
-    def cue_intro_start(self) -> int:
-        return self.__cue_intro_start
 
     @property
     def cue_intro_end(self) -> int:
@@ -237,7 +230,6 @@ class CartRepository:
             "display_artist": cart.display_artist or "",
             "cue_audio_start": cart.cue_audio_start,
             "cue_audio_end": cart.cue_audio_end,
-            "cue_intro_start": cart.cue_intro_start,
             "cue_intro_end": cart.cue_intro_end,
             "cue_segue": cart.cue_segue,
             "sweeper": cart.sweeper,
@@ -333,7 +325,6 @@ class PlayoutOneCartRepository(CartRepository, MsSqlRepository):
                 [],
                 db_cart.TrimIn,
                 db_cart.TrimOut,
-                db_cart.TrimIn,
                 db_cart.Intro,
                 db_cart.Extro,
                 db_cart.Oversweep,

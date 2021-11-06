@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   appBar: {
     marginLeft: drawerWidth,
+    // skipcq JS-0377
     zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
@@ -132,6 +133,7 @@ const Menu = (): React.ReactElement => {
       <Grid item>
         <Button
           color="inherit"
+          data-test="toggle-dark-mode"
           onClick={handleDarkModeToggle}
           startIcon={darkMode ? <Brightness4 /> : <Brightness7 />}
         >

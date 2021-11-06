@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`happy path loads and unloads 1`] = `
+exports['happy path loads and unloads 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"
@@ -87,6 +87,7 @@ exports[`happy path loads and unloads 1`] = `
                 >
                   <ForwardRef(Slider)
                     aria-label="audio preview time indicator"
+                    data-test="slider-preview"
                     max={4}
                     min={0}
                     onChange={[Function]}
@@ -196,6 +197,7 @@ exports[`happy path loads and unloads 1`] = `
                     >
                       <ForwardRef(Slider)
                         aria-label="audio preview time indicator"
+                        data-test="slider-preview"
                         max={4}
                         min={0}
                         onChange={[Function]}
@@ -307,6 +309,7 @@ exports[`happy path loads and unloads 1`] = `
                         >
                           <ForwardRef(Slider)
                             aria-label="audio preview time indicator"
+                            data-test="slider-preview"
                             max={4}
                             min={0}
                             onChange={[Function]}
@@ -1448,6 +1451,7 @@ exports[`happy path loads and unloads 1`] = `
                             >
                               <ForwardRef(Slider)
                                 aria-label="audio preview time indicator"
+                                data-test="slider-preview"
                                 max={4}
                                 min={0}
                                 onChange={[Function]}
@@ -1541,6 +1545,7 @@ exports[`happy path loads and unloads 1`] = `
                               Object {
                                 "children": <ForwardRef(Slider)
                                   aria-label="audio preview time indicator"
+                                  data-test="slider-preview"
                                   max={4}
                                   min={0}
                                   onChange={[Function]}
@@ -1572,6 +1577,7 @@ exports[`happy path loads and unloads 1`] = `
                             >
                               <ForwardRef(Slider)
                                 aria-label="audio preview time indicator"
+                                data-test="slider-preview"
                                 max={4}
                                 min={0}
                                 onChange={[Function]}
@@ -1730,6 +1736,7 @@ exports[`happy path loads and unloads 1`] = `
                                       },
                                     }
                                   }
+                                  data-test="slider-preview"
                                   isRtl={false}
                                   max={4}
                                   min={0}
@@ -1742,6 +1749,7 @@ exports[`happy path loads and unloads 1`] = `
                                   <MuiSliderRoot
                                     as="span"
                                     className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root"
+                                    data-test="slider-preview"
                                     onKeyUp={[Function]}
                                     onMouseDown={[Function]}
                                     onMouseUp={[Function]}
@@ -1891,6 +1899,7 @@ exports[`happy path loads and unloads 1`] = `
                                             },
                                           },
                                         },
+                                        "data-test": "slider-preview",
                                         "disabled": false,
                                         "dragging": false,
                                         "isRtl": false,
@@ -1913,6 +1922,7 @@ exports[`happy path loads and unloads 1`] = `
                                   >
                                     <span
                                       className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root css-187mznn-MuiSlider-root"
+                                      data-test="slider-preview"
                                       onKeyUp={[Function]}
                                       onMouseDown={[Function]}
                                       onMouseUp={[Function]}
@@ -2064,6 +2074,7 @@ exports[`happy path loads and unloads 1`] = `
                                                 },
                                               },
                                             },
+                                            "data-test": "slider-preview",
                                             "disabled": false,
                                             "dragging": false,
                                             "isRtl": false,
@@ -2235,6 +2246,7 @@ exports[`happy path loads and unloads 1`] = `
                                                 },
                                               },
                                             },
+                                            "data-test": "slider-preview",
                                             "disabled": false,
                                             "dragging": false,
                                             "isRtl": false,
@@ -2422,6 +2434,7 @@ exports[`happy path loads and unloads 1`] = `
                                                 },
                                               },
                                             },
+                                            "data-test": "slider-preview",
                                             "disabled": false,
                                             "dragging": false,
                                             "isRtl": false,
@@ -2596,6 +2609,7 @@ exports[`happy path loads and unloads 1`] = `
                                                   },
                                                 },
                                               },
+                                              "data-test": "slider-preview",
                                               "disabled": false,
                                               "dragging": false,
                                               "isRtl": false,
@@ -2731,7 +2745,7 @@ exports[`happy path loads and unloads 1`] = `
 </PreviewPlayer>
 `;
 
-exports[`unhappy path fails on first http request 1`] = `
+exports['unhappy path fails on first http request 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"
@@ -4081,7 +4095,7 @@ exports[`unhappy path fails on first http request 1`] = `
 </PreviewPlayer>
 `;
 
-exports[`unhappy path fails on second http request 1`] = `
+exports['unhappy path fails on second http request 1'] = `
 <PreviewPlayer>
   <ForwardRef(Drawer)
     anchor="bottom"

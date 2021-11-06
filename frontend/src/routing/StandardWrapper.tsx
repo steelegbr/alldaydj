@@ -41,7 +41,7 @@ interface Props {}
 const StandardWrapper = ({ children }: React.PropsWithChildren<Props>) : React.ReactElement => {
   const classes = useStyles();
   return (
-    <div className={classes.content}>
+    <div className={classes.content} role="main">
       {children}
     </div>
   );

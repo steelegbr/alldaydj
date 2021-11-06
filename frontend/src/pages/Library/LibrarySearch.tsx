@@ -17,9 +17,12 @@
 */
 
 import {
-  FormControl, Input, InputAdornment, InputLabel,
+  Button,
+  TextField, Grid, InputAdornment,
 } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Add, Search } from '@mui/icons-material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { CartSearchConditions } from 'api/models/Search';
@@ -27,9 +30,17 @@ import LoadingButton from 'components/common/LoadingButton';
 import CartSearchContext, { CartSearchStatus } from 'components/context/CartSearchContext';
 import Paths from 'routing/Paths';
 
+const useStyles = makeStyles(() => createStyles({
+  searchButton: {
+    marginRight: 10,
+    marginBottom: 10,
+  },
+}));
+
 const LibrarySearch = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const history = useHistory();
+  const classes = useStyles();
 
   const updateConditions = (newConditions: CartSearchConditions, status: CartSearchStatus) => {
     setSearch({
@@ -70,28 +81,47 @@ const LibrarySearch = (): React.ReactElement => {
     });
   };
 
+  const newCart = () => {
+    history.push(Paths.cart);
+  };
+
   return (
     <form data-test="form-library-search" onSubmit={performSearch}>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="search">
-          Search:
-        </InputLabel>
-        <Input
-          data-test="input-search"
-          id="search"
-          name="search"
-          onChange={updateSearchTerm}
-          startAdornment={(
+      <TextField
+        InputProps={{
+          startAdornment: (
             <InputAdornment position="start">
               <Search />
             </InputAdornment>
-          )}
-          value={search.conditions.search}
-        />
-      </FormControl>
-      <LoadingButton color="primary" data-test="button-search" loading={search.status === 'Searching'} type="submit" variant="contained">
-        Search
-      </LoadingButton>
+          ),
+        }}
+        data-test="input-search"
+        fullWidth
+        id="search"
+        label="Search:"
+        margin="normal"
+        name="search"
+        onChange={updateSearchTerm}
+        value={search.conditions.search}
+      />
+      <Grid container>
+        <Grid item>
+          <LoadingButton className={classes.searchButton} color="primary" data-test="button-search" loading={search.status === 'Searching'} type="submit" variant="contained">
+            Search
+          </LoadingButton>
+        </Grid>
+        <Grid item>
+          <Button
+            data-test="button-add"
+            onClick={newCart}
+            variant="contained"
+          >
+            <Add />
+            Add New
+          </Button>
+        </Grid>
+      </Grid>
+
     </form>
   );
 };

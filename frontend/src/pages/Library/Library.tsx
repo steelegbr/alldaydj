@@ -18,42 +18,41 @@
 
 import { Alert, Snackbar, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import { CartSearchResults } from 'api/models/Search';
 import { cartSearch } from 'api/requests/Search';
-import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import CartSearchContext from 'components/context/CartSearchContext';
 import LibrarySearch from 'pages/Library/LibrarySearch';
 import LibraryTable from 'pages/Library/LibraryTable';
+import { Paginated } from 'api/models/Pagination';
+import { CartSearchResult } from 'api/models/Search';
+import { AxiosResponse } from 'axios';
 
 const Library = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const [
     searchResults,
     setSearchResults,
-  ] = React.useState<CartSearchResults | undefined>(undefined);
+  ] = React.useState<Paginated<CartSearchResult> | undefined>(undefined);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
-  const authenticatonContext = React.useContext(AuthenticationContext);
-  const accessToken = authenticatonContext?.authenticationStatus.accessToken;
 
   useEffect(() => {
-    if (accessToken && search.status === 'ReadyToSearch') {
+    if (search.status === 'ReadyToSearch') {
       setSearch({
         conditions: {
           ...search.conditions,
         },
         status: 'Searching',
       });
-      cartSearch(search.conditions, accessToken).then(
-        (results) => {
+      cartSearch(search.conditions).then(
+        (response: AxiosResponse<Paginated<CartSearchResult>>) => {
           setSearch({
             conditions: {
               ...search.conditions,
             },
             status: 'ResultsReturned',
           });
-          setSearchResults(results.data);
+          setSearchResults(response.data);
         },
-        (error) => {
+        (error: Error) => {
           setSearch({
             conditions: {
               ...search.conditions,
@@ -64,7 +63,7 @@ const Library = (): React.ReactElement => {
         },
       );
     }
-  }, [search, setSearch, accessToken]);
+  }, [search, setSearch]);
 
   return (
     <>

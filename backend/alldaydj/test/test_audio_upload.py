@@ -71,7 +71,6 @@ class AudioUploadTests(APITestCase):
             display_artist="Test Artist",
             cue_audio_start=0,
             cue_audio_end=0,
-            cue_intro_start=0,
             cue_intro_end=0,
             cue_segue=0,
             sweeper=False,
@@ -355,7 +354,7 @@ class AudioUploadTests(APITestCase):
         self.assertEqual(result.result, "Failed to decompress the audio.")
 
     @parameterized.expand(
-        [("./alldaydj/test/files/valid_with_markers.wav", 0, 0, 938, 2451, 0)]
+        [("./alldaydj/test/files/valid_with_markers.wav", 0, 938, 2451, 0)]
     )
     @patch("alldaydj.tasks.generate_compressed_audio.apply_async")
     @patch("django.core.files.storage.default_storage.open")
@@ -363,7 +362,6 @@ class AudioUploadTests(APITestCase):
         self,
         file_name: str,
         expected_audio_start: int,
-        expected_intro_start: int,
         expected_intro_end: int,
         expected_segue: int,
         expected_audio_end: int,
@@ -388,7 +386,6 @@ class AudioUploadTests(APITestCase):
 
         self.assertEqual(updated_job.status, AudioUploadJob.AudioUploadStatus.METADATA)
         self.assertEqual(updated_job.cart.cue_audio_start, expected_audio_start)
-        self.assertEqual(updated_job.cart.cue_intro_start, expected_intro_start)
         self.assertEqual(updated_job.cart.cue_intro_end, expected_intro_end)
         self.assertEqual(updated_job.cart.cue_segue, expected_segue)
         self.assertEqual(updated_job.cart.cue_audio_end, expected_audio_end)

@@ -24,3 +24,8 @@ export const millisecondToMinutesSecond = (milliseconds: number) => {
   const msObj = Duration.fromObject({ milliseconds });
   return msObj.shiftTo('minutes', 'seconds').toFormat('m:ss');
 };
+
+export const millisecondToMinutesSecondMilliseconds = (milliseconds: number) => {
+  const msObj = Duration.fromObject({ milliseconds });
+  return msObj.shiftTo('minutes', 'seconds', 'milliseconds').toFormat('m:ss.S');
+};

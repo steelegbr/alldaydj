@@ -115,9 +115,7 @@ def _move_audio_file(src: str, dst: str):
     # Copy the contents
 
     with default_storage.open(src, "rb") as src_file:
-        contents = src_file.read()
-
-    default_storage.save(dst, contents)
+        default_storage.save(dst, src_file)
 
     # Delete the source file
 
@@ -272,9 +270,6 @@ def extract_audio_metadata(job_id: str):
 
             job.cart.cue_audio_start = __get_timer(
                 cart_chunk.timers, ["AUD1", "AUDs"], format_chunk.sample_rate
-            )
-            job.cart.cue_intro_start = __get_timer(
-                cart_chunk.timers, ["INT1", "INTs"], format_chunk.sample_rate
             )
             job.cart.cue_intro_end = __get_timer(
                 cart_chunk.timers, ["INT ", "INT2", "INTe"], format_chunk.sample_rate

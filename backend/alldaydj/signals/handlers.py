@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from django.core.files.storage import default_storage
+from alldaydj.models import Cart
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 from django.core.mail import EmailMultiAlternatives, send_mail
@@ -93,3 +95,13 @@ def password_reset_token_created(
     )
     message.attach_alternative(email_html, "text/html")
     message.send()
+
+
+@receiver(post_delete, sender=Cart)
+def delete_audio(sender, instance, **kwargs):
+    if instance:
+        files_to_delete = [f"audio/{instance.id}", f"compressed/{instance.id}"]
+
+        for file in files_to_delete:
+            if default_storage.exists(file):
+                default_storage.delete(file)

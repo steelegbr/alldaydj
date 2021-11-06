@@ -16,13 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from django.http.response import JsonResponse
 from alldaydj.documents.backends import MatchPhraseFilterBackend
 from alldaydj.documents.cart import CartDocument
-from alldaydj.models import Artist, AudioUploadJob, Cart, Tag, Type
+from alldaydj.models import Artist, AudioUploadJob, Cart, CartIdSequencer, Tag, Type
 from alldaydj.serializers import (
     ArtistSerializer,
     AudioSerlializer,
     AudioUploadJobSerializer,
+    CartIdSequencerSerialiser,
     CartSerializer,
     CartDocumentSerializer,
     TagSerializer,
@@ -48,9 +50,10 @@ from django_elasticsearch_dsl_drf.filter_backends import (
 )
 from django_elasticsearch_dsl_drf.viewsets import BaseDocumentViewSet
 from django_elasticsearch_dsl_drf.pagination import QueryFriendlyPageNumberPagination
+import re
 from rest_framework.parsers import MultiPartParser
-from rest_framework import views
-from rest_framework import viewsets
+from rest_framework import views, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
@@ -169,3 +172,29 @@ class CartDocumentView(BaseDocumentViewSet):
         "artist",
         "title",
     )
+
+
+class CartIdSequencerViewSet(viewsets.ModelViewSet):
+    queryset = CartIdSequencer.objects.all()
+    serializer_class = CartIdSequencerSerialiser
+
+    @action(detail=True, methods=["get"])
+    def generate_next(self, request, pk=None):
+        generator = self.get_object()
+        search_regex = (
+            f"{generator.prefix}(\\d{{{generator.min_digits},}}){generator.suffix}"
+        )
+        existing = Cart.objects.filter(label__regex=search_regex).order_by("label")
+
+        next_expected = 1
+        for current in existing:
+            current_number = int(re.findall(search_regex, current.label)[0])
+            if current_number == next_expected:
+                next_expected += 1
+            else:
+                break
+
+        next_padded = str(next_expected).rjust(generator.min_digits, "0")
+        return JsonResponse(
+            {"next": f"{generator.prefix}{next_padded}{generator.suffix}"}
+        )

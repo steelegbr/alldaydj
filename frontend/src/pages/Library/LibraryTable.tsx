@@ -28,13 +28,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { CartSearchResults } from 'api/models/Search';
 import CartSearchContext, { CartSearch } from 'components/context/CartSearchContext';
 import Paths from 'routing/Paths';
 import LibraryTableRow from 'pages/Library/LibraryTableRow';
+import { Paginated } from 'api/models/Pagination';
+import { CartSearchResult } from 'api/models/Search';
 
 interface LibraryTableProps {
-    results: CartSearchResults
+    results: Paginated<CartSearchResult>
 }
 
 const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {

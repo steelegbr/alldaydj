@@ -36,6 +36,7 @@ import re
 from rest_framework.parsers import MultiPartParser
 from rest_framework import views, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 
 
@@ -52,6 +53,9 @@ class AudioUploadJobViewSet(viewsets.ReadOnlyModelViewSet):
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    filter_backends = [OrderingFilter, SearchFilter]
+    search_fields = ["label", "title", "display_artist", "year"]
+    ordering_fields = ["label", "title", "display_artist"]
 
 
 class CartByLabelViewSet(viewsets.ReadOnlyModelViewSet):

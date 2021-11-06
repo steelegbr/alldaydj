@@ -638,3 +638,46 @@ class CartTests(APITestCase):
         self.assertEqual(
             response_json["label"], ["cart with this label already exists."]
         )
+
+    def test_search(self):
+        """
+        Tests we can search for carts
+        """
+
+        result_cart = Cart(
+            label="CART11",
+            title="Some Great Song Worth Listening To",
+            display_artist="God's Gift to Music",
+            cue_audio_start=0,
+            cue_audio_end=233040,
+            cue_intro_end=29350,
+            cue_segue=22606,
+            sweeper=False,
+            year=800,
+            isrc="ABC123",
+            composer="Some Person",
+            publisher="Evil Bandits",
+            record_label="Money Makers",
+            type=Type.objects.get(name="Type 1"),
+        )
+        result_cart.save()
+
+        url = f"{reverse('cart-list')}?search=worth+listen"
+        set_bearer_token(self.USERNAME, self.PASSWORD, self.client)
+
+        # Act
+
+        response = self.client.get(url)
+        response_json = json.loads(response.content)
+
+        # Assert
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response_json["count"], 1)
+        self.assertEqual(response_json["next"], None)
+        self.assertEqual(response_json["previous"], None)
+        self.assertEqual(len(response_json["results"]), 1)
+
+        matching_cart = response_json["results"][0]
+        self.assertEqual(matching_cart["id"], str(result_cart.id))
+        self.assertEqual(matching_cart["label"], result_cart.label)

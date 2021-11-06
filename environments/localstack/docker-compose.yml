@@ -19,4 +19,3 @@ services:
       - "alldaydj-localstack:/tmp/localstack"
 volumes:
   alldaydj-localstack:
-  alldaydj-elasticsearch:

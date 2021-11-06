@@ -16,10 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.documents.cart import CartDocument
 from alldaydj.models import Artist, AudioUploadJob, Cart, CartIdSequencer, Tag, Type
 from django.core.files.storage import default_storage
-from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
 
 
@@ -105,18 +103,6 @@ class TypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = ("id", "name", "colour", "now_playing")
-
-
-class CartDocumentSerializer(DocumentSerializer):
-    class Meta:
-        document = CartDocument
-        fields = (
-            "label",
-            "id",
-            "title",
-            "artist",
-            "year",
-        )
 
 
 class CartIdSequencerSerialiser(serializers.ModelSerializer):

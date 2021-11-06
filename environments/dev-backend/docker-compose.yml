@@ -27,12 +27,6 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${ADDJ_RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${ADDJ_RABBIT_PASS}
-  alldaydj-elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - alldaydj-elasticsearch:/usr/share/elasticsearch/data
   alldaydj-web:
     build:
       context: ../../
@@ -61,8 +55,6 @@ services:
       - alldaydj-postgres:postgres
       - alldaydj-rabbit:rabbit
       - alldaydj-localstack:localstack
-      - alldaydj-elasticsearch:elasticsearch
 volumes:
   alldaydj-localstack:
   alldaydj-postgres:
-  alldaydj-elasticsearch:

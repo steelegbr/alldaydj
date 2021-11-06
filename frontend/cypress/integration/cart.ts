@@ -51,6 +51,7 @@ describe('Cart Operations', () => {
     it('Search and Delete', () => {
         cy.get('[data-test="button-library"]').last().click();
         cy.get('[data-test="input-search"]').type('TESTCART123{enter}');
+        cy.wait(2000);
 
         cy.get('[data-test="result-expand"]').first().click();
         cy.injectAxe();

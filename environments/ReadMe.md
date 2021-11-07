@@ -23,3 +23,7 @@ To get the latest image, remember to pull!
 You will need to create a superuser for initial login:
 
     python manage.py createsuperuser
+
+##  Fullstack
+
+This launches the full AllDay DJ stack. You will need to create the S3 bucket on each launch but the database is persistent.

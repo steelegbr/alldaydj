@@ -46,15 +46,12 @@ import { CartEditorContext } from 'components/context/CartEditorContext';
 import CartAudioEditor from 'pages/Cart/CartAudioEditor';
 import { CartSynchroniserState } from 'pages/Cart/CartSynchroniser';
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Paths from 'routing/Paths';
 import { getLogger } from 'services/LoggingService';
 import { CartFields, MAX_PERMITTED_YEAR, validateCart } from 'services/ValidationService';
 
 type EditorState = 'Loading' | 'Error' | 'Loaded';
-type CartEditorParams = {
-    cartId: string
-}
 
 const useStyles = makeStyles(() => createStyles({
   actionButton: {
@@ -64,8 +61,8 @@ const useStyles = makeStyles(() => createStyles({
 
 const CartEditor = (): React.ReactElement => {
   const classes = useStyles();
-  const { cartId } = useParams<CartEditorParams>();
-  const history = useHistory();
+  const { cartId } = useParams();
+  const navigate = useNavigate();
   const { cart, setCart, file } = React.useContext(CartEditorContext);
   const [editorState, setEditorState] = React.useState<EditorState>('Loading');
   const [showDelete, setShowDelete] = React.useState<boolean>(false);
@@ -277,9 +274,9 @@ const CartEditor = (): React.ReactElement => {
 
   const handleCancel = React.useCallback(
     () => {
-      history.push(Paths.library.search);
+      navigate(Paths.library.search);
     },
-    [history],
+    [navigate],
   );
 
   const handleSubmit = React.useCallback(
@@ -301,12 +298,12 @@ const CartEditor = (): React.ReactElement => {
         file,
       };
 
-      history.push(
+      navigate(
         Paths.cartSync,
-        syncState,
+        { state: syncState },
       );
     },
-    [hasValidationErrors, cart, file, history],
+    [hasValidationErrors, cart, file, navigate],
   );
 
   const sequencerCallback = React.useCallback(
@@ -324,9 +321,9 @@ const CartEditor = (): React.ReactElement => {
 
   const onDelete = React.useCallback(
     () => {
-      history.push(Paths.library.search);
+      navigate(Paths.library.search);
     },
-    [history],
+    [navigate],
   );
 
   const onCancel = React.useCallback(

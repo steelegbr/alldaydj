@@ -24,7 +24,7 @@ import { Add, Search } from '@mui/icons-material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CartSearchConditions } from 'api/models/Search';
 import LoadingButton from 'components/common/LoadingButton';
 import CartSearchContext, { CartSearchStatus } from 'components/context/CartSearchContext';
@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => createStyles({
 
 const LibrarySearch = (): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const updateConditions = (newConditions: CartSearchConditions, status: CartSearchStatus) => {
@@ -75,14 +75,14 @@ const LibrarySearch = (): React.ReactElement => {
       'ReadyToSearch',
     );
 
-    history.push({
+    navigate({
       pathname: Paths.library.search,
       search: `?${new URLSearchParams(newConditions).toString()}`,
     });
   };
 
   const newCart = () => {
-    history.push(Paths.cart);
+    navigate(Paths.cart);
   };
 
   return (

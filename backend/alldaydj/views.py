@@ -41,17 +41,17 @@ from rest_framework.response import Response
 
 
 class ArtistViewSet(viewsets.ModelViewSet):
-    queryset = Artist.objects.all()
+    queryset = Artist.objects.all().order_by("name")
     serializer_class = ArtistSerializer
 
 
 class AudioUploadJobViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = AudioUploadJob.objects.all()
+    queryset = AudioUploadJob.objects.all().order_by("id")
     serializer_class = AudioUploadJobSerializer
 
 
 class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
+    queryset = Cart.objects.all().order_by("label")
     serializer_class = CartSerializer
     filter_backends = [OrderingFilter, SearchFilter]
     search_fields = ["label", "title", "display_artist", "year"]
@@ -59,19 +59,19 @@ class CartViewSet(viewsets.ModelViewSet):
 
 
 class CartByLabelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Cart.objects.all()
+    queryset = Cart.objects.all().order_by("label")
     serializer_class = CartSerializer
     lookup_field = "label"
     lookup_value_regex = "[A-Z0-9]+"
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all()
+    queryset = Tag.objects.all().order_by("tag")
     serializer_class = TagSerializer
 
 
 class TypeViewSet(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
+    queryset = Type.objects.all().order_by("name")
     serializer_class = TypeSerializer
 
 
@@ -120,7 +120,7 @@ class AudioView(views.APIView):
 
 
 class CartIdSequencerViewSet(viewsets.ModelViewSet):
-    queryset = CartIdSequencer.objects.all()
+    queryset = CartIdSequencer.objects.all().order_by("name")
     serializer_class = CartIdSequencerSerialiser
 
     @action(detail=True, methods=["get"])

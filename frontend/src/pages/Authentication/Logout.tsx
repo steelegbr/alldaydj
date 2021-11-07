@@ -20,20 +20,20 @@ import {
   Button, Card, CardActions, CardContent, Typography,
 } from '@mui/material';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
 import Paths from 'routing/Paths';
 import { logOut } from 'services/AuthenticationService';
 
 const Logout = (): React.ReactElement => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const authenticationContext = React.useContext(AuthenticationContext);
   if (authenticationContext?.authenticationStatus.stage !== 'Unauthenticated') {
     authenticationContext?.setAuthenticationStatus(logOut());
   }
 
   const redirectToLogin = () => {
-    history.push(Paths.auth.login);
+    navigate(Paths.auth.login);
   };
 
   return (

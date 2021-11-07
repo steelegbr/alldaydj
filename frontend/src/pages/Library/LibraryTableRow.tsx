@@ -29,7 +29,7 @@ import {
 import React, { Fragment } from 'react';
 import { PreviewContext } from 'components/context/PreviewContext';
 import AudioDownloadButton from 'components/audio/AudioDownloadButton';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Paths from 'routing/Paths';
 import CartSearchContext from 'components/context/CartSearchContext';
 import CartDeleteAlert from 'components/audio/CartDeleteAlert';
@@ -52,7 +52,7 @@ interface TableRowProps {
 const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [showDelete, setShowDelete] = React.useState<boolean>(false);
   const { setCartId } = React.useContext(PreviewContext);
@@ -67,9 +67,9 @@ const LibraryTableRow = ({ result }: TableRowProps): React.ReactElement => {
 
   const editCart = React.useCallback(
     () => {
-      history.push(`${Paths.cart}${cartId}`);
+      navigate(`${Paths.cart}${cartId}`);
     },
-    [history, cartId],
+    [navigate, cartId],
   );
 
   const deleteCart = React.useCallback(

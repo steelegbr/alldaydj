@@ -24,7 +24,7 @@ import createStyles from '@mui/styles/createStyles';
 import { Theme } from '@mui/material/styles';
 import { ExitToApp, LibraryMusic } from '@mui/icons-material';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Paths from 'routing/Paths';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -33,54 +33,46 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MenuContents = (): React.ReactElement => {
   const classes = useStyles();
-  const history = useHistory();
-
-  const menuItemLibrary = () => (
-    <ListItemButton
-      aria-posinset={1}
-      aria-setsize={1}
-      data-test="button-library"
-      key="Music Library"
-      onClick={(event) => {
-        event.preventDefault();
-        history.push(Paths.library.search);
-      }}
-    >
-      <ListItemIcon>
-        <LibraryMusic />
-      </ListItemIcon>
-      <ListItemText primary="Music Library" />
-    </ListItemButton>
-  );
-
-  const menuItemLogout = () => (
-    <ListItemButton
-      aria-posinset={1}
-      aria-setsize={1}
-      data-test="button-logout"
-      key="Log Out"
-      onClick={(event) => {
-        event.preventDefault();
-        history.push(Paths.auth.logout);
-      }}
-    >
-      <ListItemIcon>
-        <ExitToApp />
-      </ListItemIcon>
-      <ListItemText primary="Log Out" />
-    </ListItemButton>
-  );
+  const navigate = useNavigate();
 
   return (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {menuItemLibrary()}
+        <ListItemButton
+          aria-posinset={1}
+          aria-setsize={1}
+          data-test="button-library"
+          key="Music Library"
+          onClick={(event) => {
+            event.preventDefault();
+            navigate(Paths.library.search);
+          }}
+        >
+          <ListItemIcon>
+            <LibraryMusic />
+          </ListItemIcon>
+          <ListItemText primary="Music Library" />
+        </ListItemButton>
       </List>
       <Divider />
       <List>
-        {menuItemLogout()}
+        <ListItemButton
+          aria-posinset={1}
+          aria-setsize={1}
+          data-test="button-logout"
+          key="Log Out"
+          onClick={(event) => {
+            event.preventDefault();
+            navigate(Paths.auth.logout);
+          }}
+        >
+          <ListItemIcon>
+            <ExitToApp />
+          </ListItemIcon>
+          <ListItemText primary="Log Out" />
+        </ListItemButton>
       </List>
     </div>
   );

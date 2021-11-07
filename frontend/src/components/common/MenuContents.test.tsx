@@ -22,14 +22,13 @@ import MenuContents from 'components/common/MenuContents';
 import { AuthenticationContext, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 const mockSetAuthStatus = jest.fn();
 const theme = createTheme();
 
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockPush,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('menu contents', () => {
@@ -58,13 +57,13 @@ describe('menu contents', () => {
     const component = mountComponent();
     const logoutButton = component.find("[data-test='button-logout']").first();
     logoutButton.simulate('click');
-    expect(mockPush).toBeCalledWith('/logout/');
+    expect(mockNavigate).toBeCalledWith('/logout/');
   });
 
   it('library', () => {
     const component = mountComponent();
     const libraryButton = component.find("[data-test='button-library']").first();
     libraryButton.simulate('click');
-    expect(mockPush).toBeCalledWith('/library/');
+    expect(mockNavigate).toBeCalledWith('/library/');
   });
 });

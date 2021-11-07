@@ -44,11 +44,13 @@ class AudioSerlializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_audio(cart):
-        return default_storage.url(cart.audio)
+        if default_storage.exists(cart.audio):
+            return default_storage.url(cart.audio)
 
     @staticmethod
     def get_compressed(cart):
-        return default_storage.url(cart.compressed)
+        if default_storage.exists(cart.compressed):
+            return default_storage.url(cart.compressed)
 
     class Meta:
         model = Cart

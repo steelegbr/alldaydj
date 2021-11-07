@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: alldaydj-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: 300
 spec:
   rules:
     - http:

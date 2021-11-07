@@ -144,7 +144,13 @@ describe('unhappy path', () => {
     });
 
     const responseGetCartAudio = Promise.resolve({
-      status: 404,
+      status: 200,
+      data: {
+        audio: null,
+        compressed: null,
+        hash_audio: null,
+        hash_compressed: null,
+      },
     });
 
     mockAxios.get.mockResolvedValueOnce(responseGetCartDetails)

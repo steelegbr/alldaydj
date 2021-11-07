@@ -329,7 +329,7 @@ const CartAudioEditor = (): React.ReactElement => {
         setEditorState('InfoLoading');
         getCartAudio(cartId).then(
           (response: AxiosResponse<CartAudio>) => {
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.audio) {
               getLogger().info('Found audio information.');
               setEditorState('AudioLoading');
               loadRemoteAudio(response.data.audio);

@@ -149,7 +149,12 @@ const PreviewPlayer = () : React.ReactElement => {
       getCartAudio(requestedCartId).then(
         (response: AxiosResponse<CartAudio>) => {
           if (response.status === 200) {
-            setCartAudio(response.data);
+            if (response.data.compressed) {
+              setCartAudio(response.data);
+            } else {
+              getLogger().error('No compressed data found.');
+              setPlayerState('Error');
+            }
           } else {
             getLogger().error(`Error encountered unexpected status of ${response.status} loading the cart audio info for preview.`);
             setPlayerState('Error');

@@ -33,6 +33,7 @@ spec:
       containers:
         - image: rabbitmq:latest
           name: alldaydj-rabbitmq
+          imagePullPolicy: Always
           env:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:

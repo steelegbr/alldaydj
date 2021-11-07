@@ -32,6 +32,7 @@ spec:
     spec:
       containers:
         - image: steelegbr/alldaydj-backend:latest
+          imagePullPolicy: Always
           name: alldaydj-backend
           env:
             - name: ADDJ_SECRET_KEY

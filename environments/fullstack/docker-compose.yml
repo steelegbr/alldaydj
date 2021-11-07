@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:latest
+  rabbitmq:
+    image: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=addjrabbit
+      - RABBITMQ_DEFAULT_PASS=rabbitpass
+  frontend:
+    image: steelegbr/alldaydj-frontend
+  backend:
+    image: steelegbr/alldaydj-backend
+    environment:
+      - ADDJ_SECRET_KEY=${ADDJ_SECRET_KEY}
+      - ADDJ_DEBUG=${ADDJ_DEBUG}
+      - ADDJ_DB_NAME=${ADDJ_DB_NAME}
+      - ADDJ_DB_USER=${ADDJ_DB_USER}
+      - ADDJ_DB_PASS=${ADDJ_DB_PASS}
+      - ADDJ_DB_HOST=postgres
+      - ADDJ_USERS_DOMAIN=${ADDJ_USERS_DOMAIN}
+      - ADDJ_RABBIT_HOST=rabbitmq
+      - ADDJ_RABBIT_USER=addjrabbit
+      - ADDJ_RABBIT_PASS=rabbitpass
+      - ADDJ_CELERY_ALWAYS_EAGER
+      - ADDJ_S3_REGION=dummy-region
+      - ADDJ_S3_ENDPOINT=http://localstack:4566/
+      - ADDJ_S3_KEY_ID=test-key
+      - ADDJ_S3_KEY_SECRET=test-secret
+      - ADDJ_S3_BUCKET=alldaydj
+      - CELERY_BROKER_URL=amqp://addjrabbit:rabbitpass@rabbit:5672/
+      - USE_SSL=false
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=eu-west-1
+      - AWS_DEFAULT_REGION=eu-west-1
+      - HOSTNAME_EXTERNAL=localstack
+      - USE_SSL=false
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+    ports:
+      - 4566:4566
+      - 4571:4571
+  loadbalancer:
+    image: steelegbr/alldaydj-loadbalancer
+    ports:
+      - 3000:80
+volumes:
+  alldaydj-localstack:
+  alldaydj-postgres:

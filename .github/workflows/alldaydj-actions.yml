@@ -15,7 +15,7 @@ env:
   ADDJ_CELERY_ALWAYS_EAGER: "True"
   DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
   ADDJ_S3_REGION: dummy-region
-  ADDJ_S3_ENDPOINT: https://localhost/
+  ADDJ_S3_ENDPOINT: http://localstack:4566/
   ADDJ_S3_KEY_ID: key123
   ADDJ_S3_KEY_SECRET: secret123
   ADDJ_S3_BUCKET: alldaydj
@@ -255,7 +255,7 @@ jobs:
           ADDJ_CELERY_ALWAYS_EAGER: "True"
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
           ADDJ_S3_REGION: dummy-region
-          ADDJ_S3_ENDPOINT: https://localstack/
+          ADDJ_S3_ENDPOINT: http://localstack:4572/
           ADDJ_S3_KEY_ID: key123
           ADDJ_S3_KEY_SECRET: secret123
           ADDJ_S3_BUCKET: alldaydj
@@ -284,6 +284,11 @@ jobs:
           RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "backend" {print $1}'`
           echo Creating superuser on $RUNNING_CONTAINER
           docker exec -d $RUNNING_CONTAINER python manage.py createsuperuser --noinput
+      - name: Setup the localstack S3 bucket
+        run: |
+          RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "localstack" {print $1}'`
+          echo Setting up the S3 container on on $RUNNING_CONTAINER
+          docker exec -d $RUNNING_CONTAINER awslocal s3 mb s3://alldaydj
       - name: Setup the e2e fixtures
         run: |
           RUNNING_CONTAINER=`docker ps | awk -F " " '$2 ~ "backend" {print $1}'`

@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alldaydj-rabbitmq
+  labels:
+    app: alldaydj
+spec:
+  ports:
+    - port: 5672
+  selector:
+    app: alldaydj
+    tier: rabbitmq
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alldaydj-rabbitmq
+  labels:
+    app: alldaydj
+spec:
+  selector:
+    matchLabels:
+      app: alldaydj
+      tier: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: alldaydj
+        tier: rabbitmq
+    spec:
+      containers:
+        - image: rabbitmq:latest
+          name: alldaydj-rabbitmq
+          imagePullPolicy: Always
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: rabbit_username
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: rabbit_password
+          ports:
+            - containerPort: 5672
+              name: rabbitmq

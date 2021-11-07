@@ -12,3 +12,4 @@ node_modules
 sync.log
 **/cypress/**/*.png
 **/cypress/**/*.mp4
+kustomization.yaml

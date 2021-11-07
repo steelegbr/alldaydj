@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alldaydj-postgres
+  labels:
+    app: alldaydj
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: alldaydj
+    tier: postgres
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: alldaydj
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alldaydj-postgres
+  labels:
+    app: alldaydj
+spec:
+  selector:
+    matchLabels:
+      app: alldaydj
+      tier: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: alldaydj
+        tier: postgres
+    spec:
+      containers:
+        - image: postgres:latest
+          imagePullPolicy: Always
+          name: postgres
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: database
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: db_password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: db_username
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: postgres-persistent-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim

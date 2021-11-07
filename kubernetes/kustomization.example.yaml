@@ -1,0 +1,20 @@
+secretGenerator:
+  - name: alldaydj
+    literals:
+      - database=alldaydj
+      - db_username=alldaydj
+      - db_password=Pa55w0rd
+      - rabbit_username=alldaydj
+      - rabbit_password=Pa55w0rd
+      - addj_secret_key=supersecret
+      - addj_s3_endpoint=https://s3.example.org
+      - addj_s3_key_id=key1
+      - addj_s3_key_secret=secret1
+      - addj_s3_bucket=alldaydj-dev
+      - addj_celery_url=amqp://alldaydj:Pa55w0rd@alldaydj-rabbitmq:5672/
+resources:
+  - backend-deployment.yaml
+  - frontend-deployment.yaml
+  - ingress-deployment.yaml
+  - postgres-deployment.yaml
+  - rabbitmq-deployment.yaml

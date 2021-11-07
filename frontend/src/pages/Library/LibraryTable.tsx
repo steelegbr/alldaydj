@@ -28,7 +28,7 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CartSearchContext, { CartSearch } from 'components/context/CartSearchContext';
 import Paths from 'routing/Paths';
 import LibraryTableRow from 'pages/Library/LibraryTableRow';
@@ -47,7 +47,7 @@ interface LibraryTableProps {
 
 const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
   const { search, setSearch } = React.useContext(CartSearchContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const page = Number.parseInt(search.conditions.page, 10);
   const resultsPerPage = Number.parseInt(search.conditions.resultsPerPage, 10);
@@ -55,12 +55,12 @@ const LibraryTable = ({ results }: LibraryTableProps): React.ReactElement => {
   const updateSearch = React.useCallback(
     (newSearch: CartSearch) => {
       setSearch(newSearch);
-      history.push({
+      navigate({
         pathname: Paths.library.search,
         search: `?${new URLSearchParams(newSearch.conditions).toString()}`,
       });
     },
-    [history, setSearch],
+    [navigate, setSearch],
   );
 
   const changePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {

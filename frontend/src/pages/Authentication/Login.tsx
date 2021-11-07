@@ -33,7 +33,7 @@ import { Email, Lock } from '@mui/icons-material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userLogin } from 'api/requests/Authentication';
 import LoadingButton from 'components/common/LoadingButton';
 import { AuthenticationContext } from 'components/context/AuthenticationContext';
@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 export default function Login(): React.ReactElement {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const authenticationContext = React.useContext(AuthenticationContext);
   const [loginStatus, setLoginStatus] = React.useState<LoginStatus>({
@@ -160,7 +160,7 @@ export default function Login(): React.ReactElement {
           getLogger().info('User login success!');
           const user = loginUser(result.data.refresh, result.data.access);
           authenticationContext?.setAuthenticationStatus(user);
-          history.push(Paths.base);
+          navigate(Paths.base);
         },
         (error) => {
           getLogger().warn(`User login failed - ${error}`);
@@ -171,14 +171,14 @@ export default function Login(): React.ReactElement {
         },
       );
     },
-    [authenticationContext, history, loginStatus],
+    [authenticationContext, navigate, loginStatus],
   );
 
   const forgottenPassword = useCallback(
     () => {
-      history.push(Paths.auth.forgottenPassword);
+      navigate(Paths.auth.forgottenPassword);
     },
-    [history],
+    [navigate],
   );
 
   function emailInput() {

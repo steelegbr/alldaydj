@@ -23,6 +23,13 @@ import { AuthenticationContext, AuthenticationStatusProps } from 'components/con
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const mockSetAuthStatus = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}));
+
 const theme = createTheme();
 
 describe('main menu', () => {

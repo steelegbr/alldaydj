@@ -18,17 +18,16 @@
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { CartSearchConditionFields } from 'api/models/Search';
+import { CartSearchConditionFields, CartSearchOrderBy } from 'api/models/Search';
 import CartSearchContext, { CartSearchContextType, CartSearchStatus } from 'components/context/CartSearchContext';
 import LibrarySearch from 'pages/Library/LibrarySearch';
 
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 const mockSetSearch = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockPush,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('cart library search', () => {
@@ -56,6 +55,7 @@ describe('cart library search', () => {
         page: '1',
         resultsPerPage: '10',
         search: '',
+        order: CartSearchOrderBy.Label,
       },
       'NotStarted',
     );
@@ -73,6 +73,7 @@ describe('cart library search', () => {
         page: '1',
         resultsPerPage: '10',
         search: 'Test',
+        order: 'label',
       },
       status: 'NotStarted',
     });
@@ -81,12 +82,13 @@ describe('cart library search', () => {
         page: '1',
         resultsPerPage: '10',
         search: '',
+        order: 'label',
       },
       status: 'ReadyToSearch',
     });
-    expect(mockPush).toBeCalledWith({
+    expect(mockNavigate).toBeCalledWith({
       pathname: '/library/',
-      search: '?page=1&resultsPerPage=10&search=',
+      search: '?page=1&resultsPerPage=10&search=&order=label',
     });
   });
 
@@ -96,6 +98,7 @@ describe('cart library search', () => {
         page: '1',
         resultsPerPage: '10',
         search: 'Test',
+        order: CartSearchOrderBy.Label,
       },
       'Searching',
     );
@@ -107,6 +110,6 @@ describe('cart library search', () => {
     searchButton.simulate('submit');
 
     expect(mockSetSearch).not.toBeCalled();
-    expect(mockPush).not.toBeCalled();
+    expect(mockNavigate).not.toBeCalled();
   });
 });

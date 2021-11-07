@@ -34,7 +34,7 @@ import {
 } from 'api/requests/Cart';
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Paths from 'routing/Paths';
 import { getLogger } from 'services/LoggingService';
 import { useInterval } from 'usehooks-ts';
@@ -85,9 +85,9 @@ const MAP_JOB_STATUS_SYNC_STATE = new Map<AudioJobStatus, SyncState>([
 ]);
 
 const CartSynchroniser = (): React.ReactElement => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
-  const location = useLocation<CartSynchroniserState>();
+  const location = useLocation();
   const { cart, file } = location.state;
   const [state, setState] = React.useState<SyncState>(SyncState.Idle);
   const [errorText, setErrorText] = React.useState<string>();
@@ -179,16 +179,16 @@ const CartSynchroniser = (): React.ReactElement => {
 
   const returnToPrevious = React.useCallback(
     () => {
-      history.goBack();
+      navigate(-1);
     },
-    [history],
+    [navigate],
   );
 
   const goForward = React.useCallback(
     () => {
-      history.push(`${Paths.cart}${updatedCart.id}`);
+      navigate(`${Paths.cart}${updatedCart.id}`);
     },
-    [history, updatedCart.id],
+    [navigate, updatedCart.id],
   );
 
   const updateCuePointsSuccess = React.useCallback(

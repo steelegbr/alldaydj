@@ -21,13 +21,12 @@ import { mount } from 'enzyme';
 import Logout from 'pages/Authentication/Logout';
 import { AuthenticationContext, AuthenticationStage, AuthenticationStatusProps } from 'components/context/AuthenticationContext';
 
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 const mockSetAuthenticationStatus = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockPush,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('logout page', () => {
@@ -49,7 +48,7 @@ describe('logout page', () => {
     const component = getComponent('Unauthenticated');
     const loginButton = component.find("[data-test='button-login']").first();
     loginButton.simulate('click');
-    expect(mockPush).toBeCalledWith('/login/');
+    expect(mockNavigate).toBeCalledWith('/login/');
   });
 
   it('automatic log out triggers', () => {

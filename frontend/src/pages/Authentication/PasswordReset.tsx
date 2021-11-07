@@ -33,19 +33,15 @@ import { passwordReset, testPasswordResetToken } from 'api/requests/Authenticati
 import LoadingButton from 'components/common/LoadingButton';
 import React from 'react';
 import PasswordStrengthBar from 'react-password-strength-bar';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Paths from 'routing/Paths';
 import { getLogger } from 'services/LoggingService';
-
-type PasswordResetParams = {
-    token: string
-}
 
 type ResetState = 'Idle' | 'CheckingToken' | 'TokenNotValid' | 'AwaitingNewPassword' | 'ChangingPassword' | 'Complete' | 'Error'
 
 const PasswordReset = (): React.ReactElement => {
-  const history = useHistory();
-  const { token } = useParams<PasswordResetParams>();
+  const navigate = useNavigate();
+  const { token } = useParams();
   const [resetRequestState, setResetRequestState] = React.useState<ResetState>('Idle');
   const [password, setPassword] = React.useState<string>('');
   const [repeatPassword, setRepeatPassword] = React.useState<string>('');
@@ -67,7 +63,7 @@ const PasswordReset = (): React.ReactElement => {
     setResetRequestState('ChangingPassword');
 
     passwordReset({
-      token,
+      token: token || '',
       password,
     }).then(
       () => {
@@ -82,7 +78,7 @@ const PasswordReset = (): React.ReactElement => {
   };
 
   const returnToLoginScreen = () => {
-    history.push(Paths.auth.login);
+    navigate(Paths.auth.login);
   };
 
   const updatePasswordStrength = (strength: number) => {
@@ -92,7 +88,7 @@ const PasswordReset = (): React.ReactElement => {
   if (resetRequestState === 'Idle') {
     getLogger().info('Checking password reset token validity');
     setResetRequestState('CheckingToken');
-    testPasswordResetToken({ token }).then(
+    testPasswordResetToken({ token: token || '' }).then(
       () => {
         setResetRequestState('AwaitingNewPassword');
       },

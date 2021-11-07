@@ -26,14 +26,13 @@ import { AuthenticationStatus } from 'components/context/AuthenticationContext';
 
 const mockUserLogin = userLogin as jest.Mock;
 const mockLoginUser = loginUser as jest.Mock;
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('api/requests/Authentication');
 jest.mock('services/AuthenticationService');
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockPush,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('login page', () => {
@@ -92,7 +91,7 @@ describe('login page', () => {
       username: 'user@example.com',
       password: 'p@55w0rd1',
     });
-    expect(mockPush).toBeCalledWith('/');
+    expect(mockNavigate).toBeCalledWith('/');
   });
 
   it('login failure presents an error message', async () => {

@@ -17,12 +17,11 @@
 */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Dummy from 'components/test/Dummy';
 import AuthenticationWrapper from 'routing/AuthenticationWrapper';
 import Login from 'pages/Authentication/Login';
 import Paths from 'routing/Paths';
-import PrivateRoute from 'routing/PrivateRoute';
 import StandardWrapper from 'routing/StandardWrapper';
 import Library from 'pages/Library/Library';
 import Logout from 'pages/Authentication/Logout';
@@ -32,61 +31,103 @@ import PasswordReset from 'pages/Authentication/PasswordReset';
 import CartEditor from 'pages/Cart/CartEditor';
 import { CartEditorProvider } from 'components/context/CartEditorContext';
 import CartSynchroniser from 'pages/Cart/CartSynchroniser';
+import { AuthenticationContext } from 'components/context/AuthenticationContext';
+import { isAuthenticated } from 'services/AuthenticationService';
 
 export default function ApplicationRouter() : React.ReactElement {
+  const authenticationContext = React.useContext(AuthenticationContext);
+  const authenticated = isAuthenticated(authenticationContext);
+
   return (
-    <Switch>
-      <Route path={Paths.auth.login}>
-        <AuthenticationWrapper>
-          <Login />
-        </AuthenticationWrapper>
-      </Route>
-      <Route path={Paths.auth.logout}>
-        <AuthenticationWrapper>
-          <Logout />
-        </AuthenticationWrapper>
-      </Route>
-      <Route path={Paths.auth.forgottenPassword}>
-        <AuthenticationWrapper>
-          <ForgottenPassword />
-        </AuthenticationWrapper>
-      </Route>
-      <Route path={`${Paths.auth.passwordReset}:token`}>
-        <AuthenticationWrapper>
-          <PasswordReset />
-        </AuthenticationWrapper>
-      </Route>
-      <PrivateRoute path={Paths.library.search}>
-        <StandardWrapper>
-          <CartSearchProvider>
-            <Library />
-          </CartSearchProvider>
-        </StandardWrapper>
-      </PrivateRoute>
-      <PrivateRoute path={`${Paths.cart}:cartId`}>
-        <StandardWrapper>
-          <CartEditorProvider>
-            <CartEditor />
-          </CartEditorProvider>
-        </StandardWrapper>
-      </PrivateRoute>
-      <PrivateRoute path={Paths.cart}>
-        <StandardWrapper>
-          <CartEditorProvider>
-            <CartEditor />
-          </CartEditorProvider>
-        </StandardWrapper>
-      </PrivateRoute>
-      <PrivateRoute path={Paths.cartSync}>
-        <StandardWrapper>
-          <CartSynchroniser />
-        </StandardWrapper>
-      </PrivateRoute>
-      <PrivateRoute path={Paths.base}>
-        <StandardWrapper>
-          <Dummy />
-        </StandardWrapper>
-      </PrivateRoute>
-    </Switch>
+    <Routes>
+      <Route
+        element={(
+          <AuthenticationWrapper>
+            <Login />
+          </AuthenticationWrapper>
+        )}
+        path={Paths.auth.login}
+      />
+      <Route
+        element={(
+          <AuthenticationWrapper>
+            <Logout />
+          </AuthenticationWrapper>
+        )}
+        path={Paths.auth.logout}
+      />
+      <Route
+        element={(
+          <AuthenticationWrapper>
+            <ForgottenPassword />
+          </AuthenticationWrapper>
+      )}
+        path={Paths.auth.forgottenPassword}
+      />
+      <Route
+        element={(
+          <AuthenticationWrapper>
+            <PasswordReset />
+          </AuthenticationWrapper>
+      )}
+        path={`${Paths.auth.passwordReset}:token`}
+      />
+      <Route
+        element={(
+          authenticated ? (
+            <StandardWrapper>
+              <CartSearchProvider>
+                <Library />
+              </CartSearchProvider>
+            </StandardWrapper>
+          ) : <Navigate to={Paths.auth.login} />
+      )}
+        path={Paths.library.search}
+      />
+      <Route
+        element={(
+          authenticated ? (
+            <StandardWrapper>
+              <CartEditorProvider>
+                <CartEditor />
+              </CartEditorProvider>
+            </StandardWrapper>
+          ) : <Navigate to={Paths.auth.login} />
+      )}
+        path={`${Paths.cart}:cartId`}
+      />
+      <Route
+        element={(
+          authenticated ? (
+            <StandardWrapper>
+              <CartEditorProvider>
+                <CartEditor />
+              </CartEditorProvider>
+            </StandardWrapper>
+          ) : <Navigate to={Paths.auth.login} />
+      )}
+        path={Paths.cart}
+      />
+      <Route
+        element={(
+          authenticated ? (
+            <StandardWrapper>
+              <CartSynchroniser />
+            </StandardWrapper>
+          ) : <Navigate to={Paths.auth.login} />
+      )}
+        path={Paths.cartSync}
+      />
+      <Route
+        element={(
+          authenticated ? (
+            <StandardWrapper>
+              <Dummy />
+            </StandardWrapper>
+          ) : <Navigate to={Paths.auth.login} />
+      )}
+        path={Paths.base}
+      />
+    </Routes>
   );
 }

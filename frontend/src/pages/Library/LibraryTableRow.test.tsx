@@ -29,12 +29,11 @@ const sampleResult : CartSearchResult = {
   year: 1988,
 };
 
-const mockPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: mockPush,
-  }),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('library table row', () => {
@@ -65,6 +64,6 @@ describe('library table row', () => {
 
     const editButton = component.find("button[data-test='button-edit']");
     editButton.simulate('click');
-    expect(mockPush).toBeCalledWith('/cart/957dbe30-007d-442e-975e-42e096e60fa2');
+    expect(mockNavigate).toBeCalledWith('/cart/957dbe30-007d-442e-975e-42e096e60fa2');
   });
 });

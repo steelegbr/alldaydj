@@ -10,7 +10,7 @@ Radio playout for the modern, cloud-driven world. The API is Django with DRF. Ce
 The plan for delivering AllDay DJ in stages:
 
  - [X] JWT auth integration.
- - [ ] Audio library (can store and edit carts).
+ - [X] Audio library (can store and edit carts).
  - [X] Search
  - [ ] Log editing.
  - [ ] VT.

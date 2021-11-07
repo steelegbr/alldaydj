@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alldaydj-backend
+  labels:
+    app: alldaydj
+spec:
+  ports:
+    - port: 8000
+  selector:
+    app: alldaydj
+    tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alldaydj-backend
+  labels:
+    app: alldaydj
+spec:
+  selector:
+    matchLabels:
+      app: alldaydj
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: alldaydj
+        tier: backend
+    spec:
+      containers:
+        - image: steelegbr/alldaydj-backend:latest
+          name: alldaydj-backend
+          env:
+            - name: ADDJ_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: addj_secret_key
+            - name: ADDJ_DB_HOST
+              value: alldaydj-postgres
+            - name: ADDJ_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: db_username
+            - name: ADDJ_DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: db_password
+            - name: ADDJ_RABBIT_HOST
+              value: alldaydj-rabbitmq
+            - name: ADDJ_RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: rabbit_username
+            - name: ADDJ_RABBIT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: rabbit_password
+            - name: ADDJ_CELERY_ALWAYS_EAGER
+              value: "True"
+            - name: ADDJ_S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: addj_s3_endpoint
+            - name: ADDJ_S3_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: addj_s3_key_id
+            - name: ADDJ_S3_KEY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: addj_s3_key_secret
+            - name: ADDJ_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: alldaydj
+                  key: addj_s3_bucket
+          ports:
+            - containerPort: 8000
+              name: alldaydj

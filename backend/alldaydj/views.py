@@ -151,10 +151,6 @@ class CartIdSequencerViewSet(viewsets.ModelViewSet):
                 break
 
         next_padded = str(next_expected).rjust(generator.min_digits, "0")
-        complete_generated = {generator.prefix}{next_padded}{generator.suffix}
-        logger.info(
-            f"Generator {generator.name} picked complete_generated"
-        )
-        return JsonResponse(
-            {"next": complete_generated}
-        )
+        complete_generated = f"{generator.prefix}{next_padded}{generator.suffix}"
+        logger.info(f"Generator {generator.name} picked complete_generated")
+        return JsonResponse({"next": complete_generated})

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports['main menu snapshot 1'] = `
+exports[`main menu snapshot 1`] = `
 <ThemeProvider
   theme={
     Object {
@@ -121,7 +121,7 @@ exports['main menu snapshot 1'] = `
           "contrastText": "#fff",
           "dark": "#e65100",
           "light": "#ff9800",
-          "main": "#ED6C02",
+          "main": "#ed6c02",
         },
       },
       "shadows": Array [
@@ -410,7 +410,7 @@ exports['main menu snapshot 1'] = `
             "contrastText": "#fff",
             "dark": "#e65100",
             "light": "#ff9800",
-            "main": "#ED6C02",
+            "main": "#ed6c02",
           },
         },
         "shadows": Array [
@@ -1183,6 +1183,7 @@ exports['main menu snapshot 1'] = `
                                         startIcon={<Memo />}
                                       >
                                         <MuiButtonRoot
+                                          className=""
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1193,6 +1194,7 @@ exports['main menu snapshot 1'] = `
                                           }
                                           component="button"
                                           data-test="toggle-dark-mode"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1216,7 +1218,7 @@ exports['main menu snapshot 1'] = `
                                           }
                                         >
                                           <ForwardRef(ButtonBase)
-                                            className="css-19wn4wk-MuiButton-root"
+                                            className=" css-19wn4wk-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1227,6 +1229,7 @@ exports['main menu snapshot 1'] = `
                                             }
                                             component="button"
                                             data-test="toggle-dark-mode"
+                                            disableRipple={false}
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -1234,7 +1237,7 @@ exports['main menu snapshot 1'] = `
                                           >
                                             <MuiButtonBaseRoot
                                               as="button"
-                                              className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root css-19wn4wk-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-19wn4wk-MuiButton-root"
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1287,7 +1290,7 @@ exports['main menu snapshot 1'] = `
                                                     "Dark Mode",
                                                     undefined,
                                                   ],
-                                                  "className": "css-19wn4wk-MuiButton-root",
+                                                  "className": " css-19wn4wk-MuiButton-root",
                                                   "classes": Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                     "label": "MuiButton-label",
@@ -1311,7 +1314,7 @@ exports['main menu snapshot 1'] = `
                                               type="button"
                                             >
                                               <button
-                                                className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root css-1y942vo-MuiButtonBase-root-MuiButton-root"
+                                                className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-1y942vo-MuiButtonBase-root-MuiButton-root"
                                                 data-test="toggle-dark-mode"
                                                 disabled={false}
                                                 onBlur={[Function]}
@@ -3251,7 +3254,7 @@ exports['main menu snapshot 1'] = `
 </ThemeProvider>
 `;
 
-exports['main menu snapshot menu opened 1'] = `
+exports[`main menu snapshot menu opened 1`] = `
 <ThemeProvider
   theme={
     Object {
@@ -3372,7 +3375,7 @@ exports['main menu snapshot menu opened 1'] = `
           "contrastText": "#fff",
           "dark": "#e65100",
           "light": "#ff9800",
-          "main": "#ED6C02",
+          "main": "#ed6c02",
         },
       },
       "shadows": Array [
@@ -3661,7 +3664,7 @@ exports['main menu snapshot menu opened 1'] = `
             "contrastText": "#fff",
             "dark": "#e65100",
             "light": "#ff9800",
-            "main": "#ED6C02",
+            "main": "#ed6c02",
           },
         },
         "shadows": Array [
@@ -4434,6 +4437,7 @@ exports['main menu snapshot menu opened 1'] = `
                                         startIcon={<Memo />}
                                       >
                                         <MuiButtonRoot
+                                          className=""
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -4444,6 +4448,7 @@ exports['main menu snapshot menu opened 1'] = `
                                           }
                                           component="button"
                                           data-test="toggle-dark-mode"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -4467,7 +4472,7 @@ exports['main menu snapshot menu opened 1'] = `
                                           }
                                         >
                                           <ForwardRef(ButtonBase)
-                                            className="css-19wn4wk-MuiButton-root"
+                                            className=" css-19wn4wk-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -4478,6 +4483,7 @@ exports['main menu snapshot menu opened 1'] = `
                                             }
                                             component="button"
                                             data-test="toggle-dark-mode"
+                                            disableRipple={false}
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -4485,7 +4491,7 @@ exports['main menu snapshot menu opened 1'] = `
                                           >
                                             <MuiButtonBaseRoot
                                               as="button"
-                                              className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root css-19wn4wk-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-19wn4wk-MuiButton-root"
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -4538,7 +4544,7 @@ exports['main menu snapshot menu opened 1'] = `
                                                     "Dark Mode",
                                                     undefined,
                                                   ],
-                                                  "className": "css-19wn4wk-MuiButton-root",
+                                                  "className": " css-19wn4wk-MuiButton-root",
                                                   "classes": Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                     "label": "MuiButton-label",
@@ -4562,7 +4568,7 @@ exports['main menu snapshot menu opened 1'] = `
                                               type="button"
                                             >
                                               <button
-                                                className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root css-1y942vo-MuiButtonBase-root-MuiButton-root"
+                                                className="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-1y942vo-MuiButtonBase-root-MuiButton-root"
                                                 data-test="toggle-dark-mode"
                                                 disabled={false}
                                                 onBlur={[Function]}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports['loading button idle state 1'] = `
+exports[`loading button idle state 1`] = `
 <LoadingButton
   loading={false}
 >
@@ -130,7 +130,7 @@ exports['loading button idle state 1'] = `
               "contrastText": "#fff",
               "dark": "#e65100",
               "light": "#ff9800",
-              "main": "#ED6C02",
+              "main": "#ed6c02",
             },
           },
           "shadows": Array [
@@ -305,6 +305,7 @@ exports['loading button idle state 1'] = `
           loading={false}
         >
           <MuiButtonRoot
+            className=""
             classes={
               Object {
                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -314,6 +315,7 @@ exports['loading button idle state 1'] = `
               }
             }
             component="button"
+            disableRipple={false}
             disabled={false}
             focusRipple={true}
             focusVisibleClassName=""
@@ -335,7 +337,7 @@ exports['loading button idle state 1'] = `
             }
           >
             <ForwardRef(ButtonBase)
-              className="css-w60cv3-MuiButton-root"
+              className=" css-w60cv3-MuiButton-root"
               classes={
                 Object {
                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -345,6 +347,7 @@ exports['loading button idle state 1'] = `
                 }
               }
               component="button"
+              disableRipple={false}
               disabled={false}
               focusRipple={true}
               focusVisibleClassName=""
@@ -352,7 +355,7 @@ exports['loading button idle state 1'] = `
             >
               <MuiButtonBaseRoot
                 as="button"
-                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                 classes={
                   Object {
                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -383,7 +386,7 @@ exports['loading button idle state 1'] = `
                       "Test Button",
                       undefined,
                     ],
-                    "className": "css-w60cv3-MuiButton-root",
+                    "className": " css-w60cv3-MuiButton-root",
                     "classes": Object {
                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                       "label": "MuiButton-label",
@@ -406,7 +409,7 @@ exports['loading button idle state 1'] = `
                 type="button"
               >
                 <button
-                  className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                   disabled={false}
                   loading={false}
                   onBlur={[Function]}
@@ -453,7 +456,7 @@ exports['loading button idle state 1'] = `
 </LoadingButton>
 `;
 
-exports['loading button loading state 1'] = `
+exports[`loading button loading state 1`] = `
 <LoadingButton
   loading={true}
 >
@@ -583,7 +586,7 @@ exports['loading button loading state 1'] = `
               "contrastText": "#fff",
               "dark": "#e65100",
               "light": "#ff9800",
-              "main": "#ED6C02",
+              "main": "#ed6c02",
             },
           },
           "shadows": Array [
@@ -759,6 +762,7 @@ exports['loading button loading state 1'] = `
           loading={true}
         >
           <MuiButtonRoot
+            className=""
             classes={
               Object {
                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -768,6 +772,7 @@ exports['loading button loading state 1'] = `
               }
             }
             component="button"
+            disableRipple={false}
             disabled={true}
             focusRipple={true}
             focusVisibleClassName=""
@@ -789,7 +794,7 @@ exports['loading button loading state 1'] = `
             }
           >
             <ForwardRef(ButtonBase)
-              className="css-w60cv3-MuiButton-root"
+              className=" css-w60cv3-MuiButton-root"
               classes={
                 Object {
                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -799,6 +804,7 @@ exports['loading button loading state 1'] = `
                 }
               }
               component="button"
+              disableRipple={false}
               disabled={true}
               focusRipple={true}
               focusVisibleClassName=""
@@ -806,7 +812,7 @@ exports['loading button loading state 1'] = `
             >
               <MuiButtonBaseRoot
                 as="button"
-                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled css-w60cv3-MuiButton-root"
+                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled  css-w60cv3-MuiButton-root"
                 classes={
                   Object {
                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -837,7 +843,7 @@ exports['loading button loading state 1'] = `
                       "Test Button",
                       undefined,
                     ],
-                    "className": "css-w60cv3-MuiButton-root",
+                    "className": " css-w60cv3-MuiButton-root",
                     "classes": Object {
                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                       "label": "MuiButton-label",
@@ -860,7 +866,7 @@ exports['loading button loading state 1'] = `
                 type="button"
               >
                 <button
-                  className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                   disabled={true}
                   loading={true}
                   onBlur={[Function]}

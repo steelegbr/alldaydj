@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports['theme context snapshot 1'] = `
+exports[`theme context snapshot 1`] = `
 <AppThemeProvider>
   <ThemeProvider
     theme={
@@ -122,7 +122,7 @@ exports['theme context snapshot 1'] = `
             "contrastText": "#fff",
             "dark": "#e65100",
             "light": "#ff9800",
-            "main": "#ED6C02",
+            "main": "#ed6c02",
           },
         },
         "shadows": Array [
@@ -411,7 +411,7 @@ exports['theme context snapshot 1'] = `
               "contrastText": "#fff",
               "dark": "#e65100",
               "light": "#ff9800",
-              "main": "#ED6C02",
+              "main": "#ed6c02",
             },
           },
           "shadows": Array [

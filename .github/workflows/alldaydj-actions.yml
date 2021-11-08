@@ -7,9 +7,6 @@ env:
   ADDJ_DB_USER: alldaydj
   ADDJ_DB_PASS: ${{ secrets.ADDJ_DB_PASS }}
   ADDJ_DB_HOST: localhost
-  ADDJ_RABIT_HOST: localhost
-  ADDJ_RABBIT_USER: alldaydj
-  ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
   PYTHON_VER: 3.9
   YARN_VER: 16
   ADDJ_CELERY_ALWAYS_EAGER: "True"
@@ -31,13 +28,6 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      rabbitmq:
-        image: rabbitmq
-        env:
-          RABBITMQ_DEFAULT_USER: ${{ env.ADDJ_RABBIT_USER }}
-          RABBITMQ_DEFAULT_PASS: ${{ env.ADDJ_RABBIT_PASS }}
-        ports:
-          - 5672:5672
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the commit
@@ -232,14 +222,14 @@ jobs:
       rabbitmq:
         image: rabbitmq
         env:
-          RABBITMQ_DEFAULT_USER: ${{ env.ADDJ_RABBIT_USER }}
-          RABBITMQ_DEFAULT_PASS: ${{ env.ADDJ_RABBIT_PASS }}
+          RABBITMQ_DEFAULT_USER: alldaydj
+          RABBITMQ_DEFAULT_PASS: rabbitmq
       frontend:
         image: steelegbr/alldaydj-frontend
       backend:
         image: steelegbr/alldaydj-backend
         env:
-          CELERY_BROKER_URL: "ampq://rabbitmq:${{ secrets.ADDJ_RABBIT_PASS }}@rabbitmq:5672/"
+          CELERY_BROKER_URL: "amqp://alldaydj:rabbitmq@rabbitmq:5672/"
           DJANGO_SUPERUSER_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
           DJANGO_SUPERUSER_EMAIL: ${{ secrets.CYPRESS_USERNAME }}
           DJANGO_SUPERUSER_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
@@ -248,9 +238,9 @@ jobs:
           ADDJ_DB_USER: alldaydj
           ADDJ_DB_PASS: ${{ secrets.ADDJ_DB_PASS }}
           ADDJ_DB_HOST: postgres
-          ADDJ_RABIT_HOST: rabbitmq
+          ADDJ_RABBIT_HOST: rabbitmq
           ADDJ_RABBIT_USER: alldaydj
-          ADDJ_RABBIT_PASS: ${{ secrets.ADDJ_RABBIT_PASS }}
+          ADDJ_RABBIT_PASS: rabbitmq
           PYTHON_VER: 3.9
           ADDJ_CELERY_ALWAYS_EAGER: "True"
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}

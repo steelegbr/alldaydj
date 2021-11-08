@@ -231,3 +231,19 @@ EMAIL_USE_SSL = strtobool(environ.get("ADDJ_SMTP_SSL", "False"))
 # File Upload
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1000000000
+
+# Log to console
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}

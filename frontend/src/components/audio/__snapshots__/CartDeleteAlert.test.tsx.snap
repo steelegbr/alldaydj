@@ -316,7 +316,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                           class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
                         >
                           <button
-                            class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1sszw6i-MuiButtonBase-root-MuiButton-root"
                             data-test="alert-button-delete"
                             tabindex="0"
                             type="button"
@@ -338,7 +338,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                             />
                           </button>
                           <button
-                            class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-zcbmsk-MuiButtonBase-root-MuiButton-root"
                             data-test="alert-button-cancel"
                             tabindex="0"
                             type="button"
@@ -858,7 +858,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                   class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
                                 >
                                   <button
-                                    class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                                    class="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1sszw6i-MuiButtonBase-root-MuiButton-root"
                                     data-test="alert-button-delete"
                                     tabindex="0"
                                     type="button"
@@ -880,7 +880,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                     />
                                   </button>
                                   <button
-                                    class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                                    class="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-zcbmsk-MuiButtonBase-root-MuiButton-root"
                                     data-test="alert-button-cancel"
                                     tabindex="0"
                                     type="button"
@@ -1342,6 +1342,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                             variant="contained"
                                           >
                                             <MuiButtonRoot
+                                              className=""
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1352,6 +1353,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               }
                                               component="button"
                                               data-test="alert-button-delete"
+                                              disableRipple={false}
                                               disabled={false}
                                               focusRipple={true}
                                               focusVisibleClassName=""
@@ -1377,7 +1379,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               }
                                             >
                                               <ForwardRef(ButtonBase)
-                                                className="css-2whykm-MuiButton-root"
+                                                className=" css-2whykm-MuiButton-root"
                                                 classes={
                                                   Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1388,6 +1390,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                 }
                                                 component="button"
                                                 data-test="alert-button-delete"
+                                                disableRipple={false}
                                                 disabled={false}
                                                 focusRipple={true}
                                                 focusVisibleClassName=""
@@ -1395,7 +1398,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               >
                                                 <MuiButtonBaseRoot
                                                   as="button"
-                                                  className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-2whykm-MuiButton-root"
+                                                  className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-2whykm-MuiButton-root"
                                                   classes={
                                                     Object {
                                                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1430,7 +1433,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                         ],
                                                         undefined,
                                                       ],
-                                                      "className": "css-2whykm-MuiButton-root",
+                                                      "className": " css-2whykm-MuiButton-root",
                                                       "classes": Object {
                                                         "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                         "label": "MuiButton-label",
@@ -1454,7 +1457,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                   type="button"
                                                 >
                                                   <button
-                                                    className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1sszw6i-MuiButtonBase-root-MuiButton-root"
+                                                    className="MuiButton-root MuiButton-contained MuiButton-containedError MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1sszw6i-MuiButtonBase-root-MuiButton-root"
                                                     data-test="alert-button-delete"
                                                     disabled={false}
                                                     onBlur={[Function]}
@@ -1541,6 +1544,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                             variant="contained"
                                           >
                                             <MuiButtonRoot
+                                              className=""
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1551,6 +1555,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               }
                                               component="button"
                                               data-test="alert-button-cancel"
+                                              disableRipple={false}
                                               disabled={false}
                                               focusRipple={true}
                                               focusVisibleClassName=""
@@ -1573,7 +1578,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               }
                                             >
                                               <ForwardRef(ButtonBase)
-                                                className="css-9w2fx5-MuiButton-root"
+                                                className=" css-9w2fx5-MuiButton-root"
                                                 classes={
                                                   Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1584,6 +1589,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                 }
                                                 component="button"
                                                 data-test="alert-button-cancel"
+                                                disableRipple={false}
                                                 disabled={false}
                                                 focusRipple={true}
                                                 focusVisibleClassName=""
@@ -1591,7 +1597,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                               >
                                                 <MuiButtonBaseRoot
                                                   as="button"
-                                                  className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-9w2fx5-MuiButton-root"
+                                                  className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-9w2fx5-MuiButton-root"
                                                   classes={
                                                     Object {
                                                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1623,7 +1629,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                         "Cancel",
                                                         undefined,
                                                       ],
-                                                      "className": "css-9w2fx5-MuiButton-root",
+                                                      "className": " css-9w2fx5-MuiButton-root",
                                                       "classes": Object {
                                                         "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                         "label": "MuiButton-label",
@@ -1647,7 +1653,7 @@ exports['delete cart alert box cancel calls the callback 1'] = `
                                                   type="button"
                                                 >
                                                   <button
-                                                    className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                                                    className="MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-zcbmsk-MuiButtonBase-root-MuiButton-root"
                                                     data-test="alert-button-cancel"
                                                     disabled={false}
                                                     onBlur={[Function]}

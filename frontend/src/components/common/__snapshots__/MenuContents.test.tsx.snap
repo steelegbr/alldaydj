@@ -121,7 +121,7 @@ exports['menu contents snapshot 1'] = `
           "contrastText": "#fff",
           "dark": "#e65100",
           "light": "#ff9800",
-          "main": "#ED6C02",
+          "main": "#ed6c02",
         },
       },
       "shadows": Array [
@@ -410,7 +410,7 @@ exports['menu contents snapshot 1'] = `
             "contrastText": "#fff",
             "dark": "#e65100",
             "light": "#ff9800",
-            "main": "#ED6C02",
+            "main": "#ed6c02",
           },
         },
         "shadows": Array [

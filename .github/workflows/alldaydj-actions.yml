@@ -240,6 +240,7 @@ jobs:
       backend:
         image: steelegbr/alldaydj-backend
         env:
+          CELERY_BROKER_URL: "ampq://rabbitmq:${{ secrets.ADDJ_RABBIT_PASS }}@rabbitmq:5672/"
           DJANGO_SUPERUSER_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
           DJANGO_SUPERUSER_EMAIL: ${{ secrets.CYPRESS_USERNAME }}
           DJANGO_SUPERUSER_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}

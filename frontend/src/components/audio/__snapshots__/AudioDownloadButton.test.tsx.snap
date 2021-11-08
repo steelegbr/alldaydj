@@ -13,6 +13,7 @@ exports['audio download button rendering render compressed 1'] = `
   >
     <MuiButtonRoot
       aria-controls="download compressed audio"
+      className=""
       classes={
         Object {
           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -23,6 +24,7 @@ exports['audio download button rendering render compressed 1'] = `
       }
       component="button"
       data-test="button-download-compressed"
+      disableRipple={false}
       disabled={false}
       focusRipple={true}
       focusVisibleClassName=""
@@ -51,7 +53,7 @@ exports['audio download button rendering render compressed 1'] = `
     >
       <ForwardRef(ButtonBase)
         aria-controls="download compressed audio"
-        className="css-w60cv3-MuiButton-root"
+        className=" css-w60cv3-MuiButton-root"
         classes={
           Object {
             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -62,6 +64,7 @@ exports['audio download button rendering render compressed 1'] = `
         }
         component="button"
         data-test="button-download-compressed"
+        disableRipple={false}
         disabled={false}
         focusRipple={true}
         focusVisibleClassName=""
@@ -70,7 +73,7 @@ exports['audio download button rendering render compressed 1'] = `
         <MuiButtonBaseRoot
           aria-controls="download compressed audio"
           as="button"
-          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
           classes={
             Object {
               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -107,7 +110,7 @@ exports['audio download button rendering render compressed 1'] = `
                 ],
                 undefined,
               ],
-              "className": "css-w60cv3-MuiButton-root",
+              "className": " css-w60cv3-MuiButton-root",
               "classes": Object {
                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                 "label": "MuiButton-label",
@@ -132,7 +135,7 @@ exports['audio download button rendering render compressed 1'] = `
         >
           <button
             aria-controls="download compressed audio"
-            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
             data-test="button-download-compressed"
             disabled={false}
             onBlur={[Function]}
@@ -229,6 +232,7 @@ exports['audio download button rendering render compressed 2'] = `
   >
     <MuiButtonRoot
       aria-controls="download linear audio"
+      className=""
       classes={
         Object {
           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -239,6 +243,7 @@ exports['audio download button rendering render compressed 2'] = `
       }
       component="button"
       data-test="button-download-linear"
+      disableRipple={false}
       disabled={false}
       focusRipple={true}
       focusVisibleClassName=""
@@ -267,7 +272,7 @@ exports['audio download button rendering render compressed 2'] = `
     >
       <ForwardRef(ButtonBase)
         aria-controls="download linear audio"
-        className="css-w60cv3-MuiButton-root"
+        className=" css-w60cv3-MuiButton-root"
         classes={
           Object {
             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -278,6 +283,7 @@ exports['audio download button rendering render compressed 2'] = `
         }
         component="button"
         data-test="button-download-linear"
+        disableRipple={false}
         disabled={false}
         focusRipple={true}
         focusVisibleClassName=""
@@ -286,7 +292,7 @@ exports['audio download button rendering render compressed 2'] = `
         <MuiButtonBaseRoot
           aria-controls="download linear audio"
           as="button"
-          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
           classes={
             Object {
               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -323,7 +329,7 @@ exports['audio download button rendering render compressed 2'] = `
                 ],
                 undefined,
               ],
-              "className": "css-w60cv3-MuiButton-root",
+              "className": " css-w60cv3-MuiButton-root",
               "classes": Object {
                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                 "label": "MuiButton-label",
@@ -348,7 +354,7 @@ exports['audio download button rendering render compressed 2'] = `
         >
           <button
             aria-controls="download linear audio"
-            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
             data-test="button-download-linear"
             disabled={false}
             onBlur={[Function]}
@@ -789,6 +795,7 @@ exports['audio download download unhappy path 1'] = `
   >
     <MuiButtonRoot
       aria-controls="download compressed audio"
+      className=""
       classes={
         Object {
           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -799,6 +806,7 @@ exports['audio download download unhappy path 1'] = `
       }
       component="button"
       data-test="button-download-compressed"
+      disableRipple={false}
       disabled={false}
       focusRipple={true}
       focusVisibleClassName=""
@@ -827,7 +835,7 @@ exports['audio download download unhappy path 1'] = `
     >
       <ForwardRef(ButtonBase)
         aria-controls="download compressed audio"
-        className="css-w60cv3-MuiButton-root"
+        className=" css-w60cv3-MuiButton-root"
         classes={
           Object {
             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -838,6 +846,7 @@ exports['audio download download unhappy path 1'] = `
         }
         component="button"
         data-test="button-download-compressed"
+        disableRipple={false}
         disabled={false}
         focusRipple={true}
         focusVisibleClassName=""
@@ -846,7 +855,7 @@ exports['audio download download unhappy path 1'] = `
         <MuiButtonBaseRoot
           aria-controls="download compressed audio"
           as="button"
-          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+          className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
           classes={
             Object {
               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -883,7 +892,7 @@ exports['audio download download unhappy path 1'] = `
                 ],
                 undefined,
               ],
-              "className": "css-w60cv3-MuiButton-root",
+              "className": " css-w60cv3-MuiButton-root",
               "classes": Object {
                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                 "label": "MuiButton-label",
@@ -908,7 +917,7 @@ exports['audio download download unhappy path 1'] = `
         >
           <button
             aria-controls="download compressed audio"
-            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
             data-test="button-download-compressed"
             disabled={false}
             onBlur={[Function]}

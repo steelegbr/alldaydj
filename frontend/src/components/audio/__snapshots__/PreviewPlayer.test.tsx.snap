@@ -512,22 +512,13 @@ exports['happy path loads and unloads 1'] = `
                                 >
                                   <div
                                     aria-label="preview cart"
-                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-dr3dyz-MuiButtonGroup-root"
+                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-zqcytf-MuiButtonGroup-root"
                                     role="group"
                                   >
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={false}
-                                      fullWidth={false}
-                                      key=".0"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -548,12 +539,10 @@ exports['happy path loads and unloads 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Pause",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": false,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -615,12 +604,10 @@ exports['happy path loads and unloads 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Pause",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": false,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -682,12 +669,10 @@ exports['happy path loads and unloads 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Pause",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": false,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -765,18 +750,9 @@ exports['happy path loads and unloads 1'] = `
                                       </MuiButtonRoot>
                                     </ForwardRef(Button)>
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={false}
-                                      fullWidth={false}
-                                      key=".1"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -797,12 +773,10 @@ exports['happy path loads and unloads 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Stop",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": false,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -864,12 +838,10 @@ exports['happy path loads and unloads 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Stop",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": false,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -931,12 +903,10 @@ exports['happy path loads and unloads 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Stop",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": false,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -1092,6 +1062,7 @@ exports['happy path loads and unloads 1'] = `
                                 startIcon={<Memo />}
                               >
                                 <MuiButtonRoot
+                                  className=""
                                   classes={
                                     Object {
                                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1102,6 +1073,7 @@ exports['happy path loads and unloads 1'] = `
                                   }
                                   component="button"
                                   data-test="button-close"
+                                  disableRipple={false}
                                   disabled={false}
                                   focusRipple={true}
                                   focusVisibleClassName=""
@@ -1125,7 +1097,7 @@ exports['happy path loads and unloads 1'] = `
                                   }
                                 >
                                   <ForwardRef(ButtonBase)
-                                    className="css-w60cv3-MuiButton-root"
+                                    className=" css-w60cv3-MuiButton-root"
                                     classes={
                                       Object {
                                         "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1136,6 +1108,7 @@ exports['happy path loads and unloads 1'] = `
                                     }
                                     component="button"
                                     data-test="button-close"
+                                    disableRipple={false}
                                     disabled={false}
                                     focusRipple={true}
                                     focusVisibleClassName=""
@@ -1143,7 +1116,7 @@ exports['happy path loads and unloads 1'] = `
                                   >
                                     <MuiButtonBaseRoot
                                       as="button"
-                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                       classes={
                                         Object {
                                           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1196,7 +1169,7 @@ exports['happy path loads and unloads 1'] = `
                                             "Close",
                                             undefined,
                                           ],
-                                          "className": "css-w60cv3-MuiButton-root",
+                                          "className": " css-w60cv3-MuiButton-root",
                                           "classes": Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                             "label": "MuiButton-label",
@@ -1220,7 +1193,7 @@ exports['happy path loads and unloads 1'] = `
                                       type="button"
                                     >
                                       <button
-                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                         data-test="button-close"
                                         disabled={false}
                                         onBlur={[Function]}
@@ -3134,22 +3107,13 @@ exports['unhappy path fails on first http request 1'] = `
                                 >
                                   <div
                                     aria-label="preview cart"
-                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-dr3dyz-MuiButtonGroup-root"
+                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-zqcytf-MuiButtonGroup-root"
                                     role="group"
                                   >
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={true}
-                                      fullWidth={false}
-                                      key=".0"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -3170,12 +3134,10 @@ exports['unhappy path fails on first http request 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Play",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": true,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -3237,12 +3199,10 @@ exports['unhappy path fails on first http request 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Play",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": true,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -3304,12 +3264,10 @@ exports['unhappy path fails on first http request 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Play",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": true,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -3370,18 +3328,9 @@ exports['unhappy path fails on first http request 1'] = `
                                       </MuiButtonRoot>
                                     </ForwardRef(Button)>
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={true}
-                                      fullWidth={false}
-                                      key=".1"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -3402,12 +3351,10 @@ exports['unhappy path fails on first http request 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Stop",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": true,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -3469,12 +3416,10 @@ exports['unhappy path fails on first http request 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Stop",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": true,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -3536,12 +3481,10 @@ exports['unhappy path fails on first http request 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Stop",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": true,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -3680,6 +3623,7 @@ exports['unhappy path fails on first http request 1'] = `
                                 startIcon={<Memo />}
                               >
                                 <MuiButtonRoot
+                                  className=""
                                   classes={
                                     Object {
                                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -3690,6 +3634,7 @@ exports['unhappy path fails on first http request 1'] = `
                                   }
                                   component="button"
                                   data-test="button-close"
+                                  disableRipple={false}
                                   disabled={false}
                                   focusRipple={true}
                                   focusVisibleClassName=""
@@ -3713,7 +3658,7 @@ exports['unhappy path fails on first http request 1'] = `
                                   }
                                 >
                                   <ForwardRef(ButtonBase)
-                                    className="css-w60cv3-MuiButton-root"
+                                    className=" css-w60cv3-MuiButton-root"
                                     classes={
                                       Object {
                                         "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -3724,6 +3669,7 @@ exports['unhappy path fails on first http request 1'] = `
                                     }
                                     component="button"
                                     data-test="button-close"
+                                    disableRipple={false}
                                     disabled={false}
                                     focusRipple={true}
                                     focusVisibleClassName=""
@@ -3731,7 +3677,7 @@ exports['unhappy path fails on first http request 1'] = `
                                   >
                                     <MuiButtonBaseRoot
                                       as="button"
-                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                       classes={
                                         Object {
                                           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -3784,7 +3730,7 @@ exports['unhappy path fails on first http request 1'] = `
                                             "Close",
                                             undefined,
                                           ],
-                                          "className": "css-w60cv3-MuiButton-root",
+                                          "className": " css-w60cv3-MuiButton-root",
                                           "classes": Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                             "label": "MuiButton-label",
@@ -3808,7 +3754,7 @@ exports['unhappy path fails on first http request 1'] = `
                                       type="button"
                                     >
                                       <button
-                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                         data-test="button-close"
                                         disabled={false}
                                         onBlur={[Function]}
@@ -4484,22 +4430,13 @@ exports['unhappy path fails on second http request 1'] = `
                                 >
                                   <div
                                     aria-label="preview cart"
-                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-dr3dyz-MuiButtonGroup-root"
+                                    className="MuiButtonGroup-root MuiButtonGroup-contained css-zqcytf-MuiButtonGroup-root"
                                     role="group"
                                   >
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={true}
-                                      fullWidth={false}
-                                      key=".0"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -4520,12 +4457,10 @@ exports['unhappy path fails on second http request 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Play",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": true,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -4587,12 +4522,10 @@ exports['unhappy path fails on second http request 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Play",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": true,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -4654,12 +4587,10 @@ exports['unhappy path fails on second http request 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Play",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": true,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -4720,18 +4651,9 @@ exports['unhappy path fails on second http request 1'] = `
                                       </MuiButtonRoot>
                                     </ForwardRef(Button)>
                                     <ForwardRef(Button)
-                                      className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
-                                      color="primary"
-                                      disableElevation={false}
-                                      disableFocusRipple={false}
-                                      disableRipple={false}
                                       disabled={true}
-                                      fullWidth={false}
-                                      key=".1"
                                       onClick={[Function]}
-                                      size="medium"
                                       startIcon={<Memo />}
-                                      variant="contained"
                                     >
                                       <MuiButtonRoot
                                         className="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary"
@@ -4752,12 +4674,10 @@ exports['unhappy path fails on second http request 1'] = `
                                         ownerState={
                                           Object {
                                             "children": "Stop",
-                                            "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                             "color": "primary",
                                             "component": "button",
                                             "disableElevation": false,
                                             "disableFocusRipple": false,
-                                            "disableRipple": false,
                                             "disabled": true,
                                             "fullWidth": false,
                                             "onClick": [Function],
@@ -4819,12 +4739,10 @@ exports['unhappy path fails on second http request 1'] = `
                                                     ownerState={
                                                       Object {
                                                         "children": "Stop",
-                                                        "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                         "color": "primary",
                                                         "component": "button",
                                                         "disableElevation": false,
                                                         "disableFocusRipple": false,
-                                                        "disableRipple": false,
                                                         "disabled": true,
                                                         "fullWidth": false,
                                                         "onClick": [Function],
@@ -4886,12 +4804,10 @@ exports['unhappy path fails on second http request 1'] = `
                                                 ownerState={
                                                   Object {
                                                     "children": "Stop",
-                                                    "className": "MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary",
                                                     "color": "primary",
                                                     "component": "button",
                                                     "disableElevation": false,
                                                     "disableFocusRipple": false,
-                                                    "disableRipple": false,
                                                     "disabled": true,
                                                     "fullWidth": false,
                                                     "onClick": [Function],
@@ -5030,6 +4946,7 @@ exports['unhappy path fails on second http request 1'] = `
                                 startIcon={<Memo />}
                               >
                                 <MuiButtonRoot
+                                  className=""
                                   classes={
                                     Object {
                                       "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -5040,6 +4957,7 @@ exports['unhappy path fails on second http request 1'] = `
                                   }
                                   component="button"
                                   data-test="button-close"
+                                  disableRipple={false}
                                   disabled={false}
                                   focusRipple={true}
                                   focusVisibleClassName=""
@@ -5063,7 +4981,7 @@ exports['unhappy path fails on second http request 1'] = `
                                   }
                                 >
                                   <ForwardRef(ButtonBase)
-                                    className="css-w60cv3-MuiButton-root"
+                                    className=" css-w60cv3-MuiButton-root"
                                     classes={
                                       Object {
                                         "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -5074,6 +4992,7 @@ exports['unhappy path fails on second http request 1'] = `
                                     }
                                     component="button"
                                     data-test="button-close"
+                                    disableRipple={false}
                                     disabled={false}
                                     focusRipple={true}
                                     focusVisibleClassName=""
@@ -5081,7 +5000,7 @@ exports['unhappy path fails on second http request 1'] = `
                                   >
                                     <MuiButtonBaseRoot
                                       as="button"
-                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                      className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                       classes={
                                         Object {
                                           "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -5134,7 +5053,7 @@ exports['unhappy path fails on second http request 1'] = `
                                             "Close",
                                             undefined,
                                           ],
-                                          "className": "css-w60cv3-MuiButton-root",
+                                          "className": " css-w60cv3-MuiButton-root",
                                           "classes": Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                             "label": "MuiButton-label",
@@ -5158,7 +5077,7 @@ exports['unhappy path fails on second http request 1'] = `
                                       type="button"
                                     >
                                       <button
-                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                        className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                         data-test="button-close"
                                         disabled={false}
                                         onBlur={[Function]}

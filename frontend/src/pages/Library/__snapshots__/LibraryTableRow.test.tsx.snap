@@ -985,7 +985,7 @@ exports['library table row renders single result expanded 1'] = `
                             >
                               <button
                                 aria-controls="preview audio"
-                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                 data-test="button-preview"
                                 tabindex="0"
                                 type="button"
@@ -1009,7 +1009,7 @@ exports['library table row renders single result expanded 1'] = `
                               </button>
                               <button
                                 aria-controls="download compressed audio"
-                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                 data-test="button-download-compressed"
                                 tabindex="0"
                                 type="button"
@@ -1033,7 +1033,7 @@ exports['library table row renders single result expanded 1'] = `
                               </button>
                               <button
                                 aria-controls="download linear audio"
-                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                 data-test="button-download-linear"
                                 tabindex="0"
                                 type="button"
@@ -1057,7 +1057,7 @@ exports['library table row renders single result expanded 1'] = `
                               </button>
                               <button
                                 aria-controls="edit cart"
-                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                 data-test="button-edit"
                                 tabindex="0"
                                 type="button"
@@ -1080,7 +1080,7 @@ exports['library table row renders single result expanded 1'] = `
                               </button>
                               <button
                                 aria-controls="delete cart"
-                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                 data-test="button-delete"
                                 tabindex="0"
                                 type="button"
@@ -1417,7 +1417,7 @@ exports['library table row renders single result expanded 1'] = `
                                           "contrastText": "#fff",
                                           "dark": "#e65100",
                                           "light": "#ff9800",
-                                          "main": "#ED6C02",
+                                          "main": "#ed6c02",
                                         },
                                       },
                                       "shadows": Array [
@@ -1595,6 +1595,7 @@ exports['library table row renders single result expanded 1'] = `
                                     >
                                       <MuiButtonRoot
                                         aria-controls="preview audio"
+                                        className=""
                                         classes={
                                           Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1605,6 +1606,7 @@ exports['library table row renders single result expanded 1'] = `
                                         }
                                         component="button"
                                         data-test="button-preview"
+                                        disableRipple={false}
                                         disabled={false}
                                         focusRipple={true}
                                         focusVisibleClassName=""
@@ -1633,7 +1635,7 @@ exports['library table row renders single result expanded 1'] = `
                                       >
                                         <ForwardRef(ButtonBase)
                                           aria-controls="preview audio"
-                                          className="css-w60cv3-MuiButton-root"
+                                          className=" css-w60cv3-MuiButton-root"
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1644,6 +1646,7 @@ exports['library table row renders single result expanded 1'] = `
                                           }
                                           component="button"
                                           data-test="button-preview"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1652,7 +1655,7 @@ exports['library table row renders single result expanded 1'] = `
                                           <MuiButtonBaseRoot
                                             aria-controls="preview audio"
                                             as="button"
-                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1689,7 +1692,7 @@ exports['library table row renders single result expanded 1'] = `
                                                   ],
                                                   undefined,
                                                 ],
-                                                "className": "css-w60cv3-MuiButton-root",
+                                                "className": " css-w60cv3-MuiButton-root",
                                                 "classes": Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                   "label": "MuiButton-label",
@@ -1714,7 +1717,7 @@ exports['library table row renders single result expanded 1'] = `
                                           >
                                             <button
                                               aria-controls="preview audio"
-                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                               data-test="button-preview"
                                               disabled={false}
                                               onBlur={[Function]}
@@ -1807,6 +1810,7 @@ exports['library table row renders single result expanded 1'] = `
                                       >
                                         <MuiButtonRoot
                                           aria-controls="download compressed audio"
+                                          className=""
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1817,6 +1821,7 @@ exports['library table row renders single result expanded 1'] = `
                                           }
                                           component="button"
                                           data-test="button-download-compressed"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -1845,7 +1850,7 @@ exports['library table row renders single result expanded 1'] = `
                                         >
                                           <ForwardRef(ButtonBase)
                                             aria-controls="download compressed audio"
-                                            className="css-w60cv3-MuiButton-root"
+                                            className=" css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1856,6 +1861,7 @@ exports['library table row renders single result expanded 1'] = `
                                             }
                                             component="button"
                                             data-test="button-download-compressed"
+                                            disableRipple={false}
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -1864,7 +1870,7 @@ exports['library table row renders single result expanded 1'] = `
                                             <MuiButtonBaseRoot
                                               aria-controls="download compressed audio"
                                               as="button"
-                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -1901,7 +1907,7 @@ exports['library table row renders single result expanded 1'] = `
                                                     ],
                                                     undefined,
                                                   ],
-                                                  "className": "css-w60cv3-MuiButton-root",
+                                                  "className": " css-w60cv3-MuiButton-root",
                                                   "classes": Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                     "label": "MuiButton-label",
@@ -1926,7 +1932,7 @@ exports['library table row renders single result expanded 1'] = `
                                             >
                                               <button
                                                 aria-controls="download compressed audio"
-                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                                 data-test="button-download-compressed"
                                                 disabled={false}
                                                 onBlur={[Function]}
@@ -2020,6 +2026,7 @@ exports['library table row renders single result expanded 1'] = `
                                       >
                                         <MuiButtonRoot
                                           aria-controls="download linear audio"
+                                          className=""
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2030,6 +2037,7 @@ exports['library table row renders single result expanded 1'] = `
                                           }
                                           component="button"
                                           data-test="button-download-linear"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -2058,7 +2066,7 @@ exports['library table row renders single result expanded 1'] = `
                                         >
                                           <ForwardRef(ButtonBase)
                                             aria-controls="download linear audio"
-                                            className="css-w60cv3-MuiButton-root"
+                                            className=" css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2069,6 +2077,7 @@ exports['library table row renders single result expanded 1'] = `
                                             }
                                             component="button"
                                             data-test="button-download-linear"
+                                            disableRipple={false}
                                             disabled={false}
                                             focusRipple={true}
                                             focusVisibleClassName=""
@@ -2077,7 +2086,7 @@ exports['library table row renders single result expanded 1'] = `
                                             <MuiButtonBaseRoot
                                               aria-controls="download linear audio"
                                               as="button"
-                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                               classes={
                                                 Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2114,7 +2123,7 @@ exports['library table row renders single result expanded 1'] = `
                                                     ],
                                                     undefined,
                                                   ],
-                                                  "className": "css-w60cv3-MuiButton-root",
+                                                  "className": " css-w60cv3-MuiButton-root",
                                                   "classes": Object {
                                                     "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                     "label": "MuiButton-label",
@@ -2139,7 +2148,7 @@ exports['library table row renders single result expanded 1'] = `
                                             >
                                               <button
                                                 aria-controls="download linear audio"
-                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                                 data-test="button-download-linear"
                                                 disabled={false}
                                                 onBlur={[Function]}
@@ -2228,6 +2237,7 @@ exports['library table row renders single result expanded 1'] = `
                                     >
                                       <MuiButtonRoot
                                         aria-controls="edit cart"
+                                        className=""
                                         classes={
                                           Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2238,6 +2248,7 @@ exports['library table row renders single result expanded 1'] = `
                                         }
                                         component="button"
                                         data-test="button-edit"
+                                        disableRipple={false}
                                         disabled={false}
                                         focusRipple={true}
                                         focusVisibleClassName=""
@@ -2265,7 +2276,7 @@ exports['library table row renders single result expanded 1'] = `
                                       >
                                         <ForwardRef(ButtonBase)
                                           aria-controls="edit cart"
-                                          className="css-w60cv3-MuiButton-root"
+                                          className=" css-w60cv3-MuiButton-root"
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2276,6 +2287,7 @@ exports['library table row renders single result expanded 1'] = `
                                           }
                                           component="button"
                                           data-test="button-edit"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -2284,7 +2296,7 @@ exports['library table row renders single result expanded 1'] = `
                                           <MuiButtonBaseRoot
                                             aria-controls="edit cart"
                                             as="button"
-                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2320,7 +2332,7 @@ exports['library table row renders single result expanded 1'] = `
                                                   ],
                                                   undefined,
                                                 ],
-                                                "className": "css-w60cv3-MuiButton-root",
+                                                "className": " css-w60cv3-MuiButton-root",
                                                 "classes": Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                   "label": "MuiButton-label",
@@ -2345,7 +2357,7 @@ exports['library table row renders single result expanded 1'] = `
                                           >
                                             <button
                                               aria-controls="edit cart"
-                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                               data-test="button-edit"
                                               disabled={false}
                                               onBlur={[Function]}
@@ -2432,6 +2444,7 @@ exports['library table row renders single result expanded 1'] = `
                                     >
                                       <MuiButtonRoot
                                         aria-controls="delete cart"
+                                        className=""
                                         classes={
                                           Object {
                                             "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2442,6 +2455,7 @@ exports['library table row renders single result expanded 1'] = `
                                         }
                                         component="button"
                                         data-test="button-delete"
+                                        disableRipple={false}
                                         disabled={false}
                                         focusRipple={true}
                                         focusVisibleClassName=""
@@ -2469,7 +2483,7 @@ exports['library table row renders single result expanded 1'] = `
                                       >
                                         <ForwardRef(ButtonBase)
                                           aria-controls="delete cart"
-                                          className="css-w60cv3-MuiButton-root"
+                                          className=" css-w60cv3-MuiButton-root"
                                           classes={
                                             Object {
                                               "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2480,6 +2494,7 @@ exports['library table row renders single result expanded 1'] = `
                                           }
                                           component="button"
                                           data-test="button-delete"
+                                          disableRipple={false}
                                           disabled={false}
                                           focusRipple={true}
                                           focusVisibleClassName=""
@@ -2488,7 +2503,7 @@ exports['library table row renders single result expanded 1'] = `
                                           <MuiButtonBaseRoot
                                             aria-controls="delete cart"
                                             as="button"
-                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-w60cv3-MuiButton-root"
+                                            className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-w60cv3-MuiButton-root"
                                             classes={
                                               Object {
                                                 "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
@@ -2524,7 +2539,7 @@ exports['library table row renders single result expanded 1'] = `
                                                   ],
                                                   undefined,
                                                 ],
-                                                "className": "css-w60cv3-MuiButton-root",
+                                                "className": " css-w60cv3-MuiButton-root",
                                                 "classes": Object {
                                                   "endIcon": "MuiButton-endIcon MuiButton-iconSizeMedium",
                                                   "label": "MuiButton-label",
@@ -2549,7 +2564,7 @@ exports['library table row renders single result expanded 1'] = `
                                           >
                                             <button
                                               aria-controls="delete cart"
-                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                                              className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
                                               data-test="button-delete"
                                               disabled={false}
                                               onBlur={[Function]}

@@ -32,6 +32,7 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
+import logging
 import re
 from rest_framework.parsers import MultiPartParser
 from rest_framework import views, viewsets
@@ -39,6 +40,8 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 
+
+logger = logging.getLogger(__name__)
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all().order_by("name")
@@ -85,10 +88,12 @@ class AudioView(views.APIView):
         # Check we have a cart to match on
 
         cart = get_object_or_404(Cart, id=pk)
+        logger.info(f'Found cart {cart.id}')
 
         # Check we have a file uploaded to us
 
         if "file" not in request.data or not request.data["file"]:
+            logger.warn(f'Update cart {cart.id} audio without audio payload')
             return HttpResponseBadRequest(
                 _("You must upload an audio file to process.")
             )
@@ -97,12 +102,17 @@ class AudioView(views.APIView):
 
         job = AudioUploadJob(cart=cart)
         job.save()
+        logger.info(f'Created job {job.id} for cart {cart.id}')
 
         # Save the file to the queue folder and trigger the process
 
         generated_file_name = f"queued/{job.id}_{cart.id}"
+        logger.info(f'Starting upload to {generated_file_name}')
         default_storage.save(generated_file_name, request.data["file"])
+        logger.info(f'Completed upload to {generated_file_name}')
+
         validate_audio_upload.apply_async(args=(job.id,))
+        logger.info(f'Async job {job.id} triggered')
 
         # Let the user know we're in progress
 

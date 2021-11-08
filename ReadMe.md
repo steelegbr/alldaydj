@@ -62,7 +62,7 @@ need the following variables.
 
 A simple shell script that exports the environment variables should be enough for dev work. Remember to execute it correctly inside the Python virtualenv:
 
-    . set_params_dev.sh
+    source set_params_dev.sh
 
 Note the lack of forward slash!
 

@@ -15,7 +15,6 @@ env:
   ADDJ_CELERY_ALWAYS_EAGER: "True"
   DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
   ADDJ_S3_REGION: dummy-region
-  ADDJ_S3_ENDPOINT: http://localstack:4566/
   ADDJ_S3_KEY_ID: key123
   ADDJ_S3_KEY_SECRET: secret123
   ADDJ_S3_BUCKET: alldaydj
@@ -256,7 +255,7 @@ jobs:
           ADDJ_CELERY_ALWAYS_EAGER: "True"
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
           ADDJ_S3_REGION: dummy-region
-          ADDJ_S3_ENDPOINT: http://localstack:4572/
+          ADDJ_S3_ENDPOINT: http://localstack:4566/
           ADDJ_S3_KEY_ID: key123
           ADDJ_S3_KEY_SECRET: secret123
           ADDJ_S3_BUCKET: alldaydj

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`audio download button rendering render compressed 1`] = `
+exports['audio download button rendering render compressed 1'] = `
 <AudioDownloadButton
   cartId="UUID123"
   downloadType="Compressed"
@@ -219,7 +219,7 @@ exports[`audio download button rendering render compressed 1`] = `
 </AudioDownloadButton>
 `;
 
-exports[`audio download button rendering render compressed 2`] = `
+exports['audio download button rendering render compressed 2'] = `
 <AudioDownloadButton
   cartId="UUID123"
   downloadType="Linear"
@@ -438,7 +438,7 @@ exports[`audio download button rendering render compressed 2`] = `
 </AudioDownloadButton>
 `;
 
-exports[`audio download download unhappy path 1`] = `
+exports['audio download download unhappy path 1'] = `
 <AudioDownloadButton
   cartId="UUID123"
   downloadType="Compressed"

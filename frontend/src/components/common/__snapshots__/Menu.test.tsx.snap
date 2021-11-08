@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`main menu snapshot 1`] = `
+exports['main menu snapshot 1'] = `
 <ThemeProvider
   theme={
     Object {
@@ -3254,7 +3254,7 @@ exports[`main menu snapshot 1`] = `
 </ThemeProvider>
 `;
 
-exports[`main menu snapshot menu opened 1`] = `
+exports['main menu snapshot menu opened 1'] = `
 <ThemeProvider
   theme={
     Object {

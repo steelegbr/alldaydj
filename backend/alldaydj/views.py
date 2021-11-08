@@ -94,7 +94,7 @@ class AudioView(views.APIView):
         # Check we have a file uploaded to us
 
         if "file" not in request.data or not request.data["file"]:
-            logger.warn(f"Update cart {cart.id} audio without audio payload")
+            logger.warning(f"Update cart {cart.id} audio without audio payload")
             return HttpResponseBadRequest(
                 _("You must upload an audio file to process.")
             )

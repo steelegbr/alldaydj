@@ -43,6 +43,7 @@ from rest_framework.response import Response
 
 logger = logging.getLogger(__name__)
 
+
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all().order_by("name")
     serializer_class = ArtistSerializer
@@ -88,12 +89,12 @@ class AudioView(views.APIView):
         # Check we have a cart to match on
 
         cart = get_object_or_404(Cart, id=pk)
-        logger.info(f'Found cart {cart.id}')
+        logger.info(f"Found cart {cart.id}")
 
         # Check we have a file uploaded to us
 
         if "file" not in request.data or not request.data["file"]:
-            logger.warn(f'Update cart {cart.id} audio without audio payload')
+            logger.warn(f"Update cart {cart.id} audio without audio payload")
             return HttpResponseBadRequest(
                 _("You must upload an audio file to process.")
             )
@@ -102,17 +103,17 @@ class AudioView(views.APIView):
 
         job = AudioUploadJob(cart=cart)
         job.save()
-        logger.info(f'Created job {job.id} for cart {cart.id}')
+        logger.info(f"Created job {job.id} for cart {cart.id}")
 
         # Save the file to the queue folder and trigger the process
 
         generated_file_name = f"queued/{job.id}_{cart.id}"
-        logger.info(f'Starting upload to {generated_file_name}')
+        logger.info(f"Starting upload to {generated_file_name}")
         default_storage.save(generated_file_name, request.data["file"])
-        logger.info(f'Completed upload to {generated_file_name}')
+        logger.info(f"Completed upload to {generated_file_name}")
 
         validate_audio_upload.apply_async(args=(job.id,))
-        logger.info(f'Async job {job.id} triggered')
+        logger.info(f"Async job {job.id} triggered")
 
         # Let the user know we're in progress
 
@@ -150,6 +151,10 @@ class CartIdSequencerViewSet(viewsets.ModelViewSet):
                 break
 
         next_padded = str(next_expected).rjust(generator.min_digits, "0")
+        complete_generated = {generator.prefix}{next_padded}{generator.suffix}
+        logger.info(
+            f"Generator {generator.name} picked complete_generated"
+        )
         return JsonResponse(
-            {"next": f"{generator.prefix}{next_padded}{generator.suffix}"}
+            {"next": complete_generated}
         )

@@ -13,4 +13,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fastapi import FastAPI()
+from fastapi import FastAPI
+from routers import artists
+
+app = FastAPI()
+app.include_router(artists.router)

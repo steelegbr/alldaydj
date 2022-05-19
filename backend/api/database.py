@@ -13,7 +13,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-# Database autoconfig from GCLOUD_PROJECT environment variable
+from firebase_admin import credentials, firestore, initialize_app
+from os import environ
 
-from google.cloud import firestore
-db = firestore.Client()
+db_creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
+firebase_app = initialize_app(db_creds)
+db = firestore.client()

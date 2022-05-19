@@ -1,5 +1,6 @@
 *.pyc
-addjvenv/
+apivenv/
+functionsvenv/
 syncvenv/
 .vscode/
 set_params_dev.sh

@@ -31,16 +31,16 @@ class Cart(BaseModel):
     cue_segue: int = Field(default=0, ge=0)
     sweeper: bool
     year: int = Field(default=0, ge=0)
-    isrc: str
-    composer: str
-    publisher: str
-    record_label: str
+    isrc: Optional[str]
+    composer: Optional[str]
+    publisher: Optional[str]
+    record_label: Optional[str]
     tags: List[str]
-    type: UUID
-    hash_audio: str
-    hash_compressed: str
-    audio: str
-    compressed: str
+    type: str
+    hash_audio: Optional[str]
+    hash_compressed: Optional[str]
+    audio: Optional[str]
+    compressed: Optional[str]
     fade: bool
 
 

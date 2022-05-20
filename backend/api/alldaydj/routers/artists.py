@@ -15,7 +15,6 @@
 
 from alldaydj.models.artist import Artist
 from alldaydj.services.artist_repository import ArtistRepository
-from alldaydj.services.logging import logger
 from fastapi import APIRouter, HTTPException, Response
 from fastapi_pagination import Page, add_pagination, paginate
 from typing import List
@@ -27,23 +26,17 @@ artist_repository = ArtistRepository()
 
 @router.get("/artist/{artist_id}")
 async def get_artist(artist_id: UUID) -> Artist:
-    logger.info(f"GET for artist ID {artist_id}")
     artist = artist_repository.get(artist_id)
 
     if not artist:
-        logger.info(f"RETURN 404 artist ID {artist_id}")
         raise HTTPException(status_code=404, detail="Artist not found")
 
-    logger.info(f"RETURN 200 artist ID {artist_id}")
     return artist
 
 
 @router.post("/artist/")
 async def create_artist(artist: Artist) -> Artist:
-    logger.info(f"POST for artist name {artist.name}")
-
     if artist_repository.get_by_name(artist.name):
-        logger.info(f"RETURN 409 artist name {artist.name}")
         raise HTTPException(
             status_code=409, detail="Artist with that name already exists"
         )
@@ -57,21 +50,17 @@ async def create_artist(artist: Artist) -> Artist:
 
 @router.delete("/artist/{artist_id}")
 async def delete_artist(artist_id: UUID):
-    logger.info(f"DELETE for artist ID {artist_id}")
     artist = artist_repository.get(artist_id)
 
     if not artist:
-        logger.info(f"RETURN 404 artist ID {artist_id}")
         raise HTTPException(status_code=404, detail="Artist not found")
 
     artist_repository.delete(artist_id)
-    logger.info("RETURN 204 delete success")
     return Response(status_code=204)
 
 
 @router.get("/artist/", response_model=Page[Artist])
 async def autocomplete_artist(q: str) -> List[Artist]:
-    logger.info(f"SEARCH for artist {q}")
     return paginate(artist_repository.autocomplete_search(q))
 
 

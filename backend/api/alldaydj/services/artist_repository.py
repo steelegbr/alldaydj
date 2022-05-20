@@ -14,7 +14,7 @@
 """
 
 from alldaydj.models.artist import Artist
-from alldaydj.services.database import db
+from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
 from typing import List, Optional
 from uuid import UUID
@@ -46,16 +46,18 @@ class ArtistRepository:
 
     def save(self, id: str, artist: Artist):
         logger.info(f"Saving artist {id}")
+
+        # Convert
+
         artist_to_save = artist.dict()
-
-        # Don't store the ID twice
-
-        if "id" in artist_to_save:
-            del artist_to_save["id"]
+        strip_id(artist_to_save)
 
         # Create an autocomplete field
 
         artist_to_save[FIELD_AUTOCOMPLTE] = artist.name.lower()
+
+        # Save
+
         db.collection(COLLECTION_ARTIST).document(str(id)).set(artist_to_save)
 
     def delete(self, id: UUID):

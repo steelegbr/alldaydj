@@ -15,7 +15,13 @@
 
 from firebase_admin import credentials, firestore, initialize_app
 from os import environ
+from typing import Dict
 
 db_creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
 firebase_app = initialize_app(db_creds)
 db = firestore.client()
+
+
+def strip_id(dict: Dict):
+    if dict and "id" in dict:
+        del dict["id"]

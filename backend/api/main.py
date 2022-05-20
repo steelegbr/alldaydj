@@ -13,14 +13,38 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fastapi import FastAPI
-from alldaydj.routers import artists
+from fastapi import FastAPI, Request
+from alldaydj.routers import artists, types
+from alldaydj.services.logging import logger
+from time import time
 
-# Use a nested FastAPI instance to mounst at /api/ as our base
+# Use a nested FastAPI instance to mount at /api/ as our base
 
 app = FastAPI()
 
 api_app = FastAPI(debug=True)
 api_app.include_router(artists.router)
+api_app.include_router(types.router)
 
 app.mount("/api", api_app)
+
+# Logging
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+
+    # Note the timings and make the request
+
+    start = time()
+    response = await call_next(request)
+    end = time()
+
+    # Log the timings and response
+
+    response_time = (end - start) * 1000
+    logger.info(
+        f"{request.method} {request.url.path} {response_time:.2f}ms {response.status_code}"
+    )
+
+    return response

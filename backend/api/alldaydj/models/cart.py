@@ -45,7 +45,7 @@ class Cart(BaseModel):
 
 
 class CartType(BaseModel):
-    id: UUID
+    id: Optional[UUID]
     tag: constr(min_length=1)
-    colour: Color()
+    colour: Color
     now_playing: bool

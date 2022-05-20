@@ -80,11 +80,27 @@ async def create_cart(cart: Cart) -> Cart:
 
 
 @router.get("/cart", response_model=Page[Cart])
-def search_cart(q: str) -> List[Cart]:
+async def search_cart(q: str) -> List[Cart]:
     return paginate(cart_repository.search(q))
 
 
-add_pagination(router)
+@router.put("/cart/{cart_id}")
+async def update_cart(cart_id: UUID, cart: Cart) -> Cart:
+    if not cart_repository.get(cart_id):
+        raise HTTPException(status_code=404, detail="Cart not found")
+
+    cart_repository.save(cart_id, cart)
+    cart.id = cart_id
+    return cart
+
+
+@router.delete("/cart/{cart_id}")
+async def delete_cart(cart_id):
+    if not cart_repository.get(cart_id):
+        raise HTTPException(status_code=404, detail="Cart not found")
+
+    cart_repository.delete(cart_id)
+    return Response(status_code=204)
 
 
 add_pagination(router)

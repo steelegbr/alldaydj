@@ -71,3 +71,7 @@ class CartRepository:
             search_query = search_query.where(f"{FIELD_SEARCH}.{search_token}", "==", 1)
 
         return [self.__map_doc_to_cart(cart_doc) for cart_doc in search_query.stream()]
+
+    def delete(self, id: UUID):
+        logger.info(f"Delete cart ID {id}")
+        db.collection(COLLECTION_CART).document(str(id)).delete()

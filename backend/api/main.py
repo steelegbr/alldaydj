@@ -14,7 +14,13 @@
 """
 
 from fastapi import FastAPI
-from routers import artists
+from alldaydj.routers import artists
+
+# Use a nested FastAPI instance to mounst at /api/ as our base
 
 app = FastAPI()
-app.include_router(artists.router)
+
+api_app = FastAPI(debug=True)
+api_app.include_router(artists.router)
+
+app.mount("/api", api_app)

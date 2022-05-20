@@ -13,24 +13,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fastapi import APIRouter, HTTPException
-from models.artist import Artist
-from services.artist_service import ArtistService
-from services.logging import logger
+from typing import Optional
+from pydantic import BaseModel, constr
 from uuid import UUID
 
-router = APIRouter()
-artist_service = ArtistService()
 
-
-@router.get("/{artist_id}")
-def get_artist(artist_id: UUID) -> Artist:
-    logger.info(f"GET for artist ID {artist_id}")
-    artist = artist_service.get(artist_id)
-
-    if not artist:
-        logger.info(f"RETURN 404 artist ID {artist_id}")
-        raise HTTPException(status_code=404, detail="Artist not found")
-
-    logger.info(f"RETURN 200 artist ID {artist_id}")
-    return artist
+class Artist(BaseModel):
+    id: Optional[UUID]
+    name: constr(min_length=1)

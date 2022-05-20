@@ -13,11 +13,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fastapi import Response
 from alldaydj.models.artist import Artist
 from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.logging import logger
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
+from fastapi_pagination import Page, add_pagination, paginate
+from typing import List
 from uuid import uuid4, UUID
 
 router = APIRouter()
@@ -66,3 +67,12 @@ async def delete_artist(artist_id: UUID):
     artist_repository.delete(artist_id)
     logger.info("RETURN 204 delete success")
     return Response(status_code=204)
+
+
+@router.get("/artist/", response_model=Page[Artist])
+async def autocomplete_artist(q: str) -> List[Artist]:
+    logger.info(f"SEARCH for artist {q}")
+    return paginate(artist_repository.autocomplete_search(q))
+
+
+add_pagination(router)

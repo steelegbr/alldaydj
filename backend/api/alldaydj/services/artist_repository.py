@@ -20,6 +20,7 @@ from typing import List, Optional
 from uuid import UUID
 
 COLLECTION_ARTIST = "artists"
+FIELD_AUTOCOMPLTE = "autocomplete"
 
 
 class ArtistRepository:
@@ -46,10 +47,27 @@ class ArtistRepository:
     def save(self, id: str, artist: Artist):
         logger.info(f"Saving artist {id}")
         artist_to_save = artist.dict()
+
+        # Don't store the ID twice
+
         if "id" in artist_to_save:
             del artist_to_save["id"]
+
+        # Create an autocomplete field
+
+        artist_to_save[FIELD_AUTOCOMPLTE] = artist.name.lower()
         db.collection(COLLECTION_ARTIST).document(str(id)).set(artist_to_save)
 
     def delete(self, id: UUID):
         logger.info(f"Delete artist {id}")
         db.collection(COLLECTION_ARTIST).document(str(id)).delete()
+
+    def autocomplete_search(self, q: str) -> List[Artist]:
+        logger.info(f"Search artist name {q}")
+        return [
+            self.__map_doc_to_artist(artist_doc)
+            for artist_doc in db.collection(COLLECTION_ARTIST)
+            .where(FIELD_AUTOCOMPLTE, ">=", q)
+            .where(FIELD_AUTOCOMPLTE, "<", f"q\uF8FF")
+            .stream()
+        ]

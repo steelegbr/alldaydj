@@ -1,3 +1,4 @@
 fastapi
+fastapi-pagination
 firebase-admin
 uvicorn[standard]

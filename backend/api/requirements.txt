@@ -2,4 +2,5 @@ fastapi
 fastapi-pagination
 firebase-admin
 nltk
+parameterized
 uvicorn[standard]

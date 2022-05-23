@@ -15,7 +15,7 @@
 
 from google.cloud import pubsub_v1
 
-from firebase_admin import credentials, firestore, initialize_app
+from firebase_admin import credentials
 from os import environ
 from typing import Dict
 

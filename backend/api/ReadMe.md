@@ -12,7 +12,7 @@ You may need to refresh the environment variables if it doesn't load:
 
 To use the firebase emulator, you'll need some extra environement variables:
 
-    $env:FIRESTORE_EMULATOR_HOST="localhost:9099"
+    $env:FIRESTORE_EMULATOR_HOST="localhost:8080"
     $env:FIREBASE_STORAGE_EMULATOR_HOST="localhost:9199"
 
 ## Search

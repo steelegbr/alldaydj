@@ -14,14 +14,7 @@
 """
 
 from alldaydj.services.firebase import firebase_app
-from firebase_admin import firestore
+from firebase_admin import storage
 from os import environ
-from typing import Dict
 
-
-db = firestore.client()
-
-
-def strip_id(dict: Dict):
-    if dict and "id" in dict:
-        del dict["id"]
+bucket = storage.bucket(environ.get("ALLDAYDJ_BUCKET"))

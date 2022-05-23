@@ -63,11 +63,13 @@ class ArtistRepository(Repository):
 
     def add_if_not_exist(self, name: str):
         logger.info(f"Add artist name {name} if they do not already exist")
+        if not name:
+            logger.info(f"Not adding empty artist to the system")
+
         if self.get_by_name(name):
             logger.info(f"Artist name {name} already exists")
 
-        new_artist = Artist()
-        new_artist.id = uuid4
-        new_artist.name = name
+        new_artist = Artist(name=name)
+        new_artist.id = uuid4()
 
-        self.save(new_artist)
+        self.save(new_artist.id, new_artist)

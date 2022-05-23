@@ -33,4 +33,6 @@ class JobRepository(Repository):
 
     def save(self, id: UUID, job: AudioUploadJob):
         logger.info(f"Saving job {id}")
-        self.save_stripped_document(id, COLLECTION_JOB, job)
+        self.save_stripped_document(
+            id, COLLECTION_JOB, job, {"cart_id": str(job.cart_id)}
+        )

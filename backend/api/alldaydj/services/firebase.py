@@ -13,15 +13,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.services.firebase import firebase_app
-from firebase_admin import firestore
 from os import environ
-from typing import Dict
+from firebase_admin import credentials, initialize_app
 
-
-db = firestore.client()
-
-
-def strip_id(dict: Dict):
-    if dict and "id" in dict:
-        del dict["id"]
+creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
+firebase_app = initialize_app(creds)

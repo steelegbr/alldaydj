@@ -67,4 +67,4 @@ class TypeRepository(Repository):
         if not cart_types or len(cart_types) > 1:
             logger.info(f"Found {len(cart_types)} cart type(s) for tag {cart_type}")
             raise HTTPException(status_code=400, detail="Invalid cart type supplied")
-        return cart_types[0].id
+        return str(cart_types[0].id)

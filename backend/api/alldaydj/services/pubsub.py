@@ -13,15 +13,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.services.firebase import firebase_app
-from firebase_admin import firestore
+from google.cloud import pubsub_v1
+
+from firebase_admin import credentials, firestore, initialize_app
 from os import environ
 from typing import Dict
 
+TOPIC_VALIDATE = environ.get("ALLDADYJ_TOPIC_VALIDATE")
 
-db = firestore.client()
-
-
-def strip_id(dict: Dict):
-    if dict and "id" in dict:
-        del dict["id"]
+pubsub_creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
+publisher = pubsub_v1.PublisherClient(credentials=pubsub_creds)

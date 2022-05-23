@@ -7,6 +7,8 @@ The FastAPI with Firestore implementation of the AllDay DJ backend.
 You may need to refresh the environment variables if it doesn't load:
 
     $env:FIREBASE_CREDENTIALS="/path/to/file.json"
+    $env:ALLDAYDJ_BUCKET="addj-test-bucket"
+    $env:ALLDADYJ_TOPIC_VALIDATE="validate-audio"
 
 ### Emulator
 

@@ -49,3 +49,10 @@ class CartType(BaseModel):
     tag: constr(min_length=1)
     colour: Color
     now_playing: bool
+
+
+class CartAudio(BaseModel):
+    audio: str
+    compressed: str
+    hash_audio: str
+    hash_compressed: str

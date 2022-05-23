@@ -32,6 +32,6 @@ class AudioUploadStatus(str, Enum):
 
 class AudioUploadJob(BaseModel):
     id: Optional[UUID]
-    name: AudioUploadStatus
+    status: AudioUploadStatus
     cart_id: UUID
     error: Optional[str]

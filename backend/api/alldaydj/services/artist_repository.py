@@ -14,9 +14,9 @@
 """
 
 from alldaydj.models.artist import Artist
-from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
+from alldaydj.services.repository import Repository
 from typing import List, Optional
 from uuid import UUID, uuid4
 
@@ -24,17 +24,13 @@ COLLECTION_ARTIST = "artists"
 FIELD_AUTOCOMPLTE = "autocomplete"
 
 
-class ArtistRepository:
+class ArtistRepository(Repository):
     def __map_doc_to_artist(self, artist_doc) -> Artist:
         return Artist.parse_obj({**artist_doc.to_dict(), "id": artist_doc.id})
 
     def get(self, id: UUID) -> Optional[Artist]:
         logger.info(f"Lookup for artist ID {id}")
-        artist_doc = db.collection(COLLECTION_ARTIST).document(str(id)).get()
-        if artist_doc.exists:
-            logger.info(f"Artist ID {id} found")
-            return self.__map_doc_to_artist(artist_doc)
-        logger.info(f"Artist ID {id} NOT found")
+        return self.get_document(id, COLLECTION_ARTIST, self.__map_doc_to_artist)
 
     def get_by_name(self, name: str) -> List[Artist]:
         logger.info(f"Find exact match of artist name {name}")
@@ -47,19 +43,9 @@ class ArtistRepository:
 
     def save(self, id: str, artist: Artist):
         logger.info(f"Saving artist {id}")
-
-        # Convert
-
-        artist_to_save = artist.dict()
-        strip_id(artist_to_save)
-
-        # Create an autocomplete field
-
-        artist_to_save[FIELD_AUTOCOMPLTE] = artist.name.lower()
-
-        # Save
-
-        db.collection(COLLECTION_ARTIST).document(str(id)).set(artist_to_save)
+        self.save_stripped_document(
+            id, COLLECTION_ARTIST, artist, {FIELD_AUTOCOMPLTE: artist.name.lower()}
+        )
 
     def delete(self, id: UUID):
         logger.info(f"Delete artist {id}")
@@ -71,7 +57,7 @@ class ArtistRepository:
             self.__map_doc_to_artist(artist_doc)
             for artist_doc in db.collection(COLLECTION_ARTIST)
             .where(FIELD_AUTOCOMPLTE, ">=", q)
-            .where(FIELD_AUTOCOMPLTE, "<", f"q\uF8FF")
+            .where(FIELD_AUTOCOMPLTE, "<", f"{q}\uF8FF")
             .stream()
         ]
 

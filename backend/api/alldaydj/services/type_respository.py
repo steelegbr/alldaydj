@@ -16,6 +16,7 @@
 from alldaydj.models.cart import CartType
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
+from alldaydj.services.repository import Repository
 from fastapi import HTTPException
 from typing import List
 from uuid import UUID
@@ -23,24 +24,17 @@ from uuid import UUID
 COLLECTION_TYPE = "types"
 
 
-class TypeRepository:
+class TypeRepository(Repository):
     def __map_doc_to_cart_type(self, type_doc) -> CartType:
         return CartType.parse_obj({**type_doc.to_dict(), "id": type_doc.id})
 
     def all(self) -> List[CartType]:
         logger.info("List for all cart types")
-        return [
-            self.__map_doc_to_cart_type(type_doc)
-            for type_doc in db.collection(COLLECTION_TYPE).stream()
-        ]
+        return self.get_all(COLLECTION_TYPE, self.__map_doc_to_cart_type)
 
     def get(self, id: UUID) -> CartType:
         logger.info(f"Lookup for cart type ID {id}")
-        type_doc = db.collection(COLLECTION_TYPE).document(str(id)).get()
-        if type_doc.exists:
-            logger.info(f"Cart type ID {id} found")
-            return self.__map_doc_to_cart_type(type_doc)
-        logger.info(f"Cart type ID {id} NOT found")
+        return self.get_document(id, COLLECTION_TYPE, self.__map_doc_to_cart_type)
 
     def get_by_tag(self, tag: str) -> List[CartType]:
         logger.info(f"Lookup by cart type tag {tag}")

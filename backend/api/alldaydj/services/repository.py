@@ -13,24 +13,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.models.job import AudioUploadJob
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
-from alldaydj.services.repository import Repository
-from typing import Optional
+from pydantic import BaseModel
+from typing import Callable
 from uuid import UUID
 
-COLLECTION_JOB = "jobs"
 
+class Repository:
+    def get_document(self, id: UUID, collection: str, mapper: Callable):
+        doc = db.collection(collection).document(str(id)).get()
+        if doc.exists:
+            logger.info(f"Document id {id} in {collection} exists")
+            return mapper(doc)
+        logger.info(f"Document id {id} in {collection} does not exist")
 
-class JobRepository(Repository):
-    def __map_doc_to_job(self, job_doc) -> AudioUploadJob:
-        return AudioUploadJob.parse_obj({**job_doc.to_dict(), "id": job_doc.id})
+    def get_all(self, collection: str, mapper: Callable):
+        [mapper(doc) for doc in db.collection(collection).stream()]
 
-    def get(self, id: UUID) -> Optional[AudioUploadJob]:
-        logger.info(f"Lookup for job ID {id}")
-        return self.get_document(id, COLLECTION_JOB, self.__map_doc_to_job)
-
-    def save(self, id: UUID, job: AudioUploadJob):
-        logger.info(f"Saving job {id}")
-        self.save_stripped_document(id, COLLECTION_JOB, job)
+    def save_stripped_document(
+        self, id: UUID, collection: str, doc: BaseModel, extra_fields={}
+    ):
+        converted = {**doc.dict(), **extra_fields}
+        strip_id(converted)
+        db.collection(collection).document(str(id)).set(converted)

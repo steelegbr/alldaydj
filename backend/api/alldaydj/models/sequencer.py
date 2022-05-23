@@ -13,24 +13,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.models.job import AudioUploadJob
-from alldaydj.services.database import db, strip_id
-from alldaydj.services.logging import logger
-from alldaydj.services.repository import Repository
+from pydantic import BaseModel, constr, Field
 from typing import Optional
 from uuid import UUID
 
-COLLECTION_JOB = "jobs"
+CONSTRAINT_CART_ID = r"[a-zA-Z0-9]*"
 
 
-class JobRepository(Repository):
-    def __map_doc_to_job(self, job_doc) -> AudioUploadJob:
-        return AudioUploadJob.parse_obj({**job_doc.to_dict(), "id": job_doc.id})
+class CartIdSequencer(BaseModel):
+    id: Optional[UUID]
+    name: constr(min_length=1)
+    prefix: constr(regex=CONSTRAINT_CART_ID)
+    suffix: constr(regex=CONSTRAINT_CART_ID)
+    min_digits: Field(ge=1)
 
-    def get(self, id: UUID) -> Optional[AudioUploadJob]:
-        logger.info(f"Lookup for job ID {id}")
-        return self.get_document(id, COLLECTION_JOB, self.__map_doc_to_job)
 
-    def save(self, id: UUID, job: AudioUploadJob):
-        logger.info(f"Saving job {id}")
-        self.save_stripped_document(id, COLLECTION_JOB, job)
+class SequencerResponse(BaseModel):
+    next: str

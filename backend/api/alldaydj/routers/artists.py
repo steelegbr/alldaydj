@@ -26,9 +26,7 @@ artist_repository = ArtistRepository()
 
 @router.get("/artist/{artist_id}")
 async def get_artist(artist_id: UUID) -> Artist:
-    artist = artist_repository.get(artist_id)
-
-    if not artist:
+    if not (artist := artist_repository.get(artist_id)):
         raise HTTPException(status_code=404, detail="Artist not found")
 
     return artist

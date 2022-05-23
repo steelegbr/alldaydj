@@ -125,3 +125,33 @@ def test_create_collision():
     # Cleanup
 
     client.delete(f"/api/artist/{original_response_json['id']}")
+
+
+def test_autocomplete():
+    # Arrange
+
+    artists = ["ARTIST 7", "Artist 8", "artist 9"]
+    responses = [
+        client.post("/api/artist/", json={"name": artist}) for artist in artists
+    ]
+
+    # Act
+
+    search_response = client.get("/api/artist?q=art")
+    search_response_json = search_response.json()
+
+    # Assert
+
+    for response in responses:
+        assert response.status_code == 200
+
+    assert search_response.status_code == 200
+
+    assert search_response_json["total"] == len(artists)
+    for index, artist in enumerate(artists):
+        assert search_response_json["items"][index]["name"] == artist
+
+    # Cleanup
+
+    for response in responses:
+        client.delete(f"/api/artist/{response.json()['id']}")

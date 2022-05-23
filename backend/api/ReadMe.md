@@ -15,6 +15,16 @@ To use the firebase emulator, you'll need some extra environement variables:
     $env:FIRESTORE_EMULATOR_HOST="localhost:8080"
     $env:FIREBASE_STORAGE_EMULATOR_HOST="localhost:9199"
 
+You may need to build the functions before attempting to run the emulators:
+
+    npm run build
+
+##
+
+Testing the backend API can be done with a call to:
+
+    pytest
+
 ## Search
 
 To allow the generation of search terms to ignore stop words, NLTK must have collection of stopwords for the language. Downloads can be triggered from the CLI:

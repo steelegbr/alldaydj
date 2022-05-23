@@ -27,10 +27,10 @@ client = TestClient(app)
         ("📻📡 🎶",),
     ]
 )
-def test_can_create_retrieve_artists(self, name: str):
+def test_can_create_retrieve_delete_artist(name: str):
     # Create
 
-    post_response = client.post("/api/artist", json={"name": name})
+    post_response = client.post("/api/artist/", json={"name": name})
     assert post_response.status_code == 200
     post_response_json = post_response.json()
     assert post_response_json["name"] == name

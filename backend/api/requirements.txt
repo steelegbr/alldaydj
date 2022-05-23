@@ -3,4 +3,5 @@ fastapi-pagination
 firebase-admin
 nltk
 parameterized
+pytest
 uvicorn[standard]

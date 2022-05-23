@@ -46,6 +46,24 @@ async def create_artist(artist: Artist) -> Artist:
     return artist
 
 
+@router.put("/artist/{artist_id}")
+async def update_artist(artist_id: UUID, artist: Artist):
+    colliding_artists = [
+        possible_collision
+        for possible_collision in artist_repository.get_by_name(artist.name)
+        if not possible_collision.id == artist_id
+    ]
+
+    if colliding_artists:
+        raise HTTPException(
+            status_code=409, detail="Artist with that name already exists"
+        )
+
+    artist_repository.save(artist_id, artist)
+    artist.id = artist_id
+    return artist
+
+
 @router.delete("/artist/{artist_id}")
 async def delete_artist(artist_id: UUID):
     artist = artist_repository.get(artist_id)

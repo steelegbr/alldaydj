@@ -14,10 +14,11 @@
 """
 
 from alldaydj.models.artist import Artist
+from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
 from typing import List, Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 COLLECTION_ARTIST = "artists"
 FIELD_AUTOCOMPLTE = "autocomplete"
@@ -73,3 +74,14 @@ class ArtistRepository:
             .where(FIELD_AUTOCOMPLTE, "<", f"q\uF8FF")
             .stream()
         ]
+
+    def add_if_not_exist(self, name: str):
+        logger.info(f"Add artist name {name} if they do not already exist")
+        if self.get_by_name(name):
+            logger.info(f"Artist name {name} already exists")
+
+        new_artist = Artist()
+        new_artist.id = uuid4
+        new_artist.name = name
+
+        self.save(new_artist)

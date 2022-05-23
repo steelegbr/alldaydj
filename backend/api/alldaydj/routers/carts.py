@@ -14,6 +14,7 @@
 """
 
 from alldaydj.models.cart import Cart
+from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.type_respository import TypeRepository
 from alldaydj.services.logging import logger
@@ -23,6 +24,7 @@ from typing import List
 from uuid import UUID, uuid4
 
 router = APIRouter()
+artist_repository = ArtistRepository()
 cart_repository = CartRepository()
 type_repository = TypeRepository()
 
@@ -63,12 +65,7 @@ async def create_cart(cart: Cart) -> Cart:
 
     # Re-map the type to a UUID
 
-    cart_types = type_repository.get_by_tag(cart.type)
-    if not cart_types or len(cart_types) > 1:
-        logger.info(f"Found {len(cart_types)} cart type(s) for tag {cart.type}")
-        raise HTTPException(status_code=400, detail="Invalid cart type supplied")
-
-    cart.type = str(cart_types[0].id)
+    cart.type = type_repository.remap_string_to_uuid(cart.type)
 
     # Perform the save
 
@@ -76,6 +73,9 @@ async def create_cart(cart: Cart) -> Cart:
     cart_repository.save(id, cart)
     cart.id = id
 
+    # Add the artist as needed
+
+    artist_repository.add_if_not_exist(cart.artist)
     return cart
 
 
@@ -86,20 +86,31 @@ async def search_cart(q: str) -> List[Cart]:
 
 @router.put("/cart/{cart_id}")
 async def update_cart(cart_id: UUID, cart: Cart) -> Cart:
-    if not cart_repository.get(cart_id):
+    if not (existing_cart := cart_repository.get(cart_id)):
         raise HTTPException(status_code=404, detail="Cart not found")
 
+    # Re-map the type to a UUID
+
+    cart.type = type_repository.remap_string_to_uuid(cart.type)
+
+    # Save the cart and do any artist mapping magic
+
     cart_repository.save(cart_id, cart)
+    cart_repository.delete_artist_if_not_used(existing_cart)
+    artist_repository.add_if_not_exist(cart.artist)
+
     cart.id = cart_id
     return cart
 
 
 @router.delete("/cart/{cart_id}")
 async def delete_cart(cart_id):
-    if not cart_repository.get(cart_id):
+    if not (existing_cart := cart_repository.get(cart_id)):
         raise HTTPException(status_code=404, detail="Cart not found")
 
     cart_repository.delete(cart_id)
+    cart_repository.delete_artist_if_not_used(existing_cart)
+
     return Response(status_code=204)
 
 

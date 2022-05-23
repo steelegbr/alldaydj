@@ -14,6 +14,7 @@
 """
 
 from alldaydj.models.cart import Cart
+from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
 from alldaydj.services.search import fields_to_tokens, fields_to_weighting_map
@@ -22,6 +23,8 @@ from uuid import UUID
 
 COLLECTION_CART = "cart"
 FIELD_SEARCH = "search"
+
+artist_repository = ArtistRepository()
 
 
 class CartRepository:
@@ -45,6 +48,15 @@ class CartRepository:
             self.__map_doc_to_cart(cart_doc)
             for cart_doc in db.collection(COLLECTION_CART)
             .where("label", "==", label)
+            .stream()
+        ]
+
+    def get_by_artist(self, artist: str) -> Cart:
+        logger.info(f"Lookup for cart by artist {artist}")
+        return [
+            self.__map_doc_to_cart(cart_doc)
+            for cart_doc in db.collection(COLLECTION_CART)
+            .where("artist", "==", artist)
             .stream()
         ]
 
@@ -75,3 +87,13 @@ class CartRepository:
     def delete(self, id: UUID):
         logger.info(f"Delete cart ID {id}")
         db.collection(COLLECTION_CART).document(str(id)).delete()
+
+    def delete_artist_if_not_used(self, cart: Cart):
+        logger.info(f"Clean up for artist name {cart.artist}")
+        if not self.get_by_artist(cart.artist):
+            artist_to_delete = artist_repository.get_by_name(cart.artist)
+
+            if not artist_to_delete:
+                logger.warning(f"Failed to find artist {cart.artist} for cleanup")
+            else:
+                artist_repository.delete(artist_to_delete)

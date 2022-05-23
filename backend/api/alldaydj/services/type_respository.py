@@ -16,6 +16,7 @@
 from alldaydj.models.cart import CartType
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
+from fastapi import HTTPException
 from typing import List
 from uuid import UUID
 
@@ -66,3 +67,10 @@ class TypeRepository:
     def delete(self, id: UUID):
         logger.info(f"Deleting cart type {id}")
         db.collection(COLLECTION_TYPE).document(str(id)).delete()
+
+    def remap_string_to_uuid(self, cart_type: str) -> str:
+        cart_types = self.get_by_tag(cart_type)
+        if not cart_types or len(cart_types) > 1:
+            logger.info(f"Found {len(cart_types)} cart type(s) for tag {cart_type}")
+            raise HTTPException(status_code=400, detail="Invalid cart type supplied")
+        return cart_types[0].id

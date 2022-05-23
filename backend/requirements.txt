@@ -1,6 +1,7 @@
 fastapi
 fastapi-pagination
 firebase-admin
+google-cloud-functions
 google-cloud-pubsub
 nltk
 parameterized

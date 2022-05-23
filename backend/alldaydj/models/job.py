@@ -35,3 +35,8 @@ class AudioUploadJob(BaseModel):
     status: AudioUploadStatus
     cart_id: UUID
     error: Optional[str]
+
+class FileStage(Enum):
+    QUEUED = 0
+    COMPRESSED = 1
+    AUDIO = 2

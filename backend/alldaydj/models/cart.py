@@ -13,10 +13,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from turtle import st
-from typing import Optional, List
 from pydantic import BaseModel, constr, Field
 from pydantic.color import Color
+from typing import Optional, List
 from uuid import UUID
 
 

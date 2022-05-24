@@ -24,7 +24,6 @@ from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS, TOPIC_METADATA
 from alldaydj.services.storage import bucket, move_file_in_bucket, read_file
-from google.cloud.functions import Context
 from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
@@ -63,7 +62,7 @@ def set_job_error(job: AudioUploadJob, error: str):
     job_repository.save(job.id, job)
 
 
-def validate_audio_upload(event: Dict, context: Context):
+def validate_audio_upload(event: Dict, context):
     logger.info(f"Audio validation triggered by message ID {context.event_id}")
     job = extract_job_from_event(event)
     update_job(job, AudioUploadStatus.validating)

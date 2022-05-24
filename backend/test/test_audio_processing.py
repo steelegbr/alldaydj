@@ -14,6 +14,7 @@
 """
 
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus
+from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.storage import bucket, delete_file, upload_file
 from audio_processing import validate_audio_upload
 from base64 import b64encode
@@ -22,9 +23,9 @@ from typing import Dict
 from unittest.mock import patch
 from uuid import uuid4
 
-from backend.alldaydj.services.job_repository import JobRepository
-
 MODULE_NAME = "audio_processing"
+
+job_repository = JobRepository()
 
 
 def job_to_event(job: AudioUploadJob) -> Dict:
@@ -46,8 +47,8 @@ def test_validate_invalid_file(file_name: str, expected_mime: str):
     cart_id = uuid4()
     path_in_bucket = f"queued/{job_id}_{cart_id}"
 
-    with open(file_name, "rb") as upload_file:
-        upload_file(bucket, path_in_bucket, upload_file)
+    with open(file_name, "rb") as file_to_upload:
+        upload_file(bucket, path_in_bucket, file_to_upload)
 
     job = AudioUploadJob(id=job_id, status=AudioUploadStatus.queued, cart_id=cart_id)
     event = job_to_event(job)
@@ -55,7 +56,7 @@ def test_validate_invalid_file(file_name: str, expected_mime: str):
     # Act
 
     validate_audio_upload(event, None)
-    job_from_db = JobRepository.get(job_id)
+    job_from_db = job_repository.get(job_id)
 
     # Assert
 
@@ -64,3 +65,4 @@ def test_validate_invalid_file(file_name: str, expected_mime: str):
     # Cleanup
 
     delete_file(bucket, path_in_bucket)
+    job_repository.delete(job_id)

@@ -17,11 +17,7 @@ To use the firebase emulator, you'll need some extra environement variables:
     $env:FIRESTORE_EMULATOR_HOST="localhost:8080"
     $env:FIREBASE_STORAGE_EMULATOR_HOST="localhost:9199"
 
-You may need to build the functions before attempting to run the emulators:
-
-    npm run build
-
-##
+## Testing
 
 Testing the backend API can be done with a call to:
 

@@ -19,11 +19,13 @@ from alldaydj.services.repository import Repository
 from alldaydj.services.database import db, strip_id
 from alldaydj.services.logging import logger
 from alldaydj.services.search import fields_to_tokens, fields_to_weighting_map
+from hashlib import sha256
 from typing import Dict, List
 from uuid import UUID
 
 COLLECTION_CART = "cart"
 FIELD_SEARCH = "search"
+FIELD_LABEL = "label"
 
 artist_repository = ArtistRepository()
 
@@ -35,18 +37,18 @@ class CartRepository(Repository):
     def __generate_search_field(self, cart: Cart) -> Dict[str, int]:
         return fields_to_weighting_map([cart.title, cart.artist])
 
-    def get(self, id: UUID) -> Cart:
-        logger.info(f"Lookup for cart ID {id}")
-        return self.get_document(id, COLLECTION_CART, self.__map_doc_to_cart)
+    def normalise_label(self, label: str) -> str:
+        return label.upper()
 
-    def get_by_label(self, label: str) -> List[Cart]:
-        logger.info(f"Lookup for cart by label {label}")
-        return [
-            self.__map_doc_to_cart(cart_doc)
-            for cart_doc in db.collection(COLLECTION_CART)
-            .where("label", "==", label)
-            .stream()
-        ]
+    def __label_to_id(self, label: str) -> str:
+        encoded_label = self.normalise_label(label).encode("utf-8")
+        return sha256(encoded_label).hexdigest()
+
+    def get(self, label: str) -> Cart:
+        logger.info(f"Lookup for cart label {label}")
+        return self.get_document(
+            self.__label_to_id(label), COLLECTION_CART, self.__map_doc_to_cart
+        )
 
     def get_by_label_prefix(self, prefix: str) -> List[Cart]:
         logger.info(f"Lookup for cart by label prefix {prefix}")
@@ -67,13 +69,16 @@ class CartRepository(Repository):
             .stream()
         ]
 
-    def save(self, id: UUID, cart: Cart):
-        logger.info(f"Saving cart ID {id}")
+    def save(self, cart: Cart):
+        logger.info(f"Saving cart label {cart.label}")
         self.save_stripped_document(
-            id,
+            self.__label_to_id(cart.label),
             COLLECTION_CART,
             cart,
-            {FIELD_SEARCH: self.__generate_search_field(cart)},
+            {
+                FIELD_SEARCH: self.__generate_search_field(cart),
+                FIELD_LABEL: cart.label.upper(),
+            },
         )
 
     def search(self, q: str) -> List[Cart]:
@@ -87,9 +92,9 @@ class CartRepository(Repository):
 
         return [self.__map_doc_to_cart(cart_doc) for cart_doc in search_query.stream()]
 
-    def delete(self, id: UUID):
-        logger.info(f"Delete cart ID {id}")
-        db.collection(COLLECTION_CART).document(str(id)).delete()
+    def delete(self, label: str):
+        logger.info(f"Delete cart label {label}")
+        db.collection(COLLECTION_CART).document(self.__label_to_id(label)).delete()
 
     def delete_artist_if_not_used(self, cart: Cart):
         logger.info(f"Clean up for artist name {cart.artist}")

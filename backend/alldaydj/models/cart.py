@@ -20,7 +20,6 @@ from uuid import UUID
 
 
 class Cart(BaseModel):
-    id: Optional[UUID]
     label: constr(regex=r"[a-zA-Z0-9]+")
     title: str
     artist: str

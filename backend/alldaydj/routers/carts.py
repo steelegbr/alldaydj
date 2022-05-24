@@ -17,11 +17,10 @@ from alldaydj.models.cart import Cart
 from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.type_respository import TypeRepository
-from alldaydj.services.logging import logger
 from fastapi import APIRouter, HTTPException, Response
 from fastapi_pagination import Page, add_pagination, paginate
+from pydantic import constr
 from typing import List
-from uuid import UUID, uuid4
 
 router = APIRouter()
 artist_repository = ArtistRepository()
@@ -29,9 +28,9 @@ cart_repository = CartRepository()
 type_repository = TypeRepository()
 
 
-@router.get("/cart/{cart_id}")
-async def get_cart(cart_id: UUID) -> Cart:
-    cart = cart_repository.get(cart_id)
+@router.get("/cart/{label}")
+async def get_cart(label: str = constr(regex=r"[a-zA-Z0-9]+")) -> Cart:
+    cart = cart_repository.get(label)
 
     if not cart:
         raise HTTPException(status_code=404, detail="Cart not found")
@@ -39,26 +38,9 @@ async def get_cart(cart_id: UUID) -> Cart:
     return cart
 
 
-@router.get("/cart/by-label/{label}")
-async def get_cart_by_label(label: str) -> Cart:
-    carts = cart_repository.get_by_label(label)
-
-    if not carts:
-        raise HTTPException(status_code=404, detail="Cart not found")
-
-    if len(carts) > 1:
-        cart_ids = [cart.id for cart in carts]
-        logger.error(f"Found multiple carts for label {label}: {cart_ids}")
-        raise HTTPException(
-            status_code=500, detail="Multiple carts found for the supplied label"
-        )
-
-    return carts[0]
-
-
 @router.post("/cart")
 async def create_cart(cart: Cart) -> Cart:
-    if cart_repository.get_by_label(cart.label):
+    if cart_repository.get(cart.label):
         raise HTTPException(
             status_code=409, detail="Cart with that label already exists"
         )
@@ -69,9 +51,7 @@ async def create_cart(cart: Cart) -> Cart:
 
     # Perform the save
 
-    id = uuid4()
-    cart_repository.save(id, cart)
-    cart.id = id
+    cart_repository.save(cart)
 
     # Add the artist as needed
 
@@ -84,9 +64,9 @@ async def search_cart(q: str) -> List[Cart]:
     return paginate(cart_repository.search(q))
 
 
-@router.put("/cart/{cart_id}")
-async def update_cart(cart_id: UUID, cart: Cart) -> Cart:
-    if not (existing_cart := cart_repository.get(cart_id)):
+@router.put("/cart/{label}")
+async def update_cart(label: str, cart: Cart) -> Cart:
+    if not (existing_cart := cart_repository.get(label)):
         raise HTTPException(status_code=404, detail="Cart not found")
 
     # Re-map the type to a UUID
@@ -95,20 +75,19 @@ async def update_cart(cart_id: UUID, cart: Cart) -> Cart:
 
     # Save the cart and do any artist mapping magic
 
-    cart_repository.save(cart_id, cart)
+    cart_repository.save(cart)
     cart_repository.delete_artist_if_not_used(existing_cart)
     artist_repository.add_if_not_exist(cart.artist)
 
-    cart.id = cart_id
     return cart
 
 
-@router.delete("/cart/{cart_id}")
-async def delete_cart(cart_id):
-    if not (existing_cart := cart_repository.get(cart_id)):
+@router.delete("/cart/{label}")
+async def delete_cart(label):
+    if not (existing_cart := cart_repository.get(label)):
         raise HTTPException(status_code=404, detail="Cart not found")
 
-    cart_repository.delete(cart_id)
+    cart_repository.delete(label)
     cart_repository.delete_artist_if_not_used(existing_cart)
 
     return Response(status_code=204)

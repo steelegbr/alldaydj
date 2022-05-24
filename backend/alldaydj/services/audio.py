@@ -13,16 +13,24 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from alldaydj.services.firebase import firebase_app
-from alldaydj.services.logging import logger
-from firebase_admin import storage
-from os import environ
-
-bucket = storage.bucket(environ.get("ALLDAYDJ_BUCKET"))
+from enum import Enum
+from io import BytesIO
+from wave_chunk_parser.chunks import FormatChunk, RiffChunk, WaveFormat
 
 
-def move_file_in_bucket(bucket, source_path: str, dest_path: str):
-    logger.info(f"Moving file in bucket from {source_path} to {dest_path}")
-    source_blob = bucket.blob(source_path)
-    bucket.copy_blob(source_blob, bucket, dest_path)
-    source_blob.delete()
+class WaveCompression(Enum):
+    UNCOMPRESSED = 0
+    COMPRESSED = 1
+    INVALID = 2
+
+
+def get_wave_compression(blob: bytes) -> WaveCompression:
+    try:
+        file = BytesIO(blob)
+        riff_chunk = RiffChunk.from_file(file)
+        format_chunk: FormatChunk = riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT)
+        if format_chunk and format_chunk.format == WaveFormat.PCM:
+            return WaveCompression.UNCOMPRESSED
+        return WaveCompression.COMPRESSED
+    except Exception:
+        return WaveCompression.INVALID

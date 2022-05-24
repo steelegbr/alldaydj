@@ -9,3 +9,4 @@ pytest
 python-magic
 python-multipart
 uvicorn[standard]
+wave-chunk-parser

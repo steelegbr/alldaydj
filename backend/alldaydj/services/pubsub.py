@@ -20,6 +20,7 @@ from os import environ
 from typing import Dict
 
 TOPIC_VALIDATE = environ.get("ALLDADYJ_TOPIC_VALIDATE")
+TOPIC_DECOMPRESS = environ.get("ALLDAYDJ_TOPIC_DECOMPRESS")
 
 pubsub_creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
 publisher = pubsub_v1.PublisherClient(credentials=pubsub_creds)

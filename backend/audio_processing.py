@@ -16,19 +16,25 @@
 import base64
 import magic
 
-from alldaydj.models.job import AudioUploadJob, FileStage
+from alldaydj.models.job import AudioUploadJob, AudioUploadStatus, FileStage
 from alldaydj.models.cart import Cart
 from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
+from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS
 from alldaydj.services.storage import bucket
 from google.cloud.functions import Context
 from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
 
+job_repository = JobRepository()
+
 def extract_job_from_event(event: Dict) -> AudioUploadJob:
     return AudioUploadJob(base64.b64decode(event['data']).decode('utf-8'))
+
+def encode_for_sending(job: AudioUploadJob) -> str:
+    return job.json().encode("utf-8")
 
 def generate_file_name(job: AudioUploadJob, stage: FileStage) -> str:
     match stage:
@@ -39,9 +45,16 @@ def generate_file_name(job: AudioUploadJob, stage: FileStage) -> str:
         case _:
             return f"audio/{job.cart_id}"
 
+def update_job(job: AudioUploadJob, status: AudioUploadStatus):
+    job_id = job.id
+    job.status = status
+    job_repository.save(job_id, job)
+    job.id = job_id
+
 def validate_audio_upload(event: Dict, context: Context):
     logger.info(f"Audio validation triggered by message ID {context.event_id}")
     job = extract_job_from_event(event)
+    update_job(job, AudioUploadStatus.validating)
 
     # Generate the source and destination filenames
 
@@ -66,6 +79,7 @@ def validate_audio_upload(event: Dict, context: Context):
         # Compressed audio - needs decompression
 
         logger.info(f"Audio upload job {job.id} encountered a {mime} file")
-        # TODO: Send to decompression queue
+        publisher.publish(TOPIC_DECOMPRESS, encode_for_sending(job))
+        
 
 

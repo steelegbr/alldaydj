@@ -6,5 +6,6 @@ google-cloud-pubsub
 nltk
 parameterized
 pytest
+python-magic
 python-multipart
 uvicorn[standard]

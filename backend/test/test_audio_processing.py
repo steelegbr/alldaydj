@@ -50,7 +50,8 @@ def generate_context() -> Context:
         )
     ]
 )
-def test_validate_invalid_file(file_name: str, expected_mime: str):
+@patch(f"{MODULE_NAME}.publisher")
+def test_validate_invalid_file(file_name: str, expected_mime: str, mock_publisher):
     # Arrange
 
     job_id = uuid4()
@@ -74,6 +75,7 @@ def test_validate_invalid_file(file_name: str, expected_mime: str):
     assert job_from_db.status == AudioUploadStatus.error
     assert expected_mime in job_from_db.error
     assert not file_exists(bucket, path_in_bucket)
+    mock_publisher.publish.assert_not_called()
 
     # Cleanup
 

@@ -15,11 +15,11 @@
 
 import base64
 import json
-import magic
 
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus, FileStage
-from alldaydj.models.cart import Cart
 from alldaydj.services.audio import get_wave_compression, WaveCompression
+from alldaydj.services.codec import get_decoder
+from alldaydj.services.file import get_mime_type
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS, TOPIC_METADATA
@@ -27,8 +27,10 @@ from alldaydj.services.storage import (
     bucket,
     delete_file,
     move_file_in_bucket,
-    read_file,
+    download_file,
+    upload_file,
 )
+from io import BytesIO
 from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
@@ -81,8 +83,8 @@ def validate_audio_upload(event: Dict, context):
 
     # Determine file type from magic bytes
 
-    file_contents = read_file(bucket, inbound_file_name)
-    mime = magic.from_buffer(file_contents)
+    file_contents = download_file(bucket, inbound_file_name)
+    mime = get_mime_type(file_contents)
 
     if "WAVE audio" in mime:
 
@@ -120,3 +122,30 @@ def validate_audio_upload(event: Dict, context):
         logger.warning(f"Audio upload job encountered a {mime} file")
         delete_file(bucket, inbound_file_name)
         set_job_error(job, f"{mime} is not a valid audio file MIME type")
+
+
+def decompress_audio(event: Dict, context):
+    logger.info(f"Audio decompression triggered by message ID {context.event_id}")
+    job = extract_job_from_event(event)
+    update_job(job, AudioUploadStatus.decompressing)
+
+    compressed_file_name = generate_file_name(job, FileStage.QUEUED)
+    uncompressed_file_name = generate_file_name(job, FileStage.AUDIO)
+
+    compressed_contents = download_file(bucket, compressed_file_name)
+    compressed_file = BytesIO(compressed_contents)
+    uncompressed_file = BytesIO()
+
+    try:
+        get_decoder(get_mime_type(compressed_contents)).decode(
+            compressed_file, uncompressed_file
+        )
+    except Exception as ex:
+        logger.warning(f"Failed to decompress audio for job {job.id}. Details: {ex}")
+        set_job_error(job, "Failed to decompress the audio")
+        return
+
+    upload_file(bucket, uncompressed_file_name, uncompressed_file)
+    delete_file(bucket, compressed_file_name)
+
+    publisher.publish(TOPIC_METADATA, encode_for_sending(job))

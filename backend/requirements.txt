@@ -1,5 +1,6 @@
 fastapi
 fastapi-pagination
+ffmpeg-python
 firebase-admin
 google-cloud-pubsub
 nltk

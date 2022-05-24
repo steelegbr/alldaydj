@@ -35,7 +35,7 @@ def move_file_in_bucket(bucket, source_path: str, dest_path: str):
     source_blob.delete()
 
 
-def read_file(bucket, path: str) -> bytes:
+def download_file(bucket, path: str) -> bytes:
     logger.info(f"Reading file {path} from bucket")
     file_blob = bucket.blob(path)
     return file_blob.download_as_bytes()

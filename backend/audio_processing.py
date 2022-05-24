@@ -14,16 +14,21 @@
 """
 
 import base64
+import json
 import magic
 
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus, FileStage
 from alldaydj.models.cart import Cart
 from alldaydj.services.audio import get_wave_compression, WaveCompression
-from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS, TOPIC_METADATA
-from alldaydj.services.storage import bucket, move_file_in_bucket, read_file
+from alldaydj.services.storage import (
+    bucket,
+    delete_file,
+    move_file_in_bucket,
+    read_file,
+)
 from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
@@ -32,7 +37,9 @@ job_repository = JobRepository()
 
 
 def extract_job_from_event(event: Dict) -> AudioUploadJob:
-    return AudioUploadJob(base64.b64decode(event["data"]).decode("utf-8"))
+    json_string = base64.b64decode(event["data"]).decode("utf-8")
+    json_decoded = json.loads(json_string)
+    return AudioUploadJob(**json_decoded)
 
 
 def encode_for_sending(job: AudioUploadJob) -> str:
@@ -87,6 +94,7 @@ def validate_audio_upload(event: Dict, context):
                 logger.warning(
                     f"Audio upload job {job.id} encountered a compressed WAVE file"
                 )
+                delete_file(bucket, inbound_file_name)
                 set_job_error(job, "Compressed WAVE files are not supported.")
             case WaveCompression.UNCOMPRESSED:
                 move_file_in_bucket(bucket, inbound_file_name, uncompressed_file_name)
@@ -95,6 +103,7 @@ def validate_audio_upload(event: Dict, context):
                 logger.warning(
                     f"Audio upload job {job.id} failed to read the WAVE file"
                 )
+                delete_file(bucket, inbound_file_name)
                 set_job_error(job, "Failed to correctly read the WAVE format.")
 
     elif any(mime_type in mime for mime_type in COMPRESSED_MIME_TYPES):
@@ -103,3 +112,11 @@ def validate_audio_upload(event: Dict, context):
 
         logger.info(f"Audio upload job {job.id} encountered a {mime} file")
         publisher.publish(TOPIC_DECOMPRESS, encode_for_sending(job))
+
+    else:
+
+        # Bad file - stop the job and delete
+
+        logger.warning(f"Audio upload job encountered a {mime} file")
+        delete_file(bucket, inbound_file_name)
+        set_job_error(job, f"{mime} is not a valid audio file MIME type")

@@ -36,3 +36,7 @@ class JobRepository(Repository):
         self.save_stripped_document(
             id, COLLECTION_JOB, job, {"cart_id": str(job.cart_id)}
         )
+
+    def delete(self, id: UUID):
+        logger.info(f"Deleting job {id}")
+        db.collection(COLLECTION_JOB).document(str(id)).delete()

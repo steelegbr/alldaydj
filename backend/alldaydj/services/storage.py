@@ -45,3 +45,9 @@ def upload_file(bucket, path: str, contents: BinaryIO):
     logger.info(f"Uploading file path {path} to bucket")
     upload_blob = bucket.blob(path)
     upload_blob.upload_from_file(contents)
+
+
+def file_exists(bucket, path: str) -> bool:
+    logger.info(f"Checking if {path} exists in the bucket")
+    file_blob = bucket.blob(path)
+    return file_blob.exists()

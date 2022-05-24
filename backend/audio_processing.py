@@ -23,11 +23,9 @@ from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS, TOPIC_METADATA
-from alldaydj.services.storage import bucket
+from alldaydj.services.storage import bucket, move_file_in_bucket, read_file
 from google.cloud.functions import Context
 from typing import Dict
-
-from backend.alldaydj.services.storage import move_file_in_bucket
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
 
@@ -77,8 +75,7 @@ def validate_audio_upload(event: Dict, context: Context):
 
     # Determine file type from magic bytes
 
-    file_blob = bucket.blob(inbound_file_name)
-    file_contents = file_blob.download_as_bytes()
+    file_contents = read_file(bucket, inbound_file_name)
     mime = magic.from_buffer(file_contents)
 
     if "WAVE audio" in mime:

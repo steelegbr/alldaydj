@@ -17,8 +17,15 @@ from alldaydj.services.firebase import firebase_app
 from alldaydj.services.logging import logger
 from firebase_admin import storage
 from os import environ
+from typing import BinaryIO
 
 bucket = storage.bucket(environ.get("ALLDAYDJ_BUCKET"))
+
+
+def delete_file(bucket, path: str):
+    logger.info(f"Deleting file {path} from bucket")
+    delete_blob = bucket.blob(path)
+    delete_blob.delete()
 
 
 def move_file_in_bucket(bucket, source_path: str, dest_path: str):
@@ -26,3 +33,15 @@ def move_file_in_bucket(bucket, source_path: str, dest_path: str):
     source_blob = bucket.blob(source_path)
     bucket.copy_blob(source_blob, bucket, dest_path)
     source_blob.delete()
+
+
+def read_file(bucket, path: str) -> bytes:
+    logger.info(f"Reading file {path} from bucket")
+    file_blob = bucket.blob(path)
+    return file_blob.download_as_bytes()
+
+
+def upload_file(bucket, path: str, contents: BinaryIO):
+    logger.info(f"Uploading file path {path} to bucket")
+    upload_blob = bucket.blob(path)
+    upload_blob.upload_from_file(contents)

@@ -19,7 +19,7 @@ from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import publisher, TOPIC_VALIDATE
-from alldaydj.services.storage import bucket
+from alldaydj.services.storage import bucket, upload_file
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from uuid import UUID, uuid4
 
@@ -66,9 +66,7 @@ async def upload_audio(cart_id: UUID, file: UploadFile = File(...)) -> AudioUplo
 
     upload_file_name = f"queued/{job.id}_{cart.id}"
     logger.info(f"Starting upload to {upload_file_name}")
-
-    upload_blob = bucket.blob(upload_file_name)
-    upload_blob.upload_from_file(file.file)
+    upload_file(bucket, upload_file_name, file.file)
     logger.info(f"Successfully completed upload to {upload_file_name}")
 
     # Trigger the ingestion process

@@ -92,20 +92,23 @@ def test_validate_invalid_file(file_name: str, expected_mime: str, mock_publishe
 
 @parameterized.expand(
     [
-        ("./test/files/valid.mp3",),
-        ("./test/files/valid.ogg",),
-        ("./test/files/valid.flac",),
-        ("./test/files/valid.m4a",),
+        ("./test/files/valid.mp3", True),
+        ("./test/files/valid.ogg", True),
+        ("./test/files/valid.flac", True),
+        ("./test/files/valid.m4a", True),
+        ("./test/files/valid_no_markers.wav", False),
     ]
 )
 @patch(f"{MODULE_NAME}.publisher")
 @patch(f"{MODULE_NAME}.TOPIC_DECOMPRESS", "DECOMPRESS")
-def test_validate_compressed_file(file_name: str, mock_publisher):
+@patch(f"{MODULE_NAME}.TOPIC_METADATA", "METADATA")
+def test_validate_file(file_name: str, compressed: bool, mock_publisher):
     # Arrange
 
     job_id = uuid4()
     cart_id = uuid4()
     path_in_bucket = f"queued/{job_id}_{cart_id}"
+    decompressed_path = f"audio/{cart_id}"
 
     with open(file_name, "rb") as file_to_upload:
         upload_file(bucket, path_in_bucket, file_to_upload)
@@ -125,10 +128,20 @@ def test_validate_compressed_file(file_name: str, mock_publisher):
     # Assert
 
     assert job_from_db.status == AudioUploadStatus.validating
-    assert file_exists(bucket, path_in_bucket)
-    mock_publisher.publish.assert_called_with("DECOMPRESS", expected_message_call)
+
+    if compressed:
+        assert file_exists(bucket, path_in_bucket)
+        mock_publisher.publish.assert_called_with("DECOMPRESS", expected_message_call)
+    else:
+        assert not file_exists(bucket, path_in_bucket)
+        assert file_exists(bucket, decompressed_path)
+        mock_publisher.publish.assert_called_with("METADATA", expected_message_call)
 
     # Cleanup
 
-    delete_file(bucket, path_in_bucket)
+    if compressed:
+        delete_file(bucket, path_in_bucket)
+    else:
+        delete_file(bucket, decompressed_path)
+
     job_repository.delete(job_id)

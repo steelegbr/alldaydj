@@ -15,7 +15,7 @@
 
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus
 from alldaydj.services.job_repository import JobRepository
-from alldaydj.services.storage import bucket, file_exists, upload_file
+from alldaydj.services.storage import bucket, delete_file, file_exists, upload_file
 from audio_processing import validate_audio_upload
 from base64 import b64encode
 from parameterized import parameterized
@@ -32,8 +32,16 @@ class Context:
     event_id: UUID
 
 
+def encode_job(job: AudioUploadJob) -> bytes:
+    return job.json().encode("utf-8")
+
+
+def b64_encode_job(job: AudioUploadJob):
+    return b64encode(encode_job(job))
+
+
 def job_to_event(job: AudioUploadJob) -> Dict:
-    return {"data": b64encode(job.json().encode("utf-8"))}
+    return {"data": b64_encode_job(job)}
 
 
 def generate_context() -> Context:
@@ -79,4 +87,48 @@ def test_validate_invalid_file(file_name: str, expected_mime: str, mock_publishe
 
     # Cleanup
 
+    job_repository.delete(job_id)
+
+
+@parameterized.expand(
+    [
+        ("./test/files/valid.mp3",),
+        ("./test/files/valid.ogg",),
+        ("./test/files/valid.flac",),
+        ("./test/files/valid.m4a",),
+    ]
+)
+@patch(f"{MODULE_NAME}.publisher")
+@patch(f"{MODULE_NAME}.TOPIC_DECOMPRESS", "DECOMPRESS")
+def test_validate_compressed_file(file_name: str, mock_publisher):
+    # Arrange
+
+    job_id = uuid4()
+    cart_id = uuid4()
+    path_in_bucket = f"queued/{job_id}_{cart_id}"
+
+    with open(file_name, "rb") as file_to_upload:
+        upload_file(bucket, path_in_bucket, file_to_upload)
+
+    job = AudioUploadJob(id=job_id, status=AudioUploadStatus.queued, cart_id=cart_id)
+    event = job_to_event(job)
+    context = generate_context()
+    expected_message_call = encode_job(
+        AudioUploadJob(id=job_id, status=AudioUploadStatus.validating, cart_id=cart_id)
+    )
+
+    # Act
+
+    validate_audio_upload(event, context)
+    job_from_db = job_repository.get(job_id)
+
+    # Assert
+
+    assert job_from_db.status == AudioUploadStatus.validating
+    assert file_exists(bucket, path_in_bucket)
+    mock_publisher.publish.assert_called_with("DECOMPRESS", expected_message_call)
+
+    # Cleanup
+
+    delete_file(bucket, path_in_bucket)
     job_repository.delete(job_id)

@@ -16,7 +16,7 @@
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.storage import bucket, delete_file, file_exists, upload_file
-from audio_processing import validate_audio_upload
+from audio_processing import decompress_audio, validate_audio_upload
 from base64 import b64encode
 from parameterized import parameterized
 from typing import Dict
@@ -144,4 +144,51 @@ def test_validate_file(file_name: str, compressed: bool, mock_publisher):
     else:
         delete_file(bucket, decompressed_path)
 
+    job_repository.delete(job_id)
+
+
+@parameterized.expand(
+    [
+        ("./test/files/valid.mp3",),
+        ("./test/files/valid.ogg",),
+        ("./test/files/valid.flac",),
+        ("./test/files/valid.m4a",),
+    ]
+)
+@patch(f"{MODULE_NAME}.TOPIC_METADATA", "METADATA")
+@patch(f"{MODULE_NAME}.publisher")
+def test_decompress_audio_valid(file_name: str, mock_publisher):
+    # Arrange
+
+    job_id = uuid4()
+    cart_id = uuid4()
+    compressed_path = f"queued/{job_id}_{cart_id}"
+    decompressed_path = f"audio/{cart_id}"
+
+    with open(file_name, "rb") as file_to_upload:
+        upload_file(bucket, compressed_path, file_to_upload)
+
+    job = AudioUploadJob(
+        id=job_id, status=AudioUploadStatus.validating, cart_id=cart_id
+    )
+    event = job_to_event(job)
+    context = generate_context()
+    expected_message_call = encode_job(
+        AudioUploadJob(
+            id=job_id, status=AudioUploadStatus.decompressing, cart_id=cart_id
+        )
+    )
+
+    # Act
+
+    decompress_audio(event, context)
+
+    # Assert
+
+    assert file_exists(bucket, decompressed_path)
+    mock_publisher.publish.assert_called_with("METADATA", expected_message_call)
+
+    # Cleanup
+
+    delete_file(bucket, decompressed_path)
     job_repository.delete(job_id)

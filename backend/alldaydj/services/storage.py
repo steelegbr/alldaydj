@@ -44,6 +44,7 @@ def download_file(bucket, path: str) -> bytes:
 def upload_file(bucket, path: str, contents: BinaryIO):
     logger.info(f"Uploading file path {path} to bucket")
     upload_blob = bucket.blob(path)
+    contents.seek(0)
     upload_blob.upload_from_file(contents)
 
 

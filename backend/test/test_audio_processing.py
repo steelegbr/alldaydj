@@ -21,6 +21,7 @@ from alldaydj.services.storage import bucket, delete_file, file_exists, upload_f
 from audio_processing import (
     decompress_audio,
     extract_audio_metadata,
+    generate_compressed_audio,
     validate_audio_upload,
 )
 from base64 import b64encode
@@ -267,3 +268,40 @@ def test_extract_metadata(
     cart_repository.delete(cart.label)
     job_repository.delete(job_id)
     delete_file(bucket, file_path)
+
+
+@parameterized.expand([("./test/files/valid_no_markers.wav",)])
+@patch(f"{MODULE_NAME}.TOPIC_HASHES", "HASH")
+@patch(f"{MODULE_NAME}.publisher")
+def test_compress_hashes(file_name: str, mock_publisher):
+    # Arrange
+
+    job_id = uuid4()
+    cart_id = str(uuid4())
+    compressed_path = f"compressed/{cart_id}"
+    decompressed_path = f"audio/{cart_id}"
+
+    with open(file_name, "rb") as file_to_upload:
+        upload_file(bucket, decompressed_path, file_to_upload)
+
+    job = AudioUploadJob(id=job_id, status=AudioUploadStatus.metadata, cart_id=cart_id)
+    event = job_to_event(job)
+    context = generate_context()
+    expected_message_call = encode_job(
+        AudioUploadJob(id=job_id, status=AudioUploadStatus.compressing, cart_id=cart_id)
+    )
+
+    # Act
+
+    generate_compressed_audio(event, context)
+
+    # Assert
+
+    assert file_exists(bucket, compressed_path)
+    mock_publisher.publish.assert_called_with("HASH", expected_message_call)
+
+    # Cleanup
+
+    delete_file(bucket, decompressed_path)
+    delete_file(bucket, compressed_path)
+    job_repository.delete(job_id)

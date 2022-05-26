@@ -24,7 +24,7 @@ from alldaydj.services.audio import (
     WaveCompression,
 )
 from alldaydj.services.cart_repository import CartRepository
-from alldaydj.services.codec import get_decoder
+from alldaydj.services.codec import get_decoder, OggEncoder
 from alldaydj.services.file import get_mime_type
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
@@ -32,6 +32,7 @@ from alldaydj.services.pubsub import (
     publisher,
     TOPIC_COMPRESS,
     TOPIC_DECOMPRESS,
+    TOPIC_HASHES,
     TOPIC_METADATA,
 )
 from alldaydj.services.storage import (
@@ -45,6 +46,7 @@ from io import BytesIO
 from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
+OGG_QUALITY = 4
 
 cart_repository = CartRepository()
 job_repository = JobRepository()
@@ -191,3 +193,21 @@ def extract_audio_metadata(event: Dict, context):
         cart_repository.save(cart)
 
     publisher.publish(TOPIC_COMPRESS, encode_for_sending(job))
+
+
+def generate_compressed_audio(event: Dict, context):
+    logger.info(f"Audio compression triggered by message ID {context.event_id}")
+    job = extract_job_from_event(event)
+    update_job(job, AudioUploadStatus.compressing)
+
+    uncompressed_file_name = generate_file_name(job, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, FileStage.COMPRESSED)
+
+    uncompressed_contents = download_file(bucket, uncompressed_file_name)
+    uncompressed_blob = BytesIO(uncompressed_contents)
+    compressed_blob = BytesIO()
+
+    OggEncoder().encode(uncompressed_blob, compressed_blob, OGG_QUALITY)
+    upload_file(bucket, compressed_file_name, compressed_blob)
+
+    publisher.publish(TOPIC_HASHES, encode_for_sending(job))

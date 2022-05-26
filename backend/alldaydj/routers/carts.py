@@ -91,9 +91,9 @@ async def delete_cart(label):
     cart_repository.delete(label)
     cart_repository.delete_artist_if_not_used(existing_cart)
 
-    audio_file_name = cart_repository.generate_file_name(existing_cart)
-    if file_exists(bucket, audio_file_name):
-        delete_file(bucket, audio_file_name)
+    for path in [existing_cart.audio, existing_cart.compressed]:
+        if path and file_exists(bucket, path):
+            delete_file(bucket, path)
 
     return Response(status_code=204)
 

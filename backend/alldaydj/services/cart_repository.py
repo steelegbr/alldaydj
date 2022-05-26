@@ -44,9 +44,6 @@ class CartRepository(Repository):
         encoded_label = self.normalise_label(label).encode("utf-8")
         return sha256(encoded_label).hexdigest()
 
-    def generate_file_name(self, cart: Cart) -> str:
-        return f"audio/{self.label_to_id(cart.label)}"
-
     def get(self, label: str) -> Cart:
         logger.info(f"Lookup for cart label {label}")
         return self.get_document(

@@ -22,6 +22,7 @@ from audio_processing import (
     decompress_audio,
     extract_audio_metadata,
     generate_compressed_audio,
+    generate_hashes,
     validate_audio_upload,
 )
 from base64 import b64encode
@@ -304,4 +305,72 @@ def test_compress_hashes(file_name: str, mock_publisher):
 
     delete_file(bucket, decompressed_path)
     delete_file(bucket, compressed_path)
+    job_repository.delete(job_id)
+
+
+@parameterized.expand(
+    [
+        (
+            "./test/files/valid_with_markers.wav",
+            "./test/files/valid.ogg",
+            "d6e4085fffc29e8bcc526ae32446f779f05fa2ecaf17f3e8b4584bee02079f88",
+            "b9452aaeb14828fe7c9cae6749878220a26977963f91471a0193c75c59081e86",
+        ),
+    ]
+)
+def test_generate_hashes(
+    audio_file_name: str,
+    compressed_file_name: str,
+    expected_audio_hash: str,
+    expected_compressed_hash: str,
+):
+    # Arrange
+
+    cart = Cart(
+        label="HASHING",
+        title="Test",
+        artist="Test",
+        sweeper=False,
+        tags=[],
+        type=str(uuid4()),
+        fade=False,
+    )
+    cart_repository.save(cart)
+
+    job_id = uuid4()
+    cart_id = cart_repository.label_to_id(cart.label)
+    audio_path = f"audio/{cart_id}"
+    compressed_path = f"compressed/{cart_id}"
+
+    with open(audio_file_name, "rb") as file_to_upload:
+        upload_file(bucket, audio_path, file_to_upload)
+
+    with open(compressed_file_name, "rb") as file_to_upload:
+        upload_file(bucket, compressed_path, file_to_upload)
+
+    job = AudioUploadJob(
+        id=job_id, status=AudioUploadStatus.compressing, cart_id=cart_id
+    )
+    event = job_to_event(job)
+    context = generate_context()
+
+    # Act
+
+    generate_hashes(event, context)
+    updated_job = job_repository.get(job_id)
+    updated_cart = cart_repository.get_by_id(cart_id)
+
+    # Assert
+
+    assert updated_job.status == AudioUploadStatus.done
+    assert updated_cart.hash_audio == expected_audio_hash
+    assert updated_cart.hash_compressed == expected_compressed_hash
+    assert updated_cart.audio == audio_path
+    assert updated_cart.compressed == compressed_path
+
+    # Cleanup
+
+    delete_file(bucket, audio_path)
+    delete_file(bucket, compressed_path)
+    cart_repository.delete(cart.label)
     job_repository.delete(job_id)

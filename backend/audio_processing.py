@@ -26,6 +26,7 @@ from alldaydj.services.audio import (
 from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.codec import get_decoder, OggEncoder
 from alldaydj.services.file import get_mime_type
+from alldaydj.services.hash import generate_hash
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
 from alldaydj.services.pubsub import (
@@ -211,3 +212,24 @@ def generate_compressed_audio(event: Dict, context):
     upload_file(bucket, compressed_file_name, compressed_blob)
 
     publisher.publish(TOPIC_HASHES, encode_for_sending(job))
+
+
+def generate_hashes(event: Dict, context):
+    logger.info(f"Hash generation triggered by message ID {context.event_id}")
+    job = extract_job_from_event(event)
+    update_job(job, AudioUploadStatus.hashing)
+
+    uncompressed_file_name = generate_file_name(job, FileStage.AUDIO)
+    compressed_file_name = generate_file_name(job, FileStage.COMPRESSED)
+
+    uncompressed_contents = download_file(bucket, uncompressed_file_name)
+    compressed_contents = download_file(bucket, compressed_file_name)
+
+    cart = cart_repository.get_by_id(job.cart_id)
+    cart.hash_audio = generate_hash(uncompressed_contents)
+    cart.hash_compressed = generate_hash(compressed_contents)
+    cart.audio = uncompressed_file_name
+    cart.compressed = compressed_file_name
+    cart_repository.save(cart)
+
+    update_job(job, AudioUploadStatus.done)

@@ -264,5 +264,6 @@ def test_extract_metadata(
 
     # Cleanup
 
+    cart_repository.delete(cart.label)
     job_repository.delete(job_id)
     delete_file(bucket, file_path)

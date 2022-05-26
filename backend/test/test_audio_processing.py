@@ -70,7 +70,7 @@ def test_validate_invalid_file(file_name: str, expected_mime: str, mock_publishe
     # Arrange
 
     job_id = uuid4()
-    cart_id = uuid4()
+    cart_id = str(uuid4())
     path_in_bucket = f"queued/{job_id}_{cart_id}"
 
     with open(file_name, "rb") as file_to_upload:
@@ -113,7 +113,7 @@ def test_validate_file(file_name: str, compressed: bool, mock_publisher):
     # Arrange
 
     job_id = uuid4()
-    cart_id = uuid4()
+    cart_id = str(uuid4())
     path_in_bucket = f"queued/{job_id}_{cart_id}"
     decompressed_path = f"audio/{cart_id}"
 
@@ -168,7 +168,7 @@ def test_decompress_audio_valid(file_name: str, mock_publisher):
     # Arrange
 
     job_id = uuid4()
-    cart_id = uuid4()
+    cart_id = str(uuid4())
     compressed_path = f"queued/{job_id}_{cart_id}"
     decompressed_path = f"audio/{cart_id}"
 
@@ -201,11 +201,17 @@ def test_decompress_audio_valid(file_name: str, mock_publisher):
     job_repository.delete(job_id)
 
 
-@parameterized.expand([("./test/files/valid_with_markers.wav", 0, 938, 2451, 0)])
+@parameterized.expand(
+    [
+        ("./test/files/valid_with_markers.wav", True, 0, 938, 2451, 0),
+        ("./test/files/valid_no_markers.wav", False, 0, 0, 0, 0),
+    ]
+)
 @patch(f"{MODULE_NAME}.TOPIC_COMPRESS", "COMPRESS")
 @patch(f"{MODULE_NAME}.publisher")
 def test_extract_metadata(
     file_name: str,
+    valid: bool,
     expected_audio_start: int,
     expected_intro_end: int,
     expected_segue: int,
@@ -249,10 +255,12 @@ def test_extract_metadata(
     # Assert
 
     mock_publisher.publish.assert_called_with("COMPRESS", expected_message_call)
-    assert updated_cart.cue_audio_start == expected_audio_start
-    assert updated_cart.cue_intro_end == expected_intro_end
-    assert updated_cart.cue_segue == expected_segue
-    assert updated_cart.cue_audio_end == expected_end
+
+    if valid:
+        assert updated_cart.cue_audio_start == expected_audio_start
+        assert updated_cart.cue_intro_end == expected_intro_end
+        assert updated_cart.cue_segue == expected_segue
+        assert updated_cart.cue_audio_end == expected_end
 
     # Cleanup
 

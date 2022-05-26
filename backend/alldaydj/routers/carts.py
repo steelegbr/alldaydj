@@ -16,6 +16,7 @@
 from alldaydj.models.cart import Cart
 from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.cart_repository import CartRepository
+from alldaydj.services.storage import bucket, delete_file, file_exists
 from alldaydj.services.type_respository import TypeRepository
 from fastapi import APIRouter, HTTPException, Response
 from fastapi_pagination import Page, add_pagination, paginate
@@ -89,6 +90,10 @@ async def delete_cart(label):
 
     cart_repository.delete(label)
     cart_repository.delete_artist_if_not_used(existing_cart)
+
+    audio_file_name = cart_repository.generate_file_name(existing_cart)
+    if file_exists(bucket, audio_file_name):
+        delete_file(bucket, audio_file_name)
 
     return Response(status_code=204)
 

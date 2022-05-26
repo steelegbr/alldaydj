@@ -13,10 +13,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from alldaydj.models.cart import Cart
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus
+from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.storage import bucket, delete_file, file_exists, upload_file
-from audio_processing import decompress_audio, validate_audio_upload
+from audio_processing import (
+    decompress_audio,
+    extract_audio_metadata,
+    validate_audio_upload,
+)
 from base64 import b64encode
 from parameterized import parameterized
 from typing import Dict
@@ -25,6 +31,7 @@ from uuid import uuid4, UUID
 
 MODULE_NAME = "audio_processing"
 
+cart_repository = CartRepository()
 job_repository = JobRepository()
 
 
@@ -192,3 +199,62 @@ def test_decompress_audio_valid(file_name: str, mock_publisher):
 
     delete_file(bucket, decompressed_path)
     job_repository.delete(job_id)
+
+
+@parameterized.expand([("./test/files/valid_with_markers.wav", 0, 938, 2451, 0)])
+@patch(f"{MODULE_NAME}.TOPIC_COMPRESS", "COMPRESS")
+@patch(f"{MODULE_NAME}.publisher")
+def test_extract_metadata(
+    file_name: str,
+    expected_audio_start: int,
+    expected_intro_end: int,
+    expected_segue: int,
+    expected_end: int,
+    mock_publisher,
+):
+    # Arrange
+
+    cart = Cart(
+        label="METADATA",
+        title="Test",
+        artist="Test",
+        sweeper=False,
+        tags=[],
+        type=str(uuid4()),
+        fade=False,
+    )
+    cart_repository.save(cart)
+
+    job_id = uuid4()
+    cart_id = cart_repository.label_to_id(cart.label)
+    file_path = f"audio/{cart_id}"
+
+    with open(file_name, "rb") as file_to_upload:
+        upload_file(bucket, file_path, file_to_upload)
+
+    job = AudioUploadJob(
+        id=job_id, status=AudioUploadStatus.decompressing, cart_id=cart_id
+    )
+    event = job_to_event(job)
+    context = generate_context()
+    expected_message_call = encode_job(
+        AudioUploadJob(id=job_id, status=AudioUploadStatus.metadata, cart_id=cart_id)
+    )
+
+    # Act
+
+    extract_audio_metadata(event, context)
+    updated_cart = cart_repository.get(cart.label)
+
+    # Assert
+
+    mock_publisher.publish.assert_called_with("COMPRESS", expected_message_call)
+    assert updated_cart.cue_audio_start == expected_audio_start
+    assert updated_cart.cue_intro_end == expected_intro_end
+    assert updated_cart.cue_segue == expected_segue
+    assert updated_cart.cue_audio_end == expected_end
+
+    # Cleanup
+
+    job_repository.delete(job_id)
+    delete_file(bucket, file_path)

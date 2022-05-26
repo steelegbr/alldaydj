@@ -13,9 +13,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+from alldaydj.services.logging import logger
 from enum import Enum
 from io import BytesIO
-from wave_chunk_parser.chunks import FormatChunk, RiffChunk, WaveFormat
+from typing import List, Tuple
+from wave_chunk_parser.chunks import CartChunk, FormatChunk, RiffChunk, WaveFormat
 
 
 class WaveCompression(Enum):
@@ -34,3 +36,26 @@ def get_wave_compression(blob: bytes) -> WaveCompression:
         return WaveCompression.COMPRESSED
     except Exception:
         return WaveCompression.INVALID
+
+
+def get_cart_chunk(blob: bytes) -> Tuple[CartChunk, FormatChunk]:
+    try:
+        riff_chunk = RiffChunk.from_file(blob)
+        return (
+            riff_chunk.sub_chunks.get(CartChunk.HEADER_CART),
+            riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT),
+        )
+    except Exception as ex:
+        logger.warning(f"Failed to read chunks from file. Reason: {ex}")
+        return (None, None)
+
+
+def timer_to_milliseconds(
+    cart_chunk: CartChunk, format_chunk: FormatChunk, possible_prefixes: List[str]
+) -> int:
+    for prefix in possible_prefixes:
+        if found_timers := [
+            timer for timer in cart_chunk.timers if timer.name == prefix
+        ]:
+            return (found_timers[0].time * 1000) // format_chunk.sample_rate
+    return 0

@@ -40,18 +40,22 @@ class CartRepository(Repository):
     def normalise_label(self, label: str) -> str:
         return label.upper()
 
-    def __label_to_id(self, label: str) -> str:
+    def label_to_id(self, label: str) -> str:
         encoded_label = self.normalise_label(label).encode("utf-8")
         return sha256(encoded_label).hexdigest()
 
     def generate_file_name(self, cart: Cart) -> str:
-        return f"audio/{self.__label_to_id(cart.label)}"
+        return f"audio/{self.label_to_id(cart.label)}"
 
     def get(self, label: str) -> Cart:
         logger.info(f"Lookup for cart label {label}")
         return self.get_document(
-            self.__label_to_id(label), COLLECTION_CART, self.__map_doc_to_cart
+            self.label_to_id(label), COLLECTION_CART, self.__map_doc_to_cart
         )
+
+    def get_by_id(self, id: str) -> Cart:
+        logger.info(f"Lookup for cart ID {id}")
+        return self.get_document(id, COLLECTION_CART, self.__map_doc_to_cart)
 
     def get_by_label_prefix(self, prefix: str) -> List[Cart]:
         logger.info(f"Lookup for cart by label prefix {prefix}")
@@ -75,7 +79,7 @@ class CartRepository(Repository):
     def save(self, cart: Cart):
         logger.info(f"Saving cart label {cart.label}")
         self.save_stripped_document(
-            self.__label_to_id(cart.label),
+            self.label_to_id(cart.label),
             COLLECTION_CART,
             cart,
             {
@@ -97,7 +101,7 @@ class CartRepository(Repository):
 
     def delete(self, label: str):
         logger.info(f"Delete cart label {label}")
-        db.collection(COLLECTION_CART).document(self.__label_to_id(label)).delete()
+        db.collection(COLLECTION_CART).document(self.label_to_id(label)).delete()
 
     def delete_artist_if_not_used(self, cart: Cart):
         logger.info(f"Clean up for artist name {cart.artist}")

@@ -17,12 +17,23 @@ import base64
 import json
 
 from alldaydj.models.job import AudioUploadJob, AudioUploadStatus, FileStage
-from alldaydj.services.audio import get_wave_compression, WaveCompression
+from alldaydj.services.audio import (
+    get_cart_chunk,
+    get_wave_compression,
+    timer_to_milliseconds,
+    WaveCompression,
+)
+from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.codec import get_decoder
 from alldaydj.services.file import get_mime_type
 from alldaydj.services.job_repository import JobRepository
 from alldaydj.services.logging import logger
-from alldaydj.services.pubsub import publisher, TOPIC_DECOMPRESS, TOPIC_METADATA
+from alldaydj.services.pubsub import (
+    publisher,
+    TOPIC_COMPRESS,
+    TOPIC_DECOMPRESS,
+    TOPIC_METADATA,
+)
 from alldaydj.services.storage import (
     bucket,
     delete_file,
@@ -35,6 +46,7 @@ from typing import Dict
 
 COMPRESSED_MIME_TYPES = ["FLAC", "ID3", "AAC", "Ogg data, Vorbis audio"]
 
+cart_repository = CartRepository()
 job_repository = JobRepository()
 
 
@@ -149,3 +161,33 @@ def decompress_audio(event: Dict, context):
     delete_file(bucket, compressed_file_name)
 
     publisher.publish(TOPIC_METADATA, encode_for_sending(job))
+
+
+def extract_audio_metadata(event: Dict, context):
+    logger.info(f"Metadata extraction triggered by message ID {context.event_id}")
+    job = extract_job_from_event(event)
+    update_job(job, AudioUploadStatus.metadata)
+
+    audio_file_name = generate_file_name(job, FileStage.AUDIO)
+    audio_contents = download_file(bucket, audio_file_name)
+    audio_file = BytesIO(audio_contents)
+
+    (cart_chunk, format_chunk) = get_cart_chunk(audio_file)
+    if cart_chunk:
+        logger.info(f"Updating cart {job.cart_id} with cart chunk data")
+        cart = cart_repository.get_by_id(job.cart_id)
+        cart.cue_audio_start = timer_to_milliseconds(
+            cart_chunk, format_chunk, ["AUD1", "AUDs"]
+        )
+        cart.cue_intro_end = timer_to_milliseconds(
+            cart_chunk, format_chunk, ["INT", "INT2", "INTe"]
+        )
+        cart.cue_segue = timer_to_milliseconds(
+            cart_chunk, format_chunk, ["SEG ", "SEG1", "SEGs"]
+        )
+        cart.cue_audio_end = timer_to_milliseconds(
+            cart_chunk, format_chunk, ["AUD2", "AUDe"]
+        )
+        cart_repository.save(cart)
+
+    publisher.publish(TOPIC_COMPRESS, encode_for_sending(job))

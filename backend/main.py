@@ -13,16 +13,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fastapi import FastAPI, Request
 from alldaydj.routers import artists, audio_files, carts, types, users
 from alldaydj.services.logging import logger
+from distutils.util import strtobool
+from fastapi import FastAPI, Request
+from os import environ
 from time import time
 
 # Use a nested FastAPI instance to mount at /api/ as our base
 
 app = FastAPI()
+DEBUG = strtobool(environ.get("ALLDAYDJ_DEBUG", "False"))
 
-api_app = FastAPI(debug=True)
+api_app = FastAPI(debug=DEBUG)
 api_app.include_router(artists.router)
 api_app.include_router(audio_files.router)
 api_app.include_router(carts.router)

@@ -19,11 +19,14 @@ from os import environ
 from passlib.context import CryptContext
 from typing import Dict
 
-SECRET_KEY = environ.get("ALLDAYDJ_SECRET_KEY")
+SECRET_KEY_FILE = environ.get("ALLDAYDJ_SECRET_KEY_FILE")
 TOKEN_EXPIRY_MINUTES = environ.get("ALLDAYDJ_TOKEN_EXPIRY", 30)
-TOKEN_ALGORITHM = "H256"
+TOKEN_ALGORITHM = "ES512"
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+with open(SECRET_KEY_FILE, "r") as secret_file:
+    SECRET_KEY = secret_file.read()
 
 
 def verify_password(plain: str, hashed: str) -> bool:

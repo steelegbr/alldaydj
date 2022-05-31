@@ -14,7 +14,7 @@
 """
 
 from fastapi import FastAPI, Request
-from alldaydj.routers import artists, audio_files, carts, types
+from alldaydj.routers import artists, audio_files, carts, types, users
 from alldaydj.services.logging import logger
 from time import time
 
@@ -27,6 +27,7 @@ api_app.include_router(artists.router)
 api_app.include_router(audio_files.router)
 api_app.include_router(carts.router)
 api_app.include_router(types.router)
+api_app.include_router(users.router)
 
 app.mount("/api", api_app)
 

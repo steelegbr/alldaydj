@@ -17,15 +17,13 @@ import re
 
 from sys import prefix
 from alldaydj.models.cart import Cart
-from alldaydj.models.sequencer import CartIdSequencer
+from alldaydj.models.sequencer import CartIdSequencer, SequencerResponse
 from alldaydj.services.cart_repository import CartRepository
 from alldaydj.services.sequencer_repository import SequencerRepository
 from fastapi import APIRouter, HTTPException, Response
 from fastapi_pagination import Page, add_pagination, paginate
 from typing import List
 from uuid import UUID, uuid4
-
-from backend.api.alldaydj.models.sequencer import SequencerResponse
 
 router = APIRouter()
 cart_repository = CartRepository()

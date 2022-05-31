@@ -16,12 +16,11 @@
 from alldaydj.models.cart import Cart
 from alldaydj.services.artist_repository import ArtistRepository
 from alldaydj.services.repository import Repository
-from alldaydj.services.database import db, strip_id
+from alldaydj.services.database import db
 from alldaydj.services.logging import logger
 from alldaydj.services.search import fields_to_tokens, fields_to_weighting_map
 from hashlib import sha256
 from typing import Dict, List
-from uuid import UUID
 
 COLLECTION_CART = "cart"
 FIELD_SEARCH = "search"

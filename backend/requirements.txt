@@ -5,7 +5,9 @@ firebase-admin
 google-cloud-pubsub
 nltk
 parameterized
+passlib[bcrypt]
 pytest
+python-jose[cryptography]
 python-magic
 python-multipart
 uvicorn[standard]

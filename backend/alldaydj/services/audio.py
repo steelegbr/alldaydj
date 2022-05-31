@@ -30,7 +30,7 @@ def get_wave_compression(blob: bytes) -> WaveCompression:
     try:
         file = BytesIO(blob)
         riff_chunk = RiffChunk.from_file(file)
-        format_chunk: FormatChunk = riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT)
+        format_chunk: FormatChunk = riff_chunk.get_chunk(FormatChunk.HEADER_FORMAT)
         if format_chunk and format_chunk.format == WaveFormat.PCM:
             return WaveCompression.UNCOMPRESSED
         return WaveCompression.COMPRESSED
@@ -42,8 +42,8 @@ def get_cart_chunk(blob: bytes) -> Tuple[CartChunk, FormatChunk]:
     try:
         riff_chunk = RiffChunk.from_file(blob)
         return (
-            riff_chunk.sub_chunks.get(CartChunk.HEADER_CART),
-            riff_chunk.sub_chunks.get(FormatChunk.HEADER_FORMAT),
+            riff_chunk.get_chunk(CartChunk.HEADER_CART),
+            riff_chunk.get_chunk(FormatChunk.HEADER_FORMAT),
         )
     except Exception as ex:
         logger.warning(f"Failed to read chunks from file. Reason: {ex}")

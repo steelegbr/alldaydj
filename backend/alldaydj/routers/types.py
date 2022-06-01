@@ -14,8 +14,10 @@
 """
 
 from alldaydj.models.cart import CartType
+from alldaydj.models.user import User
+from alldaydj.services.authentication import get_current_user
 from alldaydj.services.type_respository import TypeRepository
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi_pagination import Page, add_pagination, paginate
 from typing import List
 from uuid import UUID, uuid4
@@ -25,7 +27,7 @@ type_repository = TypeRepository()
 
 
 @router.get("/type", response_model=Page[CartType])
-async def get_types() -> List[CartType]:
+async def get_types(user: User = Depends(get_current_user)) -> List[CartType]:
     return paginate(type_repository.all())
 
 

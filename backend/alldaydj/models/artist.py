@@ -12,3 +12,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from typing import Optional
+from pydantic import BaseModel, constr
+from uuid import UUID
+
+
+class Artist(BaseModel):
+    id: Optional[UUID]
+    name: constr(min_length=1)

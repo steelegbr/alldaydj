@@ -12,3 +12,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from os import environ
+from firebase_admin import credentials, initialize_app
+
+creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
+firebase_app = initialize_app(creds)

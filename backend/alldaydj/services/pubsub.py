@@ -12,3 +12,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from google.cloud import pubsub_v1
+
+from firebase_admin import credentials
+from os import environ
+from typing import Dict
+
+TOPIC_COMPRESS = environ.get("ALLDAYDJ_TOPIC_COMPRESS")
+TOPIC_DECOMPRESS = environ.get("ALLDAYDJ_TOPIC_DECOMPRESS")
+TOPIC_HASHES = environ.get("ALLDAYDJ_TOPIC_HASHES")
+TOPIC_METADATA = environ.get("ALLDAYDJ_TOPIC_METADATA")
+TOPIC_VALIDATE = environ.get("ALLDADYJ_TOPIC_VALIDATE")
+
+pubsub_creds = credentials.Certificate(environ.get("FIREBASE_CREDENTIALS"))
+publisher = pubsub_v1.PublisherClient(credentials=pubsub_creds)

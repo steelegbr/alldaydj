@@ -12,3 +12,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from alldaydj.services.firebase import firebase_app
+from firebase_admin import firestore
+from os import environ
+from typing import Dict
+
+
+db = firestore.client()
+
+
+def strip_id(dict: Dict):
+    if dict and "id" in dict:
+        del dict["id"]

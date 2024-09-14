@@ -12,3 +12,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from alldaydj.models.job import AudioUploadJob
+from alldaydj.services.job_repository import JobRepository
+from fastapi import APIRouter, HTTPException
+from uuid import UUID
+
+router = APIRouter()
+job_repository = JobRepository()
+
+
+@router.get("/job/{job_id}")
+def get_job(self, job_id: UUID) -> AudioUploadJob:
+    if not (job := job_repository.get(job_id)):
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    return job

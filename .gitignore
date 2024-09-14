@@ -1,5 +1,5 @@
 *.pyc
-addjvenv/
+backendvenv/
 syncvenv/
 .vscode/
 set_params_dev.sh
@@ -13,3 +13,4 @@ sync.log
 **/cypress/**/*.png
 **/cypress/**/*.mp4
 kustomization.yaml
+credentials/

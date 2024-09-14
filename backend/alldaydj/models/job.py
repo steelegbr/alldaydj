@@ -12,3 +12,32 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from enum import Enum
+from pydantic import BaseModel
+from typing import Optional
+from uuid import UUID
+
+
+class AudioUploadStatus(str, Enum):
+    queued = "QUEUED"
+    error = "ERROR"
+    validating = "VALIDATING"
+    decompressing = "DECOMPRESSING"
+    metadata = "METADATA"
+    compressing = "COMPRESSING"
+    hashing = "HASHING"
+    done = "DONE"
+
+
+class AudioUploadJob(BaseModel):
+    id: Optional[UUID]
+    status: AudioUploadStatus
+    cart_id: str
+    error: Optional[str]
+
+
+class FileStage(Enum):
+    QUEUED = 0
+    COMPRESSED = 1
+    AUDIO = 2

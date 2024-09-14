@@ -12,3 +12,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from pydantic import BaseModel, EmailStr, Field
+
+
+class User(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = Field("bearer", const=True)

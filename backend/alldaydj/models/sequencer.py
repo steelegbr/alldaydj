@@ -12,3 +12,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
+from pydantic import BaseModel, constr, Field
+from typing import Optional
+from uuid import UUID
+
+CONSTRAINT_CART_ID = r"[a-zA-Z0-9]*"
+
+
+class CartIdSequencer(BaseModel):
+    id: Optional[UUID]
+    name: constr(min_length=1)
+    prefix: constr(regex=CONSTRAINT_CART_ID)
+    suffix: constr(regex=CONSTRAINT_CART_ID)
+    min_digits: Field(ge=1)
+
+
+class SequencerResponse(BaseModel):
+    next: str

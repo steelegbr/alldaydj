@@ -1,6 +1,0 @@
-black
-click
-PyJWT
-pyodbc
-requests
-SQLAlchemy

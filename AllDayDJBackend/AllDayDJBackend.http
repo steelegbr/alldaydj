@@ -1,0 +1,6 @@
+@AllDayDJBackend_HostAddress = http://localhost:5228
+
+GET {{AllDayDJBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

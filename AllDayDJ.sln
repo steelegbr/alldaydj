@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllDayDJ", "AllDayDJ\AllDayDJ.csproj", "{8F5CA723-3A3F-428E-896A-048F1D1CEF3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllDayDJBackend", "AllDayDJBackend\AllDayDJBackend.csproj", "{5B52272B-CD1A-4D2F-9EA4-ADFC9E525DD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllDayDJBackend", "AllDayDJBackend\AllDayDJBackend.csproj", "{CC0B10E4-F100-48D1-9576-6F3190899E13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,9 @@ Global
 		{5B52272B-CD1A-4D2F-9EA4-ADFC9E525DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B52272B-CD1A-4D2F-9EA4-ADFC9E525DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B52272B-CD1A-4D2F-9EA4-ADFC9E525DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC0B10E4-F100-48D1-9576-6F3190899E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0B10E4-F100-48D1-9576-6F3190899E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0B10E4-F100-48D1-9576-6F3190899E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0B10E4-F100-48D1-9576-6F3190899E13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

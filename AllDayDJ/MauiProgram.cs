@@ -1,4 +1,5 @@
 ﻿using AllDayDJ.Pages;
+using AllDayDJ.Services;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
@@ -30,6 +31,7 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<LoginPageViewModel>();
 		builder.Services.AddSingleton<LoginPage>();
+		builder.Services.AddSingleton<IAuthenticationService, ApiAuthenticationService>();
 
 		return builder.Build();
 	}

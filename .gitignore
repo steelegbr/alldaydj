@@ -400,3 +400,7 @@ FodyWeavers.xsd
 # MacOS
 
 .DS_store
+
+# Local app settings
+
+appsettings.Development.json

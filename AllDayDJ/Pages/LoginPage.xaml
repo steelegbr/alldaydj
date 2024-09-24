@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AllDayDJ"
+             x:Class="AllDayDJ.Pages.LoginPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25"
+            VerticalOptions="Center">
+            <Image
+                Source="alldaydj_logo.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="All day dj radio automation software" />
+
+            <Button
+                x:Name="LoginBtn"
+                Text="Log In" 
+                SemanticProperties.Hint="Starts the log in process"
+                Command="{Binding LoginCommand}"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -20,6 +20,14 @@ public class AuthController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Attempts to authenticate the user. If we're already authenticated (cookie exists), the JWT 
+    /// tokens from the upstream authentication service are returned. Otherwise the user is pushed
+    /// into the OAuth flow.
+    /// </summary>
+    /// <param name="schemeDto">Indicates the authentication scheme to use.</param>
+    /// <returns>A redirect, either to the MAUI app or the OAuth2 flow.</returns>
+
     [HttpGet("{scheme}")]
     public async Task Get([FromRoute] AuthenticationSchemeDto schemeDto)
     {

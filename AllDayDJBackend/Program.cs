@@ -1,8 +1,4 @@
-using System.Security.Claims;
 using Auth0.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,21 +19,6 @@ builder.Services.AddSerilog(
 );
 
 // Authentication
-
-// var domain = $"https://{builder.Configuration["Auth0:Domain"]}/";
-// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//     .AddJwtBearer(
-//         options => 
-//         {
-//             options.Authority = domain;
-//             options.Audience = builder.Configuration["Auth0:Audience"];
-//             options.TokenValidationParameters = new TokenValidationParameters
-//             {
-//                 NameClaimType = ClaimTypes.NameIdentifier
-//             };
-//             options.SaveToken = true;
-//         }
-//     );
 
 builder.Services.AddAuth0WebAppAuthentication(
     options => {

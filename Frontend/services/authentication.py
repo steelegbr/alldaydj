@@ -186,6 +186,14 @@ class AuthenticationService:
                 "Asked to deregister callback that wasn't registered", callback=callback
             )
 
-    def get_token(self) -> str:
+    def get_token(self) -> Optional[str]:
         # TODO: Check if the token is still valid and trigger a refresh process in the background
         return self.__token_response.access_token
+
+    def get_device_code(self) -> Optional[str]:
+        if self.__device_code_response:
+            return self.__device_code_response.device_code
+
+    def get_login_url(self) -> Optional[str]:
+        if self.__device_code_response:
+            return self.__device_code_response.verification_uri_complete

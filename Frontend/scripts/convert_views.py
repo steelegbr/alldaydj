@@ -1,12 +1,13 @@
 from click import command, option
+from logging import Logger
 from pathlib import Path
-from services.logging import Logger, LoggingService
+from structlog import get_logger
 from subprocess import CalledProcessError, run
 
 
 @command()
 @option("--path", default="./ui/views/generated")
-def convert(path: str, logger: Logger = LoggingService.get_logger(__name__)):
+def convert(path: str, logger: Logger = get_logger(__name__)):
     for ui_file in Path(path).glob("*.ui"):
         py_file = ui_file.parent / f"{ui_file.stem}.py"
         logger.info("Converting UI file", ui_file=ui_file, py_file=py_file)

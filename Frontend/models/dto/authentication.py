@@ -1,5 +1,10 @@
+from enum import StrEnum
 from pydantic import BaseModel
 from typing import Optional
+
+
+class OAuthScope(StrEnum):
+    OpenIdProfile = "openid profile"
 
 
 class OAuthDeviceCodeRequest(BaseModel):
@@ -8,7 +13,7 @@ class OAuthDeviceCodeRequest(BaseModel):
     client_id: str
 
 
-class OAutheDeviceCodeResponse(BaseModel):
+class OAuthDeviceCodeResponse(BaseModel):
     device_code: str
     user_code: str
     verification_uri: str

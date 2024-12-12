@@ -9,6 +9,7 @@ import pytest
     [
         (AuthenticationServiceState.Authenticated,),
         (AuthenticationServiceState.AwaitingUserAuth),
+        (AuthenticationServiceState.AuthUrl),
         (AuthenticationServiceState.DeviceCode),
         (AuthenticationServiceState.RefreshingToken),
         (AuthenticationServiceState.TimedOut),
@@ -26,5 +27,5 @@ def test_authentication_short_circuit(state: AuthenticationServiceState, mock_lo
     # Assert
 
     mock_logger.warning.assert_called_once_with(
-        "Can't attempt authentication when in the %s state", state=state
+        "Can't attempt authentication in current state", state=state
     )

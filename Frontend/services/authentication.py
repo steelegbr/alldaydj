@@ -1,6 +1,10 @@
 from enum import StrEnum
 from models.dto.api import ApiSettings
-from models.dto.authentication import OAuthDeviceCodeRequest, OAuthDeviceCodeResponse
+from models.dto.authentication import (
+    OAuthDeviceCodeRequest,
+    OAuthDeviceCodeResponse,
+    OAuthScope,
+)
 from PySide6.QtCore import QJsonDocument
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from services.api import ApiService
@@ -42,7 +46,7 @@ class AuthenticationService:
         return self.__state
 
     def __set_state(self, state: AuthenticationServiceState):
-        self.__logger("Changing state", state=state)
+        self.__logger.info("Changing state", state=state)
         self.__state = state
         for callback in self.__callbacks:
             callback(state)
@@ -79,6 +83,7 @@ class AuthenticationService:
         payload = OAuthDeviceCodeRequest(
             audience=api_settings.auth_audience,
             client_id=api_settings.auth_client_id,
+            scope=OAuthScope.OpenIdProfile,
         )
 
         def callback(reply: QNetworkReply):
@@ -89,7 +94,7 @@ class AuthenticationService:
                 )
                 self.__handle_error(f"Failed to get Device Code")
             else:
-                response = OAuthDeviceCodeResponse.model_validate(content)
+                response = OAuthDeviceCodeResponse.model_validate_json(content)
                 self.__logger.info("Obtained device code", response=response)
 
         network_access_manager = QNetworkAccessManager()
@@ -108,3 +113,24 @@ class AuthenticationService:
 
     def get_error(self) -> Optional[str]:
         return self.__error
+
+    def register_callback(self, callback: Callable[[AuthenticationServiceState], None]):
+        if callback and callback not in self.__callbacks:
+            self.__callbacks.append(callback)
+            self.__logger.info("Register callback", callback=callback)
+        else:
+            self.__logger.warning(
+                "Asked to register callback that's already registered",
+                callback=callback,
+            )
+
+    def deregister_callback(
+        self, callback: Callable[[AuthenticationServiceState], None]
+    ):
+        if callback in self.__callbacks:
+            self.__callbacks.remove(callback)
+            self.__logger.info("Deregister callback", callback=callback)
+        else:
+            self.__logger.warning(
+                "Asked to deregister callback that wasn't registered", callback=callback
+            )

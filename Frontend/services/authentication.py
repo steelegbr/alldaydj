@@ -3,9 +3,14 @@ from models.dto.api import ApiSettings
 from models.dto.authentication import (
     OAuthDeviceCodeRequest,
     OAuthDeviceCodeResponse,
+    OAuthError,
+    OAuthGrant,
     OAuthScope,
+    OAuthTokenRequest,
+    OAuthTokenResponse,
+    OAuthTokenResponseError,
 )
-from PySide6.QtCore import QJsonDocument
+from PySide6.QtCore import QJsonDocument, QTimer
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from services.api import ApiService
 from services.logging import get_logger, Logger
@@ -25,10 +30,14 @@ class AuthenticationServiceState(StrEnum):
 
 class AuthenticationService:
     __api_service: ApiService
+    __api_settings: ApiSettings
     __callbacks: List[Callable[[AuthenticationServiceState], None]] = []
+    __device_code_response: OAuthDeviceCodeResponse
     __error: Optional[str]
     __logger: Logger
     __state: AuthenticationServiceState
+    __timer: QTimer = QTimer()
+    __token_response: OAuthTokenResponse
 
     ENCODING = "utf-8"
 
@@ -69,22 +78,26 @@ class AuthenticationService:
         self.__error = None
 
         def success(api_settings: ApiSettings):
-            self.__request_device_code(api_settings)
+            self.__api_settings = api_settings
+            self.__logger.info("Retrieved API settings", settings=self.__api_settings)
+            self.__request_device_code()
 
         def failure(error: str, _: str):
             self.__handle_error(f"API Error: {error}")
 
         self.__api_service.get_api_settings(success, failure)
 
-    def __request_device_code(self, api_settings: ApiSettings):
+    def __request_device_code(self):
         self.__set_state(AuthenticationServiceState.DeviceCode)
 
-        url = f"https://{api_settings.auth_domain}/oauth/device/code"
+        url = f"https://{self.__api_settings.auth_domain}/oauth/device/code"
         payload = OAuthDeviceCodeRequest(
-            audience=api_settings.auth_audience,
-            client_id=api_settings.auth_client_id,
+            audience=self.__api_settings.auth_audience,
+            client_id=self.__api_settings.auth_client_id,
             scope=OAuthScope.OpenIdProfile,
         )
+
+        self.__logger.info("Request device code from OAuth service", url=url)
 
         def callback(reply: QNetworkReply):
             content = str(reply.readAll().data(), encoding=self.ENCODING)
@@ -94,8 +107,46 @@ class AuthenticationService:
                 )
                 self.__handle_error(f"Failed to get Device Code")
             else:
-                response = OAuthDeviceCodeResponse.model_validate_json(content)
-                self.__logger.info("Obtained device code", response=response)
+                self.__device_code_response = (
+                    OAuthDeviceCodeResponse.model_validate_json(content)
+                )
+                self.__logger.info(
+                    "Obtained device code", response=self.__device_code_response
+                )
+                self.__make_token_request()
+
+        network_access_manager = QNetworkAccessManager()
+        network_access_manager.finished.connect(callback)
+        network_access_manager.post(
+            QNetworkRequest(url), self.__convert_dict_for_post(payload.model_dump())
+        )
+
+    def __make_token_request(self, *args, **kwargs):
+        self.__set_state(AuthenticationServiceState.AwaitingUserAuth)
+
+        url = url = f"https://{self.__api_settings.auth_domain}/oauth/token"
+        payload = OAuthTokenRequest(
+            grant_type=OAuthGrant.DeviceCode,
+            device_code=self.__device_code_response.device_code,
+            client_id=self.__api_settings.auth_client_id,
+        )
+
+        self.__logger.info("Request token from OAuth service", url=url)
+
+        def callback(reply: QNetworkReply):
+            content = str(reply.readAll().data(), encoding=self.ENCODING)
+            if reply.error():
+                token_error = OAuthError[OAuthTokenResponseError].model_validate_json(
+                    content
+                )
+                self.__logger.error("Failed to get token", **token_error.model_dump())
+                self.__timer.singleShot(
+                    self.__device_code_response.interval, self.__make_token_request
+                )
+            else:
+                self.__token_response = OAuthTokenResponse.model_validate_json(content)
+                self.__logger.info("Obtained tokens")
+                self.__set_state(AuthenticationServiceState.Authenticated)
 
         network_access_manager = QNetworkAccessManager()
         network_access_manager.finished.connect(callback)
@@ -134,3 +185,7 @@ class AuthenticationService:
             self.__logger.warning(
                 "Asked to deregister callback that wasn't registered", callback=callback
             )
+
+    def get_token(self) -> str:
+        # TODO: Check if the token is still valid and trigger a refresh process in the background
+        return self.__token_response.access_token

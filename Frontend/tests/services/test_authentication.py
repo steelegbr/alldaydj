@@ -63,8 +63,12 @@ def test_happy_path(monkeypatch, starting_state):
 
     http_responses = [
         MockQtHttpResponse(
-            '{"device_code": "DEVICE123", "user_code": "USER54321", "verification_uri": "http://example.org/verify", "verification_uri_complete": "http://example.org/verify?device_code=DEVICE123", "expires_in": 500, "interval": 10}'
-        )
+            '{"device_code": "DEVICE123", "user_code": "USER54321", "verification_uri": "http://example.org/verify", "verification_uri_complete": "http://example.org/verify?device_code=DEVICE123", "expires_in": 500, "interval": 1}'
+        ),
+        # MockQtHttpResponse('{"error": "authorization_pending", "error_description": "Still waiting on the user..."}', QNetworkReply.NetworkError.ContentAccessDenied)
+        MockQtHttpResponse(
+            '{"access_token": "TOKEN123", "refresh_token": "REFRESH123", "token_type": "Bearer", "expires_in": 500}'
+        ),
     ]
 
     def run_side_effects(*args, **kwargs):
@@ -86,6 +90,8 @@ def test_happy_path(monkeypatch, starting_state):
     expected_state_history = [
         AuthenticationServiceState.AuthUrl,
         AuthenticationServiceState.DeviceCode,
+        AuthenticationServiceState.AwaitingUserAuth,
+        AuthenticationServiceState.Authenticated,
     ]
 
     def state_change_callback(state: AuthenticationServiceState):
@@ -98,8 +104,8 @@ def test_happy_path(monkeypatch, starting_state):
     )
     authentication_service.register_callback(state_change_callback)
 
-    # Act and wait until we hit the end of the road (error OR authenticated)
-    # We also have to make the callback from the API service
+    # Act
+    # We also have to simulate the API service callback
 
     authentication_service.authenticate()
     mock_api.call_args[0][0](
@@ -113,5 +119,9 @@ def test_happy_path(monkeypatch, starting_state):
     # Assert
 
     assert state_history == expected_state_history
-    assert mock_http_post.call_count == 1
+    assert mock_http_post.call_count == 2
     assert mock_http_get.call_count == 0
+    assert (
+        authentication_service.get_state() == AuthenticationServiceState.Authenticated
+    )
+    assert authentication_service.get_token() == "TOKEN123"

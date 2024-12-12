@@ -1,10 +1,30 @@
 from enum import StrEnum
 from pydantic import BaseModel
-from typing import Optional
+from typing import Generic, Optional, TypeVar
+
+T = TypeVar("T")
 
 
 class OAuthScope(StrEnum):
     OpenIdProfile = "openid profile"
+
+
+class OAuthGrant(StrEnum):
+    DeviceCode = "urn:ietf:params:oauth:grant-type:device_code"
+
+
+class OAuthTokenError(StrEnum):
+    AuthorizationPending = "authorization_pending"
+    SlowDown = "slow_down"
+    ExpiredToken = "expired_token"
+    AccessDenied = "access_denied"
+
+
+class OAuthTokenResponseError(StrEnum):
+    AuthorizationPending = "authorization_pending"
+    SlowDown = "slow_down"
+    ExpiredToken = "expired_token"
+    AccessDenied = "access_denied"
 
 
 class OAuthDeviceCodeRequest(BaseModel):
@@ -20,3 +40,21 @@ class OAuthDeviceCodeResponse(BaseModel):
     verification_uri_complete: str
     expires_in: int
     interval: int
+
+
+class OAuthTokenRequest(BaseModel):
+    grant_type: OAuthGrant
+    device_code: str
+    client_id: str
+
+
+class OAuthTokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+    expires_in: int
+
+
+class OAuthError(BaseModel, Generic[T]):
+    error: T
+    error_description: str

@@ -49,7 +49,13 @@ class SettingsService:
             self.__logger.error("Cannot save settings as no settings supplied!")
             return
 
+        # Force validation
+
         settings_dict = settings.model_dump()
+        Settings(**settings_dict)
+
+        # Save to Qt settings abstraction
+
         for key in settings_dict.keys():
             self.__settings.setValue(key, self.__map_value_for_save(settings_dict[key]))
         self.__logger.info("Saved settings")

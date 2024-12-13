@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox
+from pydantic import ValidationError
 from services.logging import LoggingService, Logger
 from services.factory import ServiceFactory
 from services.settings import SettingsService
@@ -22,3 +23,20 @@ class Launcher(QMainWindow, Ui_MainWindow):
 
         settings = self.__settings_service.get()
         self.instanceUrl.setText(str(settings.base_url))
+
+        self.login.clicked.connect(self.handle_login_button_clicked)
+
+    def handle_login_button_clicked(self):
+        instance_url = self.instanceUrl.text()
+        self.__logger.info("Attempting to set base URL", url=instance_url)
+
+        settings = self.__settings_service.get()
+        settings.base_url = instance_url
+
+        try:
+            self.__settings_service.save(settings)
+        except ValidationError:
+            self.__logger.error("Base URL not valid", url=instance_url)
+            QMessageBox.critical(
+                self, "Sorry", "You must enter a valid instance URL to connect to!"
+            )

@@ -15,10 +15,15 @@ class ServiceFactory:
             cls.instance.__logger = logger
         return cls.instance
 
+    def apiService(self) -> ApiService:
+        return ApiService(settings_service=self.settingsService())
+
     def authenticationService(self) -> AuthenticationService:
         if not self.__authentication_service:
             self.__logger.info("Instantiating Authentication Service")
-            self.__authentication_service = AuthenticationService()
+            self.__authentication_service = AuthenticationService(
+                api_service=self.apiService()
+            )
         return self.__authentication_service
 
     def settingsService(self) -> SettingsService:

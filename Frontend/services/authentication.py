@@ -35,6 +35,7 @@ class AuthenticationService:
     __device_code_response: OAuthDeviceCodeResponse
     __error: Optional[str]
     __logger: Logger
+    __network_access_manager: QNetworkAccessManager
     __state: AuthenticationServiceState
     __timer: QTimer = QTimer()
     __token_response: OAuthTokenResponse
@@ -73,6 +74,11 @@ class AuthenticationService:
                 state=self.get_state(),
             )
 
+    def __generate_json_request(self, url: str):
+        request = QNetworkRequest(url)
+        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
+        return request
+
     def __get_auth_url(self):
         self.__set_state(AuthenticationServiceState.AuthUrl)
         self.__error = None
@@ -97,13 +103,17 @@ class AuthenticationService:
             scope=OAuthScope.OpenIdProfile,
         )
 
-        self.__logger.info("Request device code from OAuth service", url=url)
+        self.__logger.info(
+            "Request device code from OAuth service",
+            url=url,
+        )
 
         def callback(reply: QNetworkReply):
             content = str(reply.readAll().data(), encoding=self.ENCODING)
-            if error := reply.error():
+
+            if reply.error() is not QNetworkReply.NetworkError.NoError:
                 self.__logger.error(
-                    "Failed to get Device Code", error=error, response=content
+                    "Failed to get Device Code", error=reply.error(), response=content
                 )
                 self.__handle_error(f"Failed to get Device Code")
             else:
@@ -115,10 +125,11 @@ class AuthenticationService:
                 )
                 self.__make_token_request()
 
-        network_access_manager = QNetworkAccessManager()
-        network_access_manager.finished.connect(callback)
-        network_access_manager.post(
-            QNetworkRequest(url), self.__convert_dict_for_post(payload.model_dump())
+        self.__network_access_manager = QNetworkAccessManager()
+        self.__network_access_manager.finished.connect(callback)
+        self.__network_access_manager.post(
+            self.__generate_json_request(url),
+            self.__convert_dict_for_post(payload.model_dump()),
         )
 
     def __make_token_request(self, *args, **kwargs):
@@ -135,7 +146,7 @@ class AuthenticationService:
 
         def callback(reply: QNetworkReply):
             content = str(reply.readAll().data(), encoding=self.ENCODING)
-            if reply.error():
+            if reply.error() is not QNetworkReply.NetworkError.NoError:
                 token_error = OAuthError[OAuthTokenResponseError].model_validate_json(
                     content
                 )
@@ -148,9 +159,9 @@ class AuthenticationService:
                 self.__logger.info("Obtained tokens")
                 self.__set_state(AuthenticationServiceState.Authenticated)
 
-        network_access_manager = QNetworkAccessManager()
-        network_access_manager.finished.connect(callback)
-        network_access_manager.post(
+        self.__network_access_manager = QNetworkAccessManager()
+        self.__network_access_manager.finished.connect(callback)
+        self.__network_access_manager.post(
             QNetworkRequest(url), self.__convert_dict_for_post(payload.model_dump())
         )
 

@@ -4,6 +4,7 @@ from services.logging import LoggingService, Logger
 from services.factory import ServiceFactory
 from services.settings import SettingsService
 from ui.views.generated.launcher import Ui_MainWindow
+from ui.views.login import Login
 
 
 class Launcher(QMainWindow, Ui_MainWindow):
@@ -35,6 +36,9 @@ class Launcher(QMainWindow, Ui_MainWindow):
 
         try:
             self.__settings_service.save(settings)
+            self.__login = Login()
+            self.__login.show()
+            self.hide()
         except ValidationError:
             self.__logger.error("Base URL not valid", url=instance_url)
             QMessageBox.critical(

@@ -2,12 +2,13 @@ from models.dto.api import ApiSettings
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
-from typing import Callable
+from typing import Callable, List
 from urllib.parse import urljoin
 
 
 class ApiService:
     __logger: Logger
+    __managers: List[QNetworkAccessManager] = []
     __settings_service: SettingsService
 
     ENCODING = "utf-8"
@@ -31,20 +32,24 @@ class ApiService:
         def callback(reply: QNetworkReply):
             content = str(reply.readAll().data(), encoding=self.ENCODING)
 
-            if error := reply.error():
+            if reply.error() is not QNetworkReply.NetworkError.NoError:
                 self.__logger.error(
                     "Network error encountered",
                     url=url,
                     body=reply.readAll(),
-                    error=error,
+                    error=reply.error(),
                 )
-                failure(error, content)
+                failure(reply.error(), content)
             else:
                 self.__logger.info("Successful network request", url=url)
                 success(content)
 
+            self.__managers.remove(network_access_manager)
+
         network_access_manager.finished.connect(callback)
         network_access_manager.get(QNetworkRequest(url))
+
+        self.__managers.append(network_access_manager)
 
     def get_api_settings(
         self,

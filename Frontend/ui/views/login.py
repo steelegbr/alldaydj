@@ -45,5 +45,5 @@ class Login(QMainWindow, Ui_MainWindow):
         self.code.setText("")
 
         if state is AuthenticationServiceState.AwaitingUserAuth:
-            self.code.setText(self.__authentication_service.get_device_code())
+            self.code.setText(self.__authentication_service.get_user_code())
             open(self.__authentication_service.get_login_url())

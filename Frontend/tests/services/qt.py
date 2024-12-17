@@ -12,12 +12,19 @@ class MockSignal:
     def connect(self, callback: callable):
         self.connect_callbacks.append(callback)
 
+    def disconnect(self, callback: callable):
+        pass
+
 
 class MockQtHttpResponse:
     __error: Optional[QNetworkReply.NetworkError]
     __response: QByteArray
 
-    def __init__(self, response: str, error: QNetworkReply.NetworkError = None):
+    def __init__(
+        self,
+        response: str,
+        error: QNetworkReply.NetworkError = QNetworkReply.NetworkError.NoError,
+    ):
         self.__error = error
         self.__response = QByteArray(response.encode())
 

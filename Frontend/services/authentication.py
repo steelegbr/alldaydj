@@ -50,12 +50,16 @@ class AuthenticationService:
     ):
         self.__api_service = api_service
         self.__logger = logger
+        self.__network_access_manager = QNetworkAccessManager()
         self.__state = state
 
     def get_state(self) -> AuthenticationServiceState:
         return self.__state
 
     def __set_state(self, state: AuthenticationServiceState):
+        if self.get_state() is state:
+            return
+
         self.__logger.info("Changing state", state=state)
         self.__state = state
         for callback in self.__callbacks:
@@ -100,7 +104,7 @@ class AuthenticationService:
         payload = OAuthDeviceCodeRequest(
             audience=self.__api_settings.auth_audience,
             client_id=self.__api_settings.auth_client_id,
-            scope=OAuthScope.OpenIdProfile,
+            scope=OAuthScope.OpenIdProfileWithOfflineAccess,
         )
 
         self.__logger.info(
@@ -109,6 +113,7 @@ class AuthenticationService:
         )
 
         def callback(reply: QNetworkReply):
+            self.__network_access_manager.finished.disconnect(callback)
             content = str(reply.readAll().data(), encoding=self.ENCODING)
 
             if reply.error() is not QNetworkReply.NetworkError.NoError:
@@ -125,7 +130,6 @@ class AuthenticationService:
                 )
                 self.__make_token_request()
 
-        self.__network_access_manager = QNetworkAccessManager()
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
             self.__generate_json_request(url),
@@ -145,24 +149,41 @@ class AuthenticationService:
         self.__logger.info("Request token from OAuth service", url=url)
 
         def callback(reply: QNetworkReply):
+            self.__network_access_manager.finished.disconnect(callback)
             content = str(reply.readAll().data(), encoding=self.ENCODING)
+
             if reply.error() is not QNetworkReply.NetworkError.NoError:
                 token_error = OAuthError[OAuthTokenResponseError].model_validate_json(
                     content
                 )
-                self.__logger.error("Failed to get token", **token_error.model_dump())
-                self.__timer.singleShot(
-                    self.__device_code_response.interval, self.__make_token_request
-                )
+
+                if token_error.error in [
+                    OAuthTokenResponseError.AuthorizationPending,
+                    OAuthTokenResponseError.SlowDown,
+                ]:
+                    self.__timer.singleShot(
+                        self.__device_code_response.interval * 1000,
+                        self.__make_token_request,
+                    )
+                else:
+                    self.__logger.warning(
+                        "Failed to get token", **token_error.model_dump()
+                    )
+                    self.__set_state(AuthenticationServiceState.Error)
+
             else:
                 self.__token_response = OAuthTokenResponse.model_validate_json(content)
-                self.__logger.info("Obtained tokens")
+                self.__logger.info(
+                    "Obtained tokens",
+                    access_token=self.__token_response.access_token,
+                    refresh_token=self.__token_response.refresh_token,
+                )
                 self.__set_state(AuthenticationServiceState.Authenticated)
 
-        self.__network_access_manager = QNetworkAccessManager()
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            QNetworkRequest(url), self.__convert_dict_for_post(payload.model_dump())
+            self.__generate_json_request(url),
+            self.__convert_dict_for_post(payload.model_dump()),
         )
 
     def __convert_dict_for_post(self, payload: Dict):
@@ -201,9 +222,9 @@ class AuthenticationService:
         # TODO: Check if the token is still valid and trigger a refresh process in the background
         return self.__token_response.access_token
 
-    def get_device_code(self) -> Optional[str]:
+    def get_user_code(self) -> Optional[str]:
         if self.__device_code_response:
-            return self.__device_code_response.device_code
+            return self.__device_code_response.user_code
 
     def get_login_url(self) -> Optional[str]:
         if self.__device_code_response:

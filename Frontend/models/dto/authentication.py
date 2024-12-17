@@ -7,6 +7,8 @@ T = TypeVar("T")
 
 class OAuthScope(StrEnum):
     OpenIdProfile = "openid profile"
+    OpenIdOfflineAccess = "openid offline_access"
+    OpenIdProfileWithOfflineAccess = "openid profile offline_access"
 
 
 class OAuthGrant(StrEnum):

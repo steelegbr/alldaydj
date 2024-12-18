@@ -16,6 +16,7 @@ pyside6 = "^6.8.1"
 pytest = "^8.3.4"
 black = "^24.10.0"
 click = "^8.1.7"
+freezegun = "^1.5.1"
 
 [build-system]
 requires = ["poetry-core"]

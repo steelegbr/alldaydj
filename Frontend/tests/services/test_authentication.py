@@ -1,4 +1,6 @@
+from freezegun import freeze_time
 from models.dto.api import ApiSettings
+from pathlib import Path
 from services.authentication import (
     ApiService,
     AuthenticationService,
@@ -58,6 +60,15 @@ def test_happy_path(monkeypatch, starting_state):
 
     mock_api = MagicMock()
     monkeypatch.setattr("services.authentication.ApiService.get_api_settings", mock_api)
+
+    # Token validation
+
+    mock_token_validation = MagicMock()
+    mock_token_validation.return_value = True
+    monkeypatch.setattr(
+        "services.authentication.AuthenticationService.is_token_still_valid",
+        mock_token_validation,
+    )
 
     # HTTP responses
 
@@ -125,3 +136,97 @@ def test_happy_path(monkeypatch, starting_state):
         authentication_service.get_state() == AuthenticationServiceState.Authenticated
     )
     assert authentication_service.get_token() == "TOKEN123"
+
+
+def test_token_invalid():
+    # Arrange
+
+    token_filename = Path(__file__).parent / "access_token.json"
+    with open(token_filename) as token_handle:
+        token = token_handle.read()
+
+    expected = False
+
+    # Act
+
+    actual = AuthenticationService().is_token_still_valid(token)
+
+    # Assert
+
+    assert actual == expected
+
+
+@freeze_time("2024-12-17")
+def test_token_valid():
+    # Arrange
+
+    token_filename = Path(__file__).parent / "access_token.json"
+    with open(token_filename) as token_handle:
+        token = token_handle.read()
+
+    expected = True
+
+    # Act
+
+    actual = AuthenticationService().is_token_still_valid(token)
+
+    # Assert
+
+    assert actual == expected
+
+
+def test_refresh_token(monkeypatch):
+    # Arrange
+    # Signals
+
+    mock_signal = MockSignal()
+    monkeypatch.setattr(
+        "services.authentication.QNetworkAccessManager.finished", mock_signal
+    )
+
+    # HTTP responses
+
+    http_responses = [
+        MockQtHttpResponse(
+            '{"access_token": "ACCESS123", "id_token": "ID123", "scope": "openid profile offline_access", "expires_in": 500, "token_type": "Bearer"}'
+        )
+    ]
+
+    def run_side_effects(*args, **kwargs):
+        mock_signal.connect_callbacks[-1](http_responses.pop(0))
+
+    mock_http_post = MagicMock(side_effect=run_side_effects)
+    monkeypatch.setattr(
+        "services.authentication.QNetworkAccessManager.post", mock_http_post
+    )
+
+    # Token validation
+
+    mock_token_validation = MagicMock()
+    mock_token_validation.return_value = True
+    monkeypatch.setattr(
+        "services.authentication.AuthenticationService.is_token_still_valid",
+        mock_token_validation,
+    )
+
+    # Service itself
+
+    authentication_service = AuthenticationService()
+    authentication_service.set_api_settings(
+        ApiSettings(
+            auth_audience="AUD123",
+            auth_domain="auth.example.org",
+            auth_client_id="CLIENT123",
+        )
+    )
+    expected = "ACCESS123"
+
+    # Act
+
+    authentication_service.do_refresh_token("REFRESH123")
+    actual = authentication_service.get_token()
+
+    # Assert
+
+    assert actual == expected
+    mock_http_post.assert_called_once()

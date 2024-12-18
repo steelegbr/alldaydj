@@ -13,6 +13,7 @@ class OAuthScope(StrEnum):
 
 class OAuthGrant(StrEnum):
     DeviceCode = "urn:ietf:params:oauth:grant-type:device_code"
+    RefreshToken = "refresh_token"
 
 
 class OAuthTokenError(StrEnum):
@@ -27,6 +28,10 @@ class OAuthTokenResponseError(StrEnum):
     SlowDown = "slow_down"
     ExpiredToken = "expired_token"
     AccessDenied = "access_denied"
+
+
+class OAuthTokenType(StrEnum):
+    Bearer = "Bearer"
 
 
 class OAuthDeviceCodeRequest(BaseModel):
@@ -60,3 +65,17 @@ class OAuthTokenResponse(BaseModel):
 class OAuthError(BaseModel, Generic[T]):
     error: T
     error_description: str
+
+
+class OAuthRefreshRequest(BaseModel):
+    client_id: str
+    grant_type: OAuthGrant
+    refresh_token: str
+
+
+class OAuthRefreshResponse(BaseModel):
+    access_token: str
+    id_token: str
+    scope: OAuthScope
+    expires_in: int
+    token_type: OAuthTokenType

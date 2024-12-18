@@ -6,8 +6,17 @@ authors = ["Marc Steele <steelegbr@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.12, <3.14"
+structlog = "^24.4.0"
+pydantic = "^2.10.3"
+pyside6 = "^6.8.1"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+black = "^24.10.0"
+click = "^8.1.7"
+freezegun = "^1.5.1"
 
 [build-system]
 requires = ["poetry-core"]

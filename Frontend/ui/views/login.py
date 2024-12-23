@@ -4,7 +4,7 @@ from services.authentication import AuthenticationService, AuthenticationService
 from services.factory import ServiceFactory
 from typing import Dict
 from ui.views.generated.login import Ui_MainWindow
-from webbrowser import open
+from webbrowser import open as open_webbrowser
 
 LOGIN_STATUS_MAP: Dict[AuthenticationServiceState, str] = {
     AuthenticationServiceState.Authenticated: "",
@@ -46,4 +46,4 @@ class Login(QMainWindow, Ui_MainWindow):
 
         if state is AuthenticationServiceState.AwaitingUserAuth:
             self.code.setText(self.__authentication_service.get_user_code())
-            open(self.__authentication_service.get_login_url())
+            open_webbrowser(self.__authentication_service.get_login_url())

@@ -16,9 +16,7 @@ jobs:
               with:
                   python-version: ${{ matrix.python-version }}
             - name: Install Poetry
-              run: |
-                  curl -sSL https://install.python-poetry.org | python3 -
-              working-directory: ./frontend
+              uses: snok/install-poetry@v1
             - name: Install Dependencies
               run: |
                     poetry install

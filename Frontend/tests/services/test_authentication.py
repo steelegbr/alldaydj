@@ -76,7 +76,6 @@ def test_happy_path(monkeypatch, starting_state):
         MockQtHttpResponse(
             '{"device_code": "DEVICE123", "user_code": "USER54321", "verification_uri": "http://example.org/verify", "verification_uri_complete": "http://example.org/verify?device_code=DEVICE123", "expires_in": 500, "interval": 1}'
         ),
-        # MockQtHttpResponse('{"error": "authorization_pending", "error_description": "Still waiting on the user..."}', QNetworkReply.NetworkError.ContentAccessDenied)
         MockQtHttpResponse(
             '{"access_token": "TOKEN123", "refresh_token": "REFRESH123", "token_type": "Bearer", "expires_in": 500}'
         ),

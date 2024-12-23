@@ -1,0 +1,25 @@
+name: Linting
+on: [push]
+
+jobs:
+    backend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3  
+            - name: Lint with Black
+              uses: psf/black@stable
+              with:
+                options: "--check --diff"
+                src: "./Backend"
+
+    frontend:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3  
+            - name: Lint with Black
+              uses: psf/black@stable
+              with:
+                options: "--check --diff --exclude \"/ui/views/generated/\""
+                src: "./Frontend"

@@ -19,6 +19,7 @@ jobs:
               uses: snok/install-poetry@v1
             - name: Install Dependencies
               run: |
+                    ls -la
                     cd frontend
                     /home/runner/.local/bin/poetry install
             - name: Run Tests

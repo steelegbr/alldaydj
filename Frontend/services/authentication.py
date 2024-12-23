@@ -232,7 +232,7 @@ class AuthenticationService:
         difference = expiry_time - now
         return (difference.total_seconds() // 3600) > refresh_hours
 
-    def do_refresh_token(self, refresh_token: str):
+    def do_refresh_token(self, refresh_token: Optional[str]):
         self.__set_state(AuthenticationServiceState.RefreshingToken)
 
         if not refresh_token:
@@ -278,7 +278,7 @@ class AuthenticationService:
             self.get_state() is AuthenticationServiceState.Authenticated
             and not self.is_token_still_valid(self.__access_token)
         ):
-            self.do_refresh_token()
+            self.do_refresh_token(None)
 
         return self.__access_token
 

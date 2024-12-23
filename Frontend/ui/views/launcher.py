@@ -9,6 +9,7 @@ from ui.views.login import Login
 
 class Launcher(QMainWindow, Ui_MainWindow):
     __logger: Logger
+    __login: Login
     __settings_service: SettingsService
 
     def __init__(

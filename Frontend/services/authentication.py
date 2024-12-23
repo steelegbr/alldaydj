@@ -125,7 +125,7 @@ class AuthenticationService:
                 self.__logger.error(
                     "Failed to get Device Code", error=reply.error(), response=content
                 )
-                self.__handle_error(f"Failed to get Device Code")
+                self.__handle_error("Failed to get Device Code")
             else:
                 self.__device_code_response = (
                     OAuthDeviceCodeResponse.model_validate_json(content)

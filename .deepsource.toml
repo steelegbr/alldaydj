@@ -1,6 +1,6 @@
 version = 1
 
-test_patterns = ["**/test_*.py"]
+test_patterns = ["**/test_*.py", "Frontend/tests/**/*.py"]
 
 exclude_patterns = ["Frontend/ui/views/generated/*.py"]
 

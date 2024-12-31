@@ -22,7 +22,8 @@ class ServiceFactory:
         if not self.__authentication_service:
             self.__logger.info("Instantiating Authentication Service")
             self.__authentication_service = AuthenticationService(
-                api_service=self.apiService()
+                api_service=self.apiService(),
+                settings_service=self.settingsService(),
             )
         return self.__authentication_service
 

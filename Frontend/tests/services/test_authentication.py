@@ -1,16 +1,36 @@
 from freezegun import freeze_time
+from models.core.settings import Settings
 from models.dto.api import ApiSettings
 from pathlib import Path
 from services.authentication import (
     ApiService,
     AuthenticationService,
     AuthenticationServiceState,
+    SettingsService,
 )
 from tests.services.logging import mock_logger
-from tests.services.qt import MockSignal, MockQtHttpResponse
+from tests.services.qt import MockSignal, MockQtHttpResponse, QNetworkReply
 from unittest.mock import MagicMock
 
 import pytest
+
+
+@pytest.fixture
+def mock_settings_default():
+    settings_service = SettingsService()
+    dummy_settings = Settings()
+    settings_service.get = MagicMock(return_value=dummy_settings)
+    settings_service.save = MagicMock()
+    return settings_service
+
+
+@pytest.fixture
+def mock_settings_with_refresh_token():
+    settings_service = SettingsService()
+    dummy_settings = Settings(refresh_token="REFRESH123")
+    settings_service.get = MagicMock(return_value=dummy_settings)
+    settings_service.save = MagicMock()
+    return settings_service
 
 
 @pytest.mark.parametrize(
@@ -24,10 +44,14 @@ import pytest
         AuthenticationServiceState.TimedOut,
     ],
 )
-def test_authentication_short_circuit(state: AuthenticationServiceState, mock_logger):
+def test_authentication_short_circuit(
+    state: AuthenticationServiceState, mock_logger, mock_settings_default
+):
     # Arrange
 
-    authentication_service = AuthenticationService(logger=mock_logger, state=state)
+    authentication_service = AuthenticationService(
+        logger=mock_logger, settings_service=mock_settings_default, state=state
+    )
 
     # Act
 
@@ -47,7 +71,7 @@ def test_authentication_short_circuit(state: AuthenticationServiceState, mock_lo
         AuthenticationServiceState.Error,
     ],
 )
-def test_happy_path(monkeypatch, starting_state):
+def test_happy_path(monkeypatch, starting_state, mock_settings_default):
     # Arrange
     # Signals
 
@@ -110,7 +134,9 @@ def test_happy_path(monkeypatch, starting_state):
     # The service itself
 
     authentication_service = AuthenticationService(
-        state=starting_state, api_service=ApiService()
+        state=starting_state,
+        api_service=ApiService(),
+        settings_service=mock_settings_default,
     )
     authentication_service.register_callback(state_change_callback)
 
@@ -137,7 +163,7 @@ def test_happy_path(monkeypatch, starting_state):
     assert authentication_service.get_token() == "TOKEN123"
 
 
-def test_token_invalid():
+def test_token_invalid(mock_settings_default):
     # Arrange
 
     token_filename = Path(__file__).parent / "access_token.json"
@@ -148,7 +174,9 @@ def test_token_invalid():
 
     # Act
 
-    actual = AuthenticationService().is_token_still_valid(token)
+    actual = AuthenticationService(
+        settings_service=mock_settings_default
+    ).is_token_still_valid(token)
 
     # Assert
 
@@ -156,7 +184,7 @@ def test_token_invalid():
 
 
 @freeze_time("2024-12-17")
-def test_token_valid():
+def test_token_valid(mock_settings_default):
     # Arrange
 
     token_filename = Path(__file__).parent / "access_token.json"
@@ -167,14 +195,16 @@ def test_token_valid():
 
     # Act
 
-    actual = AuthenticationService().is_token_still_valid(token)
+    actual = AuthenticationService(
+        settings_service=mock_settings_default
+    ).is_token_still_valid(token)
 
     # Assert
 
     assert actual == expected
 
 
-def test_refresh_token(monkeypatch):
+def test_refresh_token(monkeypatch, mock_settings_default):
     # Arrange
     # Signals
 
@@ -210,7 +240,9 @@ def test_refresh_token(monkeypatch):
 
     # Service itself
 
-    authentication_service = AuthenticationService()
+    authentication_service = AuthenticationService(
+        settings_service=mock_settings_default
+    )
     authentication_service.set_api_settings(
         ApiSettings(
             auth_audience="AUD123",
@@ -229,3 +261,59 @@ def test_refresh_token(monkeypatch):
 
     assert actual == expected
     mock_http_post.assert_called_once()
+    mock_settings_default.save.assert_not_called()
+
+
+def test_refresh_token_failure(monkeypatch, mock_settings_with_refresh_token):
+    # Arrange
+
+    # Signals
+
+    mock_signal = MockSignal()
+    monkeypatch.setattr(
+        "services.authentication.QNetworkAccessManager.finished", mock_signal
+    )
+
+    # HTTP responses
+
+    http_responses = [
+        MockQtHttpResponse("ERROR", QNetworkReply.NetworkError.ContentAccessDenied)
+    ]
+
+    def run_side_effects(*args, **kwargs):
+        mock_signal.connect_callbacks[-1](http_responses.pop(0))
+
+    mock_http_post = MagicMock(side_effect=run_side_effects)
+    monkeypatch.setattr(
+        "services.authentication.QNetworkAccessManager.post", mock_http_post
+    )
+
+    # Authentication process
+
+    mock_authenitcation = MagicMock()
+    monkeypatch.setattr(
+        "services.authentication.AuthenticationService.authenticate",
+        mock_authenitcation,
+    )
+
+    # Service itself
+
+    authentication_service = AuthenticationService(
+        settings_service=mock_settings_with_refresh_token
+    )
+    authentication_service.set_api_settings(
+        ApiSettings(
+            auth_audience="AUD123",
+            auth_domain="auth.example.org",
+            auth_client_id="CLIENT123",
+        )
+    )
+
+    # Act
+
+    authentication_service.do_refresh_token()
+
+    # Assert
+
+    mock_authenitcation.assert_called_once()
+    mock_settings_with_refresh_token.save.assert_called_once_with(Settings())

@@ -18,6 +18,7 @@ from PySide6.QtCore import QJsonDocument, QTimer
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from services.api import ApiService
 from services.logging import get_logger, Logger
+from services.settings import SettingsService
 from typing import Callable, Dict, List, Optional
 
 
@@ -42,6 +43,7 @@ class AuthenticationService:
     __logger: Logger
     __network_access_manager: QNetworkAccessManager
     __refresh_token: str
+    __settings_service: SettingsService
     __state: AuthenticationServiceState
     __timer: QTimer = QTimer()
 
@@ -51,12 +53,15 @@ class AuthenticationService:
         self,
         api_service: ApiService = None,
         logger: Logger = get_logger(__name__),
+        settings_service: SettingsService = None,
         state: AuthenticationServiceState = AuthenticationServiceState.Unauthenticated,
     ):
         self.__api_service = api_service
         self.__logger = logger
         self.__network_access_manager = QNetworkAccessManager()
+        self.__settings_service = settings_service
         self.__state = state
+        self.__refresh_token_from_settings()
 
     def get_state(self) -> AuthenticationServiceState:
         return self.__state
@@ -95,7 +100,11 @@ class AuthenticationService:
         def success(api_settings: ApiSettings):
             self.__api_settings = api_settings
             self.__logger.info("Retrieved API settings", settings=self.__api_settings)
-            self.__request_device_code()
+
+            if self.__refresh_token:
+                self.do_refresh_token(self.__refresh_token)
+            else:
+                self.__request_device_code()
 
         def failure(error: str, _: str):
             self.__handle_error(f"API Error: {error}")
@@ -179,7 +188,7 @@ class AuthenticationService:
             else:
                 token_response = OAuthTokenResponse.model_validate_json(content)
                 self.__access_token = token_response.access_token
-                self.__refresh_token = token_response.refresh_token
+                self.__set_refresh_token(token_response.refresh_token)
 
                 self.__logger.info(
                     "Obtained tokens", expires_in=token_response.expires_in
@@ -232,7 +241,7 @@ class AuthenticationService:
         difference = expiry_time - now
         return (difference.total_seconds() // 3600) > refresh_hours
 
-    def do_refresh_token(self, refresh_token: Optional[str]):
+    def do_refresh_token(self, refresh_token: Optional[str] = None):
         self.__set_state(AuthenticationServiceState.RefreshingToken)
 
         if not refresh_token:
@@ -253,7 +262,9 @@ class AuthenticationService:
 
             if reply.error() is not QNetworkReply.NetworkError.NoError:
                 self.__logger.warning("Failed to refresh token", error=reply.readAll())
-                self.__set_state(AuthenticationServiceState.Authenticated)
+                self.__set_state(AuthenticationServiceState.Unauthenticated)
+                self.__clear_refresh_token()
+                self.authenticate()
 
             else:
                 refresh_response = OAuthRefreshResponse.model_validate_json(content)
@@ -293,3 +304,22 @@ class AuthenticationService:
     def set_api_settings(self, api_settings: ApiSettings):
         self.__api_settings = api_settings
         self.__logger.info("Set API settings", settings=self.__api_settings)
+
+    def __set_refresh_token(self, refresh_token: str):
+        self.__logger.info("Set refresh token")
+        self.__refresh_token = refresh_token
+
+        settings = self.__settings_service.get()
+        settings.refresh_token = refresh_token
+        self.__settings_service.save(settings)
+
+    def __refresh_token_from_settings(self):
+        settings = self.__settings_service.get()
+        self.__refresh_token = settings.refresh_token
+
+    def __clear_refresh_token(self):
+        self.__logger.info("Clear refresh token")
+        settings = self.__settings_service.get()
+        settings.refresh_token = None
+        self.__settings_service.save(settings)
+        self.__refresh_token = None

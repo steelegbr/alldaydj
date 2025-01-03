@@ -4,6 +4,7 @@ from services.authentication import AuthenticationService, AuthenticationService
 from services.factory import ServiceFactory
 from typing import Dict
 from ui.views.generated.login import Ui_MainWindow
+from ui.views.main import MainScreen
 from webbrowser import open as open_webbrowser
 
 LOGIN_STATUS_MAP: Dict[AuthenticationServiceState, str] = {
@@ -20,6 +21,7 @@ LOGIN_STATUS_MAP: Dict[AuthenticationServiceState, str] = {
 
 class Login(QMainWindow, Ui_MainWindow):
     __authentication_service: AuthenticationService
+    __main_screen: MainScreen = None
 
     def __init__(
         self,
@@ -44,6 +46,12 @@ class Login(QMainWindow, Ui_MainWindow):
         self.status.setText(LOGIN_STATUS_MAP[state])
         self.code.setText("")
 
-        if state is AuthenticationServiceState.AwaitingUserAuth:
-            self.code.setText(self.__authentication_service.get_user_code())
-            open_webbrowser(self.__authentication_service.get_login_url())
+        match state:
+            case AuthenticationServiceState.AwaitingUserAuth:
+                self.code.setText(self.__authentication_service.get_user_code())
+                open_webbrowser(self.__authentication_service.get_login_url())
+            case AuthenticationServiceState.Authenticated:
+                if self.__main_screen is None:
+                    self.__main_screen = MainScreen()
+                self.__main_screen.show()
+                self.hide()

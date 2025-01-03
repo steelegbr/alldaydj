@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QLabel, QWidget, QVBoxLayout
 
+
 class Placeholder(QWidget):
     __label: QLabel
 
@@ -7,7 +8,7 @@ class Placeholder(QWidget):
         super().__init__()
 
         self.__label = QLabel(content)
-        
+
         layout = QVBoxLayout()
         layout.addWidget(self.__label)
         self.setLayout(layout)

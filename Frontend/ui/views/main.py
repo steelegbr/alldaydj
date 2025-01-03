@@ -38,7 +38,8 @@ class MainScreen(QMainWindow):
 
         return tabs_layout
 
-    def __create_left_tabs(self):
+    @staticmethod
+    def __create_left_tabs():
         left_tabs = QTabWidget(movable=True)
 
         left_tabs.addTab(Placeholder("Log"), "Log")
@@ -46,7 +47,8 @@ class MainScreen(QMainWindow):
 
         return left_tabs
 
-    def __create_right_tabs(self):
+    @staticmethod
+    def __create_right_tabs():
         right_tabs = QTabWidget(movable=True)
 
         right_tabs.addTab(Placeholder("Library"), "Library")

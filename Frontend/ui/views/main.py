@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 from ui.views.clock import Clock
+from ui.views.library import Library
 from ui.views.placeholder import Placeholder
 
 
@@ -52,7 +53,7 @@ class MainScreen(QMainWindow):
     def __create_right_tabs():
         right_tabs = QTabWidget(movable=True)
 
-        right_tabs.addTab(Placeholder("Library"), "Library")
+        right_tabs.addTab(Library(), "Library")
         right_tabs.addTab(Placeholder("Settings"), "Settings")
 
         return right_tabs

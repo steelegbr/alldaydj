@@ -36,11 +36,11 @@ jobs:
                     pip install poetry
             - name: Install Dependencies
               run: |
-                    /home/runner/.local/bin/poetry install
+                    poetry install
               working-directory: ./Backend
             - name: Run Tests
               run: |
-                    /home/runner/.local/bin/poetry run python manage.py test
+                    poetry run python manage.py test
               working-directory: ./Backend
     frontend:
         runs-on: ubuntu-latest

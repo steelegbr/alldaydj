@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
 )
+from ui.views.cart_editor import CartEditor
 
 
 class Library(QWidget):
@@ -55,8 +56,13 @@ class Library(QWidget):
         footer_layout.addWidget(self.__result_count)
 
         self.__new_cart_button = QPushButton("Add Cart")
+        self.__new_cart_button.clicked.connect(self.__show_new_cart_dialog)
         footer_layout.addWidget(self.__new_cart_button)
 
         footer_layout.setStretch(0, 1)
 
         return footer_layout
+
+    def __show_new_cart_dialog(self):
+        dialog = CartEditor()
+        dialog.exec()

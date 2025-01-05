@@ -2,6 +2,7 @@ from services.api import ApiService
 from services.authentication import AuthenticationService
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
+from services.tag import TagService
 
 
 class ServiceFactory:
@@ -29,3 +30,9 @@ class ServiceFactory:
 
     def settingsService(self) -> SettingsService:
         return SettingsService()
+
+    def tagService(self) -> TagService:
+        return TagService(
+            authetication_service=self.authenticationService(),
+            settings_service=self.settingsService(),
+        )

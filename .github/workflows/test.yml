@@ -2,15 +2,32 @@ name: Run Tests
 on: [push]
 
 env:
+  DB_NAME: alldaydj
+  DB_USER: postgres
+  DB_PASSWORD: postgres
+  DB_HOST: postgres
+  DEBUG: True
   SECRET_KEY: NONSENSE-SECRET-KEY
 
 jobs:
     backend:
         runs-on: ubuntu-latest
+        container: python:{{ matrix.python-version }}
         strategy:
             matrix:
                 python-version: ["3.12", "3.13"]
-
+        services:
+          postgres:
+            image: postgres
+            env:
+              POSTGRES_DB: ${{ env.DB_NAME }}
+              POSTGRES_USER: ${{ env.DB_USER }}
+              POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+            options: >-
+              --health-cmd pg_isready
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3  

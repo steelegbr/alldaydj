@@ -16,6 +16,8 @@ class Clock(QMainWindow, BaseClock):
         self.__timer.timeout.connect(self.__update_time)
         self.__timer.start(refresh_interval)
 
+        self.__update_time()
+
         self.setMinimumHeight(178)
 
     def __update_time(self):

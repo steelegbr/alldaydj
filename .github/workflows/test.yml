@@ -12,7 +12,7 @@ env:
 jobs:
     backend:
         runs-on: ubuntu-latest
-        container: python:{{ matrix.python-version }}
+        container: python:${{ matrix.python-version }}
         strategy:
             matrix:
                 python-version: ["3.12", "3.13"]

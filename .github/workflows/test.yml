@@ -30,13 +30,10 @@ jobs:
               --health-retries 5
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3  
-            - name: Setup Python {{ matrix.python-version }}
-              uses: actions/setup-python@v4
-              with:
-                  python-version: ${{ matrix.python-version }}
+              uses: actions/checkout@v3
             - name: Install Poetry
-              uses: snok/install-poetry@v1
+              run: |
+                    pip install poetry
             - name: Install Dependencies
               run: |
                     /home/runner/.local/bin/poetry install

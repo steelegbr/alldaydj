@@ -1,6 +1,9 @@
 name: Run Tests
 on: [push]
 
+env:
+  SECRET_KEY: NONSENSE-SECRET-KEY
+
 jobs:
     backend:
         runs-on: ubuntu-latest

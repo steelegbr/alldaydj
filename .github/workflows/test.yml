@@ -6,6 +6,11 @@ env:
   DB_USERNAME: postgres
   DB_PASSWORD: postgres
   DB_HOST: postgres
+  JWT_AUDIENCE: TEST-AUDIENCE
+  JWT_CLIENT_ID: TEST-CLIENT-ID
+  JWT_DOMAIN: example.org
+  JWT_ISSUER: TEST-ISSUER
+  JWT_JKWS: http://example.org/well-known/jwks.json
   DEBUG: True
   SECRET_KEY: NONSENSE-SECRET-KEY
 

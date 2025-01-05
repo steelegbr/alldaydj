@@ -50,9 +50,9 @@ class Cart(Model):
     valid_until = DateTimeField(null=True)
     isrc = TextField(blank=True)
     record_label = TextField(blank=True)
-    cue_start = FloatField()
+    cue_start = FloatField(default=0)
     cue_intro = FloatField(null=True)
-    cue_outro = FloatField()
+    cue_outro = FloatField(default=0)
 
     def __str__(self):
         return f"({self.label}) {self.artist} - {self.title}"

@@ -10,7 +10,7 @@ env:
   JWT_CLIENT_ID: TEST-CLIENT-ID
   JWT_DOMAIN: example.org
   JWT_ISSUER: TEST-ISSUER
-  JWT_JKWS: http://example.org/well-known/jwks.json
+  JWT_JWKS: http://example.org/well-known/jwks.json
   DEBUG: True
   SECRET_KEY: NONSENSE-SECRET-KEY
 

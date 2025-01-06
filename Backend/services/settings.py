@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     jwt_client_id: str
     jwt_domain: str
     jwt_issuer: str
+    mongodb_url: str
 
     class Config:
         env_file = ".env"

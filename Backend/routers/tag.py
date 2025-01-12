@@ -82,4 +82,4 @@ async def update_tag(
     response_model_by_alias=False,
 )
 async def list_tags(auth_result: str = Security(token_verifier.verify)) -> Page[Tag]:
-    return await paginate(await tag_collection.find().sort("tag"))
+    return await paginate(tag_collection)

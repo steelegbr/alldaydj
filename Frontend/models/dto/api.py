@@ -11,7 +11,8 @@ class ApiSettings(BaseModel):
 
 
 class Pagination(BaseModel, Generic[T]):
-    count: int
-    next: Optional[HttpUrl]
-    previous: Optional[HttpUrl]
-    results: List[T]
+    items: List[T]
+    page: int
+    pages: int
+    size: int
+    total: int

@@ -13,6 +13,7 @@ from ui.viewmodels.tag import TagListModel
 class TagSettings(QWidget):
     __add_button: QPushButton
     __add_text: QLineEdit
+    __delete_button: QPushButton
     __tag_list: QListView
     __tag_model: TagListModel
 
@@ -41,7 +42,10 @@ class TagSettings(QWidget):
         layout = QHBoxLayout()
 
         layout.addWidget(QLabel(""), 1)
-        layout.addWidget(QPushButton("Delete"))
+
+        self.__delete_button = QPushButton("Delete")
+        self.__delete_button.pressed.connect(self.__delete_button_pressed)
+        layout.addWidget(self.__delete_button)
 
         return layout
 
@@ -52,6 +56,18 @@ class TagSettings(QWidget):
         layout.addWidget(self.__add_text, 1)
 
         self.__add_button = QPushButton("Add")
+        self.__add_button.pressed.connect(self.__add_button_pressed)
         layout.addWidget(self.__add_button)
 
         return layout
+
+    def __add_button_pressed(self):
+        tag_text = self.__add_text.text()
+        if not tag_text:
+            return
+
+        self.__tag_model.addTag(tag_text)
+        self.__add_text.clear()
+
+    def __delete_button_pressed(self):
+        pass

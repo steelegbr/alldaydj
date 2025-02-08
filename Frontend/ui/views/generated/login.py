@@ -22,15 +22,15 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(520, 159)
+        MainWindow.resize(559, 203)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.throbber = QLabel(self.centralwidget)
         self.throbber.setObjectName(u"throbber")
-        self.throbber.setGeometry(QRect(0, 0, 171, 151))
+        self.throbber.setGeometry(QRect(20, 20, 171, 151))
         self.code = QLabel(self.centralwidget)
         self.code.setObjectName(u"code")
-        self.code.setGeometry(QRect(210, 90, 311, 51))
+        self.code.setGeometry(QRect(230, 110, 311, 51))
         font = QFont()
         font.setPointSize(45)
         font.setBold(True)
@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         self.code.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.status = QLabel(self.centralwidget)
         self.status.setObjectName(u"status")
-        self.status.setGeometry(QRect(210, 20, 311, 51))
+        self.status.setGeometry(QRect(230, 40, 311, 51))
         self.status.setAlignment(Qt.AlignmentFlag.AlignCenter)
         MainWindow.setCentralWidget(self.centralwidget)
 

@@ -53,5 +53,5 @@ class Login(QMainWindow, Ui_MainWindow):
             case AuthenticationServiceState.Authenticated:
                 if self.__main_screen is None:
                     self.__main_screen = MainScreen()
-                self.__main_screen.show()
+                self.__main_screen.showMaximized()
                 self.hide()

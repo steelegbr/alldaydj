@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>159</height>
+    <width>559</width>
+    <height>203</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="throbber">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>20</x>
+      <y>20</y>
       <width>171</width>
       <height>151</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QLabel" name="code">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>90</y>
+      <x>230</x>
+      <y>110</y>
       <width>311</width>
       <height>51</height>
      </rect>
@@ -52,8 +52,8 @@
    <widget class="QLabel" name="status">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>20</y>
+      <x>230</x>
+      <y>40</y>
       <width>311</width>
       <height>51</height>
      </rect>

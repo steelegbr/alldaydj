@@ -10,4 +10,4 @@ RUN poetry install --without dev
 
 COPY . /app/
 ENTRYPOINT [ "poetry" ]
-CMD ["run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["run", "fastapi", "main.py", "--port", "80"]

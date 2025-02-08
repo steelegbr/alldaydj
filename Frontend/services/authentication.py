@@ -14,9 +14,10 @@ from models.dto.authentication import (
     OAuthTokenResponse,
     OAuthTokenResponseError,
 )
-from PySide6.QtCore import QJsonDocument, QTimer
+from PySide6.QtCore import QTimer
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply, QNetworkRequest
 from services.api import ApiService
+from services.json import JsonService
 from services.logging import get_logger, Logger
 from services.settings import SettingsService
 from typing import Callable, Dict, List, Optional
@@ -88,11 +89,6 @@ class AuthenticationService:
                 state=self.get_state(),
             )
 
-    def __generate_json_request(self, url: str):
-        request = QNetworkRequest(url)
-        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
-        return request
-
     def __get_auth_url(self):
         self.__set_state(AuthenticationServiceState.AuthUrl)
         self.__error = None
@@ -146,8 +142,8 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
-            self.__convert_dict_for_post(payload.model_dump()),
+            JsonService.generate_json_request(url),
+            JsonService.dict_to_json(payload.model_dump()),
         )
 
     def __make_token_request(self, *args, **kwargs):
@@ -197,13 +193,9 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
-            self.__convert_dict_for_post(payload.model_dump()),
+            JsonService.generate_json_request(url),
+            JsonService.dict_to_json(payload.model_dump()),
         )
-
-    def __convert_dict_for_post(self, payload: Dict):
-        doc = QJsonDocument(payload)
-        return doc.toJson()
 
     def __handle_error(self, error: str):
         self.__set_state(AuthenticationServiceState.Error)
@@ -277,8 +269,8 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
-            self.__convert_dict_for_post(payload.model_dump()),
+            JsonService.generate_json_request(url),
+            JsonService.dict_to_json(payload.model_dump()),
         )
 
     def get_token(self) -> Optional[str]:
@@ -292,6 +284,13 @@ class AuthenticationService:
             self.do_refresh_token(None)
 
         return self.__access_token
+
+    def get_authenticated_request(self, url: str) -> QNetworkRequest:
+        request = QNetworkRequest()
+        request.setUrl(url)
+        request.setRawHeader(b"Authorization", f"Bearer {self.get_token()}".encode())
+        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
+        return request
 
     def get_user_code(self) -> Optional[str]:
         if self.__device_code_response:

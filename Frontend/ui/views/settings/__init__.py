@@ -1,1 +1,1 @@
-from .settings import Settings
+from .settings import Settings  # skipcq: PYL-W2000

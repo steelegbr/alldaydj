@@ -1,5 +1,5 @@
-from pydantic import BaseModel, HttpUrl
-from typing import Generic, List, Optional, TypeVar
+from pydantic import BaseModel
+from typing import Generic, List, TypeVar
 
 T = TypeVar("T")
 

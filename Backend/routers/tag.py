@@ -19,10 +19,9 @@ token_verifier = TokenVerifier()
     status_code=status.HTTP_201_CREATED,
     response_model_by_alias=False,
 )
-# skipcq: PYL-W0613
 async def create_tag(
     tag: TagUpdate = Body(...), auth_result: str = Security(token_verifier.verify)
-):
+):  # skipcq: PYL-W0613
     new_tag = await tag_collection.insert_one(tag.model_dump(by_alias=True))
     created_tag = await tag_collection.find_one({"_id": new_tag.inserted_id})
     return created_tag
@@ -58,12 +57,11 @@ async def delete_tag(id: str, auth_result: str = Security(token_verifier.verify)
     response_model=Tag,
     response_model_by_alias=False,
 )
-# skipcq: PYL-W0613
 async def update_tag(
     id: str,
     tag: TagUpdate = Body(...),
     auth_result: str = Security(token_verifier.verify),
-):
+):  # skipcq: PYL-W0613
     update_result = await tag_collection.find_one_and_update(
         {"_id": ObjectId(id)},
         {"$set": tag.model_dump(by_alias=True)},

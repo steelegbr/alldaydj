@@ -19,6 +19,7 @@ token_verifier = TokenVerifier()
     status_code=status.HTTP_201_CREATED,
     response_model_by_alias=False,
 )
+# skipcq: PYL-W0613
 async def create_tag(
     tag: TagUpdate = Body(...), auth_result: str = Security(token_verifier.verify)
 ):
@@ -33,6 +34,7 @@ async def create_tag(
     response_model=Tag,
     response_model_by_alias=False,
 )
+# skipcq: PYL-W0613
 async def get_tag(id: str, auth_result: str = Security(token_verifier.verify)):
     if not (tag := await tag_collection.find_one({"_id": ObjectId(id)})):
         raise HTTPException(status_code=404, detail=f"Tag {id} not found")
@@ -40,6 +42,7 @@ async def get_tag(id: str, auth_result: str = Security(token_verifier.verify)):
 
 
 @router.delete("/{id}", response_description="Delete a tag", status_code=204)
+# skipcq: PYL-W0613
 async def delete_tag(id: str, auth_result: str = Security(token_verifier.verify)):
     delete_result = await tag_collection.delete_one({"_id": ObjectId(id)})
 
@@ -55,6 +58,7 @@ async def delete_tag(id: str, auth_result: str = Security(token_verifier.verify)
     response_model=Tag,
     response_model_by_alias=False,
 )
+# skipcq: PYL-W0613
 async def update_tag(
     id: str,
     tag: TagUpdate = Body(...),
@@ -78,5 +82,6 @@ async def update_tag(
     response_model=Page[Tag],
     response_model_by_alias=False,
 )
+# skipcq: PYL-W0613
 async def list_tags(auth_result: str = Security(token_verifier.verify)) -> Page[Tag]:
     return await paginate(tag_collection)

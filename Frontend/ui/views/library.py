@@ -42,7 +42,8 @@ class Library(QWidget):
 
         return search_layout
 
-    def __generate_results(self):
+    @staticmethod
+    def __generate_results():
         results_layout = QHBoxLayout()
 
         results_layout.addWidget(QLabel("Results"))
@@ -63,6 +64,7 @@ class Library(QWidget):
 
         return footer_layout
 
-    def __show_new_cart_dialog(self):
+    @staticmethod
+    def __show_new_cart_dialog():
         dialog = CartEditor()
         dialog.exec()

@@ -24,7 +24,8 @@ class TokenVerifier:
 
         self.__client = PyJWKClient(jwks_url)
 
-    def __check_claims(self, payload, claim_name: str, expected_values: List[str]):
+    @staticmethod
+    def __check_claims(payload, claim_name: str, expected_values: List[str]):
         if claim_name not in payload:
             raise UnauthorizedException(detail=f"Claim {claim_name} not found in token")
 

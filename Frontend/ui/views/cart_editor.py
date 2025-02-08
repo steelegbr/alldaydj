@@ -85,7 +85,8 @@ class CartEditor(QDialog):
 
         return form_layout
 
-    def __generate_footer(self):
+    @staticmethod
+    def __generate_footer():
         layout = QHBoxLayout()
 
         spacer = QLabel()

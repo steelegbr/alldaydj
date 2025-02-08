@@ -47,9 +47,18 @@ class TagListModel(QAbstractListModel):
             existing_tag for existing_tag in self.__tags if existing_tag.tag == tag
         ]
         if not existing_tags:
-            self.__tag_service.add_tag(
-                tag, self.__handle_tag_action, self.__handle_failure
-            )
+            self.__tag_service.add(tag, self.__handle_tag_action, self.__handle_failure)
+
+    def deleteTag(self, index: int):
+        if index < 0 or index >= len(self.__tags):
+            return
+
+        tag = self.__tags[index]
+
+        self.__tag_service.delete(tag, self.__handle_none_action, self.__handle_failure)
 
     def __handle_tag_action(self, tag: Tag):
+        self.refresh()
+
+    def __handle_none_action(self):
         self.refresh()

@@ -71,4 +71,6 @@ class TagSettings(QWidget):
         self.__add_text.clear()
 
     def __delete_button_pressed(self):
-        pass
+        indexes = self.__tag_list.selectedIndexes()
+        for index in indexes:
+            self.__tag_model.deleteTag(index.row())

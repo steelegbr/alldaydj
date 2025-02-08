@@ -72,7 +72,7 @@ class TagService:
         url = urljoin(str(self.__settings_service.get().base_url), "/api/tag")
         self.__get_page(url, 1, success, failure, [])
 
-    def add_tag(
+    def add(
         self, tag: str, success: Callable[[Tag], None], failure: Callable[[str], None]
     ):
         url = urljoin(str(self.__settings_service.get().base_url), "/api/tag")
@@ -100,4 +100,31 @@ class TagService:
         self.__network_access_manager.post(
             self.__authentication_service.get_authenticated_request(url),
             JsonService.dict_to_json(body.model_dump(exclude_none=True)),
+        )
+
+    def delete(
+        self, tag: Tag, success: Callable[[], None], failure: Callable[[str], None]
+    ):
+        url = urljoin(str(self.__settings_service.get().base_url), f"/api/tag/{tag.id}")
+        self.__logger.info("DELETE Tag Request", url=url)
+
+        def callback(reply: QNetworkReply):
+            self.__network_access_manager.finished.disconnect(callback)
+            content = str(reply.readAll().data(), encoding=self.ENCODING)
+
+            if reply.error() is not QNetworkReply.NoError:
+                self.__logger.error(
+                    "DELETE Tag request failed",
+                    url=url,
+                    error=reply.error(),
+                    response=content,
+                )
+                failure("Failed to delete the tag")
+            else:
+                self.__logger.info("DELETE Tag request successful", url=url)
+                success()
+
+        self.__network_access_manager.finished.connect(callback)
+        self.__network_access_manager.deleteResource(
+            self.__authentication_service.get_authenticated_request(url)
         )

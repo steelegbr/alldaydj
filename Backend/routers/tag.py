@@ -6,7 +6,6 @@ from models.tag import Tag, TagUpdate
 from pymongo import ReturnDocument
 from services.database import tag_collection
 from services.security import TokenVerifier
-from uuid import UUID
 
 router = APIRouter(prefix="/tag", tags=["tag"])
 
@@ -34,14 +33,14 @@ async def create_tag(
     response_model=Tag,
     response_model_by_alias=False,
 )
-async def get_tag(id: UUID, auth_result: str = Security(token_verifier.verify)):
+async def get_tag(id: str, auth_result: str = Security(token_verifier.verify)):
     if not (tag := await tag_collection.find_one({"_id": ObjectId(id)})):
         raise HTTPException(status_code=404, detail=f"Tag {id} not found")
     return tag
 
 
 @router.delete("/{id}", response_description="Delete a tag", status_code=204)
-async def delete_tag(id: UUID, auth_result: str = Security(token_verifier.verify)):
+async def delete_tag(id: str, auth_result: str = Security(token_verifier.verify)):
     delete_result = await tag_collection.delete_one({"_id": ObjectId(id)})
 
     if not delete_result.deleted_count == 1:
@@ -57,7 +56,7 @@ async def delete_tag(id: UUID, auth_result: str = Security(token_verifier.verify
     response_model_by_alias=False,
 )
 async def update_tag(
-    id: UUID,
+    id: str,
     tag: TagUpdate = Body(...),
     auth_result: str = Security(token_verifier.verify),
 ):

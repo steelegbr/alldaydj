@@ -2,6 +2,7 @@ from models.dto.api import Pagination
 from models.dto.audio import Tag
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply
 from services.authentication import AuthenticationService
+from services.json import JsonService
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
 from typing import Callable, List
@@ -75,7 +76,7 @@ class TagService:
         self, tag: str, success: Callable[[Tag], None], failure: Callable[[str], None]
     ):
         url = urljoin(str(self.__settings_service.get().base_url), "/api/tag")
-        body = Tag(tag=tag)
+        body = Tag(id=None, tag=tag)
         self.__logger.info("POST Tag Request", body=body, url=url)
 
         def callback(reply: QNetworkReply):
@@ -96,4 +97,7 @@ class TagService:
                 success(tag)
 
         self.__network_access_manager.finished.connect(callback)
-        self.__network_access_manager.post()
+        self.__network_access_manager.post(
+            self.__authentication_service.get_authenticated_request(url),
+            JsonService.dict_to_json(body.model_dump(exclude_none=True)),
+        )

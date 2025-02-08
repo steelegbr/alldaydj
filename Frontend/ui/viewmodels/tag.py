@@ -33,7 +33,7 @@ class TagListModel(QAbstractListModel):
         pass
 
     def data(self, index, role):
-        if role is Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             return self.__tags[index.row()].tag
 
     def rowCount(self, index):

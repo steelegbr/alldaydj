@@ -89,11 +89,6 @@ class AuthenticationService:
                 state=self.get_state(),
             )
 
-    def __generate_json_request(self, url: str):
-        request = QNetworkRequest(url)
-        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
-        return request
-
     def __get_auth_url(self):
         self.__set_state(AuthenticationServiceState.AuthUrl)
         self.__error = None
@@ -147,7 +142,7 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
+            JsonService.generate_json_request(url),
             JsonService.dict_to_json(payload.model_dump()),
         )
 
@@ -198,7 +193,7 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
+            JsonService.generate_json_request(url),
             JsonService.dict_to_json(payload.model_dump()),
         )
 
@@ -274,7 +269,7 @@ class AuthenticationService:
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(
-            self.__generate_json_request(url),
+            JsonService.generate_json_request(url),
             JsonService.dict_to_json(payload.model_dump()),
         )
 
@@ -294,6 +289,7 @@ class AuthenticationService:
         request = QNetworkRequest()
         request.setUrl(url)
         request.setRawHeader(b"Authorization", f"Bearer {self.get_token()}".encode())
+        request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
         return request
 
     def get_user_code(self) -> Optional[str]:

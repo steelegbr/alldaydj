@@ -53,6 +53,7 @@ class TagSettings(QWidget):
         layout = QHBoxLayout()
 
         self.__add_text = QLineEdit()
+        self.__add_text.returnPressed.connect(self.__add_button_pressed)
         layout.addWidget(self.__add_text, 1)
 
         self.__add_button = QPushButton("Add")

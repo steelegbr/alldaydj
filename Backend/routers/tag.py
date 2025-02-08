@@ -21,11 +21,9 @@ token_verifier = TokenVerifier()
     response_model_by_alias=False,
 )
 async def create_tag(
-    tag: Tag = Body(...), auth_result: str = Security(token_verifier.verify)
+    tag: TagUpdate = Body(...), auth_result: str = Security(token_verifier.verify)
 ):
-    new_tag = await tag_collection.insert_one(
-        tag.model_dump(by_alias=True, exclude=["id"])
-    )
+    new_tag = await tag_collection.insert_one(tag.model_dump(by_alias=True))
     created_tag = await tag_collection.find_one({"_id": new_tag.inserted_id})
     return created_tag
 

@@ -5,8 +5,8 @@ from typing import Dict
 
 class JsonService:
     @staticmethod
-    def dict_to_json(dict: Dict):
-        doc = QJsonDocument(dict)
+    def dict_to_json(dictionary: Dict):
+        doc = QJsonDocument(dictionary)
         return doc.toJson()
 
     @staticmethod

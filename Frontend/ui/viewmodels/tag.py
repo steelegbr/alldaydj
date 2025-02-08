@@ -1,11 +1,12 @@
 from models.dto.audio import Tag
 from PySide6.QtCore import QAbstractListModel, Qt
-from PySide6.QtWidgets import QMessageBox
-from services.factory import TagService, ServiceFactory
+from services.factory import ServiceFactory, TagService
+from services.logging import Logger, LoggingService
 from typing import List
 
 
 class TagListModel(QAbstractListModel):
+    __logger: Logger
     __tags: List[Tag]
     __tag_service: TagService
 
@@ -13,10 +14,12 @@ class TagListModel(QAbstractListModel):
         self,
         *args,
         tags=None,
+        log_service: LoggingService = LoggingService(),
         tag_service: TagService = ServiceFactory().tagService(),
-        **kwargs
+        **kwargs,
     ):
         super().__init__(*args, **kwargs)
+        self.__logger = log_service.get_logger(__name__)
         self.__tag_service = tag_service
         self.__tags = tags or []
         self.refresh()
@@ -30,7 +33,7 @@ class TagListModel(QAbstractListModel):
         self.endResetModel()
 
     def __handle_failure(self, error: str):
-        pass
+        self.__logger.error(f"Failed reported back to tag viewmodel: {error}")
 
     def data(self, index, role):
         if role == Qt.ItemDataRole.DisplayRole:

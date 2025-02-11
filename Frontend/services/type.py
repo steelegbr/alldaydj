@@ -34,7 +34,7 @@ class CartTypeService:
         page: int,
         success: Callable[[List[CartType]], None],
         failure: Callable[[List[CartType]], None],
-        tags_so_far: List[CartType],
+        cart_types_so_far: List[CartType],
     ):
         self.__logger.info("GET Cart Types request", url=url)
 
@@ -53,13 +53,13 @@ class CartTypeService:
             else:
                 self.__logger.info("GET Cart Types request successful", url=url)
                 page_of_results = Pagination[CartType].model_validate_json(content)
-                tags_so_far.extend(page_of_results.items)
+                cart_types_so_far.extend(page_of_results.items)
                 if page_of_results.pages > page_of_results.page:
                     self.__get_page(
-                        page_of_results.next, page + 1, success, failure, tags_so_far
+                        page_of_results.next, page + 1, success, failure, cart_types_so_far
                     )
                 else:
-                    success(tags_so_far)
+                    success(cart_types_so_far)
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.get(
@@ -96,8 +96,8 @@ class CartTypeService:
                 failure("Failed to create the tag")
             else:
                 self.__logger.info("POST Cart Type request successful", url=url)
-                tag = CartType.model_validate_json(content)
-                success(tag)
+                cart_type = CartType.model_validate_json(content)
+                success(cart_type)
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(

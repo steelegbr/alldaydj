@@ -34,7 +34,7 @@ class GenreService:
         page: int,
         success: Callable[[List[Genre]], None],
         failure: Callable[[List[Genre]], None],
-        tags_so_far: List[Genre],
+        genres_so_far: List[Genre],
     ):
         self.__logger.info("GET Genres request", url=url)
 
@@ -53,13 +53,13 @@ class GenreService:
             else:
                 self.__logger.info("GET Genres request successful", url=url)
                 page_of_results = Pagination[Genre].model_validate_json(content)
-                tags_so_far.extend(page_of_results.items)
+                genres_so_far.extend(page_of_results.items)
                 if page_of_results.pages > page_of_results.page:
                     self.__get_page(
-                        page_of_results.next, page + 1, success, failure, tags_so_far
+                        page_of_results.next, page + 1, success, failure, genres_so_far
                     )
                 else:
-                    success(tags_so_far)
+                    success(genres_so_far)
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.get(
@@ -93,11 +93,11 @@ class GenreService:
                     error=reply.error(),
                     response=content,
                 )
-                failure("Failed to create the tag")
+                failure("Failed to create the genre")
             else:
                 self.__logger.info("POST Genre request successful", url=url)
-                tag = Genre.model_validate_json(content)
-                success(tag)
+                genre = Genre.model_validate_json(content)
+                success(genre)
 
         self.__network_access_manager.finished.connect(callback)
         self.__network_access_manager.post(

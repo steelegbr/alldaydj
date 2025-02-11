@@ -25,7 +25,7 @@ class TagListModel(QAbstractListModel):
         self.refresh()
 
     def refresh(self):
-        self.__tag_service.get_all_tags(self.__update_tags, self.__handle_failure)
+        self.__tag_service.get_all(self.__update_tags, self.__handle_failure)
 
     def __update_tags(self, tags: List[Tag]):
         self.beginResetModel()

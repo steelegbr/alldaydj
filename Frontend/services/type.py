@@ -1,5 +1,5 @@
 from models.dto.api import Pagination
-from models.dto.audio import Tag
+from models.dto.audio import CartType
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkReply
 from services.authentication import AuthenticationService
 from services.json import JsonService
@@ -9,7 +9,7 @@ from typing import Callable, List
 from urllib.parse import urljoin
 
 
-class TagService:
+class CartTypeService:
     __authentication_service: AuthenticationService
     __logger: Logger
     __settings_service: SettingsService
@@ -32,11 +32,11 @@ class TagService:
         self,
         url: str,
         page: int,
-        success: Callable[[List[Tag]], None],
-        failure: Callable[[List[str]], None],
-        tags_so_far: List[Tag],
+        success: Callable[[List[CartType]], None],
+        failure: Callable[[List[CartType]], None],
+        tags_so_far: List[CartType],
     ):
-        self.__logger.info("GET Tags request", url=url)
+        self.__logger.info("GET Cart Types request", url=url)
 
         def callback(reply: QNetworkReply):
             self.__network_access_manager.finished.disconnect(callback)
@@ -44,15 +44,15 @@ class TagService:
 
             if reply.error() is not QNetworkReply.NoError:
                 self.__logger.error(
-                    "GET Tags request failed",
+                    "GET Cart Types request failed",
                     url=url,
                     error=reply.error(),
                     response=content,
                 )
-                failure("Failed to retrieve tags from server")
+                failure("Failed to retrieve cart types from server")
             else:
-                self.__logger.info("GET Tags request successful", url=url)
-                page_of_results = Pagination[Tag].model_validate_json(content)
+                self.__logger.info("GET Cart Types request successful", url=url)
+                page_of_results = Pagination[CartType].model_validate_json(content)
                 tags_so_far.extend(page_of_results.items)
                 if page_of_results.pages > page_of_results.page:
                     self.__get_page(
@@ -67,17 +67,20 @@ class TagService:
         )
 
     def get_all(
-        self, success: Callable[[List[Tag]], None], failure: Callable[[str], None]
+        self, success: Callable[[List[CartType]], None], failure: Callable[[str], None]
     ):
-        url = urljoin(str(self.__settings_service.get().base_url), "/api/tag")
+        url = urljoin(str(self.__settings_service.get().base_url), "/api/type")
         self.__get_page(url, 1, success, failure, [])
 
     def add(
-        self, tag: str, success: Callable[[Tag], None], failure: Callable[[str], None]
+        self,
+        cart_type: str,
+        success: Callable[[CartType], None],
+        failure: Callable[[str], None],
     ):
-        url = urljoin(str(self.__settings_service.get().base_url), "/api/tag")
-        body = Tag(id=None, tag=tag)
-        self.__logger.info("POST Tag Request", body=body, url=url)
+        url = urljoin(str(self.__settings_service.get().base_url), "/api/type")
+        body = CartType(id=None, cart_type=cart_type)
+        self.__logger.info("POST Cart Type Request", body=body, url=url)
 
         def callback(reply: QNetworkReply):
             self.__network_access_manager.finished.disconnect(callback)
@@ -85,15 +88,15 @@ class TagService:
 
             if reply.error() is not QNetworkReply.NoError:
                 self.__logger.error(
-                    "POST Tag request failed",
+                    "POST Cart Type request failed",
                     url=url,
                     error=reply.error(),
                     response=content,
                 )
                 failure("Failed to create the tag")
             else:
-                self.__logger.info("POST Tag request successful", url=url)
-                tag = Tag.model_validate_json(content)
+                self.__logger.info("POST Cart Type request successful", url=url)
+                tag = CartType.model_validate_json(content)
                 success(tag)
 
         self.__network_access_manager.finished.connect(callback)
@@ -103,10 +106,15 @@ class TagService:
         )
 
     def delete(
-        self, tag: Tag, success: Callable[[], None], failure: Callable[[str], None]
+        self,
+        cart_type: CartType,
+        success: Callable[[], None],
+        failure: Callable[[str], None],
     ):
-        url = urljoin(str(self.__settings_service.get().base_url), f"/api/tag/{tag.id}")
-        self.__logger.info("DELETE Tag Request", url=url)
+        url = urljoin(
+            str(self.__settings_service.get().base_url), f"/api/type/{cart_type.id}"
+        )
+        self.__logger.info("DELETE Cart Type Request", url=url)
 
         def callback(reply: QNetworkReply):
             self.__network_access_manager.finished.disconnect(callback)
@@ -114,14 +122,14 @@ class TagService:
 
             if reply.error() is not QNetworkReply.NoError:
                 self.__logger.error(
-                    "DELETE Tag request failed",
+                    "DELETE Cart Type request failed",
                     url=url,
                     error=reply.error(),
                     response=content,
                 )
-                failure("Failed to delete the tag")
+                failure("Failed to delete the cart type")
             else:
-                self.__logger.info("DELETE Tag request successful", url=url)
+                self.__logger.info("DELETE Cart Type request successful", url=url)
                 success()
 
         self.__network_access_manager.finished.connect(callback)

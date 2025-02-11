@@ -1,7 +1,13 @@
-from pydantic import BaseModel
-from typing import Optional
+from models.dto.base import ApiBaseModel
 
 
-class Tag(BaseModel):
-    id: Optional[str]
+class CartType(ApiBaseModel):
+    cart_type: str
+
+
+class Genre(ApiBaseModel):
+    genre: str
+
+
+class Tag(ApiBaseModel):
     tag: str

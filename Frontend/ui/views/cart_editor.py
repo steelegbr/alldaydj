@@ -25,6 +25,7 @@ class CartEditor(QDialog):
     __sweeper: QCheckBox
     __tags: QListView
     __title: QLineEdit
+    __type: QComboBox
     __valid_from: QDateTimeEdit
     __valid_until: QDateTimeEdit
     __year: QSpinBox
@@ -53,6 +54,9 @@ class CartEditor(QDialog):
 
         self.__album = QLineEdit()
         form_layout.addRow("Album:", self.__album)
+
+        self.__type = QComboBox()
+        form_layout.addRow("Type:", self.__type)
 
         self.__genre = QComboBox()
         form_layout.addRow("Genre:", self.__genre)

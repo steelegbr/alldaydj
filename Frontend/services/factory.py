@@ -1,8 +1,10 @@
 from services.api import ApiService
 from services.authentication import AuthenticationService
+from services.genre import GenreService
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
 from services.tag import TagService
+from services.type import CartTypeService
 
 
 class ServiceFactory:
@@ -27,6 +29,18 @@ class ServiceFactory:
                 settings_service=self.settingsService(),
             )
         return self.__authentication_service
+
+    def cartTypeService(self) -> CartTypeService:
+        return CartTypeService(
+            authetication_service=self.authenticationService(),
+            settings_service=self.settingsService(),
+        )
+
+    def genreService(self) -> GenreService:
+        return GenreService(
+            authetication_service=self.authenticationService(),
+            settings_service=self.settingsService(),
+        )
 
     def settingsService(self) -> SettingsService:
         return SettingsService()

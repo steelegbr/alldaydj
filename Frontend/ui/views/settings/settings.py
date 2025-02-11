@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QTabWidget, QVBoxLayout, QWidget
-from ui.views.settings.cart_type import CartTypeSettings
-from ui.views.settings.genre import GenreSettings
+from ui.views.settings.genres import GenreSettings
+from ui.views.settings.types import CartTypeSettings
 from ui.views.settings.tag import TagSettings
 
 

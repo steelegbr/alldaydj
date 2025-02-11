@@ -20,10 +20,15 @@ token_verifier = TokenVerifier()
     response_model_by_alias=False,
 )
 async def create_type(
-    cart_type: CartTypeUpdate = Body(...), auth_result: str = Security(token_verifier.verify)
+    cart_type: CartTypeUpdate = Body(...),
+    auth_result: str = Security(token_verifier.verify),
 ):
-    new_cart_type = await type_collection.insert_one(cart_type.model_dump(by_alias=True))
-    created_cart_type = await type_collection.find_one({"_id": new_cart_type.inserted_id})
+    new_cart_type = await type_collection.insert_one(
+        cart_type.model_dump(by_alias=True)
+    )
+    created_cart_type = await type_collection.find_one(
+        {"_id": new_cart_type.inserted_id}
+    )
     return created_cart_type
 
 
@@ -78,5 +83,7 @@ async def update_type(
     response_model=Page[CartType],
     response_model_by_alias=False,
 )
-async def list_types(auth_result: str = Security(token_verifier.verify)) -> Page[CartType]:
+async def list_types(
+    auth_result: str = Security(token_verifier.verify),
+) -> Page[CartType]:
     return await paginate(type_collection)

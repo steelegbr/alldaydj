@@ -56,7 +56,11 @@ class CartTypeService:
                 cart_types_so_far.extend(page_of_results.items)
                 if page_of_results.pages > page_of_results.page:
                     self.__get_page(
-                        page_of_results.next, page + 1, success, failure, cart_types_so_far
+                        page_of_results.next,
+                        page + 1,
+                        success,
+                        failure,
+                        cart_types_so_far,
                     )
                 else:
                     success(cart_types_so_far)

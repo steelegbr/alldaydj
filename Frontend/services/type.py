@@ -97,7 +97,7 @@ class CartTypeService:
                     error=reply.error(),
                     response=content,
                 )
-                failure("Failed to create the tag")
+                failure("Failed to create the cart type")
             else:
                 self.__logger.info("POST Cart Type request successful", url=url)
                 cart_type = CartType.model_validate_json(content)

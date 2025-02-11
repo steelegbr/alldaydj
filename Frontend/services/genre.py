@@ -74,12 +74,12 @@ class GenreService:
 
     def add(
         self,
-        cart_type: str,
+        genre: str,
         success: Callable[[Genre], None],
         failure: Callable[[str], None],
     ):
         url = urljoin(str(self.__settings_service.get().base_url), "/api/genre")
-        body = Genre(id=None, cart_type=cart_type)
+        body = Genre(id=None, genre=genre)
         self.__logger.info("POST Genre Request", body=body, url=url)
 
         def callback(reply: QNetworkReply):
@@ -124,7 +124,7 @@ class GenreService:
                     error=reply.error(),
                     response=content,
                 )
-                failure("Failed to delete the cart type")
+                failure("Failed to delete the genre")
             else:
                 self.__logger.info("DELETE Genre request successful", url=url)
                 success()

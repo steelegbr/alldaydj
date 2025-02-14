@@ -1,5 +1,6 @@
 from services.api import ApiService
 from services.authentication import AuthenticationService
+from services.file import AudioFileService
 from services.genre import GenreService
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
@@ -20,6 +21,9 @@ class ServiceFactory:
 
     def apiService(self) -> ApiService:
         return ApiService(settings_service=self.settingsService())
+
+    def audioFileService(self) -> AudioFileService:
+        return AudioFileService()
 
     def authenticationService(self) -> AuthenticationService:
         if not self.__authentication_service:

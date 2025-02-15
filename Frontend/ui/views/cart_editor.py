@@ -15,6 +15,7 @@ from PySide6.QtWidgets import (
     QSpinBox,
     QVBoxLayout,
 )
+from services.audio import AudioPlayer, AudioService
 from services.factory import ServiceFactory
 from services.file import AudioFile, AudioFileService
 
@@ -23,6 +24,8 @@ class CartEditor(QDialog):
     __album: QLineEdit
     __artist: QLineEdit
     __audio_file: AudioFile
+    __audio_player: AudioPlayer
+    __audio_service: AudioService
     __cart: Cart
     __file_button: QPushButton
     __file_path: QLabel
@@ -43,6 +46,7 @@ class CartEditor(QDialog):
     def __init__(
         self,
         cart: Cart = None,
+        audio_service: AudioService = ServiceFactory().audioService(),
         file_service: AudioFileService = ServiceFactory().audioFileService(),
     ):
         super().__init__()
@@ -51,6 +55,7 @@ class CartEditor(QDialog):
         #     cart = Cart()
 
         # self.__cart = cart
+        self.__audio_service = audio_service
         self.__file_service = file_service
 
         layout = QVBoxLayout()
@@ -141,3 +146,6 @@ class CartEditor(QDialog):
         if audio_file_path:
             self.__audio_file = self.__file_service.get_local_file(audio_file_path)
             self.__file_path.setText(audio_file_path)
+            self.__audio_player = self.__audio_service.get_preview_player(
+                self.__audio_file
+            )

@@ -1,5 +1,7 @@
 from services.api import ApiService
+from services.audio import AudioService
 from services.authentication import AuthenticationService
+from services.file import AudioFileService
 from services.genre import GenreService
 from services.logging import LoggingService, Logger
 from services.settings import SettingsService
@@ -8,6 +10,7 @@ from services.type import CartTypeService
 
 
 class ServiceFactory:
+    __audio_service: AudioService = None
     __authentication_service: AuthenticationService = None
     __logger: Logger = None
     instance = None
@@ -20,6 +23,15 @@ class ServiceFactory:
 
     def apiService(self) -> ApiService:
         return ApiService(settings_service=self.settingsService())
+
+    def audioFileService(self) -> AudioFileService:
+        return AudioFileService()
+
+    def audioService(self) -> AudioService:
+        if not self.__audio_service:
+            self.__logger.info("Instantiating Audio Service")
+            self.__audio_service = AudioService()
+        return self.__audio_service
 
     def authenticationService(self) -> AuthenticationService:
         if not self.__authentication_service:

@@ -1,8 +1,11 @@
+from models.dto.audio import Cart, CartType, Genre, Tag
+from pathlib import Path
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
     QDateTimeEdit,
     QDialog,
+    QFileDialog,
     QFormLayout,
     QHBoxLayout,
     QLabel,
@@ -12,11 +15,21 @@ from PySide6.QtWidgets import (
     QSpinBox,
     QVBoxLayout,
 )
+from services.audio import AudioPlayer, AudioService
+from services.factory import ServiceFactory
+from services.file import AudioFile, AudioFileService
 
 
 class CartEditor(QDialog):
     __album: QLineEdit
     __artist: QLineEdit
+    __audio_file: AudioFile
+    __audio_player: AudioPlayer
+    __audio_service: AudioService
+    __cart: Cart
+    __file_button: QPushButton
+    __file_path: QLabel
+    __file_service: AudioFileService
     __genre: QComboBox
     __isrc: QLineEdit
     __label: QLineEdit
@@ -30,14 +43,27 @@ class CartEditor(QDialog):
     __valid_until: QDateTimeEdit
     __year: QSpinBox
 
-    def __init__(self):
+    def __init__(
+        self,
+        cart: Cart = None,
+        audio_service: AudioService = ServiceFactory().audioService(),
+        file_service: AudioFileService = ServiceFactory().audioFileService(),
+    ):
         super().__init__()
+
+        # if not cart:
+        #     cart = Cart()
+
+        # self.__cart = cart
+        self.__audio_service = audio_service
+        self.__file_service = file_service
 
         layout = QVBoxLayout()
         layout.addLayout(self.__generate_main_form())
         layout.addLayout(self.__generate_footer())
 
         self.setLayout(layout)
+        self.showMaximized()
 
     def __generate_main_form(self):
         form_layout = QFormLayout()
@@ -87,6 +113,14 @@ class CartEditor(QDialog):
         self.__record_label = QLineEdit()
         form_layout.addRow("Record Label:", self.__record_label)
 
+        self.__file_button = QPushButton("Browse")
+        self.__file_path = QLabel("")
+
+        self.__file_button.clicked.connect(self.__file_browse)
+
+        form_layout.addRow("File:", self.__file_path)
+        form_layout.addRow("", self.__file_button)
+
         return form_layout
 
     @staticmethod
@@ -103,3 +137,15 @@ class CartEditor(QDialog):
         layout.addWidget(cancel_button)
 
         return layout
+
+    def __file_browse(self):
+        audio_file_path, _ = QFileDialog.getOpenFileName(
+            self, "Open Audio File", str(Path.home()), "Audio Files (*.mp3 *.wav )"
+        )
+
+        if audio_file_path:
+            self.__audio_file = self.__file_service.get_local_file(audio_file_path)
+            self.__file_path.setText(audio_file_path)
+            self.__audio_player = self.__audio_service.get_preview_player(
+                self.__audio_file
+            )
